@@ -8,15 +8,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../service/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { Firestore, collectionData, collection } from '@angular/fire/firestore';
-import {AngularFirestoreCollection, CollectionReference, DocumentData} from '@angular/fire/compat/firestore'
+import {AngularFirestoreCollection, CollectionReference, DocumentData} from '@angular/fire/compat/firestore';
+import { User } from '../interface/user';
 
 const realtimeDatabaseUrl = environment.firebase.realtimeDatabaseUrl
 
-export interface User { 
-  firstName: string; 
-  lastName: string;
-  email: string;
-}
+
 
 @Component({
   selector: 'app-home',
@@ -83,5 +80,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
   home(): void{
     this.matSideNav.close();
     this.router.navigateByUrl("/home")
+  }
+
+  loginPage(selectedIndex: any): void{
+    this.router.navigateByUrl("/login", { state: { selectedIndex: selectedIndex } })
   }
 }

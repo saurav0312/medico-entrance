@@ -24,13 +24,25 @@ import { ToastrModule } from 'ngx-toastr';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { PracticetestsComponent } from './practicetests/practicetests.component';
+import { NavigationbarComponent } from './navigationbar/navigationbar.component';
+import { ContactComponent } from './contact/contact.component';
+import { MainpageComponent } from './mainpage/mainpage.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardnavigationbarComponent } from './dashboardnavigationbar/dashboardnavigationbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     HomeComponent,
-    ForgetpasswordComponent
+    ForgetpasswordComponent,
+    PracticetestsComponent,
+    NavigationbarComponent,
+    ContactComponent,
+    MainpageComponent,
+    DashboardComponent,
+    DashboardnavigationbarComponent
   ],
   imports: [
     BrowserModule,

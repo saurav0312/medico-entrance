@@ -29,7 +29,14 @@
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "./node_modules/ngx-toastr/toastr.css",
-              "src/styles.css"
+              "src/styles.css",
+              "./node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/assets/css/bootstrap.css",
+              "src/assets/css/maicons.css",
+              "src/assets/css/theme.css",
+              "src/assets/vendor/animate/animate.css",
+              "src/assets/vendor/owl-carousel/css/owl.carousel.css"
+
             ],
             "scripts": []
           },

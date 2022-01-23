@@ -1,7 +1,7 @@
 <div fxLayoutAlign="center center" fxFlexFill>
     <mat-card fxFlex="25">
         <mat-card-title style="text-align: center; color: blue;">Welcome</mat-card-title>
-        <mat-tab-group mat-stretch-tabs>
+        <mat-tab-group mat-stretch-tabs [selectedIndex]="selectedIndex">
             <mat-tab label="Sign In">
                 <mat-card-content>
                     <form (ngSubmit)="login()" name="loginForm" [formGroup]="loginForm" fxLayoutAlign ="stretch" fxLayout="column">
