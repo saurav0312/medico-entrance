@@ -1,0 +1,36 @@
+{
+    "controls": [
+      {
+        "name": "firstName",
+        "label": "First name:",
+        "value": "",
+        "type": "text",
+        "validators": {
+          "required": true
+        }
+      },
+      {
+        "name": "lastName",
+        "label": "Last name:",
+        "value": "",
+        "type": "text",
+        "validators": {}
+      },
+      {
+        "name": "email",
+        "label": "Email",
+        "value": "",
+        "type": "email",
+        "validators": {
+            "required": true
+        }
+      },
+      {
+        "name": "password",
+        "label": "Password:",
+        "value": "",
+        "type": "password",
+        "validators": {}
+      }
+    ]
+  }

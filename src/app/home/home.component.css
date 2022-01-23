@@ -1,0 +1,50 @@
+.mat-toolbar-class{
+    background:darkslateblue;
+    color: white;
+}
+
+.mat-sidenav-class{
+    margin: 16px;
+    width: 200px;
+    border-right: none;
+    background: #002b5c;
+    color: white;
+    border-radius: 10px;
+    padding: 16px;
+    text-align: center;
+}
+
+.mat-sidenav-container-class{
+    height: calc(100vh - 65px);
+}
+
+.content{
+    height: calc(100vh - 98px);
+    margin: 16px;
+    margin-left: 32px;
+    
+    justify-content: center;
+    
+    font-size: 2rem;
+    color: black;
+    border-radius: 10px;
+}
+
+.menu-button{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 1rem;
+}
+
+.mat-divider{
+    margin-top: 16px;
+    margin-bottom: 16px;
+    background-color: rgba(255,255,255,0.5);
+}
+
+
+.example-card{
+    max-width: 400px
+}

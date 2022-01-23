@@ -1,0 +1,15 @@
+.cancel-class {
+    color:darkgray;
+    margin-right: 2em;
+}
+
+.cancel-class:hover{
+    background-image:none;
+background-color:darkslateblue;
+}
+
+.forgetPassword{
+    color: darkgray;
+    margin-bottom: 1em;
+    cursor: pointer;
+}
