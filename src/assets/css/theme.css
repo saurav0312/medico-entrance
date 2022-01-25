@@ -1056,7 +1056,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 .navbar-float {
   position: absolute;
-  top: 20px;
+  top: 0px;
   left: 0;
   width: 100%;
   background-color: #fff;

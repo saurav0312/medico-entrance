@@ -82,7 +82,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     this.router.navigateByUrl("/home")
   }
 
-  loginPage(selectedIndex: any): void{
-    this.router.navigateByUrl("/login", { state: { selectedIndex: selectedIndex } })
+  signUpPage(): void{
+    this.router.navigateByUrl("/chooseSignUpOption")
   }
 }

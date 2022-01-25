@@ -15,8 +15,12 @@ export class NavigationbarComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  loginPage(selectedIndex: any): void{
-    this.router.navigateByUrl("/login", { state: { selectedIndex: selectedIndex } })
+  loginPage(): void{
+    this.router.navigateByUrl("/signin")
+  }
+
+  signUpPage(): void{
+    this.router.navigateByUrl("/chooseSignUpOption")
   }
 
 }

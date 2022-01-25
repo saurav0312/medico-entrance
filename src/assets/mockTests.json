@@ -1,0 +1,37 @@
+{
+    "mockTests":[
+        {
+            "questions":[
+                {
+                    "question":"What is area?",
+                    "options": [1,2,3],
+                    "correctAnswer":1
+                },
+                {
+                    "question":"What is perimeter?",
+                    "options": [10,20,30],
+                    "correctAnswer":20
+                }
+            ]
+        },
+        {
+            "questions":[
+                {
+                    "question":"Where is Nepal?",
+                    "options": ["Asia","Africa","North America"],
+                    "correctAnswer":"Asia"
+                },
+                {
+                    "question":"Who is Ram",
+                    "options": ["Person","Boy","Man"],
+                    "correctAnswer":"Person"
+                },
+                {
+                    "question":"Who is Sita",
+                    "options": ["Person","Girl","Woman"],
+                    "correctAnswer":"Person"
+                }
+            ]
+        }
+    ]
+}

@@ -1,3 +1,9 @@
-<div *ngFor ="let user of usersList">
-    {{user.firstName}}
+
+<div *ngFor ="let mockTest of listOfMockTests">
+    <div *ngFor ="let question of mockTest.questions">
+        {{question.question}}
+        {{question.options}}
+        {{question.correctAnswer}}
+    </div> 
 </div>
+

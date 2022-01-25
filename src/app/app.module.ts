@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './login/login.component';
+import { ChooseEntryOptionComponent } from './chooseentryoption/chooseentryoption.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -30,11 +30,12 @@ import { ContactComponent } from './contact/contact.component';
 import { MainpageComponent } from './mainpage/mainpage.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardnavigationbarComponent } from './dashboardnavigationbar/dashboardnavigationbar.component';
+import { SigninComponent } from './signin/signin.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
+    ChooseEntryOptionComponent,
     HomeComponent,
     ForgetpasswordComponent,
     PracticetestsComponent,
@@ -42,7 +43,8 @@ import { DashboardnavigationbarComponent } from './dashboardnavigationbar/dashbo
     ContactComponent,
     MainpageComponent,
     DashboardComponent,
-    DashboardnavigationbarComponent
+    DashboardnavigationbarComponent,
+    SigninComponent
   ],
   imports: [
     BrowserModule,
