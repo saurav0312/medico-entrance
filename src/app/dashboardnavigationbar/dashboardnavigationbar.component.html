@@ -13,7 +13,7 @@
             <a routerLink="#" class="nav-link">Home</a>
           </li>
           <li class="nav-item">
-            <a routerLink="/freeMockTests" class="nav-link">Free Mock Tests</a>
+            <a routerLink="/freeMockTests" class="nav-link" [matBadge]="noOfMockTest">Free Mock Tests</a>
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">
@@ -30,8 +30,6 @@
       </div>
     </div>
   </nav>
-
-  <input id="my-file-selector" type="file" (change)="uploadData($event)" name="uploadExcel">
 
 
 <!-- Sample -->

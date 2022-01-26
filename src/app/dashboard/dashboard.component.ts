@@ -13,7 +13,6 @@ export class DashboardComponent implements OnInit {
 
   mockTest! : MockTest;
   mockTests! : MockTest[];
-  collec! : String;
 
   constructor(
     private authService: AuthService 
@@ -23,7 +22,6 @@ export class DashboardComponent implements OnInit {
 
     this.authService.readMockTest().subscribe((response: any) =>{
       this.mockTests = response
-      this.collec = JSON.stringify(this.mockTests)
       console.log("Collection of MockTests: ", response)
   })
 

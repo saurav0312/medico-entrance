@@ -8,6 +8,7 @@ import { MainpageComponent } from './mainpage/mainpage.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { PracticetestsComponent } from './practicetests/practicetests.component';
 import { SigninComponent } from './signin/signin.component';
+import { StarttestComponent } from './starttest/starttest.component';
 
 const routes: Routes = [
   {path: '', component: MainpageComponent},
@@ -19,7 +20,8 @@ const routes: Routes = [
   {path: 'announcement', component: ContactComponent},
   {path: 'news', component: ContactComponent},
   {path: 'freeMockTests', component: PracticetestsComponent},
-  {path: 'forgetPassword', component:ForgetpasswordComponent}
+  {path: 'forgetPassword', component:ForgetpasswordComponent},
+  {path: 'startTest', component:StarttestComponent}
 ];
 
 @NgModule({

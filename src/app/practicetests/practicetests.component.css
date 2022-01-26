@@ -1,0 +1,54 @@
+.wrapper{
+    max-height: 120px;
+    border: 1px solid #ddd;
+    display: flex;
+    overflow-x: auto;
+}
+
+.wrapper .item{
+    min-width: 110px;
+    height: 150px;
+    line-height: 110px;
+    text-align: center;
+    background-color: #ddd;
+    margin-right: 2px;
+}
+
+
+
+.enjoy-css {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    width: 250px;
+    height: 70px;
+    cursor: pointer;
+    margin: 0 auto;
+    border: 2px solid rgba(16,83,150,1);
+    -webkit-border-radius: 40px;
+    border-radius: 40px;
+    font: normal 37px/70px "Advent Pro", Helvetica, sans-serif;
+    color: rgba(16,83,150,1);
+    text-align: center;
+    -o-text-overflow: clip;
+    text-overflow: clip;
+    letter-spacing: 1px;
+    background: rgba(0,0,0,0);
+    -webkit-transition: background-color 0.3s cubic-bezier(0, 0, 0, 0), color 0.3s cubic-bezier(0, 0, 0, 0), width 0.3s cubic-bezier(0, 0, 0, 0), border-width 0.3s cubic-bezier(0, 0, 0, 0), border-color 0.3s cubic-bezier(0, 0, 0, 0);
+    -moz-transition: background-color 0.3s cubic-bezier(0, 0, 0, 0), color 0.3s cubic-bezier(0, 0, 0, 0), width 0.3s cubic-bezier(0, 0, 0, 0), border-width 0.3s cubic-bezier(0, 0, 0, 0), border-color 0.3s cubic-bezier(0, 0, 0, 0);
+    -o-transition: background-color 0.3s cubic-bezier(0, 0, 0, 0), color 0.3s cubic-bezier(0, 0, 0, 0), width 0.3s cubic-bezier(0, 0, 0, 0), border-width 0.3s cubic-bezier(0, 0, 0, 0), border-color 0.3s cubic-bezier(0, 0, 0, 0);
+    transition: background-color 0.3s cubic-bezier(0, 0, 0, 0), color 0.3s cubic-bezier(0, 0, 0, 0), width 0.3s cubic-bezier(0, 0, 0, 0), border-width 0.3s cubic-bezier(0, 0, 0, 0), border-color 0.3s cubic-bezier(0, 0, 0, 0);
+  }
+  
+  .enjoy-css:hover {
+    color: rgba(255,255,255,1);
+    background: rgba(16,83,150,1);
+  }
+  
+  .enjoy-css:active {
+    -webkit-transition: none;
+    -moz-transition: none;
+    -o-transition: none;
+    transition: none;
+  }
+

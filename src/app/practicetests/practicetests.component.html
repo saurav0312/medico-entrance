@@ -1,9 +1,43 @@
+<app-dashboardnavigationbar [noOfMockTest]="noOfTests" ></app-dashboardnavigationbar>
 
-<div *ngFor ="let mockTest of listOfMockTests">
-    <div *ngFor ="let question of mockTest.questions">
-        {{question.question}}
-        {{question.options}}
-        {{question.correctAnswer}}
-    </div> 
+<div  style="margin-top: 5rem; margin-left: 2rem; align-content: center;">
+    <div   *ngFor="let testId of testIdList; let i = index" [attr.data-index]="i">
+        <div style="margin: 5rem;" class="enjoy-css enjoy-css:hover enjoy-css:active">
+            <div style="border: gray 2px;">
+            <div (click)="startTest(testId)">Test {{i+1}}</div>
+            
+        </div>
+        </div>
+    </div>
 </div>
+
+
+
+
+
+
+
+<!-- List of mock test -->
+
+
+<!-- <div style="margin-top: 5rem; margin-left: 20rem; text-align: center; align-content: center;">
+    <div style="width: 50rem; height:50rem">
+        <div *ngFor="let test of mockTests; let i = index" [attr.data-index]="i">
+            <h1 style="text-align: center;">Mock {{i+1}}</h1>
+            <mat-card class="example-card">
+                <mat-card-content>
+            <div *ngFor="let question of test.questions; let j= index" [attr.data-index]="j">
+                <div><h2>{{j + 1}}. {{question.question}}</h2></div>
+                <ul>
+                <div *ngFor="let option of question.options">
+                    <div style="text-align: center;"><li>{{option}}</li></div>
+                </div>
+            </ul>
+            </div>
+            
+            </mat-card-content>
+            </mat-card>
+        </div>
+    </div>
+</div> -->
 

@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from '../service/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-dashboardnavigationbar',
@@ -11,6 +10,8 @@ import * as XLSX from 'xlsx';
 })
 export class DashboardnavigationbarComponent implements OnInit {
 
+  @Input() noOfMockTest : number = 0;
+
   constructor(
     private authService :  AuthService,
     private toastrService: ToastrService,
@@ -18,6 +19,10 @@ export class DashboardnavigationbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.authService.mock$.subscribe((response: any) =>{
+      this.noOfMockTest = response.length
+  })
+
   }
 
   logout(): void{
@@ -26,16 +31,4 @@ export class DashboardnavigationbarComponent implements OnInit {
       this.router.navigateByUrl("/")
     })
   }
-
-  uploadData(event : any): void{
-    console.log(event)
-    const target: DataTransfer = <DataTransfer>(event.target)
-    if(target.files.length !== 1){
-      throw new Error("Cannot upload multiple files!")
-    }
-
-    const reader: FileReader = new FileReader();
-    reader.readAsBinaryString(target.files[0]);
-  }
-
 }

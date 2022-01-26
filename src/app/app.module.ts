@@ -14,6 +14,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
+import {MatBadgeModule} from '@angular/material/badge';
 import { HomeComponent } from './home/home.component';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -31,6 +32,7 @@ import { MainpageComponent } from './mainpage/mainpage.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardnavigationbarComponent } from './dashboardnavigationbar/dashboardnavigationbar.component';
 import { SigninComponent } from './signin/signin.component';
+import { StarttestComponent } from './starttest/starttest.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +46,8 @@ import { SigninComponent } from './signin/signin.component';
     MainpageComponent,
     DashboardComponent,
     DashboardnavigationbarComponent,
-    SigninComponent
+    SigninComponent,
+    StarttestComponent
   ],
   imports: [
     BrowserModule,
@@ -61,6 +64,7 @@ import { SigninComponent } from './signin/signin.component';
     MatIconModule,
     MatTabsModule,
     MatDividerModule,
+    MatBadgeModule,
     HttpClientModule,
     provideAuth(() => getAuth()),
     provideFirebaseApp(() => initializeApp(environment.firebase)),

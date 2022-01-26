@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
 import { from, Observable, switchMap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MockTest} from '../interface/mockTest';
-import { Firestore, addDoc, collectionData, collection } from '@angular/fire/firestore';
+import { Firestore, addDoc, collectionData, collection, doc, docData } from '@angular/fire/firestore';
 
 
 const realtimeDatabaseUrl = environment.firebase.realtimeDatabaseUrl
@@ -24,6 +24,7 @@ const realtimeDatabaseUrl = environment.firebase.realtimeDatabaseUrl
 export class AuthService {
 
   currentUser$ = authState(this.auth);
+  mock$ = this.readMockTest();
 
   constructor(
     private auth: Auth,
@@ -64,6 +65,11 @@ export class AuthService {
 
   readMockTest(): Observable<any>{
     const collectionList = collection(this.firestore, 'MockTests');
-    return collectionData(collectionList)
+    return collectionData(collectionList,{idField: 'id'})
+  }
+
+  getMockTestByID(id: string) {
+    const bookRef = doc(this.firestore, `MockTests/${id}`);
+    return docData(bookRef) as Observable<MockTest>;
   }
 }
