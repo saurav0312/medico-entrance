@@ -12,6 +12,8 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { from, Observable, switchMap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
+import { MockTest} from '../interface/mockTest';
+import { Firestore, addDoc, collectionData, collection, doc, docData } from '@angular/fire/firestore';
 
 
 const realtimeDatabaseUrl = environment.firebase.realtimeDatabaseUrl
@@ -22,12 +24,14 @@ const realtimeDatabaseUrl = environment.firebase.realtimeDatabaseUrl
 export class AuthService {
 
   currentUser$ = authState(this.auth);
+  mock$ = this.readMockTest();
 
   constructor(
     private auth: Auth,
     private httpClient : HttpClient,
     private router : Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private firestore: Firestore
     ) { }
 
   loginUser(loginForm: any) : Observable<any>{
@@ -52,5 +56,20 @@ export class AuthService {
 
   changePassword(changePasswordForm: any) : Observable<any>{
     return from(sendPasswordResetEmail(this.auth, changePasswordForm.get('email')?.value));
+  }
+
+  createMockTest(mockTest: MockTest){
+    const booksRef = collection(this.firestore, 'MockTests'); 
+    return addDoc(booksRef, mockTest);
+  }
+
+  readMockTest(): Observable<any>{
+    const collectionList = collection(this.firestore, 'MockTests');
+    return collectionData(collectionList,{idField: 'id'})
+  }
+
+  getMockTestByID(id: string) {
+    const bookRef = doc(this.firestore, `MockTests/${id}`);
+    return docData(bookRef) as Observable<MockTest>;
   }
 }

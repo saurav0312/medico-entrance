@@ -2,3 +2,39 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.cursor-icon{
+    cursor: pointer;
+}
+
+.images-container{
+    display: flex;
+    justify-content: center;
+}
+.images-container img{
+    margin-left: 5px;
+    margin-right: 5px;
+    align-items: center;
+}
+
+.mat-card-class{
+    margin-bottom: 8px;
+    max-width: 400px;
+}
+
+.main-class{
+    
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+}
+
+.teacher-student-buttons{
+    padding-right: 10px;
+}
+
+.submit-cancel-buttons{
+    margin-right: 2em;
+    margin-top: 1em;
+}

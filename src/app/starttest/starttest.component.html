@@ -1,0 +1,14 @@
+<mat-card class="example-card">
+    <mat-card-content>
+        <div *ngFor="let question of testData.questions; let i= index" [attr.data-index]="i">
+            <div>
+                <h2>{{i + 1}}. {{question.question}}</h2>
+            </div>
+            <ul>
+                <div *ngFor="let option of question.options">
+                    <div style="text-align: center;"><li>{{option}}</li></div>
+                </div>
+            </ul>
+        </div>
+</mat-card-content>
+</mat-card>

@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { LoginComponent } from './login/login.component';
+import { ChooseEntryOptionComponent } from './chooseentryoption/chooseentryoption.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -14,6 +14,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
+import {MatBadgeModule} from '@angular/material/badge';
 import { HomeComponent } from './home/home.component';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 import { HttpClientModule } from '@angular/common/http';
@@ -24,13 +25,29 @@ import { ToastrModule } from 'ngx-toastr';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { PracticetestsComponent } from './practicetests/practicetests.component';
+import { NavigationbarComponent } from './navigationbar/navigationbar.component';
+import { ContactComponent } from './contact/contact.component';
+import { MainpageComponent } from './mainpage/mainpage.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { DashboardnavigationbarComponent } from './dashboardnavigationbar/dashboardnavigationbar.component';
+import { SigninComponent } from './signin/signin.component';
+import { StarttestComponent } from './starttest/starttest.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
+    ChooseEntryOptionComponent,
     HomeComponent,
-    ForgetpasswordComponent
+    ForgetpasswordComponent,
+    PracticetestsComponent,
+    NavigationbarComponent,
+    ContactComponent,
+    MainpageComponent,
+    DashboardComponent,
+    DashboardnavigationbarComponent,
+    SigninComponent,
+    StarttestComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +64,7 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
     MatIconModule,
     MatTabsModule,
     MatDividerModule,
+    MatBadgeModule,
     HttpClientModule,
     provideAuth(() => getAuth()),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
