@@ -22,5 +22,17 @@
 
 
 .question-number-btn-class-focus{
+    background-color: gray;
+}
+
+.question-number-answered{
     background-color: green;
+}
+
+.option-selected{
+    background-color: green;
+}
+
+.option-not-selected{
+
 }

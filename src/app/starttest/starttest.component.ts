@@ -47,4 +47,12 @@ export class StarttestComponent implements OnInit {
   changeQuestion(questionIndex: number): void{
     this.counter = questionIndex
   }
+
+  optionSelected(questionNumber:number, selectedOption:number): void{
+    console.log("Question : " + questionNumber + " Option Selected: " + selectedOption)
+    this.testData.questions[this.counter].selectedOption = selectedOption;
+    this.testData.questions[this.counter].answered = true;
+    console.log(this.testData.questions[this.counter]);
+    console.log(this.testData.questions)
+  }
 }
