@@ -1,14 +1,38 @@
-<mat-card class="example-card">
-    <mat-card-content>
-        <div *ngFor="let question of testData.questions; let i= index" [attr.data-index]="i">
-            <div>
-                <h2>{{i + 1}}. {{question.question}}</h2>
+
+<!-- Bootstrap test -->
+<div class ="card" style="align-content: flex-start;">
+<div class="card">
+    <div class="card" style="float:left; margin-left: 30em; margin-top: 2em; margin-right: 30em;">
+        <div class="row d-flex justify-content-between p-3" style="align-content: center;" >
+            <div class="col" >
+                <!-- <div class ="col-sm-6" *ngFor="let question of testData.questions; let i = index" [attr.data-index]="i" style="margin-bottom: 2rem;"> -->
+                    <div class="card">
+                        <div class="card-body">
+                        <h1 class="card-title">{{counter + 1}}. {{testData.questions[counter]?.question}}</h1>
+                        <ol>
+                            <div >
+                                <li class="card options-item"  *ngFor="let option of testData.questions[counter]?.options" style="cursor: pointer; margin: 10px 0;">{{option}}</li>
+                            </div>
+                        </ol>
+                        </div>
+                        <i class="fas fa-chevron-right" ></i>
+                    </div>
+                <!-- </div> -->
+                <button class="btn btn-primary" (click)="decreaseCounter()" style="float: lef; margin-top: 1em; ">Previous</button>
+                <button class="btn btn-primary" (click)="increaseCounter()" style="float: right; margin-top: 1em;">Next</button>
             </div>
-            <ul>
-                <div *ngFor="let option of question.options">
-                    <div style="text-align: center;"><li>{{option}}</li></div>
-                </div>
-            </ul>
+            
         </div>
-</mat-card-content>
-</mat-card>
+    </div>
+
+    
+</div>
+
+<div *ngFor="let question of testData.questions; let i = index" [attr.data-index]="i">
+    <button (click)="changeQuestion(i)" [ngClass]="{'question-number-btn-class-focus' : counter === i}" class="btn question-number-btn-class">{{i+1}}</button>
+</div>
+
+</div>
+
+
+

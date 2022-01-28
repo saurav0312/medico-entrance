@@ -12,6 +12,7 @@ export class StarttestComponent implements OnInit {
 
   @Input() testId!: string;
   testData!: MockTest;
+  counter = 0;
 
   constructor(
     private router : Router,
@@ -29,4 +30,21 @@ export class StarttestComponent implements OnInit {
     })
   }
 
+  increaseCounter(): void{
+    this.counter++;
+    if(this.counter === this.testData.questions.length ){
+      this.counter = this.testData.questions.length-1;
+    }
+  }
+
+  decreaseCounter(): void{
+    this.counter --;
+    if(this.counter === -1){
+      this.counter = 0;
+    }
+  }
+
+  changeQuestion(questionIndex: number): void{
+    this.counter = questionIndex
+  }
 }
