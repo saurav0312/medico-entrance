@@ -1,0 +1,38 @@
+.options-item:hover{
+    border: 1px solid blue;
+}
+
+.options-item:active{
+    background-color: green;
+}
+
+.question-number-btn-class{
+    color:black;
+    border-radius: .4em; 
+    border-color: black; 
+    margin-left: 1em; 
+    margin-top: 0.5em; 
+    margin-right: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.question-number-btn-class:hover{
+    background-color: blue;
+}
+
+
+.question-number-btn-class-focus{
+    background-color: gray;
+}
+
+.question-number-answered{
+    background-color: green;
+}
+
+.option-selected{
+    background-color: green;
+}
+
+.option-not-selected{
+
+}

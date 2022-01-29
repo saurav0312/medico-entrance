@@ -1,15 +1,5 @@
 <app-dashboardnavigationbar [noOfMockTest]="noOfTests" ></app-dashboardnavigationbar>
 
-<div  style="margin-top: 5rem; margin-left: 2rem; align-content: center;">
-    <div   *ngFor="let testId of testIdList; let i = index" [attr.data-index]="i">
-        <div style="margin: 5rem;" class="enjoy-css enjoy-css:hover enjoy-css:active">
-            <div style="border: gray 2px;">
-            <div (click)="startTest(testId)">Test {{i+1}}</div>
-            
-        </div>
-        </div>
-    </div>
-</div>
 
 
 
@@ -40,4 +30,22 @@
         </div>
     </div>
 </div> -->
+
+
+
+
+
+<!-- BootStrap test -->
+
+<div class="row" style="margin-top: 6rem; margin-left: 2rem; margin-right: 2rem; margin-bottom: 2rem;">
+    <div class ="col-sm-6" *ngFor="let testId of testIdList; let i = index" [attr.data-index]="i" style="margin-bottom: 2rem;">
+        <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Test {{i+1}}</h5>
+              <p class="card-text">Test from XYZ institute</p>
+              <a (click)="startTest(testId)" class="btn btn-primary">Start Test</a>
+            </div>
+        </div>
+    </div>
+</div>
 

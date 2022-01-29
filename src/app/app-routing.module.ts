@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+// import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
+
 import { ChooseEntryOptionComponent } from './chooseentryoption/chooseentryoption.component';
 import { HomeComponent } from './home/home.component';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
