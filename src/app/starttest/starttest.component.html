@@ -1,5 +1,7 @@
 
 <!-- Bootstrap test -->
+<ng-container *ngIf="!testFinished; else testFinsihedBlock">
+<h1>{{totalTimeRemaining}}</h1>
 <div class ="card" style="align-content: flex-start;">
 <div class="card">
     <div class="card" style="float:left; margin-left: 30em; margin-top: 2em; margin-right: 30em;">
@@ -11,7 +13,7 @@
                         <h1 class="card-title">{{counter + 1}}. {{testData.questions[counter]?.question}}</h1>
                         <ol>
                             <div>
-                                <li (click)="optionSelected(counter,option)" class="card options-item"
+                                <li style ="height: 2.5em;" (click)="optionSelected(counter,option)" class="card options-item"
                                  [ngClass]="testData.questions[counter].selectedOption === option ? 'option-selected' : 'option-not-selected'"  *ngFor="let option of testData.questions[counter]?.options" style="cursor: pointer; margin: 10px 0;">{{option}}</li>
                             </div>
                         </ol>
@@ -34,6 +36,19 @@
 </div>
 
 </div>
+
+</ng-container>
+
+<ng-template #testFinsihedBlock>
+<h1>Test has been finished successfully</h1>
+<h2>Your test result is here</h2>
+<div>
+    <h3>Questions Attempted: </h3> {{noOfQuestionsAttempted}}
+    <h3>Questions Unattempted: </h3> {{noOfQuestionsUnattempted}}
+    <h3>Questions Answered Correctly: </h3> {{noOfQuestionsAnsweredCorrectly}}
+    <h3>Questions Answered Incorrectly</h3>{{noOfQuestionsAnsweredIncorrectly}}
+</div>
+</ng-template>
 
 
 
