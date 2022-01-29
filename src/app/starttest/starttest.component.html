@@ -1,41 +1,53 @@
 
 <!-- Bootstrap test -->
 <ng-container *ngIf="!testFinished; else testFinsihedBlock">
-<h1>{{totalTimeRemaining}}</h1>
-<div class ="card" style="align-content: flex-start;">
+<h1 style="text-align: center;">{{totalTimeRemaining}}</h1>
+<!-- <div class ="card" style="align-content: flex-start;"> -->
 <div class="card">
     <div class="card" style="float:left; margin-left: 30em; margin-top: 2em; margin-right: 30em;">
         <div class="row d-flex justify-content-between p-3" style="align-content: center;" >
-            <div class="col" >
+            <!-- <div class="col" > -->
                 <!-- <div class ="col-sm-6" *ngFor="let question of testData.questions; let i = index" [attr.data-index]="i" style="margin-bottom: 2rem;"> -->
-                    <div class="card">
-                        <div class="card-body">
-                        <h1 class="card-title">{{counter + 1}}. {{testData.questions[counter]?.question}}</h1>
-                        <ol>
-                            <div>
-                                <li style ="height: 2.5em;" (click)="optionSelected(counter,option)" class="card options-item"
-                                 [ngClass]="testData.questions[counter].selectedOption === option ? 'option-selected' : 'option-not-selected'"  *ngFor="let option of testData.questions[counter]?.options" style="cursor: pointer; margin: 10px 0;">{{option}}</li>
+                    <div style="width: auto;">
+                        <div class="card" style="float: left; width: 30em;">
+                            <div class="card-body">
+                                <h1 class="card-title">{{counter + 1}}. {{testData.questions[counter]?.question}}</h1>
+                                <ol>
+                                    <div>
+                                        <li style ="height: 2.5em;" (click)="optionSelected(counter,option)" class="card options-item"
+                                        [ngClass]="testData.questions[counter].selectedOption === option ? 'option-selected' : 'option-not-selected'"  *ngFor="let option of testData.questions[counter]?.options" style="cursor: pointer; margin: 10px 0;">{{option}}</li>
+                                    </div>
+                                </ol>
                             </div>
-                        </ol>
+                            <!-- <i class="fas fa-chevron-right" ></i> -->
                         </div>
-                        <i class="fas fa-chevron-right" ></i>
+                    <!-- </div> -->
+                    
+                        <div style="float: left; column-width: 4em;" *ngFor="let question of testData.questions; let i = index" [attr.data-index]="i">
+                            <button style ="width:3rem; height: auto;" (click)="changeQuestion(i)" [ngClass]="{'question-number-btn-class-focus' : counter === i, 'question-number-answered': testData.questions[i].answered === true}" class="btn question-number-btn-class">{{i+1}}</button>
+                        </div>
                     </div>
-                <!-- </div> -->
-                <button class="btn btn-primary" [disabled]="counter === 0"  (click)="decreaseCounter()" style="float: lef; margin-top: 1em; ">Previous</button>
-                <button class="btn btn-primary" [disabled]="counter === testData.questions.length-1" (click)="increaseCounter()" style="float: right; margin-top: 1em;">Next</button>
+            
+            <!-- </div> -->
+            <div>
+                <button class="btn btn-primary" [disabled]="counter === 0"  (click)="decreaseCounter()" style="width:fit-content; float: lef; margin-top: 1em; ">Previous</button>
+                <button class="btn btn-primary" [disabled]="counter === testData.questions.length-1" (click)="increaseCounter()" style="width:fit-content; float: right; margin-top: 1em;">Next</button>
             </div>
             
-        </div>
-    </div>
 
+           
+
+        </div>
+
+        
+
+    </div>
     
 </div>
 
-<div *ngFor="let question of testData.questions; let i = index" [attr.data-index]="i">
-    <button (click)="changeQuestion(i)" [ngClass]="{'question-number-btn-class-focus' : counter === i, 'question-number-answered': testData.questions[i].answered === true}" class="btn question-number-btn-class">{{i+1}}</button>
-</div>
 
-</div>
+
+<!-- </div> -->
 
 </ng-container>
 
