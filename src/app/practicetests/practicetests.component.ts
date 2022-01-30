@@ -50,7 +50,7 @@ export class PracticetestsComponent implements OnInit {
   }
 
   startTest(testId: string) : void{
-    this.router.navigate(["/startTest"], {queryParams: {data: testId}})
+    this.router.navigate(["/testInstructions"], {queryParams: {data: testId}})
   }
 
 }

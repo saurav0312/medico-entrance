@@ -11,19 +11,22 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { PracticetestsComponent } from './practicetests/practicetests.component';
 import { SigninComponent } from './signin/signin.component';
 import { StarttestComponent } from './starttest/starttest.component';
+import { TestinstructionsComponent } from './testinstructions/testinstructions.component';
 
 const routes: Routes = [
   {path: '', component: MainpageComponent},
   {path: 'home', component: HomeComponent},
   {path: 'chooseSignUpOption', component: ChooseEntryOptionComponent},
   {path: 'signin', component: SigninComponent},
+  {path: 'forgetPassword', component:ForgetpasswordComponent},
   {path: 'dashboard', component: DashboardComponent},
   {path: 'contact', component: ContactComponent},
   {path: 'announcement', component: ContactComponent},
   {path: 'news', component: ContactComponent},
   {path: 'freeMockTests', component: PracticetestsComponent},
-  {path: 'forgetPassword', component:ForgetpasswordComponent},
-  {path: 'startTest', component:StarttestComponent}
+  {path: 'testInstructions', component:TestinstructionsComponent},
+  {path: 'startTest', component:StarttestComponent},
+
 ];
 
 @NgModule({

@@ -1,65 +1,64 @@
 
 <!-- Bootstrap test -->
 <ng-container *ngIf="!testFinished; else testFinsihedBlock">
-<h1 style="text-align: center;">{{totalTimeRemaining}}</h1>
-<!-- <div class ="card" style="align-content: flex-start;"> -->
-<div class="card">
-    <div class="card" style="float:left; margin-left: 30em; margin-top: 2em; margin-right: 30em;">
-        <div class="row d-flex justify-content-between p-3" style="align-content: center;" >
-            <!-- <div class="col" > -->
-                <!-- <div class ="col-sm-6" *ngFor="let question of testData.questions; let i = index" [attr.data-index]="i" style="margin-bottom: 2rem;"> -->
-                    <div style="width: auto;">
-                        <div class="card" style="float: left; width: 30em;">
-                            <div class="card-body">
-                                <h1 class="card-title">{{counter + 1}}. {{testData.questions[counter]?.question}}</h1>
-                                <ol>
-                                    <div>
-                                        <li style ="height: 2.5em;" (click)="optionSelected(counter,option)" class="card options-item"
-                                        [ngClass]="testData.questions[counter].selectedOption === option ? 'option-selected' : 'option-not-selected'"  *ngFor="let option of testData.questions[counter]?.options" style="cursor: pointer; margin: 10px 0;">{{option}}</li>
-                                    </div>
-                                </ol>
-                            </div>
-                            <!-- <i class="fas fa-chevron-right" ></i> -->
+    <div>
+        <h1 style="text-align: center; margin-top: 1em;">
+            {{totalTimeRemaining}}
+            <mat-icon aria-label="home icom">
+                timer
+            </mat-icon>
+        </h1>
+        
+    </div>    
+    <div class="float-container" style="width: fit-content; float: left;">
+        <div class="float-child mat-card" style="width: auto;">
+            <div class="card" style="float: left; width: 50em; min-width: 20em; max-width: 50em ;">
+                <div class="card-body">
+                    <h1 class="card-title">{{counter + 1}}. {{testData.questions[counter]?.question}}</h1>
+                    <ol>
+                        <div>
+                            <li style ="height: 2.5em;" (click)="optionSelected(counter,option)" class="card options-item"
+                            [ngClass]="testData.questions[counter].selectedOption === option ? 'option-selected' : 'option-not-selected'"  *ngFor="let option of testData.questions[counter]?.options" style="cursor: pointer; margin: 10px 0;">{{option}}</li>
                         </div>
-                    <!-- </div> -->
-                    
-                        <div style="float: left; column-width: 4em;" *ngFor="let question of testData.questions; let i = index" [attr.data-index]="i">
-                            <button style ="width:3rem; height: auto;" (click)="changeQuestion(i)" [ngClass]="{'question-number-btn-class-focus' : counter === i, 'question-number-answered': testData.questions[i].answered === true}" class="btn question-number-btn-class">{{i+1}}</button>
-                        </div>
-                    </div>
-            
-            <!-- </div> -->
+                    </ol>
+                </div>
+            </div>
+
             <div>
                 <button class="btn btn-primary" [disabled]="counter === 0"  (click)="decreaseCounter()" style="width:fit-content; float: lef; margin-top: 1em; ">Previous</button>
                 <button class="btn btn-primary" [disabled]="counter === testData.questions.length-1" (click)="increaseCounter()" style="width:fit-content; float: right; margin-top: 1em;">Next</button>
             </div>
-            
-
-           
-
         </div>
 
-        
-
+        <div class="float-child mat-card" style="width: 25em; margin-left: 2em; float: right;" >
+            <div   *ngFor="let question of testData.questions; let i = index" [attr.data-index]="i">
+                <div style="float: left; column-width: 4em;">
+                    <button style ="width:3rem; height: auto;" (click)="changeQuestion(i)" [ngClass]="{'question-number-btn-class-focus' : counter === i, 'question-number-answered': testData.questions[i].answered === true}" class="btn question-number-btn-class">{{i+1}}</button>
+                </div>
+            </div>
+        </div>
     </div>
-    
-</div>
 
+    <div class="clear"></div>
 
-
-<!-- </div> -->
-
+    <div style="padding-left: 49em;">
+        <button (click)="submitTest()" class="btn btn-primary"> Submit</button>
+    </div>
 </ng-container>
 
-<ng-template #testFinsihedBlock>
-<h1>Test has been finished successfully</h1>
-<h2>Your test result is here</h2>
-<div>
-    <h3>Questions Attempted: </h3> {{noOfQuestionsAttempted}}
-    <h3>Questions Unattempted: </h3> {{noOfQuestionsUnattempted}}
-    <h3>Questions Answered Correctly: </h3> {{noOfQuestionsAnsweredCorrectly}}
-    <h3>Questions Answered Incorrectly</h3>{{noOfQuestionsAnsweredIncorrectly}}
-</div>
+<ng-template  #testFinsihedBlock>
+    <div style="text-align: center;">
+        <h1>User ID: {{userId}}</h1>
+        <h1>Test ID: {{testId}}</h1>
+        <h1>Test has been finished successfully</h1>
+        <h2>Your test result is here</h2>
+        <div>
+            <h3>Questions Attempted: </h3> {{noOfQuestionsAttempted}}
+            <h3>Questions Unattempted: </h3> {{noOfQuestionsUnattempted}}
+            <h3>Questions Answered Correctly: </h3> {{noOfQuestionsAnsweredCorrectly}}
+            <h3>Questions Answered Incorrectly</h3>{{noOfQuestionsAnsweredIncorrectly}}
+        </div>
+    </div>
 </ng-template>
 
 
