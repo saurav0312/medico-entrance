@@ -65,44 +65,57 @@
 </ng-template>
 
 <ng-template #detailedResultBlock>
-<h1 style="text-align: center;">Here is your detail performance report</h1>
-<div *ngFor="let test of testReportDataToSend.allTests">
-    <div style="text-align: center; margin-bottom: 3em;"><b>{{test.testId}}</b>&nbsp; {{test.testTakenDate}}</div> 
-    <table mat-table [dataSource] = "test.testQuestions" class="mat-elevation-z8"> 
-    <ng-container matColumnDef="question">
-        <th mat-header-cell *matHeaderCellDef> Question </th>
-        <td mat-cell *matCellDef="let element"> {{element.question}} </td>
-      </ng-container>
-    
-      <ng-container matColumnDef="selectedOption">
-        <th mat-header-cell *matHeaderCellDef> Selected Option </th>
-        <td mat-cell *matCellDef="let element"> {{element.selectedOption}} </td>
-      </ng-container>
-    
-      <ng-container matColumnDef="correctAnswer">
-        <th mat-header-cell *matHeaderCellDef> Correct Answer </th>
-        <td mat-cell *matCellDef="let element"> {{element.correctAnswer}} </td>
-      </ng-container>
 
-      <ng-container matColumnDef="result">
-        <th mat-header-cell *matHeaderCellDef> Result </th>
-        <td mat-cell *matCellDef="let element">
-            <div> 
-                <mat-icon *ngIf ='element.correctAnswer === element.selectedOption' style="color: green;">done</mat-icon>
-                <mat-icon *ngIf ='element.selectedOption!== null && element.correctAnswer !== element.selectedOption' style="color: red;">close</mat-icon>
-                <mat-icon *ngIf ='element.selectedOption === null' style="color: green;">question_mark</mat-icon> 
-            </div>
-        </td>
-      </ng-container>
-    
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
+    <app-detailtestreport
+        [displayedColumns] = displayedColumns 
+        [testToShowInTable] = testToShowInTable>
 
+    </app-detailtestreport>
+<!-- <h1 style="text-align: center;">Here is your detail performance report</h1>
+    <div style="text-align: center; margin-bottom: 3em;"><b>TestId: {{testToShowInTable.testId}}</b>&nbsp; Date: {{testToShowInTable.testTakenDate}}</div>
+    <div style="float: right; margin-right: 11.7em;">
+        <button mat-raised-button style="margin-left: 1em;" (click)="exporter.exportTable('xlsx', {fileName:'test', sheet: 'sheet_name', Props: {Author: 'OnlineExam'}})">Excel</button>
+        <button mat-raised-button style="margin-left: 1em;" (click)="exporter.exportTable('csv')">Csv</button>
+        <button mat-raised-button style="margin-left: 1em;" (click)="exporter.exportTable('json')">Json</button>
+        <button mat-raised-button style="margin-left: 1em;" (click)="exporter.exportTable('txt')">Txt</button>
+    </div> 
+    <div style="clear: both;"></div>
+    <div [ngClass]="'mat-elevation-z8'" class="table-contents">
+        <mat-table matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"> 
 
-    <!-- P-table usage -->
-    
-</div>
+            <ng-container matColumnDef="question">
+                <mat-header-cell  *matHeaderCellDef> Question </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.question}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="selectedOption">
+                <mat-header-cell *matHeaderCellDef> Selected Option </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.selectedOption}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="correctAnswer">
+                <mat-header-cell *matHeaderCellDef> Correct Answer </mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.correctAnswer}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="result">
+                <mat-header-cell [ngClass]="'quest-width'" *matHeaderCellDef> Result </mat-header-cell>
+                <mat-cell [ngClass]="'quest-width'" *matCellDef="let element">
+                    <div> 
+                        <mat-icon *ngIf ='element.correctAnswer === element.selectedOption' style="color: green;">done</mat-icon>
+                        <mat-icon *ngIf ='element.selectedOption!== null && element.correctAnswer !== element.selectedOption' style="color: red;">close</mat-icon>
+                        <mat-icon *ngIf ='element.selectedOption === null' style="color: green;">question_mark</mat-icon> 
+                    </div>
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+
+            
+        </mat-table>
+        <mat-paginator [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+    </div> -->
 </ng-template>
 
 

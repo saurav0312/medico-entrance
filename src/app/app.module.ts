@@ -28,10 +28,12 @@ import { environment } from '../environments/environment';
 import { ToastrModule } from 'ngx-toastr';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
-import {MatTableModule} from '@angular/material/table';
+import { MatTableModule } from '@angular/material/table';
 import { MatTableExporterModule } from 'mat-table-exporter';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
-import {TableModule} from 'primeng/table';
+import { TableModule } from 'primeng/table';
+import { NgxPrintModule } from 'ngx-print';
 
 import { PracticetestsComponent } from './practicetests/practicetests.component';
 import { NavigationbarComponent } from './navigationbar/navigationbar.component';
@@ -79,7 +81,9 @@ import { DetailtestreportComponent } from './detailtestreport/detailtestreport.c
     MatBadgeModule,
     MatTableModule,
     MatTableExporterModule,
+    MatPaginatorModule,
     TableModule,
+    NgxPrintModule,
     HttpClientModule,
     provideAuth(() => getAuth()),
     provideFirebaseApp(() => initializeApp(environment.firebase)),

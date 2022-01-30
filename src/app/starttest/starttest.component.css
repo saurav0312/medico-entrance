@@ -52,8 +52,13 @@
     clear: both;
 }
 
-table{
+.table-contents{
     width: 80%;
     margin-left: 10em;
     margin-top: 2em;
+    margin-bottom: 20em;
+}
+
+.quest-width{
+    max-width: 75px;
 }

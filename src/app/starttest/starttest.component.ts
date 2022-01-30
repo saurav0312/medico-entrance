@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { MockTest } from '../interface/mockTest';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../service/auth.service';
@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { TestReportData } from '../interface/testReportData';
 import { TestReportQuestion } from '../interface/testReportQuestion';
 import { Tests } from '../interface/tests';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-starttest',
@@ -17,11 +19,16 @@ export class StarttestComponent implements OnInit, OnDestroy {
   cols!: any[];
 
   @Input() testId!: string;
+
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+
+  dataSource!: MatTableDataSource<TestReportQuestion>;
   
   testData!: MockTest;
   testReportDataToSend!: TestReportData;
   isYourFirstTest : boolean = true;
   viewResult: boolean = false;
+  testToShowInTable! : Tests;
 
   counter = 0;
   totalTimeRemaining = 10;
@@ -48,6 +55,9 @@ export class StarttestComponent implements OnInit, OnDestroy {
       { field: 'selectedOption', header: 'Selected Option' },
       { field: 'correctAnswer', header: 'Correct Answer' }
   ];
+
+  this.dataSource = new MatTableDataSource();
+  // this.dataSource.paginator = this.paginator;
 
     this.route.queryParams.subscribe((params: any) =>{
       this.testId = <string>params.data
@@ -147,6 +157,8 @@ export class StarttestComponent implements OnInit, OnDestroy {
       "testTakenDate" : new Date()
     }
 
+    this.testToShowInTable = tests;
+
     let allTests : Array<any> = [];
     allTests.push(tests)
 
@@ -190,6 +202,9 @@ export class StarttestComponent implements OnInit, OnDestroy {
 
   viewDetailReport(){
     this.viewResult = true;
+    //this.dataSource = new MatTableDataSource<TestReportQuestion>(this.testToShowInTable.testQuestions)
+    this.dataSource.data = this.testToShowInTable.testQuestions;
+    this.dataSource.paginator = this.paginator;
     // this.testReportDataToSend.allTests.forEach(test =>{
     //   this.testQuestions = test.testQuestions
     // })
