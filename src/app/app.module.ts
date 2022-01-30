@@ -28,6 +28,11 @@ import { environment } from '../environments/environment';
 import { ToastrModule } from 'ngx-toastr';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
+import {MatTableModule} from '@angular/material/table';
+import { MatTableExporterModule } from 'mat-table-exporter';
+
+import {TableModule} from 'primeng/table';
+
 import { PracticetestsComponent } from './practicetests/practicetests.component';
 import { NavigationbarComponent } from './navigationbar/navigationbar.component';
 import { ContactComponent } from './contact/contact.component';
@@ -37,6 +42,7 @@ import { DashboardnavigationbarComponent } from './dashboardnavigationbar/dashbo
 import { SigninComponent } from './signin/signin.component';
 import { StarttestComponent } from './starttest/starttest.component';
 import { TestinstructionsComponent } from './testinstructions/testinstructions.component';
+import { DetailtestreportComponent } from './detailtestreport/detailtestreport.component';
 
 @NgModule({
   declarations: [
@@ -52,7 +58,8 @@ import { TestinstructionsComponent } from './testinstructions/testinstructions.c
     DashboardnavigationbarComponent,
     SigninComponent,
     StarttestComponent,
-    TestinstructionsComponent
+    TestinstructionsComponent,
+    DetailtestreportComponent
   ],
   imports: [
     BrowserModule,
@@ -70,6 +77,9 @@ import { TestinstructionsComponent } from './testinstructions/testinstructions.c
     MatTabsModule,
     MatDividerModule,
     MatBadgeModule,
+    MatTableModule,
+    MatTableExporterModule,
+    TableModule,
     HttpClientModule,
     provideAuth(() => getAuth()),
     provideFirebaseApp(() => initializeApp(environment.firebase)),

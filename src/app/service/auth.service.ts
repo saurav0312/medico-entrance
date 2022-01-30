@@ -13,7 +13,7 @@ import { HttpClient } from '@angular/common/http';
 import { from, Observable, switchMap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MockTest} from '../interface/mockTest';
-import { Firestore, addDoc, collectionData, collection, doc, docData, setDoc, updateDoc } from '@angular/fire/firestore';
+import { Firestore, addDoc, collectionData, collection, doc, docData, setDoc, updateDoc, arrayUnion } from '@angular/fire/firestore';
 import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
 import { uploadBytes } from 'firebase/storage';
 
@@ -82,13 +82,17 @@ export class AuthService {
     return docData(bookRef) as Observable<MockTest>;
   }
 
-  createAllMockTestsGivenByAUser(id: string | undefined, data: any){
+  createAllMockTestsGivenByAUser(id: string | undefined, data: any, isYourFirstTest: boolean){
     const docRef = doc(this.firestore, `UsersSample/${id}`);
-    //setDoc(docRef, data)
-    updateDoc(docRef, data )
+    if(isYourFirstTest){
+      setDoc(docRef, data, {merge: true})
+    }
+    else{
+      updateDoc(docRef, {allTests : arrayUnion(data.allTests[0])} )    
+    }
   }
 
-  getAllMockTestsGivenByAUser(id: string){
+  getAllMockTestsGivenByAUser(id: string | undefined) : Observable<any>{
     const bookRef = doc(this.firestore, `UsersSample/${id}`);
     return docData(bookRef) as Observable<any>;
   }

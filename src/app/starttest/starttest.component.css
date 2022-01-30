@@ -51,3 +51,9 @@
 .clear{
     clear: both;
 }
+
+table{
+    width: 80%;
+    margin-left: 10em;
+    margin-top: 2em;
+}

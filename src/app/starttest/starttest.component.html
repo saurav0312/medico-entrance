@@ -1,49 +1,51 @@
 
 <!-- Bootstrap test -->
-<ng-container *ngIf="!testFinished; else testFinsihedBlock">
-    <div>
-        <h1 style="text-align: center; margin-top: 1em;">
-            {{totalTimeRemaining}}
-            <mat-icon aria-label="home icom">
-                timer
-            </mat-icon>
-        </h1>
-        
-    </div>    
-    <div class="float-container" style="width: fit-content; float: left;">
-        <div class="float-child mat-card" style="width: auto;">
-            <div class="card" style="float: left; width: 50em; min-width: 20em; max-width: 50em ;">
-                <div class="card-body">
-                    <h1 class="card-title">{{counter + 1}}. {{testData.questions[counter]?.question}}</h1>
-                    <ol>
-                        <div>
-                            <li style ="height: 2.5em;" (click)="optionSelected(counter,option)" class="card options-item"
-                            [ngClass]="testData.questions[counter].selectedOption === option ? 'option-selected' : 'option-not-selected'"  *ngFor="let option of testData.questions[counter]?.options" style="cursor: pointer; margin: 10px 0;">{{option}}</li>
-                        </div>
-                    </ol>
+<ng-container *ngIf='!viewResult; else detailedResultBlock'>
+    <ng-container *ngIf="!testFinished; else testFinsihedBlock">
+        <div>
+            <h1 style="text-align: center; margin-top: 1em;">
+                {{totalTimeRemaining}}
+                <mat-icon aria-label="home icom">
+                    timer
+                </mat-icon>
+            </h1>
+            
+        </div>    
+        <div class="float-container" style="width: fit-content; float: left;">
+            <div class="float-child mat-card" style="width: auto;">
+                <div class="card" style="float: left; width: 50em; min-width: 20em; max-width: 50em ;">
+                    <div class="card-body">
+                        <h1 class="card-title">{{counter + 1}}. {{testData.questions[counter]?.question}}</h1>
+                        <ol>
+                            <div>
+                                <li style ="height: 2.5em;" (click)="optionSelected(counter,option)" class="card options-item"
+                                [ngClass]="testData.questions[counter].selectedOption === option ? 'option-selected' : 'option-not-selected'"  *ngFor="let option of testData.questions[counter]?.options" style="cursor: pointer; margin: 10px 0;">{{option}}</li>
+                            </div>
+                        </ol>
+                    </div>
+                </div>
+
+                <div>
+                    <button class="btn btn-primary" [disabled]="counter === 0"  (click)="decreaseCounter()" style="width:fit-content; float: lef; margin-top: 1em; ">Previous</button>
+                    <button class="btn btn-primary" [disabled]="counter === testData.questions.length-1" (click)="increaseCounter()" style="width:fit-content; float: right; margin-top: 1em;">Next</button>
                 </div>
             </div>
 
-            <div>
-                <button class="btn btn-primary" [disabled]="counter === 0"  (click)="decreaseCounter()" style="width:fit-content; float: lef; margin-top: 1em; ">Previous</button>
-                <button class="btn btn-primary" [disabled]="counter === testData.questions.length-1" (click)="increaseCounter()" style="width:fit-content; float: right; margin-top: 1em;">Next</button>
-            </div>
-        </div>
-
-        <div class="float-child mat-card" style="width: 25em; margin-left: 2em; float: right;" >
-            <div   *ngFor="let question of testData.questions; let i = index" [attr.data-index]="i">
-                <div style="float: left; column-width: 4em;">
-                    <button style ="width:3rem; height: auto;" (click)="changeQuestion(i)" [ngClass]="{'question-number-btn-class-focus' : counter === i, 'question-number-answered': testData.questions[i].answered === true}" class="btn question-number-btn-class">{{i+1}}</button>
+            <div class="float-child mat-card" style="width: 25em; margin-left: 2em; float: right;" >
+                <div   *ngFor="let question of testData.questions; let i = index" [attr.data-index]="i">
+                    <div style="float: left; column-width: 4em;">
+                        <button style ="width:3rem; height: auto;" (click)="changeQuestion(i)" [ngClass]="{'question-number-btn-class-focus' : counter === i, 'question-number-answered': testData.questions[i].answered === true}" class="btn question-number-btn-class">{{i+1}}</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="clear"></div>
+        <div class="clear"></div>
 
-    <div style="padding-left: 49em;">
-        <button (click)="submitTest()" class="btn btn-primary"> Submit</button>
-    </div>
+        <div style="padding-left: 49em;">
+            <button (click)="submitTest()" class="btn btn-primary"> Submit</button>
+        </div>
+    </ng-container>
 </ng-container>
 
 <ng-template  #testFinsihedBlock>
@@ -58,7 +60,49 @@
             <h3>Questions Answered Correctly: </h3> {{noOfQuestionsAnsweredCorrectly}}
             <h3>Questions Answered Incorrectly</h3>{{noOfQuestionsAnsweredIncorrectly}}
         </div>
+        <button class="btn btn-primary" (click)="viewDetailReport()">View Detail Result</button>
     </div>
+</ng-template>
+
+<ng-template #detailedResultBlock>
+<h1 style="text-align: center;">Here is your detail performance report</h1>
+<div *ngFor="let test of testReportDataToSend.allTests">
+    <div style="text-align: center; margin-bottom: 3em;"><b>{{test.testId}}</b>&nbsp; {{test.testTakenDate}}</div> 
+    <table mat-table [dataSource] = "test.testQuestions" class="mat-elevation-z8"> 
+    <ng-container matColumnDef="question">
+        <th mat-header-cell *matHeaderCellDef> Question </th>
+        <td mat-cell *matCellDef="let element"> {{element.question}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="selectedOption">
+        <th mat-header-cell *matHeaderCellDef> Selected Option </th>
+        <td mat-cell *matCellDef="let element"> {{element.selectedOption}} </td>
+      </ng-container>
+    
+      <ng-container matColumnDef="correctAnswer">
+        <th mat-header-cell *matHeaderCellDef> Correct Answer </th>
+        <td mat-cell *matCellDef="let element"> {{element.correctAnswer}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="result">
+        <th mat-header-cell *matHeaderCellDef> Result </th>
+        <td mat-cell *matCellDef="let element">
+            <div> 
+                <mat-icon *ngIf ='element.correctAnswer === element.selectedOption' style="color: green;">done</mat-icon>
+                <mat-icon *ngIf ='element.selectedOption!== null && element.correctAnswer !== element.selectedOption' style="color: red;">close</mat-icon>
+                <mat-icon *ngIf ='element.selectedOption === null' style="color: green;">question_mark</mat-icon> 
+            </div>
+        </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+
+    <!-- P-table usage -->
+    
+</div>
 </ng-template>
 
 

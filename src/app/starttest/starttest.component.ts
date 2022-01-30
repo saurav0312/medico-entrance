@@ -13,11 +13,15 @@ import { Tests } from '../interface/tests';
   styleUrls: ['./starttest.component.css']
 })
 export class StarttestComponent implements OnInit, OnDestroy {
+  displayedColumns: string[] = ['question', 'selectedOption', 'correctAnswer', 'result'];
+  cols!: any[];
 
   @Input() testId!: string;
   
   testData!: MockTest;
   testReportDataToSend!: TestReportData;
+  isYourFirstTest : boolean = true;
+  viewResult: boolean = false;
 
   counter = 0;
   totalTimeRemaining = 10;
@@ -38,6 +42,13 @@ export class StarttestComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+
+    this.cols = [
+      { field: 'question', header: 'Question' },
+      { field: 'selectedOption', header: 'Selected Option' },
+      { field: 'correctAnswer', header: 'Correct Answer' }
+  ];
+
     this.route.queryParams.subscribe((params: any) =>{
       this.testId = <string>params.data
       this.authService.getMockTestByID(this.testId).subscribe(response=>{
@@ -45,6 +56,13 @@ export class StarttestComponent implements OnInit, OnDestroy {
         this.authService.currentUser$.subscribe(response =>{
           this.userId = response?.uid
           this.realtimeDatabaseUrl = this.authService.realtimeDatabaseUrl;
+          this.authService.getAllMockTestsGivenByAUser(this.userId).subscribe(response =>{
+            if(response !== undefined){
+              this.isYourFirstTest = false;
+            }
+            //this.testReportDataToSend = response
+            //console.log("User MockTests Result" ,this.testReportDataToSend)
+          })
         })
          
         // this.intervalId = setInterval(() =>{
@@ -57,7 +75,6 @@ export class StarttestComponent implements OnInit, OnDestroy {
         //   }
         // },1000);
       })
-      console.log("Query data", this.testId)
     })
   }
 
@@ -109,7 +126,16 @@ export class StarttestComponent implements OnInit, OnDestroy {
       if(question.selectedOption!== undefined){
         let testReportQuestion:TestReportQuestion = {
           "question": question?.question,
-          "selectedOption": question?.selectedOption
+          "selectedOption": question?.selectedOption,
+          "correctAnswer": question?.correctAnswer
+        }
+        testQuestions.push(testReportQuestion)
+      }
+      else{
+        let testReportQuestion:TestReportQuestion = {
+          "question": question?.question,
+          "selectedOption": null,
+          "correctAnswer": question?.correctAnswer
         }
         testQuestions.push(testReportQuestion)
       }
@@ -117,7 +143,8 @@ export class StarttestComponent implements OnInit, OnDestroy {
 
     let tests: Tests = {
       "testId" : this.testId,
-      "testQuestions" : testQuestions
+      "testQuestions" : testQuestions,
+      "testTakenDate" : new Date()
     }
 
     let allTests : Array<any> = [];
@@ -126,13 +153,9 @@ export class StarttestComponent implements OnInit, OnDestroy {
     let testReportDataToSend : TestReportData ={
       "allTests": allTests
     }
+    this.testReportDataToSend = testReportDataToSend
 
-    this.authService.createAllMockTestsGivenByAUser(this.userId, testReportDataToSend);
-
-    // this.authService.getAllMockTestsGivenByAUser("userid1").subscribe(response =>{
-    //   this.testReportDataToSend = response
-    //   console.log(this.testReportDataToSend)
-    // })
+    this.authService.createAllMockTestsGivenByAUser(this.userId, testReportDataToSend, this.isYourFirstTest);
   }
 
   ngOnDestroy(){
@@ -164,4 +187,16 @@ export class StarttestComponent implements OnInit, OnDestroy {
     console.log(this.testData.questions[this.counter]);
     console.log(this.testData.questions)
   }
+
+  viewDetailReport(){
+    this.viewResult = true;
+    // this.testReportDataToSend.allTests.forEach(test =>{
+    //   this.testQuestions = test.testQuestions
+    // })
+    // this.authService.getAllMockTestsGivenByAUser(this.userId).subscribe(response =>{
+    //   this.testReportDataToSend = response
+    //   console.log("User MockTests Result" ,this.testReportDataToSend)
+    // })
+  }
+
 }
