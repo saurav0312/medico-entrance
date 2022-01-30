@@ -18,13 +18,23 @@ import {MatBadgeModule} from '@angular/material/badge';
 import { HomeComponent } from './home/home.component';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 import { HttpClientModule } from '@angular/common/http';
+
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { initializeApp,provideFirebaseApp, getApp } from '@angular/fire/app';
+import { provideStorage, getStorage } from '@angular/fire/storage'
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+
 import { environment } from '../environments/environment';
 import { ToastrModule } from 'ngx-toastr';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { MatTableModule } from '@angular/material/table';
+import { MatTableExporterModule } from 'mat-table-exporter';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
+import { TableModule } from 'primeng/table';
+import { NgxPrintModule } from 'ngx-print';
+
 import { PracticetestsComponent } from './practicetests/practicetests.component';
 import { NavigationbarComponent } from './navigationbar/navigationbar.component';
 import { ContactComponent } from './contact/contact.component';
@@ -33,6 +43,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardnavigationbarComponent } from './dashboardnavigationbar/dashboardnavigationbar.component';
 import { SigninComponent } from './signin/signin.component';
 import { StarttestComponent } from './starttest/starttest.component';
+import { TestinstructionsComponent } from './testinstructions/testinstructions.component';
+import { DetailtestreportComponent } from './detailtestreport/detailtestreport.component';
 
 @NgModule({
   declarations: [
@@ -47,7 +59,9 @@ import { StarttestComponent } from './starttest/starttest.component';
     DashboardComponent,
     DashboardnavigationbarComponent,
     SigninComponent,
-    StarttestComponent
+    StarttestComponent,
+    TestinstructionsComponent,
+    DetailtestreportComponent
   ],
   imports: [
     BrowserModule,
@@ -65,10 +79,16 @@ import { StarttestComponent } from './starttest/starttest.component';
     MatTabsModule,
     MatDividerModule,
     MatBadgeModule,
+    MatTableModule,
+    MatTableExporterModule,
+    MatPaginatorModule,
+    TableModule,
+    NgxPrintModule,
     HttpClientModule,
     provideAuth(() => getAuth()),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
+    provideStorage(() => getStorage()),
     ToastrModule.forRoot({
       timeOut: 2000
     })
