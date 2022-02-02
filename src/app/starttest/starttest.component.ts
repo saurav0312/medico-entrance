@@ -8,6 +8,7 @@ import { TestReportQuestion } from '../interface/testReportQuestion';
 import { Tests } from '../interface/tests';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { SharedService } from '../service/shared.service';
 
 @Component({
   selector: 'app-starttest',
@@ -45,7 +46,8 @@ export class StarttestComponent implements OnInit, OnDestroy {
     private router : Router,
     private route: ActivatedRoute,
     private authService: AuthService,
-    private httpClient : HttpClient
+    private httpClient : HttpClient,
+    private sharedService: SharedService
   ) { }
 
   ngOnInit(): void {
@@ -203,8 +205,11 @@ export class StarttestComponent implements OnInit, OnDestroy {
   viewDetailReport(){
     this.viewResult = true;
     //this.dataSource = new MatTableDataSource<TestReportQuestion>(this.testToShowInTable.testQuestions)
-    this.dataSource.data = this.testToShowInTable.testQuestions;
-    this.dataSource.paginator = this.paginator;
+    this.sharedService.displayedColumns = this.displayedColumns
+    this.sharedService.testData = this.testToShowInTable
+    this.router.navigate(['/studentProfile/detailTestReport'])
+    // this.dataSource.data = this.testToShowInTable.testQuestions;
+    // this.dataSource.paginator = this.paginator;
     // this.testReportDataToSend.allTests.forEach(test =>{
     //   this.testQuestions = test.testQuestions
     // })
@@ -212,6 +217,10 @@ export class StarttestComponent implements OnInit, OnDestroy {
     //   this.testReportDataToSend = response
     //   console.log("User MockTests Result" ,this.testReportDataToSend)
     // })
+  }
+
+  viewProfile(){
+    this.router.navigate(['/studentProfile/viewMyTests'])
   }
 
 }

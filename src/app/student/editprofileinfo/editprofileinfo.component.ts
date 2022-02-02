@@ -21,9 +21,6 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
   country!: string | undefined;
   imageUrl!: string | undefined;
 
-  userSubscription$!: Subscription;
-  userDetailSubscription$!: Subscription;
-
   constructor(
     private profileService: ProfileService,
     private authService: AuthService,
@@ -44,8 +41,8 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
       }
     );
 
-    this.userSubscription$ = this.authService.currentUser$.subscribe(response =>{
-      this.userDetailSubscription$ = this.profileService.getUserDetails(response?.uid).subscribe(response=>{
+        this.authService.currentUser$.subscribe(response =>{
+        this.profileService.getUserDetails(response?.uid).subscribe(response=>{
         console.log("After signout")
         if(response!== undefined){
           this.profileForm.setValue(response)
@@ -60,8 +57,7 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-      this.userSubscription$.unsubscribe();
-      this.userDetailSubscription$.unsubscribe();
+      
   }
 
   clearForm(){

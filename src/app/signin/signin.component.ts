@@ -10,7 +10,7 @@ import { map } from 'rxjs'
 @Component({
   selector: 'app-signin',
   templateUrl: './signin.component.html',
-  styleUrls: ['./signin.component.css']
+  styleUrls: ['./signin.component.scss']
 })
 export class SigninComponent implements OnInit {
 
@@ -37,18 +37,20 @@ export class SigninComponent implements OnInit {
   }
 
   login(): void{
-    this.authService.loginUser(this.loginForm).subscribe(
-      () =>{
-        this.authService.currentUser$.subscribe((response) => {
-          console.log("Current user: ", response)
-          this.toastrService.success("User Logged In")
-        })
-        this.router.navigate(["../","dashboard"], {relativeTo:this.activatedRoute})
-      },
-      error =>{
-        window.alert(error.message)
-      }
-    )
+    if(this.loginForm.valid){
+      this.authService.loginUser(this.loginForm).subscribe(
+        () =>{
+          this.authService.currentUser$.subscribe((response) => {
+            console.log("Current user: ", response)
+            this.toastrService.success("User Logged In")
+          })
+          this.router.navigate(["../","dashboard"], {relativeTo:this.activatedRoute})
+        },
+        error =>{
+          window.alert(error.message)
+        }
+      )
+    }
   }
 
   forgetPassword() : void{

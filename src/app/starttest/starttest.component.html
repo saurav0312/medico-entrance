@@ -1,6 +1,6 @@
 
 <!-- Bootstrap test -->
-<ng-container *ngIf='!viewResult; else detailedResultBlock'>
+<!-- <ng-container *ngIf='!viewResult; else detailedResultBlock'> -->
     <ng-container *ngIf="!testFinished; else testFinsihedBlock">
         <div>
             <h1 style="text-align: center; margin-top: 1em;">
@@ -46,7 +46,7 @@
             <button (click)="submitTest()" class="btn btn-primary"> Submit</button>
         </div>
     </ng-container>
-</ng-container>
+<!-- </ng-container> -->
 
 <ng-template  #testFinsihedBlock>
     <div style="text-align: center;">
@@ -60,18 +60,20 @@
             <h3>Questions Answered Correctly: </h3> {{noOfQuestionsAnsweredCorrectly}}
             <h3>Questions Answered Incorrectly</h3>{{noOfQuestionsAnsweredIncorrectly}}
         </div>
-        <button class="btn btn-primary" (click)="viewDetailReport()">View Detail Result</button>
+        <!-- <button class="btn btn-primary" (click)="viewDetailReport()">View Detail Result</button> -->
+        <p>Visit your profile to see detail result</p>
+        <button class="btn btn-primary" (click)="viewProfile()">View Profile</button>
     </div>
 </ng-template>
 
-<ng-template #detailedResultBlock>
+<!-- <ng-template #detailedResultBlock>
 
     <app-detailtestreport
         [displayedColumns] = displayedColumns 
         [testToShowInTable] = testToShowInTable>
 
     </app-detailtestreport>
-</ng-template>
+</ng-template> -->
 
 
 
