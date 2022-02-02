@@ -16,6 +16,7 @@ import { MockTest} from '../interface/mockTest';
 import { Firestore, addDoc, collectionData, collection, doc, docData, setDoc, updateDoc, arrayUnion } from '@angular/fire/firestore';
 import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
 import { uploadBytes } from 'firebase/storage';
+import { TestReportData } from '../interface/testReportData';
 
 @Injectable({
   providedIn: 'root'
@@ -92,8 +93,8 @@ export class AuthService {
     }
   }
 
-  getAllMockTestsGivenByAUser(id: string | undefined) : Observable<any>{
+  getAllMockTestsGivenByAUser(id: string | undefined) : Observable<TestReportData>{
     const bookRef = doc(this.firestore, `UsersSample/${id}`);
-    return docData(bookRef) as Observable<any>;
+    return docData(bookRef) as Observable<TestReportData>;
   }
 }

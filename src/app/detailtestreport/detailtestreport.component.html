@@ -12,10 +12,10 @@
     <div style="clear: both;"></div>
     <div [ngClass]="'mat-elevation-z8'" class="table-contents" id="content" #content>
         <mat-table [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"> 
-            <!-- <ng-container matColumnDef="no">
-                <th mat-header-cell *matHeaderCellDef> No </th>
+            <ng-container matColumnDef="no">
+                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> No </mat-header-cell>
                 <mat-cell *matCellDef="let element; let i = index;"> {{paginator.pageIndex * paginator.pageSize + i + 1}} </mat-cell>
-            </ng-container> -->
+            </ng-container>
 
             <ng-container matColumnDef="question">
                 <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Question </mat-header-cell>

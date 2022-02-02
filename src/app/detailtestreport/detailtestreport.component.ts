@@ -4,6 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { TestReportQuestion } from '../interface/testReportQuestion';
 import { Tests } from '../interface/tests';
 import { jsPDF } from "jspdf"; 
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-detailtestreport',
@@ -20,7 +21,9 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator! : MatPaginator;
   @ViewChild('content') content!: ElementRef;
 
-  constructor() { }
+  constructor(
+    private activatedRoute: ActivatedRoute
+  ) { }
 
   ngOnInit(): void {
     
