@@ -12,6 +12,8 @@ import { PracticetestsComponent } from './practicetests/practicetests.component'
 import { SigninComponent } from './signin/signin.component';
 import { StarttestComponent } from './starttest/starttest.component';
 import { TestinstructionsComponent } from './testinstructions/testinstructions.component';
+import { StudentprofileComponent } from './studentprofile/studentprofile.component';
+import { DetailtestreportComponent } from './detailtestreport/detailtestreport.component';
 
 const routes: Routes = [
   {path: '', component: MainpageComponent},
@@ -26,6 +28,8 @@ const routes: Routes = [
   {path: 'freeMockTests', component: PracticetestsComponent},
   {path: 'testInstructions', component:TestinstructionsComponent},
   {path: 'startTest', component:StarttestComponent},
+  {path: 'studentProfile', component: StudentprofileComponent},
+  {path: 'detailTestReport', component: DetailtestreportComponent}
 
 ];
 

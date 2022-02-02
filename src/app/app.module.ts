@@ -45,6 +45,7 @@ import { SigninComponent } from './signin/signin.component';
 import { StarttestComponent } from './starttest/starttest.component';
 import { TestinstructionsComponent } from './testinstructions/testinstructions.component';
 import { DetailtestreportComponent } from './detailtestreport/detailtestreport.component';
+import { StudentprofileComponent } from './studentprofile/studentprofile.component';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { DetailtestreportComponent } from './detailtestreport/detailtestreport.c
     SigninComponent,
     StarttestComponent,
     TestinstructionsComponent,
-    DetailtestreportComponent
+    DetailtestreportComponent,
+    StudentprofileComponent
   ],
   imports: [
     BrowserModule,

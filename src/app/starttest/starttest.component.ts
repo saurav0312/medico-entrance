@@ -15,7 +15,7 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrls: ['./starttest.component.css']
 })
 export class StarttestComponent implements OnInit, OnDestroy {
-  displayedColumns: string[] = ['question', 'selectedOption', 'correctAnswer', 'result'];
+  displayedColumns: string[] = ['no', 'question', 'selectedOption', 'correctAnswer', 'result'];
   cols!: any[];
 
   @Input() testId!: string;
