@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, AfterViewInit, Input, ElementRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { TestReportQuestion } from '../interface/testReportQuestion';
-import { Tests } from '../interface/tests';
-import { jsPDF } from "jspdf"; 
+import { TestReportQuestion } from '../../interface/testReportQuestion';
+import { Tests } from '../../interface/tests'; 
 import { ActivatedRoute } from '@angular/router';
+import { SharedService } from 'src/app/service/shared.service';
 
 @Component({
   selector: 'app-detailtestreport',
@@ -22,11 +22,13 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   @ViewChild('content') content!: ElementRef;
 
   constructor(
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private sharedService: SharedService,
   ) { }
 
   ngOnInit(): void {
-    
+    this.displayedColumns = this.sharedService.displayedColumns
+    this.testToShowInTable = this.sharedService.testData
   }
 
   ngAfterViewInit(): void {

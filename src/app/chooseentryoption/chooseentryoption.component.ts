@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../service/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
-import { map } from 'rxjs'
+import { map, Subscription } from 'rxjs'
+import { User } from '../interface/user';
+import { ProfileService } from '../service/profile.service'
 
 const realtimeDatabaseUrl = environment.firebase.realtimeDatabaseUrl
 
@@ -14,12 +16,14 @@ const realtimeDatabaseUrl = environment.firebase.realtimeDatabaseUrl
   templateUrl: './chooseentryoption.component.html',
   styleUrls: ['./chooseentryoption.component.css']
 })
-export class ChooseEntryOptionComponent implements OnInit {
+export class ChooseEntryOptionComponent implements OnInit, OnDestroy {
 
   @Input() selectedIndex = 0;
 
   isTeacher: boolean = false;
   isStudent: boolean = false;
+
+  userDetail!: User
 
   loginForm!: FormGroup;
   signUpForm!: FormGroup;
@@ -27,13 +31,20 @@ export class ChooseEntryOptionComponent implements OnInit {
   loginHide: boolean = true;
   signupHide: boolean = true;
 
+  loginUserSubscription$!: Subscription;
+  currentUserSubscription$!: Subscription;
+  signUpUserSubscription$!: Subscription;
+  profileDetailSubscription$!: Subscription;
+  verificationEmailSubscription$!: Subscription
+
   constructor(
     private router : Router, 
     private httpClient : HttpClient,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private toastrService: ToastrService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private profileService: ProfileService
     ) { }
 
   ngOnInit(): void {
@@ -57,10 +68,14 @@ export class ChooseEntryOptionComponent implements OnInit {
 
   }
 
+  ngOnDestroy(): void {
+    this.loginUserSubscription$.unsubscribe()
+  }
+
   login(): void{
-    this.authService.loginUser(this.loginForm).subscribe(
+    this.loginUserSubscription$ = this.authService.loginUser(this.loginForm).subscribe(
       () =>{
-        this.authService.currentUser$.subscribe((response) => {
+        this.currentUserSubscription$ = this.authService.currentUser$.subscribe((response) => {
           console.log("Current user: ", response)
           this.toastrService.success("User Logged In")
         })
@@ -75,12 +90,28 @@ export class ChooseEntryOptionComponent implements OnInit {
   signUp(): void{
     this.tempSignUpForm = this.signUpForm
     delete this.tempSignUpForm.value['password']
-    this.authService.signUpUser(this.signUpForm).subscribe(
+    this.signUpUserSubscription$ = this.authService.signUpUser(this.signUpForm).subscribe(
       () =>{
-        this.httpClient.post(realtimeDatabaseUrl +"users.json", this.tempSignUpForm.value).subscribe(res =>{
-        });
-        this.authService.currentUser$.subscribe(response => {
-          this.authService.sendVerificationEmail(response).subscribe(() =>{
+        this.currentUserSubscription$ = this.authService.currentUser$.subscribe(response => {
+          const tempUserDetail: User = {
+            'firstName': this.signUpForm.get('firstName')?.value,
+            'lastName': this.signUpForm.get('lastName')?.value,
+            'email': this.signUpForm.get('email')?.value,
+            'phoneNumber': 0,
+            'address': '',
+            'education': '',
+            'country': '',
+            'state': '',
+            'imageUrl': 'assets/img/person/person.png'
+          }
+
+          this.userDetail = tempUserDetail
+
+          this.profileDetailSubscription$ = this.profileService.updateUserDetails(response?.uid, this.userDetail).subscribe(response =>{
+            console.log("User Details updated");
+          })
+
+          this.verificationEmailSubscription$ = this.authService.sendVerificationEmail(response).subscribe(() =>{
             this.toastrService.success("Verification mail has been sent", "User Registered")
             this.router.navigate(["../","home"], {relativeTo:this.activatedRoute})
           })
