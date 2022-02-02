@@ -84,7 +84,7 @@ export class AuthService {
   }
 
   createAllMockTestsGivenByAUser(id: string | undefined, data: any, isYourFirstTest: boolean){
-    const docRef = doc(this.firestore, `UsersSample/${id}`);
+    const docRef = doc(this.firestore, `IndividualUserTests/${id}`);
     if(isYourFirstTest){
       setDoc(docRef, data, {merge: true})
     }
@@ -94,7 +94,7 @@ export class AuthService {
   }
 
   getAllMockTestsGivenByAUser(id: string | undefined) : Observable<TestReportData>{
-    const bookRef = doc(this.firestore, `UsersSample/${id}`);
+    const bookRef = doc(this.firestore, `IndividualUserTests/${id}`);
     return docData(bookRef) as Observable<TestReportData>;
   }
 }

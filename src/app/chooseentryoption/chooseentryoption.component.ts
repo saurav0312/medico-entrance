@@ -31,12 +31,6 @@ export class ChooseEntryOptionComponent implements OnInit, OnDestroy {
   loginHide: boolean = true;
   signupHide: boolean = true;
 
-  loginUserSubscription$!: Subscription;
-  currentUserSubscription$!: Subscription;
-  signUpUserSubscription$!: Subscription;
-  profileDetailSubscription$!: Subscription;
-  verificationEmailSubscription$!: Subscription
-
   constructor(
     private router : Router, 
     private httpClient : HttpClient,
@@ -69,13 +63,13 @@ export class ChooseEntryOptionComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.loginUserSubscription$.unsubscribe()
+    
   }
 
   login(): void{
-    this.loginUserSubscription$ = this.authService.loginUser(this.loginForm).subscribe(
+    this.authService.loginUser(this.loginForm).subscribe(
       () =>{
-        this.currentUserSubscription$ = this.authService.currentUser$.subscribe((response) => {
+        this.authService.currentUser$.subscribe((response) => {
           console.log("Current user: ", response)
           this.toastrService.success("User Logged In")
         })
@@ -90,9 +84,9 @@ export class ChooseEntryOptionComponent implements OnInit, OnDestroy {
   signUp(): void{
     this.tempSignUpForm = this.signUpForm
     delete this.tempSignUpForm.value['password']
-    this.signUpUserSubscription$ = this.authService.signUpUser(this.signUpForm).subscribe(
+    this.authService.signUpUser(this.signUpForm).subscribe(
       () =>{
-        this.currentUserSubscription$ = this.authService.currentUser$.subscribe(response => {
+        this.authService.currentUser$.subscribe(response => {
           const tempUserDetail: User = {
             'firstName': this.signUpForm.get('firstName')?.value,
             'lastName': this.signUpForm.get('lastName')?.value,
@@ -107,11 +101,11 @@ export class ChooseEntryOptionComponent implements OnInit, OnDestroy {
 
           this.userDetail = tempUserDetail
 
-          this.profileDetailSubscription$ = this.profileService.updateUserDetails(response?.uid, this.userDetail).subscribe(response =>{
+          this.profileService.updateUserDetails(response?.uid, this.userDetail).subscribe(response =>{
             console.log("User Details updated");
           })
 
-          this.verificationEmailSubscription$ = this.authService.sendVerificationEmail(response).subscribe(() =>{
+          this.authService.sendVerificationEmail(response).subscribe(() =>{
             this.toastrService.success("Verification mail has been sent", "User Registered")
             this.router.navigate(["../","home"], {relativeTo:this.activatedRoute})
           })
