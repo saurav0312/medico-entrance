@@ -6,17 +6,9 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ChooseEntryOptionComponent } from './chooseentryoption/chooseentryoption.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatToolbarModule } from '@angular/material/toolbar';
+
 import { ReactiveFormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
-import { MatTabsModule } from '@angular/material/tabs';
-import {MatBadgeModule} from '@angular/material/badge';
-import { HomeComponent } from './home/home.component';
-import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
+
 import { HttpClientModule } from '@angular/common/http';
 
 import { provideAuth,getAuth } from '@angular/fire/auth';
@@ -26,11 +18,20 @@ import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 import { environment } from '../environments/environment';
 import { ToastrModule } from 'ngx-toastr';
+
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTableModule } from '@angular/material/table';
 import { MatTableExporterModule } from 'mat-table-exporter';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatBadgeModule } from '@angular/material/badge';
 
 import { TableModule } from 'primeng/table';
 import { NgxPrintModule } from 'ngx-print';
@@ -44,8 +45,9 @@ import { DashboardnavigationbarComponent } from './dashboardnavigationbar/dashbo
 import { SigninComponent } from './signin/signin.component';
 import { StarttestComponent } from './starttest/starttest.component';
 import { TestinstructionsComponent } from './testinstructions/testinstructions.component';
-import { DetailtestreportComponent } from './detailtestreport/detailtestreport.component';
-import { StudentprofileComponent } from './studentprofile/studentprofile.component';
+import { StudentModule } from './student/student.module';
+import { HomeComponent } from './home/home.component';
+import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 
 @NgModule({
   declarations: [
@@ -61,9 +63,7 @@ import { StudentprofileComponent } from './studentprofile/studentprofile.compone
     DashboardnavigationbarComponent,
     SigninComponent,
     StarttestComponent,
-    TestinstructionsComponent,
-    DetailtestreportComponent,
-    StudentprofileComponent
+    TestinstructionsComponent
   ],
   imports: [
     BrowserModule,
@@ -93,7 +93,8 @@ import { StudentprofileComponent } from './studentprofile/studentprofile.compone
     provideStorage(() => getStorage()),
     ToastrModule.forRoot({
       timeOut: 2000
-    })
+    }),
+    StudentModule
   ],
   providers: [],
   bootstrap: [AppComponent]

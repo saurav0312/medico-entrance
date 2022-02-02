@@ -50,11 +50,11 @@ export class HomeComponent implements OnInit, AfterViewInit {
       // })
     //})
     //this.items =  this.firedatabase.list('users').valueChanges();
-    const collectionList = collection(this.firestore, 'users');
-      collectionData(collectionList).subscribe((response: any) =>{
-        this.users = response
-        console.log("Collection: ", response)
-    })
+    // const collectionList = collection(this.firestore, 'users');
+    //   collectionData(collectionList).subscribe((response: any) =>{
+    //     this.users = response
+    //     console.log("Collection: ", response)
+    // })
 
   }
 
