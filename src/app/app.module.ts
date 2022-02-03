@@ -13,7 +13,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { provideAuth,getAuth } from '@angular/fire/auth';
 import { initializeApp,provideFirebaseApp, getApp } from '@angular/fire/app';
-import { provideStorage, getStorage } from '@angular/fire/storage'
+import { getStorage, provideStorage } from '@angular/fire/storage'
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 import { environment } from '../environments/environment';
