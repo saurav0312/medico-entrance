@@ -2,11 +2,11 @@
     <div class="container">
       <a routerLink="#" class="navbar-brand">Entrance<span class="text-primary">.com</span></a>
 
-      <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+      <button class="navbar-toggler" (click)="toggleNavBar()" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="navbar-collapse collapse" id="navbarContent">
+      <div class="navbar-collapse collapse" id="navbarContent" [ngClass]="{'show': navOpen}">
         
           <ul class="navbar-nav mr-auto">
           <li class="nav-item active">

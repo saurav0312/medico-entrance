@@ -14,6 +14,8 @@ import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { SigninComponent } from './signin/signin.component';
 import { ChoosesignupoptionComponent } from './choosesignupoption/choosesignupoption.component';
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
+import { StudentModule } from '../student/student.module';
+import { HomepageModule } from '../homepage/homepage.module';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.compone
     MatInputModule,
     MatCardModule,
     MatButtonModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    StudentModule,
+    HomepageModule
   ]
 })
 export class AuthenticationModule { }

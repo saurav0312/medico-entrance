@@ -21,6 +21,9 @@ import { ContactComponent } from './contact/contact.component';
     CommonModule,
     HomepageRoutingModule,
     MatCardModule
+  ],
+  exports:[
+    HomenavigationbarComponent
   ]
 })
 export class HomepageModule { }
