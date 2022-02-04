@@ -2,21 +2,19 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../service/auth.service';
+import { AuthService } from '../../service/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { map, Subscription } from 'rxjs'
-import { User } from '../interface/user';
-import { ProfileService } from '../service/profile.service'
-
-const realtimeDatabaseUrl = environment.firebase.realtimeDatabaseUrl
+import { User } from '../../interface/user';
+import { ProfileService } from '../../service/profile.service'
 
 @Component({
-  selector: 'app-chooseentryoption',
-  templateUrl: './chooseentryoption.component.html',
-  styleUrls: ['./chooseentryoption.component.css']
+  selector: 'app-choosesignupoption',
+  templateUrl: './choosesignupoption.component.html',
+  styleUrls: ['./choosesignupoption.component.scss']
 })
-export class ChooseEntryOptionComponent implements OnInit, OnDestroy {
+export class ChoosesignupoptionComponent implements OnInit {
 
   @Input() selectedIndex = 0;
 
@@ -107,7 +105,7 @@ export class ChooseEntryOptionComponent implements OnInit, OnDestroy {
 
           this.authService.sendVerificationEmail(response).subscribe(() =>{
             this.toastrService.success("Verification mail has been sent", "User Registered")
-            this.router.navigate(["../","home"], {relativeTo:this.activatedRoute})
+            this.router.navigateByUrl("/home")
           })
         })
       },
@@ -149,4 +147,5 @@ export class ChooseEntryOptionComponent implements OnInit, OnDestroy {
   signIn(): void{
     this.router.navigate(["../","signin"], {relativeTo:this.activatedRoute})
   }
+
 }

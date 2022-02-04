@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MainpageComponent } from './mainpage.component';
+import { HomenavigationbarComponent } from './homenavigationbar.component';
 
-describe('MainpageComponent', () => {
-  let component: MainpageComponent;
-  let fixture: ComponentFixture<MainpageComponent>;
+describe('HomenavigationbarComponent', () => {
+  let component: HomenavigationbarComponent;
+  let fixture: ComponentFixture<HomenavigationbarComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MainpageComponent ]
+      declarations: [ HomenavigationbarComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(MainpageComponent);
+    fixture = TestBed.createComponent(HomenavigationbarComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,0 +1,127 @@
+
+<div class="login-container">
+    <div class="bb-login">
+        <div style="text-align: center;" *ngIf= '!isTeacher && !isStudent'>
+            <button style='margin-right:16px' mat-raised-button color="primary" type="button" (click) = "setObject(1)">Teacher</button>
+            <button style='margin-right:16px' mat-raised-button color="primary" type="button" (click) = "setObject(2)">Student</button>
+        </div>
+            <!-- Sign up for teacher -->
+        <form *ngIf=isTeacher (ngSubmit)="signUp()" name="signUpForm" [formGroup]="signUpForm">
+            <span class="bb-form-title p-b-26"> Sign Up </span> <span class="bb-form-title p-b-48"> 
+                <i class="mdi mdi-symfony"></i> </span>
+            <div>    
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Firstname</mat-label>
+                    <input formControlName="firstName" type="text" required matInput>
+                    <mat-error *ngIf="signUpForm.dirty && signUpForm.get('firstName')?.value.length==0">
+                        Firstname is required
+                    </mat-error>
+                </mat-form-field>
+            </div>  
+            <div>  
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Lastname</mat-label>
+                    <input formControlName="lastName" type="text" required matInput>
+                    <mat-error *ngIf="signUpForm.dirty && signUpForm.get('lastName')?.value.length==0">
+                        Lastname is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Email</mat-label>
+                    <input formControlName="email" type="email" required matInput>
+                    <mat-error *ngIf="signUpForm.dirty && signUpForm.get('email')?.value.length==0">
+                        Email is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Password</mat-label>
+                    <input formControlName="password" [type]="signupHide ? 'password' : 'text'" required matInput>
+                    <button *ngIf="signUpForm.get('password')?.value.length > 0" mat-icon-button matSuffix type="button" (click)="signupHide = !signupHide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="signupHide">
+                        <mat-icon>{{signupHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="signUpForm.dirty && signUpForm.get('password')?.value.length==0">
+                        Password is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-label>Teacher's Code</mat-label>
+                    <input formControlName="teacherCode" type="text" matInput>
+                </mat-form-field>
+            </div>
+            <a class="forgetPassword" (click)="sendTeacherCode()">Send me code</a>
+            <p>Not a teacher?<a class="forgetPassword" (click) = "isStudent=true; isTeacher=false"> Click here for student</a></p>
+            <div style="text-align: center;" class="login-container-form-btn">
+                <button mat-raised-button type="button" (click) = "clearForm()" class="cancel-class">Cancel</button>
+                <button mat-raised-button color="primary" type="submit" [disabled]="signUpForm.invalid">Submit</button>
+            </div>
+        </form>
+            
+        <!-- Sign up for student -->
+        <form *ngIf=isStudent (ngSubmit)="signUp()" name="signUpForm" [formGroup]="signUpForm" fxLayoutAlign ="stretch" fxLayout="column">
+            <span class="bb-form-title p-b-26"> Sign Up </span> <span class="bb-form-title p-b-48"> 
+                <i class="mdi mdi-symfony"></i> </span>
+                <div>  
+            <mat-form-field style="width: 100%;" appearance="outline">
+                <mat-label>Firstname</mat-label>
+                <input formControlName="firstName" type="text" required matInput>
+                <mat-error *ngIf="signUpForm.dirty && signUpForm.get('firstName')?.value.length==0">
+                    Firstname is required
+                </mat-error>
+            </mat-form-field>
+            </div>
+            <div>  
+            <mat-form-field style="width: 100%;" appearance="outline">
+                <mat-label>Lastname</mat-label>
+                <input formControlName="lastName" type="text" required matInput>
+                <mat-error *ngIf="signUpForm.dirty && signUpForm.get('lastName')?.value.length==0">
+                    Lastname is required
+                </mat-error>
+            </mat-form-field>
+            </div>
+            <div>  
+            <mat-form-field style="width: 100%;" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input formControlName="email" type="email" required matInput>
+                <mat-error *ngIf="signUpForm.dirty && signUpForm.get('email')?.value.length==0">
+                    Email is required
+                </mat-error>
+            </mat-form-field>
+            </div>
+            <div>  
+            <mat-form-field style="width: 100%;" appearance="outline">
+                <mat-label>Password</mat-label>
+                <input formControlName="password" [type]="signupHide ? 'password' : 'text'" required matInput placeholder="Password">
+                <button *ngIf="signUpForm.get('password')?.value.length > 0" mat-icon-button matSuffix type="button" (click)="signupHide = !signupHide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="signupHide">
+                    <mat-icon>{{signupHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error *ngIf="signUpForm.dirty && signUpForm.get('password')?.value.length==0">
+                    Password is required
+                </mat-error>
+            </mat-form-field >
+            </div>
+            <p>Not a student?<a class="forgetPassword" (click) = "isTeacher=true; isStudent=false"> Click here for teacher</a></p>
+            <div style="text-align: center;" >
+                <button mat-raised-button type="button" (click) = "clearForm()" class="cancel-class">Cancel</button>
+                <button mat-raised-button color="primary" type="submit" [disabled]="signUpForm.invalid">Submit</button>
+            </div>
+        </form>
+        <div>
+            <div class="text-center p-t-115"> 
+                <span class="txt1"> Already have an account? </span> 
+                <a class="txt2" routerLink="/signin"> Sign in </a> 
+            </div>     
+        </div>
+    </div>
+</div>
+    
+    
+    
+    
+    

@@ -2,10 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../service/auth.service';
+import { AuthService } from '../../service/auth.service';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from 'src/environments/environment';
-import { map } from 'rxjs'
 
 @Component({
   selector: 'app-signin',
@@ -44,7 +42,7 @@ export class SigninComponent implements OnInit {
             console.log("Current user: ", response)
             this.toastrService.success("User Logged In")
           })
-          this.router.navigate(["../","dashboard"], {relativeTo:this.activatedRoute})
+          this.router.navigateByUrl("/dashboard")
         },
         error =>{
           window.alert(error.message)
@@ -53,14 +51,11 @@ export class SigninComponent implements OnInit {
     }
   }
 
-  forgetPassword() : void{
-    this.router.navigateByUrl('/forgetPassword')
-  }
-
 
   clearForm() : void{
     this.loginForm.reset();
     this.ngOnInit();
   }
+
 
 }
