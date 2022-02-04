@@ -33,6 +33,7 @@
     "ngx-bootstrap": "^8.0.0",
     "ngx-print": "^1.2.1",
     "ngx-toastr": "^14.2.1",
+    "popper.js": "^1.16.1",
     "primeng": "^13.1.0",
     "raw-loader": "^4.0.2",
     "rxjs": "~7.4.0",
