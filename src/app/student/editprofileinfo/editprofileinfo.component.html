@@ -43,7 +43,7 @@
                     <div>
                         <mat-form-field style="width: 100%;" appearance="outline">
                             <mat-label>Email</mat-label>
-                            <input formControlName="email" type="email" required matInput>
+                            <input formControlName="email" type="email" required matInput readonly>
                             <mat-error *ngIf="profileForm.dirty && profileForm.get('email')?.value.length==0">
                                 Email is required
                             </mat-error>

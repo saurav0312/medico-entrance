@@ -1,0 +1,42 @@
+<div >
+    <div class="login-container">
+        <div class="bb-login">
+            <form (ngSubmit)="login()" name="loginForm" [formGroup]="loginForm" > 
+                <span class="bb-form-title p-b-26"> Signin </span> <span class="bb-form-title p-b-48"> 
+                    <i class="mdi mdi-symfony"></i> </span>
+                <div>  
+                    <mat-form-field style="width: 100%;" appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input formControlName="email" type="email" required matInput>
+                        <mat-error *ngIf="loginForm.dirty && loginForm.get('email')?.value.length==0">
+                            Email is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+                <div> 
+                    <mat-form-field style="width: 100%;" appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input formControlName="password" [type]="loginHide ? 'password' : 'text'" required matInput>
+                        <button *ngIf="loginForm.get('password')?.value.length > 0" mat-icon-button matSuffix type="button" (click)="loginHide = !loginHide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="loginHide">
+                            <mat-icon>{{loginHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-error *ngIf="loginForm.dirty && loginForm.get('password')?.value.length==0">
+                            Password is required
+                        </mat-error>
+                    </mat-form-field>
+                 </div>
+                 <div class="forgetPassword cursor-icon" routerLink="/authentication/forgetpassword">Forgot Password?</div>
+                <div class="login-container-form-btn">
+                    <div class="bb-login-form-btn">
+                        <div class="bb-form-bgbtn"></div> <button class="bb-form-btn"> Login </button>
+                    </div>
+                    
+                </div>
+            </form>
+            <div class="text-center p-t-115"> 
+                <span class="txt1"> Don’t have an account? </span> 
+                <a class="txt2" routerLink="/authentication/chooseSignUpOption"> Sign Up </a> 
+            </div>
+        </div>
+    </div>
+</div>

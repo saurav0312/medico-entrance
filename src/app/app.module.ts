@@ -4,7 +4,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { ChooseEntryOptionComponent } from './chooseentryoption/chooseentryoption.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 import { ReactiveFormsModule } from '@angular/forms';
@@ -38,30 +37,22 @@ import { NgxPrintModule } from 'ngx-print';
 
 import { PracticetestsComponent } from './practicetests/practicetests.component';
 import { NavigationbarComponent } from './navigationbar/navigationbar.component';
-import { ContactComponent } from './contact/contact.component';
-import { MainpageComponent } from './mainpage/mainpage.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { DashboardnavigationbarComponent } from './dashboardnavigationbar/dashboardnavigationbar.component';
-import { SigninComponent } from './signin/signin.component';
 import { StarttestComponent } from './starttest/starttest.component';
 import { TestinstructionsComponent } from './testinstructions/testinstructions.component';
+
 import { StudentModule } from './student/student.module';
-import { HomeComponent } from './home/home.component';
-import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
+import { HomepageModule } from './homepage/homepage.module';
+import { AuthenticationModule } from './authentication/authentication.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    ChooseEntryOptionComponent,
-    HomeComponent,
-    ForgetpasswordComponent,
     PracticetestsComponent,
     NavigationbarComponent,
-    ContactComponent,
-    MainpageComponent,
     DashboardComponent,
     DashboardnavigationbarComponent,
-    SigninComponent,
     StarttestComponent,
     TestinstructionsComponent
   ],
@@ -94,7 +85,9 @@ import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.compone
     ToastrModule.forRoot({
       timeOut: 2000
     }),
-    StudentModule
+    StudentModule,
+    HomepageModule,
+    AuthenticationModule
   ],
   providers: [],
   bootstrap: [AppComponent]
