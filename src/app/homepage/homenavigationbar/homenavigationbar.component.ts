@@ -7,10 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HomenavigationbarComponent implements OnInit {
 
+  navOpen: boolean = false;
+
   constructor(
   ) { }
 
   ngOnInit(): void {
+  }
+
+  toggleNavBar(){
+    this.navOpen = !this.navOpen;
   }
 
 }

@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class DashboardnavigationbarComponent implements OnInit {
 
   @Input() noOfMockTest : number = 0;
+  navOpen: boolean = false;
 
   constructor(
     private authService :  AuthService,
@@ -30,5 +31,9 @@ export class DashboardnavigationbarComponent implements OnInit {
       this.toastrService.success("Logged Out Successfully")
       this.router.navigateByUrl("/")
     })
+  }
+
+  toggleNavBar(){
+    this.navOpen = !this.navOpen;
   }
 }
