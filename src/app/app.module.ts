@@ -19,6 +19,7 @@ import { HomepageModule } from './homepage/homepage.module';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { StudentdashboardModule } from './studentdashboard/studentdashboard.module';
 import { PracticetestModule } from './practicetest/practicetest.module';
+import { TeacherdashboardModule } from './teacherdashboard/teacherdashboard.module';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { PracticetestModule } from './practicetest/practicetest.module';
     HomepageModule,
     AuthenticationModule,
     StudentdashboardModule,
-    PracticetestModule
+    PracticetestModule,
+    TeacherdashboardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

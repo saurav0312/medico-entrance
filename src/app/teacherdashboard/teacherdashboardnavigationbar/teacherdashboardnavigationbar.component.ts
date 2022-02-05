@@ -2,16 +2,15 @@ import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
+import { flatMap } from 'rxjs';
 import { ProfileService } from 'src/app/service/profile.service';
 
 @Component({
-  selector: 'app-studentdashboardnavigationbar',
-  templateUrl: './studentdashboardnavigationbar.component.html',
-  styleUrls: ['./studentdashboardnavigationbar.component.css']
+  selector: 'app-teacherdashboardnavigationbar',
+  templateUrl: './teacherdashboardnavigationbar.component.html',
+  styleUrls: ['./teacherdashboardnavigationbar.component.css']
 })
-export class StudentdashboardnavigationbarComponent implements OnInit {
-
-  @Input() noOfMockTest : number = 0;
+export class TeacherdashboardnavigationbarComponent implements OnInit {
 
   profileImageUrl!: string | undefined;
   navOpen: boolean = false;
@@ -25,9 +24,6 @@ export class StudentdashboardnavigationbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authService.mock$.subscribe((response: any) =>{
-      this.noOfMockTest = response.length
-  })
   this.authService.currentUser$.subscribe(response =>{
     this.profileService.getUserDetails(response?.uid).subscribe(response =>{
       this.profileImageUrl = response.imageUrl
@@ -50,5 +46,6 @@ export class StudentdashboardnavigationbarComponent implements OnInit {
   toggleDropdown(){
     this.dropdownOpen = !this.dropdownOpen;
   }
+
 
 }
