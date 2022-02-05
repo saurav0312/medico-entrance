@@ -7,7 +7,8 @@ import {
   createUserWithEmailAndPassword,
   sendEmailVerification,
   updateProfile,
-  sendPasswordResetEmail
+  sendPasswordResetEmail,
+  deleteUser
 } from '@angular/fire/auth';
 import { HttpClient } from '@angular/common/http';
 import { from, Observable, switchMap } from 'rxjs';

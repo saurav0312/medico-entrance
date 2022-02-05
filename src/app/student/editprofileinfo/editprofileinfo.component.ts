@@ -58,31 +58,47 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
     this.loading = true;
 
     this.authService.currentUser$.subscribe(response =>{
-      this.userId = response?.uid
-      const sub = this.profileService.getUserDetails(this.userId)
-      .subscribe(response=>{
-        console.log("After signout")
-        sub.unsubscribe();
-        if(response!== undefined){
-          if(response.dob === undefined){
-              response.dob = new Date('00/00/0000');
+      if(response === null || response === undefined){
+        this.toastrService.error("User is not authenticated. Please login first.")
+        this.loading = false;
+      }
+      else{
+        this.userId = response?.uid
+        const sub = this.profileService.getUserDetails(this.userId)
+        .subscribe(response=>{
+          if(response === null || response === undefined){
+            this.loading = false;
           }
           else{
-            response.dob = (<Timestamp><unknown>(response.dob)).toDate()
+            console.log("After signout")
+            sub.unsubscribe();
+            if(response!== undefined){
+              if(response.dob === undefined){
+                  response.dob = new Date('00/00/0000');
+              }
+              else{
+                response.dob = (<Timestamp><unknown>(response.dob)).toDate()
+              }
+              this.profileForm.setValue(response)
+              this.firstName = response.firstName
+              this.lastName = response.lastName 
+              this.email = response.email
+              this.country = response.country
+              this.imageUrl = response.imageUrl;
+              this.loading= false
+            }
           }
-          this.profileForm.setValue(response)
-          this.firstName = response.firstName
-          this.lastName = response.lastName 
-          this.email = response.email
-          this.country = response.country
-          this.imageUrl = response.imageUrl;
-          this.loading= false
-        }
-      },
-      error =>{
-        this.loading = false;
-        console.log(error)
-      })
+        },
+        error =>{
+          this.loading = false;
+          console.log(error)
+        })
+      }
+      
+    },
+    error =>{
+      this.loading = false;
+      console.log(error)
     })
   }
 
