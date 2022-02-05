@@ -8,7 +8,7 @@
     </mat-toolbar>
     
     <mat-sidenav-container class="mat-sidenav-container-class">
-      <mat-sidenav #sidenav="matSidenav" class="mat-sidenav-class" mode='side' opened>
+      <mat-sidenav #sidenav="matSidenav" class="mat-sidenav-class" mode='over'>
     
     
           <img class="avatar mat-elevation-z8" src="">
@@ -26,7 +26,11 @@
           <button routerLink="/studentdashboard" routerLinkActive="docs-navbar-header-item-selected" mat-button class="menu-button">
             <mat-icon>home</mat-icon>
             <span>Home</span>
-        </button>
+          </button>
+          <button (click)='logout()' mat-button class="menu-button">
+            <mat-icon>logout</mat-icon>
+            <span>Sign out</span>
+          </button>
       </mat-sidenav>
     
       <mat-sidenav-content class="mat-sidenav-content-class">

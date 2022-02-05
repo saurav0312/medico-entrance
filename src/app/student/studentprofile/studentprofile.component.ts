@@ -4,8 +4,10 @@ import { Tests } from '../../interface/tests';
 import { AuthService } from '../../service/auth.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { ToastrService } from 'ngx-toastr';
 import { NavigationExtras, Router } from '@angular/router';
 import { TestReportQuestion } from '../../interface/testReportQuestion';
+
 
 @Component({
   selector: 'app-studentprofile',
@@ -24,12 +26,20 @@ export class StudentprofileComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private router : Router
+    private router : Router,
+    private toastrService: ToastrService
   ) { }
 
   ngOnInit(): void {
     this.authService.currentUser$.subscribe(response =>{
       this.username = response?.displayName
+    })
+  }
+
+  logout(): void{
+    this.authService.logout().subscribe(response =>{
+      this.toastrService.success("Logged Out Successfully")
+      this.router.navigateByUrl("/")
     })
   }
 
