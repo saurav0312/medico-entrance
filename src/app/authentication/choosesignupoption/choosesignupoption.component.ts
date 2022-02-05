@@ -7,7 +7,9 @@ import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { map, Subscription } from 'rxjs'
 import { User } from '../../interface/user';
-import { ProfileService } from '../../service/profile.service'
+import { ProfileService } from '../../service/profile.service';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-choosesignupoption',
@@ -17,6 +19,9 @@ import { ProfileService } from '../../service/profile.service'
 export class ChoosesignupoptionComponent implements OnInit {
 
   @Input() selectedIndex = 0;
+
+  mode: ProgressSpinnerMode  = "indeterminate";
+  loading : boolean = false;
 
   isTeacher: boolean = false;
   isStudent: boolean = false;
@@ -80,9 +85,16 @@ export class ChoosesignupoptionComponent implements OnInit {
   }
 
   signUp(): void{
+    this.loading= true;
+
     this.tempSignUpForm = this.signUpForm
     delete this.tempSignUpForm.value['password']
-    this.authService.signUpUser(this.signUpForm).subscribe(
+    this.authService.signUpUser(this.signUpForm).pipe(
+      finalize(()=>{
+        this.loading=false;
+      } )
+    )
+    .subscribe(
       () =>{
         this.authService.currentUser$.subscribe(response => {
           const tempUserDetail: User = {
