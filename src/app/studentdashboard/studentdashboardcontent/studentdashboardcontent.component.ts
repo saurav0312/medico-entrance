@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import * as XLSX from 'xlsx';
-import { MockTest } from '../interface/mockTest';
-import { Question } from '../interface/question';
-import { AuthService } from '../service/auth.service';
+import { MockTest } from '../../interface/mockTest';
+import { Question } from '../../interface/question';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-studentdashboardcontent',
+  templateUrl: './studentdashboardcontent.component.html',
+  styleUrls: ['./studentdashboardcontent.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class StudentdashboardcontentComponent implements OnInit {
 
   mockTest! : MockTest;
   mockTests! : MockTest[];
@@ -75,5 +75,6 @@ export class DashboardComponent implements OnInit {
 
     reader.readAsBinaryString(target.files[0]);
   }
+
 
 }

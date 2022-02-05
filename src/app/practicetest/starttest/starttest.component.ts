@@ -1,21 +1,22 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MockTest } from '../interface/mockTest';
+import { MockTest } from '../../interface/mockTest';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthService } from '../service/auth.service';
+import { AuthService } from '../../service/auth.service';
 import { HttpClient } from '@angular/common/http';
-import { TestReportData } from '../interface/testReportData';
-import { TestReportQuestion } from '../interface/testReportQuestion';
-import { Tests } from '../interface/tests';
+import { TestReportData } from '../../interface/testReportData';
+import { TestReportQuestion } from '../../interface/testReportQuestion';
+import { Tests } from '../../interface/tests';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { SharedService } from '../service/shared.service';
+import { SharedService } from '../../service/shared.service';
 
 @Component({
   selector: 'app-starttest',
   templateUrl: './starttest.component.html',
   styleUrls: ['./starttest.component.css']
 })
-export class StarttestComponent implements OnInit, OnDestroy {
+export class StarttestComponent implements OnInit {
+
   displayedColumns: string[] = ['no', 'question', 'selectedOption', 'correctAnswer', 'result'];
   cols!: any[];
 
@@ -222,5 +223,6 @@ export class StarttestComponent implements OnInit, OnDestroy {
   viewProfile(){
     this.router.navigate(['/studentProfile/viewMyTests'])
   }
+
 
 }
