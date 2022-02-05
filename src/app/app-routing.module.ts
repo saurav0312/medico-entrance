@@ -28,6 +28,11 @@ const routes: Routes = [
     path: 'practicetest',
     loadChildren: () =>
       import('./practicetest/practicetest.module').then((m) => m.PracticetestModule),
+  },
+  {
+    path: 'teacherdashboard',
+    loadChildren: () =>
+      import('./teacherdashboard/teacherdashboard.module').then((m) => m.TeacherdashboardModule),
   }
 ];
 

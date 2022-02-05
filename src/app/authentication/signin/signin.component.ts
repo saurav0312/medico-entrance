@@ -6,6 +6,7 @@ import { AuthService } from '../../service/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { finalize } from 'rxjs';
+import { ProfileService } from 'src/app/service/profile.service';
 
 @Component({
   selector: 'app-signin',
@@ -25,6 +26,7 @@ export class SigninComponent implements OnInit {
     private httpClient : HttpClient,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
+    private profileService: ProfileService,
     private toastrService: ToastrService,
     private fb: FormBuilder
   ) { }
@@ -50,9 +52,17 @@ export class SigninComponent implements OnInit {
         () =>{
           this.authService.currentUser$.subscribe((response) => {
             console.log("Current user: ", response)
+            this.profileService.getUserDetails(response?.uid).subscribe(response =>{
+              if(response.accountType === 'student'){
+                this.router.navigateByUrl("/studentdashboard")
+              }
+              else{
+                this.router.navigateByUrl("/teacherdashboard")
+              }
+            })
             this.toastrService.success("User Logged In")
           })
-          this.router.navigateByUrl("/studentdashboard")
+          
         },
         error =>{
           window.alert(error.message)
