@@ -1,4 +1,5 @@
-<div style="display: inline-flexbox; margin-left: 40em; margin-top: 10em;">
+<div class="row" style="margin-top: 3em; margin-left: 2rem; margin-right: 2rem; margin-bottom: 2rem; ">
+<div style="margin-top: 10em;">
     <h1>Welcome to Practice Test {{testNumber}}</h1>   
     <h2>These are some instructions before you start the test.</h2>
     <div>
@@ -8,6 +9,10 @@
         <li>Your test will be automatically submitted after the timeout</li>
     </ol>
     </div>
-    <button style="display: inline-flex;" class="btn btn-primary" (click)="startTest()">Continue</button>
+    <div>
+        <button style="display: inline-flex; margin-right: 3em;" class="btn btn-danger" routerLink="/practicetest">Cancel</button>
+        <button style="display: inline-flex;" class="btn btn-primary" (click)="startTest()">Continue</button>
     </div>
+</div>
+</div>
     

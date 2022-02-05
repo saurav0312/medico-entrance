@@ -112,6 +112,8 @@
                 <button mat-raised-button color="primary" type="submit" [disabled]="signUpForm.invalid">Submit</button>
             </div>
         </form>
+        <app-spinner [loading]="loading" [mode]="mode" [diameter]="50" [overlay]="true">
+        </app-spinner>
         <div>
             <div class="text-center p-t-115"> 
                 <span class="txt1"> Already have an account? </span> 

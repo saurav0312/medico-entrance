@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light navbar-float">
     <div class="container">
-      <a routerLink="#" class="navbar-brand">Entrance<span class="text-primary">.com</span></a>
+      <a routerLink="/studentdashboard" class="navbar-brand">Entrance<span class="text-primary">.com</span></a>
 
       <button class="navbar-toggler" (click)="toggleNavBar()" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -17,13 +17,17 @@
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item ">
-            <a href="/studentProfile" class="nav-link">Profile</a>
-          </li>
           
-          <li class="nav-item">
-              <a (click)="logout()" class="nav-link">Sign out</a>
-            </li>
+          <img class="rounded-circle" width="40" [src]="profileImageUrl">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" (click)="toggleDropdown()" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink" [ngClass]="{'show': dropdownOpen}">
+              <a class="nav-link" href="/studentProfile">Profile</a>
+              <a class="nav-link" style="cursor: pointer;" (click)="logout()" >Sign out</a>
+            </div>
+          </li>
           </ul>
         
         
