@@ -1,10 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { User } from '../interface/user';
-import { MockTest } from '../interface/mockTest';
-import { Question } from '../interface/question';
+import { User } from '../../interface/user';
+import { MockTest } from '../../interface/mockTest';
+import { Question } from '../../interface/question';
 import { Firestore, collectionData, collection } from '@angular/fire/firestore';
 import { HttpClient } from '@angular/common/http';
-import { AuthService } from '../service/auth.service';
+import { AuthService } from '../../service/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -50,7 +50,7 @@ export class PracticetestsComponent implements OnInit {
   }
 
   startTest(testId: string) : void{
-    this.router.navigate(["/testInstructions"], {queryParams: {data: testId}})
+    this.router.navigate(["/practicetest/testInstructions"], {queryParams: {data: testId}})
   }
 
 }

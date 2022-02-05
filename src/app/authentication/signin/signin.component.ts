@@ -52,7 +52,7 @@ export class SigninComponent implements OnInit {
             console.log("Current user: ", response)
             this.toastrService.success("User Logged In")
           })
-          this.router.navigateByUrl("/dashboard")
+          this.router.navigateByUrl("/studentdashboard")
         },
         error =>{
           window.alert(error.message)

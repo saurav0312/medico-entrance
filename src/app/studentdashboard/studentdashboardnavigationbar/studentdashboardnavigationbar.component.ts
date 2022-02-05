@@ -1,14 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AuthService } from '../service/auth.service';
+import { AuthService } from '../../service/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
-  selector: 'app-dashboardnavigationbar',
-  templateUrl: './dashboardnavigationbar.component.html',
-  styleUrls: ['./dashboardnavigationbar.component.css']
+  selector: 'app-studentdashboardnavigationbar',
+  templateUrl: './studentdashboardnavigationbar.component.html',
+  styleUrls: ['./studentdashboardnavigationbar.component.css']
 })
-export class DashboardnavigationbarComponent implements OnInit {
+export class StudentdashboardnavigationbarComponent implements OnInit {
 
   @Input() noOfMockTest : number = 0;
   navOpen: boolean = false;
@@ -36,4 +36,5 @@ export class DashboardnavigationbarComponent implements OnInit {
   toggleNavBar(){
     this.navOpen = !this.navOpen;
   }
+
 }

@@ -23,7 +23,7 @@ export class TestinstructionsComponent implements OnInit {
   }
 
   startTest() : void{
-    this.router.navigate(["/startTest"], {queryParams: {data: this.testId}})
+    this.router.navigate(["/practicetest/startTest"], {queryParams: {data: this.testId}})
   }
 
 }
