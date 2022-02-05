@@ -1,9 +1,8 @@
 <div>
     <h1 style="text-align: center; margin-top: 2em;">Here is your detail performance report</h1>
-    <!-- <div *ngFor="let test of testReportDataToSend.allTests"> -->
         <div style="text-align: center; margin-bottom: 3em;">
-            <b>TestId: {{testToShowInTable.testId}}</b>&nbsp; 
-                Date: {{testToShowInTable.testTakenDate}}
+            <b>TestId: {{testId}}</b>&nbsp; 
+                Date: {{testTakenDate}}
         </div>
         <div>
             <div style="float: right; margin-right: 11.7em;">
@@ -66,12 +65,8 @@
         
                     
                 </mat-table>
-                <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                <mat-paginator [ngClass]="'styled-paginator'" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
             </div>
         </div>
-        
-        <!-- P-table usage -->
-        
-    <!-- </div> -->
     </div>
     
