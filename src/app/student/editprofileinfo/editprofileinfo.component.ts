@@ -51,7 +51,8 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
         education: new FormControl(''),
         country: new FormControl(''),
         state: new FormControl(''),
-        imageUrl: new FormControl('')
+        imageUrl: new FormControl(''),
+        accountType: new FormControl('')
       }
     );
 
@@ -74,7 +75,7 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
             sub.unsubscribe();
             if(response!== undefined){
               if(response.dob === undefined){
-                  response.dob = new Date('00/00/0000');
+                  response.dob = new Date();
               }
               else{
                 response.dob = (<Timestamp><unknown>(response.dob)).toDate()

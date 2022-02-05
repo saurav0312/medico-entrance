@@ -5,6 +5,7 @@ import { TestReportQuestion } from '../../interface/testReportQuestion';
 import { Tests } from '../../interface/tests'; 
 import { ActivatedRoute } from '@angular/router';
 import { SharedService } from 'src/app/service/shared.service';
+import { Timestamp } from 'firebase/firestore';
 
 @Component({
   selector: 'app-detailtestreport',
@@ -12,6 +13,9 @@ import { SharedService } from 'src/app/service/shared.service';
   styleUrls: ['./detailtestreport.component.css']
 })
 export class DetailtestreportComponent implements OnInit, AfterViewInit {
+
+  testId!: string;
+  testTakenDate! : Date | undefined;
 
   @Input() displayedColumns!: string[];
   @Input() testToShowInTable! : Tests;
@@ -29,6 +33,8 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.displayedColumns = this.sharedService.displayedColumns
     this.testToShowInTable = this.sharedService.testData
+    this.testId = this.testToShowInTable.testId;
+    this.testTakenDate = (<Timestamp><unknown>this.testToShowInTable.testTakenDate).toDate()
   }
 
   ngAfterViewInit(): void {

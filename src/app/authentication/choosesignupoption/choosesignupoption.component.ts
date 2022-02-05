@@ -28,7 +28,6 @@ export class ChoosesignupoptionComponent implements OnInit {
 
   userDetail!: User
 
-  loginForm!: FormGroup;
   signUpForm!: FormGroup;
   tempSignUpForm!: FormGroup;
   loginHide: boolean = true;
@@ -46,13 +45,6 @@ export class ChoosesignupoptionComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.loginForm = new FormGroup(
-      {
-        email : new FormControl('', [Validators.required, Validators.email]),
-        password: new FormControl('', [Validators.required, Validators.minLength(5)])
-      }
-    );
-
     this.signUpForm = new FormGroup(
       {
         firstName: new FormControl('',[Validators.required]),
@@ -67,21 +59,6 @@ export class ChoosesignupoptionComponent implements OnInit {
 
   ngOnDestroy(): void {
     
-  }
-
-  login(): void{
-    this.authService.loginUser(this.loginForm).subscribe(
-      () =>{
-        this.authService.currentUser$.subscribe((response) => {
-          console.log("Current user: ", response)
-          this.toastrService.success("User Logged In")
-        })
-        this.router.navigate(["../","dashboard"], {relativeTo:this.activatedRoute})
-      },
-      error =>{
-        window.alert(error.message)
-      }
-    )
   }
 
   signUp(): void{
@@ -106,7 +83,8 @@ export class ChoosesignupoptionComponent implements OnInit {
             'education': '',
             'country': '',
             'state': '',
-            'imageUrl': 'assets/img/person/person.png'
+            'imageUrl': 'assets/img/person/person.png',
+            'accountType': this.isTeacher ? 'teacher' : 'student'
           }
 
           this.userDetail = tempUserDetail
@@ -128,13 +106,8 @@ export class ChoosesignupoptionComponent implements OnInit {
   }
 
   clearForm() : void{
-    this.loginForm.reset();
     this.signUpForm.reset();
     this.ngOnInit();
-  }
-
-  forgetPassword() : void{
-    this.router.navigateByUrl('/forgetPassword')
   }
 
   sendTeacherCode(): void{

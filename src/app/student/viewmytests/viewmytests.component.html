@@ -1,43 +1,43 @@
 
-<!-- <mat-card> -->
-    <!-- <div class="mat-elevation-z4"> -->
-        <div class="example-container">
-        <h1 style="text-align: center; margin-top: 2em;">All Test Records</h1>
-          <div [ngClass]="'mat-elevation-z8'" class="table-contents" id="content" #content>
-            <mat-table [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"
-                        > 
-                <ng-container matColumnDef="no">
-                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> No </mat-header-cell>
-                    <mat-cell *matCellDef="let element; let i = index;" (click)="viewIndividualTestReport(element)"> 
-                        <span class="mobile-label">No:</span>
-                        {{paginator.pageIndex * paginator.pageSize + i + 1}} 
+
+<div >
+    <h1 style="text-align: center; margin-top: 2em;">All Test Records</h1>
+    <div [ngClass]="'mat-elevation-z8'" class="table-contents" id="content" #content>
+        <div>
+        <mat-table [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"
+                    > 
+            <ng-container matColumnDef="no">
+                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> No </mat-header-cell>
+                <mat-cell *matCellDef="let element; let i = index;" (click)="viewIndividualTestReport(element)"> 
+                    <span class="mobile-label">No:</span>
+                    {{paginator.pageIndex * paginator.pageSize + i + 1}} 
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="testId">
+                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> TestId </mat-header-cell>
+                <mat-cell *matCellDef="let element" (click)="viewIndividualTestReport(element)"> 
+                    <span class="mobile-label">TestId:</span>
+                    {{element.testId}}
                     </mat-cell>
-                </ng-container>
-    
-                <ng-container matColumnDef="testId">
-                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> TestId </mat-header-cell>
-                    <mat-cell *matCellDef="let element" (click)="viewIndividualTestReport(element)"> 
-                        <span class="mobile-label">TestId:</span>
-                        {{element.testId}}
-                     </mat-cell>
-                </ng-container>
-    
-                <ng-container matColumnDef="testTakenDate">
-                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Test Taken Date </mat-header-cell>
-                    <mat-cell *matCellDef="let element" (click)="viewIndividualTestReport(element)">
-                        <span class="mobile-label">Test Taken Date:</span>
-                         {{element.testTakenDate.toDate() | date}} 
-                    </mat-cell>
-                </ng-container>
-    
-                <mat-header-row *matHeaderRowDef="displayedColumnsForAllTests"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: displayedColumnsForAllTests;"></mat-row>
-    
-                
-            </mat-table>
-            <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </ng-container>
+
+            <ng-container matColumnDef="testTakenDate">
+                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Test Taken Date </mat-header-cell>
+                <mat-cell *matCellDef="let element" (click)="viewIndividualTestReport(element)">
+                    <span class="mobile-label">Test Taken Date:</span>
+                        {{element.testTakenDate.toDate() | date}} 
+                </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumnsForAllTests"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumnsForAllTests;"></mat-row>
+
+            
+        </mat-table>
+        </div>
+        <div>
+        <mat-paginator [ngClass]="'styled-paginator'" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
         </div>
     </div>
-    
-    <!-- </div> -->
-<!-- </mat-card> -->
+</div>

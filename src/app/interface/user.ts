@@ -9,4 +9,5 @@ export interface User {
     country?: string;
     state?: string;
     imageUrl? : string;
+    accountType: string;
   }
