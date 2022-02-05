@@ -51,10 +51,22 @@
                     </div>
 
                     <div>
-                        <mat-form-field style="width: 100%;" appearance="outline">
+                        <mat-form-field style="margin-right: 0.5em" appearance="outline">
                             <mat-label>PhoneNumber</mat-label>
                             <input formControlName="phoneNumber" type="number" matInput>
                         </mat-form-field>
+
+                        <mat-form-field appearance="outline" class="example-form-field">
+                            <mat-label>Date of birth</mat-label>
+                            <input formControlName="dob"  matInput [matDatepicker]="datepicker" [max]="today">
+                            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+                            <mat-datepicker #datepicker>
+                              <mat-datepicker-actions>
+                                <button mat-button matDatepickerCancel>Cancel</button>
+                                <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+                              </mat-datepicker-actions>
+                            </mat-datepicker>
+                          </mat-form-field>
                     </div>
 
                     <div>
@@ -88,6 +100,9 @@
                         <button style="margin-right: em; margin-top: 1em;" mat-raised-button type="button" (click) = "clearForm()" class="cancel-class">Cancel</button>
                         <button style="margin-left: 5em ; margin-right: 1em; margin-top: 1em;" mat-raised-button color="primary" [disabled]="profileForm.invalid">Save</button>
                     </div>
+
+                    <app-spinner [loading]="loading" [mode]="mode" [diameter]="50" [overlay]="true">
+                    </app-spinner>
                 </form>
 
                 <!-- <div class="row mt-2">

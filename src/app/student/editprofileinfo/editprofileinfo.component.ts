@@ -4,6 +4,9 @@ import { User } from '../../interface/user';
 import { ProfileService } from '../../service/profile.service'
 import { AuthService } from '../../service/auth.service'
 import { ToastrService } from 'ngx-toastr';
+import { Timestamp } from 'firebase/firestore';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-editprofileinfo',
@@ -14,6 +17,12 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
 
   userId: string | undefined;
   selectedProfileImage!: Blob;
+
+  //For spinner
+  mode: ProgressSpinnerMode  = "indeterminate";
+  loading : boolean = false;
+
+  today: Date = new Date();
 
   profileForm!: FormGroup;
   userDetail! : User;
@@ -37,6 +46,7 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
         lastName: new FormControl('',[Validators.required]),
         email : new FormControl('', [Validators.required, Validators.email]),
         phoneNumber: new FormControl(''),
+        dob: new FormControl(''),
         address: new FormControl(''),
         education: new FormControl(''),
         country: new FormControl(''),
@@ -45,19 +55,33 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
       }
     );
 
-        this.authService.currentUser$.subscribe(response =>{
-          this.userId = response?.uid
-          this.profileService.getUserDetails(this.userId).subscribe(response=>{
-            console.log("After signout")
-            if(response!== undefined){
-              console.log(response.imageUrl)
-              this.profileForm.setValue(response)
-              this.firstName = response.firstName
-              this.lastName = response.lastName 
-              this.email = response.email
-              this.country = response.country
-              this.imageUrl = response.imageUrl;
-            }
+    this.loading = true;
+
+    this.authService.currentUser$.subscribe(response =>{
+      this.userId = response?.uid
+      const sub = this.profileService.getUserDetails(this.userId)
+      .subscribe(response=>{
+        console.log("After signout")
+        sub.unsubscribe();
+        if(response!== undefined){
+          if(response.dob === undefined){
+              response.dob = new Date('00/00/0000');
+          }
+          else{
+            response.dob = (<Timestamp><unknown>(response.dob)).toDate()
+          }
+          this.profileForm.setValue(response)
+          this.firstName = response.firstName
+          this.lastName = response.lastName 
+          this.email = response.email
+          this.country = response.country
+          this.imageUrl = response.imageUrl;
+          this.loading= false
+        }
+      },
+      error =>{
+        this.loading = false;
+        console.log(error)
       })
     })
   }
@@ -73,20 +97,31 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
   }
 
   saveProfile(){
+    this.loading = true;
     this.userDetail = this.profileForm.value
     console.log("User Detail: ", this.userDetail)
-    //this.profileService.uploadProfileImage(this.selectedProfileImage, this.userId).subscribe(downloadUrl =>{
-      //console.log(downloadUrl)
-      this.userDetail.imageUrl = this.imageUrl
-      this.profileService.updateUserDetails(this.userId,this.userDetail).subscribe(response =>{
-        console.log(response)
-        this.toastrService.success("Profile Updated Successfully")
+    let ti = 1
+    this.userDetail.imageUrl = this.imageUrl
+    this.profileService.updateUserDetails(this.userId,this.userDetail).pipe(
+      finalize( () =>{
+        const intervalId = setInterval(()=>{
+          ti--;
+          if(ti <= 0){
+            this.loading = false;
+            clearInterval(intervalId);
+            this.toastrService.success("Profile Updated Successfully")
+            this.ngOnInit()
+          }
+        },1000)
       })
-    //})
-    // this.userDetail.imageUrl ="assets/img/person/person.png"
+    )
+    .subscribe(response =>{
+      console.log(response)
+    })
   }
 
   loadProfileImage(event: any):void{
+    this.loading = true;
     console.log(event)
     const target: DataTransfer = <DataTransfer>(event.target)
     if(target.files.length !== 1){

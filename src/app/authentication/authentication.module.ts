@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { SigninComponent } from './signin/signin.component';
@@ -16,6 +17,7 @@ import { ChoosesignupoptionComponent } from './choosesignupoption/choosesignupop
 import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.component';
 import { StudentModule } from '../student/student.module';
 import { HomepageModule } from '../homepage/homepage.module';
+import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
 
 
 @NgModule({
@@ -33,9 +35,11 @@ import { HomepageModule } from '../homepage/homepage.module';
     MatInputModule,
     MatCardModule,
     MatButtonModule,
+    MatProgressSpinnerModule,
     FlexLayoutModule,
     StudentModule,
-    HomepageModule
+    HomepageModule,
+    SpinnerModule
   ]
 })
 export class AuthenticationModule { }

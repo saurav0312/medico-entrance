@@ -8,21 +8,23 @@
 
       <div class="navbar-collapse collapse" id="navbarContent" [ngClass]="{'show': navOpen}">
         <ul class="navbar-nav ml-lg-4 pt-3 pt-lg-0">
-          <li class="nav-item active">
-            <a routerLink="/home" class="nav-link">Home</a>
+          <li class="nav-item">
+            <a routerLink="/home/homepagecontent" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:
+              true}" class="nav-link">Home</a>
           </li>
           <li class="nav-item cursor-icon" >
-            <a routerLink="/authentication/signin" class="nav-link">Login</a>
+            <a routerLink="/authentication/signin" routerLinkActive="active-link" class="nav-link">Login</a>
           </li>
           <li class="nav-item cursor-icon">
-            <a routerLink="/authentication/chooseSignUpOption" class="nav-link">Sign up</a>
+            <a routerLink="/authentication/chooseSignUpOption" routerLinkActive="active-link" class="nav-link">Sign up</a>
           </li>
           <li class="nav-item">
-            <a href="/home/contact" class="nav-link">Contact</a>
+            <a routerLink="/home/contact" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:
+              true}"  class="nav-link">Contact</a>
           </li>
-          <li class="nav-item">
-              <a href="/home" class="nav-link">About</a>
-            </li>
+          <!-- <li class="nav-item">
+              <a href="/home/about" routerLinkActive="active-link" class="nav-link">About</a>
+          </li> -->
         </ul>
         
       </div>
