@@ -28,7 +28,6 @@ export class ChoosesignupoptionComponent implements OnInit {
 
   userDetail!: User
 
-  // loginForm!: FormGroup;
   signUpForm!: FormGroup;
   tempSignUpForm!: FormGroup;
   loginHide: boolean = true;
