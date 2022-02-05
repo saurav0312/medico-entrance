@@ -20,11 +20,14 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 
 import { DetailtestreportComponent } from './detailtestreport/detailtestreport.component';
 import { ViewmytestsComponent } from './viewmytests/viewmytests.component';
 import { EditprofileinfoComponent } from './editprofileinfo/editprofileinfo.component';
+import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
 
 
 @NgModule({
@@ -49,7 +52,11 @@ import { EditprofileinfoComponent } from './editprofileinfo/editprofileinfo.comp
     NgxPrintModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    SpinnerModule
+
   ],
   exports: [
     StudentprofileComponent,

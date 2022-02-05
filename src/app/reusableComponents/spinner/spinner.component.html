@@ -1,0 +1,6 @@
+<div [ngClass]="{'overlay': loading}">
+    <div class="center">
+        <mat-progress-spinner *ngIf="loading" style="margin:0 auto;" [diameter]="diameter" [mode]="mode">
+        </mat-progress-spinner>
+    </div>
+</div>

@@ -97,7 +97,7 @@
             <div>  
             <mat-form-field style="width: 100%;" appearance="outline">
                 <mat-label>Password</mat-label>
-                <input formControlName="password" [type]="signupHide ? 'password' : 'text'" required matInput placeholder="Password">
+                <input formControlName="password" [type]="signupHide ? 'password' : 'text'" required matInput>
                 <button *ngIf="signUpForm.get('password')?.value.length > 0" mat-icon-button matSuffix type="button" (click)="signupHide = !signupHide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="signupHide">
                     <mat-icon>{{signupHide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>

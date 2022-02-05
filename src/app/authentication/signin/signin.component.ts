@@ -4,6 +4,8 @@ import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
 import { ToastrService } from 'ngx-toastr';
+import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-signin',
@@ -14,6 +16,9 @@ export class SigninComponent implements OnInit {
 
   loginForm!: FormGroup;
   loginHide: boolean = true;
+
+  mode: ProgressSpinnerMode  = "indeterminate";
+  loading : boolean = false;
 
   constructor(
     private router : Router, 
@@ -35,8 +40,13 @@ export class SigninComponent implements OnInit {
   }
 
   login(): void{
+    this.loading= true;
     if(this.loginForm.valid){
-      this.authService.loginUser(this.loginForm).subscribe(
+      this.authService.loginUser(this.loginForm).pipe(
+        finalize(()=>{
+          this.loading=false;
+        } )
+      ).subscribe(
         () =>{
           this.authService.currentUser$.subscribe((response) => {
             console.log("Current user: ", response)
@@ -48,7 +58,7 @@ export class SigninComponent implements OnInit {
           window.alert(error.message)
         }
       )
-    }
+     }
   }
 
 
