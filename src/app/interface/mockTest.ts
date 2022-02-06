@@ -10,4 +10,5 @@ export interface MockTest {
   questions: Question[];
   isBought?: boolean;
   testPrice?: number;
+  teacherUserId?: string | undefined;
 }

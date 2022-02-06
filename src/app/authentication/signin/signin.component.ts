@@ -50,13 +50,15 @@ export class SigninComponent implements OnInit {
         } )
       ).subscribe(
         () =>{
-          this.authService.currentUser$.subscribe((response) => {
+          const sub = this.authService.currentUser$.subscribe((response) => {
             console.log("Current user: ", response)
             this.profileService.getUserDetails(response?.uid).subscribe(response =>{
               if(response.accountType === 'student'){
+                sub.unsubscribe();
                 this.router.navigateByUrl("/studentdashboard")
               }
               else{
+                sub.unsubscribe();
                 this.router.navigateByUrl("/teacherdashboard")
               }
             })

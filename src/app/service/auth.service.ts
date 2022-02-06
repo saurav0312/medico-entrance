@@ -75,6 +75,7 @@ export class AuthService {
     return addDoc(booksRef, mockTest);
   }
 
+  // This method reads all mock tests of particular test type ex: free or paid
   readMockTest(testType?: string): Observable<any>{
     const collectionList = collection(this.firestore, 'MockTests');
     if(testType === undefined){
@@ -89,6 +90,7 @@ export class AuthService {
     return docData(bookRef) as Observable<MockTest>;
   }
 
+  // This method creates a entry when a student gives a test
   createAllMockTestsGivenByAUser(id: string | undefined, data: any, isYourFirstTest: boolean){
     const docRef = doc(this.firestore, `IndividualUserTests/${id}`);
     if(isYourFirstTest){
@@ -98,9 +100,22 @@ export class AuthService {
       updateDoc(docRef, {allTests : arrayUnion(data.allTests[0])} )    
     }
   }
-
+  
+  // This method fetches all tests given by a student
   getAllMockTestsGivenByAUser(id: string | undefined) : Observable<TestReportData>{
     const bookRef = doc(this.firestore, `IndividualUserTests/${id}`);
     return docData(bookRef) as Observable<TestReportData>;
+  }
+
+  fetchAllMockTestsCreatedByATeacher(teacherUserId: string | undefined) : Observable<any>{
+    const collectionList = collection(this.firestore, 'MockTests');
+    const q = query(collectionList, where("teacherUserId", "==", teacherUserId))
+    return collectionData(q,{idField: 'id'})
+  }
+
+  fetchAllUserDetailsSubscribedToTeacherTests(testIds: Array<string | undefined>):Observable<any>{
+    const collectionList = collection(this.firestore, 'TestSubscriptionDetails');
+    const q = query(collectionList, where("allSubscribedTests", "array-contains-any",  testIds))
+    return collectionData(q,{idField: 'id'})
   }
 }

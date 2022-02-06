@@ -1,3 +1,36 @@
-<div style="margin-top: 10em; text-align: center;">
-    <h2 style="text-align: center;">List of your students</h2>
+
+<div class="row" style="margin-top: 6rem; margin-left: 2rem; margin-right: 2rem; margin-bottom: 2rem;">
+    <div style="text-align: center;">
+        <h1>List of my students</h1>
+    </div>
+    <ng-template [ngIf]="myStudents.length != 0">
+        <ng-container class ="col-sm-6"  *ngFor="let myStudent of myStudents; let i = index" style="margin-bottom: 2rem;">
+            <div class ="col-sm-6" style="margin-bottom: 2rem;">
+                <div class="card">
+                    <div class="card-body">
+                    <div>
+                        <h3 class="card-title" style="text-align: center; display: inline; ">
+                            <b>Student {{i+1}}</b>
+                        </h3>
+                    </div>
+                    <div style="float: left;">
+                        <p class="card-text"><b>Student Name:</b> {{myStudent.firstName}} {{myStudent.lastName}}</p>
+                        <p class="card-text"><b>Email:</b> {{myStudent.email}}</p>
+                        <p class="card-text"><b>Phone Number:</b> {{myStudent.phoneNumber}}</p>
+                        <p class="card-text"><b>Date of birth:</b> {{myStudent.dob}}</p>
+                        <p class="card-text"><b>Address:</b> {{myStudent.address}}</p>
+                    </div>
+                    <div style="float: right;">
+                        <img class="rounded-circle" width="100" src="{{myStudent.imageUrl}}" >
+                    </div>
+                    
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </ng-template>
+    <ng-template [ngIf]="myStudents.length === 0">
+        No Students Available
+    </ng-template>
 </div>
+<app-spinner [loading]="loading"></app-spinner>

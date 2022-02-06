@@ -22,6 +22,30 @@
                     </mat-cell>
             </ng-container>
 
+            <ng-container matColumnDef="testName">
+                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> TestName </mat-header-cell>
+                <mat-cell *matCellDef="let element" (click)="viewIndividualTestReport(element)"> 
+                    <span class="mobile-label">TestName:</span>
+                    {{element.testName}}
+                    </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="testTakenBy">
+                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Test Taken By </mat-header-cell>
+                <mat-cell *matCellDef="let element" (click)="viewIndividualTestReport(element)"> 
+                    <span class="mobile-label">Test Taken By:</span>
+                    {{element.testTakenBy}}
+                    </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="testType">
+                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Test Type</mat-header-cell>
+                <mat-cell *matCellDef="let element" (click)="viewIndividualTestReport(element)"> 
+                    <span class="mobile-label">Test Type</span>
+                    {{element.testType}}
+                    </mat-cell>
+            </ng-container>
+
             <ng-container matColumnDef="testTakenDate">
                 <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Test Taken Date </mat-header-cell>
                 <mat-cell *matCellDef="let element" (click)="viewIndividualTestReport(element)">

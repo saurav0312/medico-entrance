@@ -157,7 +157,10 @@ export class StarttestComponent implements OnInit {
     let tests: Tests = {
       "testId" : this.testId,
       "testQuestions" : testQuestions,
-      "testTakenDate" : new Date()
+      "testTakenDate" : new Date(),
+      "testName": this.testData.testName,
+      "testTakenBy": this.testData.testTakenBy,
+      'testType': this.testData.testType
     }
 
     this.testToShowInTable = tests;

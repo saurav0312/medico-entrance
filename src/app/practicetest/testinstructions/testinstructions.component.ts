@@ -11,6 +11,7 @@ export class TestinstructionsComponent implements OnInit {
   @Input() testNumber! : number;
   @Input() testId! : string;
   @Input() testType!: string;
+  @Input() testTime!: number;
 
   constructor(
     private router : Router,
@@ -21,6 +22,7 @@ export class TestinstructionsComponent implements OnInit {
     this.route.queryParams.subscribe((params: any) =>{
       this.testId = <string>params.data
       this.testType = <string>params.testType;
+      this.testTime = <number>params.testTime;
     })
   }
 
