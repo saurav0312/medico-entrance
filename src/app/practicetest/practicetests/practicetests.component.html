@@ -1,19 +1,31 @@
 <app-studentdashboardnavigationbar></app-studentdashboardnavigationbar>>
 
 <div class="row" style="margin-top: 6rem; margin-left: 2rem; margin-right: 2rem; margin-bottom: 2rem;">
-    <h1 style="text-align: center;">All {{testType}} tests</h1>
+    <div style="text-align: center;">
+        <h1>All {{testType}} tests</h1>
+        <ng-template [ngIf]="testType==='paid'"><h2>Please get premium membership to access these tests or buy individual tests here<i style="color: red;">*</i></h2></ng-template>
+    </div>
     <ng-template [ngIf]="listOfMockTests.length != 0">
         <ng-container class ="col-sm-6"  *ngFor="let individualTest of listOfMockTests; let i = index" style="margin-bottom: 2rem;">
             <div class ="col-sm-6" style="margin-bottom: 2rem;">
                 <div class="card">
                     <div class="card-body">
-                    <h5 class="card-title">Test {{i+1}}</h5>
-                    <p class="card-text">Test Name: {{individualTest.testName}}</p>
-                    <p class="card-text">By: {{individualTest.testTakenBy}}</p>
-                    <p class="card-text">Test Type: {{individualTest.testType}}</p>
-                    <p class="card-text">Total Time: {{individualTest.totalTime}}</p>
-                    <p class="card-text">Total Number Of Questions: {{individualTest.totalNumberOfQuestions}}</p>
-                    <a (click)="startTest(individualTest.id)" class="btn btn-primary">Start Test</a>
+                    <div>
+                        <h3 class="card-title" style="text-align: center; display: inline; ">
+                            <b>Test {{i+1}}</b>
+                            <mat-icon *ngIf="testType==='paid' && !individualTest.isBought">
+                                lock
+                            </mat-icon>
+                        </h3>
+                        <h4 [hidden]="testType==='free' || individualTest.isBought" class="card-title" style="float: right;"><mat-icon>currency_rupee</mat-icon>{{individualTest.testPrice}}</h4>
+                    </div>
+                    <p class="card-text"><b>Test Name:</b> {{individualTest.testName}}</p>
+                    <p class="card-text"><b>By:</b> {{individualTest.testTakenBy}}</p>
+                    <p class="card-text"><b>Test Type:</b> {{individualTest.testType}}</p>
+                    <p class="card-text"><b>Total Time:</b> {{individualTest.totalTime}}</p>
+                    <p class="card-text"><b>Total Number Of Questions:</b> {{individualTest.questions.length}}</p>
+                    <button (click)="startTest(individualTest.id)" class="btn btn-primary" [disabled]="testType==='paid' && !individualTest.isBought" style="margin-right: 2em;">Start Test</button>
+                    <button (click)="buyTest(individualTest.id)" class="btn btn-primary" [hidden]="testType==='free' || individualTest.isBought">Buy Test</button>
                     </div>
                 </div>
             </div>

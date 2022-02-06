@@ -37,7 +37,8 @@ export class AddmocktestComponent implements OnInit{
         totalTime : new FormControl('', [Validators.required]),
         totalNumberOfQuestions: new FormControl('', [Validators.required]),
         testType: new FormControl('', [Validators.required]),
-        testSourceFile: new FormControl('' ,[Validators.required])
+        testSourceFile: new FormControl('' ,[Validators.required]),
+        testPrice: new FormControl('')
       }
     );
   }
@@ -89,7 +90,8 @@ export class AddmocktestComponent implements OnInit{
           "totalTime": this.createMockTestForm.get('totalTime')?.value,
           "totalNumberOfQuestions": this.createMockTestForm.get('totalNumberOfQuestions')?.value,
           "testType": this.createMockTestForm.get('testType')?.value,
-          "questions": questions
+          "questions": questions,
+          "testPrice": this.createMockTestForm.get('testPrice')?.value
         };
         this.mockTest = tempData;
         console.log("MockTest Data: ", this.mockTest);

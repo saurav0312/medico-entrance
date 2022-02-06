@@ -81,7 +81,7 @@ export class AuthService {
       return collectionData(collectionList, {idField: 'id'})
     }
     const q = query(collectionList, where("testType", "==", testType))
-    return collectionData(q,{idField: 'id'},)
+    return collectionData(q,{idField: 'id'})
   }
 
   getMockTestByID(id: string) {
