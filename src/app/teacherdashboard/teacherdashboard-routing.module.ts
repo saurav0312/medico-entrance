@@ -1,13 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AddmocktestComponent } from './addmocktest/addmocktest.component';
+import { MystudentsComponent } from './mystudents/mystudents.component';
 import { TeacherdashboardcontentComponent } from './teacherdashboardcontent/teacherdashboardcontent.component';
+import { TeacherdashboardhomeComponent } from './teacherdashboardhome/teacherdashboardhome.component';
 
 const routes: Routes = [
   {
     path:'', 
-    component: TeacherdashboardcontentComponent,
+    component: TeacherdashboardhomeComponent,
     children: [
-      
+      { path: 'teacherdashboardcontent', component: TeacherdashboardcontentComponent },
+      { path: 'addmocktest', component: AddmocktestComponent },
+      { path: 'viewmystudents', component: MystudentsComponent },
+      { path: '', redirectTo:'/teacherdashboard/teacherdashboardcontent', pathMatch: 'full' }
     ]
   }
 ];

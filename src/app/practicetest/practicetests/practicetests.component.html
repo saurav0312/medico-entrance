@@ -1,51 +1,27 @@
-<app-studentdashboardnavigationbar [noOfMockTest]="noOfTests" ></app-studentdashboardnavigationbar>>
-
-
-
-
-
-
-
-
-<!-- List of mock test -->
-
-
-<!-- <div style="margin-top: 5rem; margin-left: 20rem; text-align: center; align-content: center;">
-    <div style="width: 50rem; height:50rem">
-        <div *ngFor="let test of mockTests; let i = index" [attr.data-index]="i">
-            <h1 style="text-align: center;">Mock {{i+1}}</h1>
-            <mat-card class="example-card">
-                <mat-card-content>
-            <div *ngFor="let question of test.questions; let j= index" [attr.data-index]="j">
-                <div><h2>{{j + 1}}. {{question.question}}</h2></div>
-                <ul>
-                <div *ngFor="let option of question.options">
-                    <div style="text-align: center;"><li>{{option}}</li></div>
-                </div>
-            </ul>
-            </div>
-            
-            </mat-card-content>
-            </mat-card>
-        </div>
-    </div>
-</div> -->
-
-
-
-
-
-<!-- BootStrap test -->
+<app-studentdashboardnavigationbar></app-studentdashboardnavigationbar>>
 
 <div class="row" style="margin-top: 6rem; margin-left: 2rem; margin-right: 2rem; margin-bottom: 2rem;">
-    <div class ="col-sm-6" *ngFor="let testId of testIdList; let i = index" [attr.data-index]="i" style="margin-bottom: 2rem;">
-        <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Test {{i+1}}</h5>
-              <p class="card-text">Test from XYZ institute</p>
-              <a (click)="startTest(testId)" class="btn btn-primary">Start Test</a>
+    <h1 style="text-align: center;">All {{testType}} tests</h1>
+    <ng-template [ngIf]="listOfMockTests.length != 0">
+        <ng-container class ="col-sm-6"  *ngFor="let individualTest of listOfMockTests; let i = index" style="margin-bottom: 2rem;">
+            <div class ="col-sm-6" style="margin-bottom: 2rem;">
+                <div class="card">
+                    <div class="card-body">
+                    <h5 class="card-title">Test {{i+1}}</h5>
+                    <p class="card-text">Test Name: {{individualTest.testName}}</p>
+                    <p class="card-text">By: {{individualTest.testTakenBy}}</p>
+                    <p class="card-text">Test Type: {{individualTest.testType}}</p>
+                    <p class="card-text">Total Time: {{individualTest.totalTime}}</p>
+                    <p class="card-text">Total Number Of Questions: {{individualTest.totalNumberOfQuestions}}</p>
+                    <a (click)="startTest(individualTest.id)" class="btn btn-primary">Start Test</a>
+                    </div>
+                </div>
             </div>
-        </div>
-    </div>
+        </ng-container>
+    </ng-template>
+    <ng-template [ngIf]="listOfMockTests.length === 0">
+        No Tests Available
+    </ng-template>
 </div>
+<app-spinner [loading]="loading"></app-spinner>
 

@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg navbar-light navbar-float">
     <div class="container">
-      <a routerLink="/studentdashboard" class="navbar-brand">Entrance<span class="text-primary">.com</span></a>
+      <a routerLink="/teacherdashboard" class="navbar-brand">Entrance<span class="text-primary">.com</span></a>
 
       <button class="navbar-toggler" (click)="toggleNavBar()" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -8,10 +8,22 @@
 
       <div class="navbar-collapse collapse" id="navbarContent" [ngClass]="{'show': navOpen}">
         
-          <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a routerLink="/studentdashboard" class="nav-link">Home</a>
+        <ul class="navbar-nav ml-lg-4 pt-3 pt-lg-0">
+          <li class="nav-item">
+            <a routerLink="/teacherdashboard/teacherdashboardcontent" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:
+              true}" class="nav-link">Home</a>
           </li>
+
+          <li class="nav-item">
+            <a routerLink="/teacherdashboard/addmocktest" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:
+              true}" class="nav-link">Add Mock Test</a>
+          </li>
+
+          <li class="nav-item">
+            <a routerLink="/teacherdashboard/viewmystudents" routerLinkActive="active-link" [routerLinkActiveOptions]="{exact:
+              true}" class="nav-link">View My Students</a>
+          </li>
+
         </ul>
         <ul class="navbar-nav ml-auto">
           

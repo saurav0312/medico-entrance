@@ -17,30 +17,32 @@ export class PracticetestsComponent implements OnInit {
   //mockTests! : MockTest[];
   testIdList: Array<string>=[];
   noOfTests!: number;
+  testType!: string;
 
-  @Input() listOfMockTests! : MockTest[];
+  loading: boolean = false;
+
+  @Input() listOfMockTests : MockTest[] = [];
 
   constructor(
     private firestore: Firestore,
     private httpClient : HttpClient,
     private authService: AuthService,
-    private router : Router
+    private router : Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
+    this.loading = true;
+    this.route.queryParams.subscribe((params: any)=>{
+      this.testType = <string>params.testType;
+      this.authService.readMockTest(this.testType).subscribe((response: MockTest[]) =>{
+        this.loading = false;
+        this.listOfMockTests = response
+        console.log("Collection of MockTests: ", response)
+    })
+    })
 
-    this.authService.mock$.subscribe((response: any) =>{
-      //this.mockTests = response
-      //this.collec = JSON.stringify(this.mockTests)
-      this.noOfTests = response.length
-      response.forEach((element:any) => {
-        this.testIdList.push(element.id)
-        console.log(this.testIdList)
-      });
-      
-
-      console.log("Collection of MockTests: ", response)
-  })
+    
 
   //   this.authService.readMockTest().subscribe((response: any) =>{
   //     this.mockTests = response
@@ -49,7 +51,7 @@ export class PracticetestsComponent implements OnInit {
   // })
   }
 
-  startTest(testId: string) : void{
+  startTest(testId: string | undefined) : void{
     this.router.navigate(["/practicetest/testInstructions"], {queryParams: {data: testId}})
   }
 

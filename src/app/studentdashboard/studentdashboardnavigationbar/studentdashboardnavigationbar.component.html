@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light navbar-float">
+<nav class="navbar navbar-expand-lg navbar-light navbar-float fixed-top">
     <div class="container">
       <a routerLink="/studentdashboard" class="navbar-brand">Entrance<span class="text-primary">.com</span></a>
 
@@ -13,7 +13,10 @@
             <a routerLink="/studentdashboard" class="nav-link">Home</a>
           </li>
           <li class="nav-item">
-            <a routerLink="/practicetest" class="nav-link" [matBadge]="noOfMockTest">Free Mock Tests</a>
+            <a [routerLink]="['/practicetest']" [queryParams]="{ testType: 'free'}" class="nav-link" [matBadge]="noOfFreeMockTest">Free Mock Tests</a>
+          </li>
+          <li class="nav-item">
+            <a [routerLink]="['/practicetest']" [queryParams]="{ testType: 'paid'}" class="nav-link" [matBadge]="noOfPaidMockTest">Paid Mock Tests</a>
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">
