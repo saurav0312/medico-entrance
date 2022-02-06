@@ -8,6 +8,7 @@ import { PracticetestsComponent } from './practicetests/practicetests.component'
 import { StudentdashboardModule } from '../studentdashboard/studentdashboard.module';
 import { TestinstructionsComponent } from './testinstructions/testinstructions.component';
 import { StarttestComponent } from './starttest/starttest.component';
+import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { StarttestComponent } from './starttest/starttest.component';
     CommonModule,
     MatIconModule,
     PracticetestRoutingModule,
-    StudentdashboardModule
+    StudentdashboardModule,
+    SpinnerModule
   ]
 })
 export class PracticetestModule { }

@@ -1,0 +1,107 @@
+<div style="margin-top: 10em; text-align: center;">
+
+<!-- Test start -->
+
+<div class="container rounded bg-blue mt-5 mb-5">
+  <div class="row" >
+      
+      <div class="col-md-5 border" style="text-align: center; border-color: #7c766f !important;">
+          <div class="p-3">
+              <div class="d-flex  align-items-center mb-3">
+                  <h4 class="align-items-center"><b>Create Mock Test</b></h4>
+              </div>
+
+              <form (ngSubmit)="createMockTest()" name="createMockTestForm" [formGroup]="createMockTestForm" >
+                <div>
+                    <mat-form-field style="width: 100%;" appearance="outline" >
+                        <mat-label>Test Name</mat-label>
+                        <input formControlName="testName" type="text" required matInput >
+                        <mat-error *ngIf="createMockTestForm.get('testName')?.dirty && createMockTestForm.get('testName')?.value.length==0">
+                            Test name is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div>
+                  <mat-form-field style="width: 100%;" appearance="outline">
+                      <mat-label>Test Taker</mat-label>
+                      <input formControlName="testTakenBy" type="text" required matInput>
+                      <mat-error *ngIf="createMockTestForm.get('testTakenBy')?.dirty && createMockTestForm.get('testTakenBy')?.value.length==0">
+                        Test Taker name is required
+                      </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div>
+                    <mat-form-field style="width: 100%;" appearance="outline">
+                        <mat-label>Total Time</mat-label>
+                        <input formControlName="totalTime" type="number" required matInput>
+                        <mat-error *ngIf="createMockTestForm.get('totalTime')?.dirty && createMockTestForm.get('totalTime')?.value.length==0">
+                          Total time is required
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+
+                <div>
+                  <mat-form-field style="width: 100%;" appearance="outline">
+                      <mat-label>Total No of Questions</mat-label>
+                      <input formControlName="totalNumberOfQuestions" type="number" required matInput>
+                      <mat-error *ngIf="createMockTestForm.get('totalNumberOfQuestions')?.dirty && createMockTestForm.get('totalNumberOfQuestions')?.value.length==0">
+                        Total No of Questions is required
+                      </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div style="text-align: left; margin-bottom: 1em;">
+                  <!-- <mat-form-field style="width: 100%;" appearance="outline"> -->
+                      <mat-label style="text-align: left;">Test Type: </mat-label>
+                      <mat-radio-group formControlName="testType" aria-label="Test Type">
+                        <mat-radio-button value="free">Free</mat-radio-button>
+                        <mat-radio-button value="paid">Paid</mat-radio-button>
+                      </mat-radio-group>
+                      <!-- <input formControlName="testType" type="text" required matInput> -->
+                      <mat-error *ngIf="createMockTestForm.get('testType')?.dirty && createMockTestForm.get('testType')?.value.length==0">
+                        Test Type is required
+                      </mat-error>
+                  <!-- </mat-form-field> -->
+                </div>
+
+                <div>
+                  <mat-form-field style="width: 100%;" appearance="outline">
+                      <mat-label>Test Price</mat-label>
+                      <input formControlName="testPrice" type="number" [required]="createMockTestForm.get('testType')?.value === 'paid'" matInput>
+                      <mat-error *ngIf="createMockTestForm.get('totalNumberOfQuestions')?.dirty && createMockTestForm.get('testType')?.value === 'paid' && createMockTestForm.get('totalNumberOfQuestions')?.value.length==0">
+                        Test Price is required
+                      </mat-error>
+                  </mat-form-field>
+                </div>
+
+                <div style="width: 100%; text-align: left;">
+                  <!-- <mat-form-field style="width: 100%;" appearance="outline"> -->
+                    <mat-label>Select excel file:</mat-label> 
+                    <div class="mb-3">
+                      <input formControlName="testSourceFile" (change)="uploadFile($event)" class="form-control" type="file" required accept=".xls, .xlsx" id="formFile">
+                    </div>
+                    <!-- <label class="btn btn-default">
+                      Browse <input formControlName="testSourceFile" (change)="uploadFile($event)" type="file" required accept=".xls, .xlsx">
+                    </label> -->
+                    <!-- <input formControlName="testSourceFile" (change)="uploadFile($event) " type="file" required accept=".xls, .xlsx"> -->
+                  <!-- </mat-form-field> -->
+                </div>
+
+
+                <div>
+                    <button style="margin-right: em; margin-top: 1em;" mat-raised-button type="button" (click) = "clearForm()" class="cancel-class">Cancel</button>
+                    <button style="margin-left: 5em ; margin-right: 1em; margin-top: 1em;" mat-raised-button color="primary" [disabled]="createMockTestForm.invalid">Save</button>
+                </div>
+
+                <app-spinner [loading]="loading" [mode]="mode" [diameter]="50" [overlay]="true">
+                </app-spinner>
+              </form>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<!-- Test end -->

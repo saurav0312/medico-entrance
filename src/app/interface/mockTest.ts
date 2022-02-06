@@ -1,5 +1,13 @@
 import { Question } from "./question";
 
-export interface MockTest { 
-    questions: Question[]; 
-  }
+export interface MockTest {
+  id?: string | undefined;
+  testName? : string; 
+  testTakenBy? : string;
+  totalTime? : number;
+  totalNumberOfQuestions? : number;
+  testType?: string;
+  questions: Question[];
+  isBought?: boolean;
+  testPrice?: number;
+}

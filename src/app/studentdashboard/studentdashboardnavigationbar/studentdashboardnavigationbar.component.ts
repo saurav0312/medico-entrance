@@ -11,7 +11,8 @@ import { ProfileService } from 'src/app/service/profile.service';
 })
 export class StudentdashboardnavigationbarComponent implements OnInit {
 
-  @Input() noOfMockTest : number = 0;
+  @Input() noOfFreeMockTest : number = 0;
+  @Input() noOfPaidMockTest : number = 0;
 
   profileImageUrl!: string | undefined;
   navOpen: boolean = false;
@@ -25,9 +26,12 @@ export class StudentdashboardnavigationbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authService.mock$.subscribe((response: any) =>{
-      this.noOfMockTest = response.length
+    this.authService.readMockTest('free').subscribe((response: any) =>{
+      this.noOfFreeMockTest = response.length
   })
+  this.authService.readMockTest('paid').subscribe((response: any) =>{
+    this.noOfPaidMockTest = response.length
+})
   this.authService.currentUser$.subscribe(response =>{
     this.profileService.getUserDetails(response?.uid).subscribe(response =>{
       this.profileImageUrl = response.imageUrl

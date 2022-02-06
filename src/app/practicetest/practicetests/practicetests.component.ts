@@ -6,6 +6,8 @@ import { Firestore, collectionData, collection } from '@angular/fire/firestore';
 import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../service/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { TestsubscriptionService } from 'src/app/service/testsubscription.service';
+import { TestSubscription } from 'src/app/interface/test-subscription';
 
 @Component({
   selector: 'app-practicetests',
@@ -17,30 +19,55 @@ export class PracticetestsComponent implements OnInit {
   //mockTests! : MockTest[];
   testIdList: Array<string>=[];
   noOfTests!: number;
+  userId!: string | undefined;
 
-  @Input() listOfMockTests! : MockTest[];
+  testType!: string;
+  isBought: boolean = false;
+  loading: boolean = false;
+  isFirstSubscription: boolean = true;
+  allSubscribedTests!: Array<string | undefined>;
+
+  @Input() listOfMockTests : MockTest[] = [];
 
   constructor(
-    private firestore: Firestore,
-    private httpClient : HttpClient,
     private authService: AuthService,
-    private router : Router
+    private router : Router,
+    private route: ActivatedRoute,
+    private testsubscriptionService: TestsubscriptionService
   ) { }
 
   ngOnInit(): void {
+    this.loading = true;
+    this.route.queryParams.subscribe((params: any)=>{
+      this.testType = <string>params.testType;
+      this.authService.currentUser$.subscribe(response =>{
+        if(response !== null){
+          this.userId = response.uid
+          this.testsubscriptionService.getAllSubscribedTestsByAUser(this.userId).subscribe((response:TestSubscription) =>{
+            if(response !== undefined){
+              this.allSubscribedTests = response.allSubscribedTests
+              console.log("Subscribed Tests:", response)
+              this.isFirstSubscription = false;
+            }
+            this.authService.readMockTest(this.testType).subscribe((response: MockTest[]) =>{
+              this.loading = false;
+              this.listOfMockTests = response
+              console.log("Collection of MockTests: ", response)
+              this.listOfMockTests.forEach(test =>{
+                if(this.allSubscribedTests.findIndex(subscribedTest => subscribedTest === test.id) !== -1){
+                  test.isBought = true;
+                }
+              })
+            })
+            //this.testReportDataToSend = response
+            //console.log("User MockTests Result" ,this.testReportDataToSend)
+          })
+          
+        }
+      })
+    })
 
-    this.authService.mock$.subscribe((response: any) =>{
-      //this.mockTests = response
-      //this.collec = JSON.stringify(this.mockTests)
-      this.noOfTests = response.length
-      response.forEach((element:any) => {
-        this.testIdList.push(element.id)
-        console.log(this.testIdList)
-      });
-      
-
-      console.log("Collection of MockTests: ", response)
-  })
+    
 
   //   this.authService.readMockTest().subscribe((response: any) =>{
   //     this.mockTests = response
@@ -49,8 +76,16 @@ export class PracticetestsComponent implements OnInit {
   // })
   }
 
-  startTest(testId: string) : void{
-    this.router.navigate(["/practicetest/testInstructions"], {queryParams: {data: testId}})
+  startTest(testId: string | undefined) : void{
+    this.router.navigate(["/practicetest/testInstructions"], {queryParams: {data: testId, testType: this.testType}})
+  }
+
+  buyTest(testId: string | undefined) : void{
+    const data: TestSubscription ={
+      allSubscribedTests: [testId]
+    }
+    this.testsubscriptionService.subscribeToTest(this.userId, data, this.isFirstSubscription);
+    this.isBought = true;
   }
 
 }

@@ -14,10 +14,11 @@ import { HttpClient } from '@angular/common/http';
 import { from, Observable, switchMap } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MockTest} from '../interface/mockTest';
-import { Firestore, addDoc, collectionData, collection, doc, docData, setDoc, updateDoc, arrayUnion } from '@angular/fire/firestore';
+import { Firestore, addDoc, collectionData, collection, doc, docData, setDoc, updateDoc, arrayUnion, getDocs } from '@angular/fire/firestore';
 import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
 import { uploadBytes } from 'firebase/storage';
 import { TestReportData } from '../interface/testReportData';
+import { query, where } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -74,9 +75,13 @@ export class AuthService {
     return addDoc(booksRef, mockTest);
   }
 
-  readMockTest(): Observable<any>{
+  readMockTest(testType?: string): Observable<any>{
     const collectionList = collection(this.firestore, 'MockTests');
-    return collectionData(collectionList,{idField: 'id'})
+    if(testType === undefined){
+      return collectionData(collectionList, {idField: 'id'})
+    }
+    const q = query(collectionList, where("testType", "==", testType))
+    return collectionData(q,{idField: 'id'})
   }
 
   getMockTestByID(id: string) {
