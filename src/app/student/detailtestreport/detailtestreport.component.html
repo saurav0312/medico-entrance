@@ -1,9 +1,21 @@
 <div>
     <h1 style="text-align: center; margin-top: 2em;">Here is your detail performance report</h1>
-        <div style="text-align: center; margin-bottom: 3em;">
-            <b>TestId: {{testId}}</b>&nbsp; 
-                Date: {{testTakenDate}}
+    <div class ="row" style="margin-left: 10rem;">
+        <div class ="col-md-4">
+            <b>TestId:</b> {{testId}}
         </div>
+        <div class ="col-md-4">
+            <b>Test Name:</b> {{testToShowInTable.testName}}
+        </div>
+    </div>
+    <div class ="row" style="margin-left: 10rem;">
+        <div class ="col-md-4">
+            <b>Test Holder:</b> {{testToShowInTable.testTakenBy}}
+        </div>
+        <div class ="col-md-4">
+            <b>Date:</b> {{testTakenDate}}
+        </div>
+    </div>
         <div>
             <div style="float: right; margin-right: 11.7em;">
                 <button mat-raised-button style="margin-left: 1em;" (click)="exporter.exportTable('xlsx', {fileName:'test', sheet: 'sheet_name', Props: {Author: 'OnlineExam'}})">Excel</button>

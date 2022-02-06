@@ -19,7 +19,7 @@ export class ViewmytestsComponent implements OnInit {
   testToShowInTable! : Tests;
   viewTest : boolean = false;
 
-  displayedColumnsForAllTests: string[] = ['no', 'testId', 'testTakenDate'];
+  displayedColumnsForAllTests: string[] = ['no', 'testId', 'testName', 'testTakenBy', 'testType' ,'testTakenDate'];
 
   displayedColumnsForIndividualTest: string[] = ['no', 'question','selectedOption', 'correctAnswer', 'result'];
 

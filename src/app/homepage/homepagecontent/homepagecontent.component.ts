@@ -17,21 +17,21 @@ export class HomepagecontentComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authService.currentUser$.subscribe(response =>{
-      if(response !== null){
-        const sub = this.profileService.getUserDetails(response.uid).subscribe(response =>{
-          if(response !== undefined){
-            sub.unsubscribe()
-            if(response.accountType === 'teacher'){
-              this.router.navigateByUrl('/teacherdashboard')
-            }
-            else{
-              this.router.navigateByUrl('/studentdashboard')
-            }
-          }
-        })
-      }
-    })
+    // this.authService.currentUser$.subscribe(response =>{
+    //   if(response !== null){
+    //     const sub = this.profileService.getUserDetails(response.uid).subscribe(response =>{
+    //       if(response !== undefined){
+    //         sub.unsubscribe()
+    //         if(response.accountType === 'teacher'){
+    //           this.router.navigateByUrl('/teacherdashboard')
+    //         }
+    //         else{
+    //           this.router.navigateByUrl('/studentdashboard')
+    //         }
+    //       }
+    //     })
+    //   }
+    // })
   }
 
   signUpPage(): void{

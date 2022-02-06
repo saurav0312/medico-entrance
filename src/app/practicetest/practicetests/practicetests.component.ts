@@ -76,8 +76,8 @@ export class PracticetestsComponent implements OnInit {
   // })
   }
 
-  startTest(testId: string | undefined) : void{
-    this.router.navigate(["/practicetest/testInstructions"], {queryParams: {data: testId, testType: this.testType}})
+  startTest(testId: string | undefined, test: MockTest) : void{
+    this.router.navigate(["/practicetest/testInstructions"], {queryParams: {data: testId, testType: this.testType, testTime: test.totalTime}})
   }
 
   buyTest(testId: string | undefined) : void{

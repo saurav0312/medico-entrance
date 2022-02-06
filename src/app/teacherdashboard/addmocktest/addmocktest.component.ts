@@ -24,6 +24,8 @@ export class AddmocktestComponent implements OnInit{
   createMockTestForm!: FormGroup;
   testSourceFile! : DataTransfer;
 
+  userId!: string | undefined;
+
   constructor(
     private authService: AuthService,
     private toastrService: ToastrService
@@ -41,6 +43,12 @@ export class AddmocktestComponent implements OnInit{
         testPrice: new FormControl('')
       }
     );
+
+    this.authService.currentUser$.subscribe(response =>{
+      if(response !== null){
+        this.userId = response?.uid
+      }
+    })
   }
 
   uploadFile(event : any): void{
@@ -91,7 +99,8 @@ export class AddmocktestComponent implements OnInit{
           "totalNumberOfQuestions": this.createMockTestForm.get('totalNumberOfQuestions')?.value,
           "testType": this.createMockTestForm.get('testType')?.value,
           "questions": questions,
-          "testPrice": this.createMockTestForm.get('testPrice')?.value
+          "testPrice": this.createMockTestForm.get('testPrice')?.value,
+          "teacherUserId": this.userId
         };
         this.mockTest = tempData;
         console.log("MockTest Data: ", this.mockTest);
