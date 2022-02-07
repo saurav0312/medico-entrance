@@ -18,7 +18,7 @@ import { Firestore, addDoc, collectionData, collection, doc, docData, setDoc, up
 import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
 import { uploadBytes } from 'firebase/storage';
 import { TestReportData } from '../interface/testReportData';
-import { query, where } from 'firebase/firestore';
+import { deleteDoc, query, where } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -36,12 +36,16 @@ export class AuthService {
     private activatedRoute: ActivatedRoute,
     private firestore: Firestore,
     private storage: Storage
-    ) { }
+    ) { 
 
+  }
+
+  // Login a user
   loginUser(loginForm: any) : Observable<any>{
     return from(signInWithEmailAndPassword(this.auth, loginForm.get('email')?.value, loginForm.get('password')?.value))
   }
 
+  // Creates a user
   signUpUser(signUpForm : any) : Observable<any>{
     return from(createUserWithEmailAndPassword(this.auth, signUpForm.get('email')?.value, signUpForm.get('password')?.value)).pipe(
       switchMap(({user}) => 
@@ -50,18 +54,22 @@ export class AuthService {
     )
   }
 
+  //send verification mail
   sendVerificationEmail(user: any) : Observable<any>{
     return from(sendEmailVerification(user))
   }
 
+  //logs out a user
   logout(): Observable<any> {
     return from(this.auth.signOut());
   }
 
+  //send change password email
   changePassword(changePasswordForm: any) : Observable<any>{
     return from(sendPasswordResetEmail(this.auth, changePasswordForm.get('email')?.value));
   }
 
+  //uploads image for a question.... not used till now
   uploadQuestionImage(image: File, path: string) : Observable<any>{
     const storageReference = ref(this.storage, path)
     const uploadTask = from(uploadBytes(storageReference, image));
@@ -70,9 +78,15 @@ export class AuthService {
     );
   }
 
+  //adds a mock test
   createMockTest(mockTest: MockTest){
     const booksRef = collection(this.firestore, 'MockTests'); 
     return addDoc(booksRef, mockTest);
+  }
+
+  deleteMockTest(testId: string) : Observable<any>{
+    const bookRef = doc(this.firestore, `MockTests/${testId}`);
+    return from(deleteDoc(bookRef));
   }
 
   // This method reads all mock tests of particular test type ex: free or paid
@@ -85,6 +99,7 @@ export class AuthService {
     return collectionData(q,{idField: 'id'})
   }
 
+  //fetch mock test by its id
   getMockTestByID(id: string) {
     const bookRef = doc(this.firestore, `MockTests/${id}`);
     return docData(bookRef) as Observable<MockTest>;
@@ -107,15 +122,23 @@ export class AuthService {
     return docData(bookRef) as Observable<TestReportData>;
   }
 
+  //fetches all tests created by a teacher
   fetchAllMockTestsCreatedByATeacher(teacherUserId: string | undefined) : Observable<any>{
     const collectionList = collection(this.firestore, 'MockTests');
     const q = query(collectionList, where("teacherUserId", "==", teacherUserId))
     return collectionData(q,{idField: 'id'})
   }
 
+  //fetches all users who have subscribed to the current logged in teacher's tests
   fetchAllUserDetailsSubscribedToTeacherTests(testIds: Array<string | undefined>):Observable<any>{
     const collectionList = collection(this.firestore, 'TestSubscriptionDetails');
     const q = query(collectionList, where("allSubscribedTests", "array-contains-any",  testIds))
     return collectionData(q,{idField: 'id'})
+  }
+
+  getUserDetailsByType(type: string):Observable<any>{
+    const collectionList = collection(this.firestore, 'UserDetails');
+    const q = query(collectionList, where("accountType", "==",  type))
+    return collectionData(q)
   }
 }

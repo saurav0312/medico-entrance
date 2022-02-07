@@ -1,0 +1,85 @@
+
+<div style="margin-top: 8em;">
+    <h1 style="text-align: center; margin-top: 2em;">My All Tests</h1>
+    <div [ngClass]="'mat-elevation-z8'" class="table-contents" id="content" #content>
+        <div>
+        <mat-table matSort [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"
+                    > 
+            <ng-container matColumnDef="no">
+                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> No </mat-header-cell>
+                <mat-cell *matCellDef="let element; let i = index;"> 
+                    <span class="mobile-label">No:</span>
+                    {{paginator.pageIndex * paginator.pageSize + i + 1}} 
+                </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="testId">
+                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> TestId </mat-header-cell>
+                <mat-cell *matCellDef="let element"> 
+                    <span class="mobile-label">TestId:</span>
+                    {{element.id}}
+                    </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="testName">
+                <mat-header-cell mat-sort-header [ngClass]="'table-header-class'" *matHeaderCellDef> TestName </mat-header-cell>
+                <mat-cell *matCellDef="let element"> 
+                    <span class="mobile-label">TestName:</span>
+                    {{element.testName}}
+                    </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="testTakenBy">
+                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Test Taken By </mat-header-cell>
+                <mat-cell *matCellDef="let element"> 
+                    <span class="mobile-label">Test Taken By:</span>
+                    {{element.testTakenBy}}
+                    </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="testType">
+                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Test Type</mat-header-cell>
+                <mat-cell *matCellDef="let element"> 
+                    <span class="mobile-label">Test Type</span>
+                    {{element.testType}}
+                    </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="totalTime">
+                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Total Time</mat-header-cell>
+                <mat-cell *matCellDef="let element"> 
+                    <span class="mobile-label">Total Time</span>
+                    {{element.totalTime}}
+                    </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="testPrice">
+                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Test Price</mat-header-cell>
+                <mat-cell *matCellDef="let element"> 
+                    <span class="mobile-label">Test Price</span>
+                    {{element.testPrice}}
+                    </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Actions</mat-header-cell>
+                <mat-cell *matCellDef="let element"> 
+                    <span class="mobile-label">Delete</span>
+                    <mat-icon matTooltip="Delete" (click)="deleteMockTest(element.id)" style="color: red;">delete</mat-icon>
+                    <mat-icon matTooltip="Edit">edit</mat-icon>
+                    </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumnsForAllTests"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumnsForAllTests;" mat-ripple></mat-row>
+
+            
+        </mat-table>
+        </div>
+        <div>
+        <mat-paginator [ngClass]="'styled-paginator'" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+</div>
+
+<app-spinner [loading]="loading"></app-spinner>
