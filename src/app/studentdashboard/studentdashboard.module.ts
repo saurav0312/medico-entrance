@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { MatBadgeModule } from '@angular/material/badge';
 
+import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
+
 import { StudentdashboardRoutingModule } from './studentdashboard-routing.module';
 import { StudentdashboardnavigationbarComponent } from './studentdashboardnavigationbar/studentdashboardnavigationbar.component';
 import { StudentdashboardcontentComponent } from './studentdashboardcontent/studentdashboardcontent.component';
@@ -16,7 +18,8 @@ import { StudentdashboardcontentComponent } from './studentdashboardcontent/stud
   imports: [
     CommonModule,
     StudentdashboardRoutingModule,
-    MatBadgeModule
+    MatBadgeModule,
+    SpinnerModule
   ],
   exports:[
     StudentdashboardnavigationbarComponent
