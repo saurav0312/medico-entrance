@@ -33,9 +33,9 @@ export class ViewmytestsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authService.currentUser$.subscribe(response =>{
+    let sub = this.authService.getCurrentUser().subscribe(response =>{
       this.authService.getAllMockTestsGivenByAUser(response?.uid).subscribe(response =>{
-
+        sub.unsubscribe()
         if(response!== undefined){
           this.testReportData = response
           this.dataSource.data = this.testReportData.allTests

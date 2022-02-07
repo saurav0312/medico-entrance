@@ -26,9 +26,10 @@ export class MystudentsComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.authService.currentUser$.subscribe(response =>{
+    let sub = this.authService.getCurrentUser().subscribe(response =>{
       if(response !== null){
         this.userId = response.uid;
+        sub.unsubscribe();
         this.authService.fetchAllMockTestsCreatedByATeacher(this.userId).subscribe((response:MockTest[]) =>{
           console.log("Teacher all tests: ", response)
           response.forEach(test =>{

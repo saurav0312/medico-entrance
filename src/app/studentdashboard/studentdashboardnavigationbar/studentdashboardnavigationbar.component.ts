@@ -28,22 +28,22 @@ export class StudentdashboardnavigationbarComponent implements OnInit {
   ngOnInit(): void {
     this.authService.readMockTest('Free').subscribe((response: any) =>{
       this.noOfFreeMockTest = response.length
-  })
-  this.authService.readMockTest('Paid').subscribe((response: any) =>{
-    this.noOfPaidMockTest = response.length
-})
-  this.authService.currentUser$.subscribe(response =>{
-    this.profileService.getUserDetails(response?.uid).subscribe(response =>{
-      this.profileImageUrl = response.imageUrl
     })
-  })
-
+    this.authService.readMockTest('Paid').subscribe((response: any) =>{
+      this.noOfPaidMockTest = response.length
+    })
+    let sub = this.authService.getCurrentUser().subscribe(response =>{
+      this.profileService.getUserDetails(response?.uid).subscribe(response =>{
+        sub.unsubscribe()
+        this.profileImageUrl = response.imageUrl
+      })
+    })
   }
 
   logout(): void{
     this.authService.logout().subscribe(response =>{
       this.toastrService.success("Logged Out Successfully")
-      this.router.navigateByUrl("/")
+      this.router.navigateByUrl("/home/homepagecontent")
     })
   }
 

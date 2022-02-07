@@ -44,9 +44,10 @@ export class AddmocktestComponent implements OnInit{
       }
     );
 
-    this.authService.currentUser$.subscribe(response =>{
+    let sub = this.authService.getCurrentUser().subscribe(response =>{
       if(response !== null){
         this.userId = response?.uid
+        sub.unsubscribe()
       }
     })
   }

@@ -40,7 +40,7 @@ export class PracticetestsComponent implements OnInit {
     this.loading = true;
     this.route.queryParams.subscribe((params: any)=>{
       this.testType = <string>params.testType;
-      this.authService.currentUser$.subscribe(response =>{
+      const sub = this.authService.getCurrentUser().subscribe(response =>{
         if(response !== null){
           this.userId = response.uid
           this.testsubscriptionService.getAllSubscribedTestsByAUser(this.userId).subscribe((response:TestSubscription) =>{
@@ -62,7 +62,7 @@ export class PracticetestsComponent implements OnInit {
             //this.testReportDataToSend = response
             //console.log("User MockTests Result" ,this.testReportDataToSend)
           })
-          
+          sub.unsubscribe()
         }
       })
     })

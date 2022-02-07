@@ -3,9 +3,13 @@
 <div class="row" style="margin-top: 6rem; margin-left: 2rem; margin-right: 2rem; margin-bottom: 2rem;">
     <div style="text-align: center;">
         <h1>All {{testType}} tests</h1>
-        <ng-template [ngIf]="testType==='Paid'"><h2>Please get premium membership to access these tests or buy individual tests here<i style="color: red;">*</i></h2></ng-template>
+        
     </div>
     <ng-template [ngIf]="listOfMockTests.length != 0">
+        <ng-container [ngIf]="testType==='Paid'">
+            <h2>Please get premium membership to access these tests or buy individual tests here<i style="color: red;">*</i>
+            </h2>
+        </ng-container>
         <ng-container class ="col-sm-6"  *ngFor="let individualTest of listOfMockTests; let i = index" style="margin-bottom: 2rem;">
             <div class ="col-sm-6" style="margin-bottom: 2rem;">
                 <div class="card">

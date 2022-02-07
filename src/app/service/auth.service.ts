@@ -25,7 +25,7 @@ import { deleteDoc, query, where } from 'firebase/firestore';
 })
 export class AuthService {
 
-  currentUser$ = authState(this.auth);
+  //currentUser$ = authState(this.auth);
   mock$ = this.readMockTest();
   realtimeDatabaseUrl = environment.firebase.realtimeDatabaseUrl;
 
@@ -38,6 +38,10 @@ export class AuthService {
     private storage: Storage
     ) { 
 
+  }
+
+  getCurrentUser(): Observable<any>{
+    return authState(this.auth)
   }
 
   // Login a user
