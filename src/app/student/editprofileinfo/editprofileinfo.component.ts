@@ -58,7 +58,7 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
 
     this.loading = true;
 
-    this.authService.currentUser$.subscribe(response =>{
+    const sub = this.authService.getCurrentUser() .subscribe(response =>{
       if(response === null || response === undefined){
         //this.toastrService.error("User is not authenticated. Please login first.")
         this.loading = false;
@@ -95,7 +95,7 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
           console.log(error)
         })
       }
-      
+      sub.unsubscribe();
     },
     error =>{
       this.loading = false;

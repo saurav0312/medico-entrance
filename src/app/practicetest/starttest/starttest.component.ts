@@ -66,9 +66,10 @@ export class StarttestComponent implements OnInit {
       this.testId = <string>params.data
       this.authService.getMockTestByID(this.testId).subscribe(response=>{
         this.testData= response;
-        this.authService.currentUser$.subscribe(response =>{
+        const sub = this.authService.getCurrentUser().subscribe(response =>{
           this.userId = response?.uid
           this.realtimeDatabaseUrl = this.authService.realtimeDatabaseUrl;
+          sub.unsubscribe()
           this.authService.getAllMockTestsGivenByAUser(this.userId).subscribe(response =>{
             if(response !== undefined){
               this.isYourFirstTest = false;

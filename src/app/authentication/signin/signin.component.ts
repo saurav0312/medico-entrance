@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { finalize } from 'rxjs';
 import { ProfileService } from 'src/app/service/profile.service';
+import { User } from 'firebase/auth';
 
 @Component({
   selector: 'app-signin',
@@ -46,27 +47,49 @@ export class SigninComponent implements OnInit {
     if(this.loginForm.valid){
       this.authService.loginUser(this.loginForm).pipe(
         finalize(()=>{
-          this.loading=false;
+          
         } )
       ).subscribe(
         () =>{
-          const sub = this.authService.currentUser$.subscribe((response) => {
+          const sub = this.authService.getCurrentUser().subscribe((response:User) => {
             console.log("Current user: ", response)
-            this.profileService.getUserDetails(response?.uid).subscribe(response =>{
-              if(response.accountType === 'student'){
-                sub.unsubscribe();
-                this.router.navigateByUrl("/studentdashboard")
+            if(response != null){
+              if(0){
+                // temporarily commenting to use website. later we will enable it
+                // sub.unsubscribe()
+                // this.loading = false
+                // this.authService.logout().subscribe(res =>{
+                //   console.log("User logged out as email is not veriifed: ", res)
+                //   this.toastrService.error("Please verify email first.")
+                // })
               }
               else{
-                sub.unsubscribe();
-                this.router.navigateByUrl("/teacherdashboard")
+                let subb = this.profileService.getUserDetails(response?.uid).subscribe(response =>{
+                  subb.unsubscribe()
+                  if(response.accountType === 'student'){
+                    sub.unsubscribe();
+                    this.loading=false;
+                    this.router.navigateByUrl("/studentdashboard")
+                  }
+                  else{
+                    sub.unsubscribe();
+                    this.loading=false;
+                    this.router.navigateByUrl("/teacherdashboard")
+                  }
+                })
+                this.toastrService.success("User Logged In")
               }
-            })
-            this.toastrService.success("User Logged In")
+            }
+            else{
+              console.log("User is null")
+              sub.unsubscribe()
+              this.loading = false;
+            } 
           })
           
         },
         error =>{
+          this.loading = false
           window.alert(error.message)
         }
       )

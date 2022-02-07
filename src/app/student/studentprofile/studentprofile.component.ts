@@ -31,8 +31,9 @@ export class StudentprofileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authService.currentUser$.subscribe(response =>{
+    let sub = this.authService.getCurrentUser().subscribe(response =>{
       this.username = response?.displayName
+      sub.unsubscribe()
     })
   }
 

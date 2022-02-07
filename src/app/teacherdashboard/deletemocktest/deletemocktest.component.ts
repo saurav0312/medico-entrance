@@ -30,7 +30,7 @@ export class DeletemocktestComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.loading = true;
-    this.authService.currentUser$.subscribe(response =>{
+    let sub = this.authService.getCurrentUser().subscribe(response =>{
       if(response !== null){
         this.authService.fetchAllMockTestsCreatedByATeacher(response.uid).subscribe((response:MockTest[]) =>{
           console.log("tests by a teacher to be deleted: ", response)
@@ -47,6 +47,7 @@ export class DeletemocktestComponent implements OnInit, AfterViewInit {
       else{
         this.loading = false;
       }
+      sub.unsubscribe()
     })
   }
 

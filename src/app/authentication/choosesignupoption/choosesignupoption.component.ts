@@ -73,7 +73,7 @@ export class ChoosesignupoptionComponent implements OnInit {
     )
     .subscribe(
       () =>{
-        this.authService.currentUser$.subscribe(response => {
+        const sub = this.authService.getCurrentUser().subscribe(response => {
           const tempUserDetail: User = {
             'firstName': this.signUpForm.get('firstName')?.value,
             'lastName': this.signUpForm.get('lastName')?.value,
@@ -96,6 +96,7 @@ export class ChoosesignupoptionComponent implements OnInit {
           this.authService.sendVerificationEmail(response).subscribe(() =>{
             this.toastrService.success("Verification mail has been sent", "User Registered")
             this.router.navigateByUrl("/home")
+            sub.unsubscribe()
           })
         })
       },

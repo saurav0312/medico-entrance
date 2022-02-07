@@ -24,9 +24,10 @@ export class TeacherdashboardnavigationbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-  this.authService.currentUser$.subscribe(response =>{
+  let sub = this.authService.getCurrentUser().subscribe(response =>{
     this.profileService.getUserDetails(response?.uid).subscribe(response =>{
       this.profileImageUrl = response.imageUrl
+      sub.unsubscribe()
     })
   })
 
@@ -34,8 +35,9 @@ export class TeacherdashboardnavigationbarComponent implements OnInit {
 
   logout(): void{
     this.authService.logout().subscribe(response =>{
+      console.log(response)
       this.toastrService.success("Logged Out Successfully")
-      this.router.navigateByUrl("/")
+      this.router.navigateByUrl("/home/homepagecontent")
     })
   }
 
