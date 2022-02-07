@@ -25,7 +25,7 @@ export class PracticetestsComponent implements OnInit {
   isBought: boolean = false;
   loading: boolean = false;
   isFirstSubscription: boolean = true;
-  allSubscribedTests!: Array<string | undefined>;
+  allSubscribedTests: Array<string | undefined> =[];
 
   @Input() listOfMockTests : MockTest[] = [];
 
@@ -53,11 +53,13 @@ export class PracticetestsComponent implements OnInit {
               this.loading = false;
               this.listOfMockTests = response
               console.log("Collection of MockTests: ", response)
-              this.listOfMockTests.forEach(test =>{
-                if(this.allSubscribedTests.findIndex(subscribedTest => subscribedTest === test.id) !== -1){
-                  test.isBought = true;
-                }
-              })
+              if(this.listOfMockTests.length > 0 && this.allSubscribedTests.length > 0){
+                this.listOfMockTests.forEach(test =>{
+                  if(this.allSubscribedTests.findIndex(subscribedTest => subscribedTest === test.id) !== -1){
+                    test.isBought = true;
+                  }
+                })
+              }
             })
             //this.testReportDataToSend = response
             //console.log("User MockTests Result" ,this.testReportDataToSend)

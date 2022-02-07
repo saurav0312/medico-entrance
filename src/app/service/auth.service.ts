@@ -18,7 +18,7 @@ import { Firestore, addDoc, collectionData, collection, doc, docData, setDoc, up
 import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
 import { uploadBytes } from 'firebase/storage';
 import { TestReportData } from '../interface/testReportData';
-import { deleteDoc, query, where } from 'firebase/firestore';
+import { arrayRemove, deleteDoc, FieldValue, query, where } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -88,9 +88,15 @@ export class AuthService {
     return addDoc(booksRef, mockTest);
   }
 
+  //delete specific mock test using test id
   deleteMockTest(testId: string) : Observable<any>{
     const bookRef = doc(this.firestore, `MockTests/${testId}`);
     return from(deleteDoc(bookRef));
+  }
+
+  deleteEntryFromSubscriptionCollection(subscriberUserId: string, testIdToDelete: string){
+    const docRef = doc(this.firestore, `TestSubscriptionDetails/${subscriberUserId}`)
+    updateDoc(docRef,{"allSubscribedTests": arrayRemove(testIdToDelete)})
   }
 
   // This method reads all mock tests of particular test type ex: free or paid
@@ -140,6 +146,7 @@ export class AuthService {
     return collectionData(q,{idField: 'id'})
   }
 
+  //get user details based on account type ex: teacher or student
   getUserDetailsByType(type: string):Observable<any>{
     const collectionList = collection(this.firestore, 'UserDetails');
     const q = query(collectionList, where("accountType", "==",  type))
