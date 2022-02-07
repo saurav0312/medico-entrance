@@ -60,8 +60,18 @@ export class DeletemocktestComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(result =>{
       console.log("Dialog result: ", result)
       if(result === true){
-        this.authService.deleteMockTest(testId).subscribe(response =>{
-          console.log("Test deleted: ", response)
+        
+        let testIdArray = [testId];
+        this.authService.fetchAllUserDetailsSubscribedToTeacherTests(testIdArray).subscribe(response =>{
+          console.log("Students subscribed to the test: ", response )
+          if(response.length > 0){
+            response.forEach((user:any) =>{
+              this.authService.deleteEntryFromSubscriptionCollection(user['id'],testId);
+            })
+            this.authService.deleteMockTest(testId).subscribe(response =>{
+              console.log("Test deleted: ", response)
+            })
+          }
         })
       }
     })

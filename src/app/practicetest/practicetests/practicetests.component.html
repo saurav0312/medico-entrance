@@ -6,7 +6,7 @@
         
     </div>
     <ng-template [ngIf]="listOfMockTests.length != 0">
-        <ng-container [ngIf]="testType==='Paid'">
+        <ng-container *ngIf="testType==='Paid'">
             <h2>Please get premium membership to access these tests or buy individual tests here<i style="color: red;">*</i>
             </h2>
         </ng-container>

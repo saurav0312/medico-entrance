@@ -41,19 +41,21 @@ export class MystudentsComponent implements OnInit {
 
           if(this.allTestsCreatedByATeacher.length !== 0){
             this.authService.fetchAllUserDetailsSubscribedToTeacherTests(this.allTestsCreatedByATeacher).subscribe(response =>{
-              response.forEach((user:any) =>{
-                this.profileService.getUserDetails(user['id']).subscribe(response =>{
-                  if(this.myStudents.findIndex(ele => ele.email === response.email) === -1){
-                    if(response.dob !== undefined){
-                      response.dob = (<Timestamp><unknown>response.dob).toDate()
+              if(response.length > 0){
+                response.forEach((user:any) =>{
+                  this.profileService.getUserDetails(user['id']).subscribe(response =>{
+                    if(this.myStudents.findIndex(ele => ele.email === response.email) === -1){
+                      if(response.dob !== undefined){
+                        response.dob = (<Timestamp><unknown>response.dob).toDate()
+                      }
+                      this.myStudents.push(response)
                     }
-                    this.myStudents.push(response)
-                  }
+                  })
+                  //this.myStudents.push(user['id'])
                 })
-                //this.myStudents.push(user['id'])
-              })
-              console.log("My students id list ", this.myStudents)
-              console.log("My students details: ", response)
+                console.log("My students id list ", this.myStudents)
+                console.log("My students details: ", response)
+              }
               this.loading = false;
             })
           }
