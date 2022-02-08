@@ -19,6 +19,11 @@
                         <mat-error *ngIf="createMockTestForm.get('testName')?.dirty && createMockTestForm.get('testName')?.value.length==0">
                             Test name is required
                         </mat-error>
+
+                        <mat-error *ngIf="createMockTestForm.get('testName')?.errors">
+                          {{createMockTestForm.get('testName')?.errors | json}}
+
+                        </mat-error>
                     </mat-form-field>
                 </div>
 
@@ -39,6 +44,10 @@
                         <mat-error *ngIf="createMockTestForm.get('totalTime')?.dirty && createMockTestForm.get('totalTime')?.value.length==0">
                           Total time is required
                         </mat-error>
+                        <mat-error *ngIf="createMockTestForm.get('totalTime')?.errors">
+                          {{createMockTestForm.get('totalTime')?.errors | json}}
+
+                        </mat-error>
                     </mat-form-field>
                 </div>
 
@@ -56,7 +65,7 @@
                   <!-- <mat-form-field style="width: 100%;" appearance="outline"> -->
                       <mat-label style="text-align: left;">Test Type: </mat-label>
                       <mat-radio-group formControlName="testType" aria-label="Test Type">
-                        <mat-radio-button value="Free">Free</mat-radio-button>
+                        <mat-radio-button (change)="testTypeChanged($event)" value="Free">Free</mat-radio-button>
                         <mat-radio-button value="Paid">Paid</mat-radio-button>
                       </mat-radio-group>
                       <!-- <input formControlName="testType" type="text" required matInput> -->

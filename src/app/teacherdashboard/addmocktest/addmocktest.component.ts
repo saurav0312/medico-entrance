@@ -36,7 +36,7 @@ export class AddmocktestComponent implements OnInit{
       {
         testName: new FormControl('',[Validators.required]),
         testTakenBy: new FormControl('',[Validators.required]),
-        totalTime : new FormControl('', [Validators.required]),
+        totalTime : new FormControl('', [Validators.required, Validators.min(1)]),
         totalNumberOfQuestions: new FormControl('', [Validators.required]),
         testType: new FormControl('', [Validators.required]),
         testSourceFile: new FormControl('' ,[Validators.required]),
@@ -127,6 +127,12 @@ export class AddmocktestComponent implements OnInit{
     this.createMockTestForm.reset();
     this.ngOnInit();
 
+  }
+
+  testTypeChanged(event: any){
+    if(event['value']=='Free'){
+      this.createMockTestForm.get('testPrice')?.setValue(0);
+    }
   }
 
 
