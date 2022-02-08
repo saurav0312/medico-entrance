@@ -13,10 +13,7 @@
             <a routerLink="/studentdashboard" class="nav-link">Home</a>
           </li>
           <li class="nav-item">
-            <a [routerLink]="['/practicetest']" [queryParams]="{ testType: 'Free'}" class="nav-link" [matBadge]="noOfFreeMockTest">Free Mock Tests</a>
-          </li>
-          <li class="nav-item">
-            <a [routerLink]="['/practicetest']" [queryParams]="{ testType: 'Paid'}" class="nav-link" [matBadge]="noOfPaidMockTest">Paid Mock Tests</a>
+            <a [routerLink]="['/practicetest']" class="nav-link" [matBadge]="noOfAllMockTest">All Mock Tests</a>
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">

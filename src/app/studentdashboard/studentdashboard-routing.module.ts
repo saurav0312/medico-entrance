@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AllTestsByATeacherComponent } from './all-tests-by-ateacher/all-tests-by-ateacher.component';
 import { StudentdashboardcontentComponent } from './studentdashboardcontent/studentdashboardcontent.component';
 
 const routes: Routes = [
@@ -9,7 +10,8 @@ const routes: Routes = [
     children: [
       
     ]
-  }
+  },
+  { path: 'testsByATeacher', component: AllTestsByATeacherComponent}
 ];
 
 @NgModule({

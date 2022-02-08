@@ -6,7 +6,7 @@ import { AuthService } from '../../service/auth.service';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
 import { map, Subscription } from 'rxjs'
-import { User } from '../../interface/user';
+import { Userr } from '../../interface/user';
 import { ProfileService } from '../../service/profile.service';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { finalize } from 'rxjs';
@@ -26,7 +26,7 @@ export class ChoosesignupoptionComponent implements OnInit {
   isTeacher: boolean = false;
   isStudent: boolean = false;
 
-  userDetail!: User
+  userDetail!: Userr
 
   signUpForm!: FormGroup;
   tempSignUpForm!: FormGroup;
@@ -74,7 +74,7 @@ export class ChoosesignupoptionComponent implements OnInit {
     .subscribe(
       () =>{
         const sub = this.authService.getCurrentUser().subscribe(response => {
-          const tempUserDetail: User = {
+          const tempUserDetail: Userr = {
             'firstName': this.signUpForm.get('firstName')?.value,
             'lastName': this.signUpForm.get('lastName')?.value,
             'email': this.signUpForm.get('email')?.value,

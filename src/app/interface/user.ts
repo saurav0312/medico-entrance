@@ -1,4 +1,4 @@
-export interface User { 
+export interface Userr { 
     firstName: string; 
     lastName: string;
     email: string;
@@ -10,4 +10,6 @@ export interface User {
     state?: string;
     imageUrl? : string;
     accountType: string;
+    id?: string;
+    isSubscribed?: boolean;
   }
