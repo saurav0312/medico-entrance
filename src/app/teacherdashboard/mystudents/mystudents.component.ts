@@ -3,7 +3,7 @@ import { Timestamp } from 'firebase/firestore';
 import { MockTest } from 'src/app/interface/mockTest';
 import { AuthService } from 'src/app/service/auth.service';
 import { ProfileService } from 'src/app/service/profile.service';
-import { User } from '../../interface/user'
+import { Userr } from '../../interface/user'
 
 @Component({
   selector: 'app-mystudents',
@@ -22,7 +22,7 @@ export class MystudentsComponent implements OnInit {
   userId!: string | undefined;
   allTestsCreatedByATeacher: Array<string | undefined> =[];
 
-  myStudents: User[] =[];
+  myStudents: Userr[] =[];
 
   ngOnInit(): void {
     this.loading = true;
@@ -51,7 +51,6 @@ export class MystudentsComponent implements OnInit {
                       this.myStudents.push(response)
                     }
                   })
-                  //this.myStudents.push(user['id'])
                 })
                 console.log("My students id list ", this.myStudents)
                 console.log("My students details: ", response)

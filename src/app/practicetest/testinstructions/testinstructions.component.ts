@@ -21,7 +21,6 @@ export class TestinstructionsComponent implements OnInit {
   ngOnInit(): void {
     this.route.queryParams.subscribe((params: any) =>{
       this.testId = <string>params.data
-      this.testType = <string>params.testType;
       this.testTime = <number>params.testTime;
     })
   }

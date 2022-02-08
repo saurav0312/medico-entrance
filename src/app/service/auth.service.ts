@@ -25,7 +25,6 @@ import { arrayRemove, deleteDoc, FieldValue, query, where } from 'firebase/fires
 })
 export class AuthService {
 
-  //currentUser$ = authState(this.auth);
   mock$ = this.readMockTest();
   realtimeDatabaseUrl = environment.firebase.realtimeDatabaseUrl;
 
@@ -150,6 +149,6 @@ export class AuthService {
   getUserDetailsByType(type: string):Observable<any>{
     const collectionList = collection(this.firestore, 'UserDetails');
     const q = query(collectionList, where("accountType", "==",  type))
-    return collectionData(q)
+    return collectionData(q,{idField: 'id'})
   }
 }

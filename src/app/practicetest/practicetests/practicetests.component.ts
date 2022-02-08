@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { User } from '../../interface/user';
+import { Userr } from '../../interface/user';
 import { MockTest } from '../../interface/mockTest';
 import { Question } from '../../interface/question';
 import { Firestore, collectionData, collection } from '@angular/fire/firestore';
@@ -16,30 +16,28 @@ import { TestSubscription } from 'src/app/interface/test-subscription';
 })
 export class PracticetestsComponent implements OnInit {
 
+  searchText!: string;
+
   //mockTests! : MockTest[];
   testIdList: Array<string>=[];
   noOfTests!: number;
   userId!: string | undefined;
 
-  testType!: string;
-  isBought: boolean = false;
   loading: boolean = false;
   isFirstSubscription: boolean = true;
   allSubscribedTests: Array<string | undefined> =[];
 
   @Input() listOfMockTests : MockTest[] = [];
+  initialListOfMockTests: MockTest[] =[];
 
   constructor(
     private authService: AuthService,
     private router : Router,
-    private route: ActivatedRoute,
     private testsubscriptionService: TestsubscriptionService
   ) { }
 
   ngOnInit(): void {
     this.loading = true;
-    this.route.queryParams.subscribe((params: any)=>{
-      this.testType = <string>params.testType;
       const sub = this.authService.getCurrentUser().subscribe(response =>{
         if(response !== null){
           this.userId = response.uid
@@ -49,7 +47,7 @@ export class PracticetestsComponent implements OnInit {
               console.log("Subscribed Tests:", response)
               this.isFirstSubscription = false;
             }
-            this.authService.readMockTest(this.testType).subscribe((response: MockTest[]) =>{
+            this.authService.readMockTest().subscribe((response: MockTest[]) =>{
               this.loading = false;
               this.listOfMockTests = response
               console.log("Collection of MockTests: ", response)
@@ -60,14 +58,12 @@ export class PracticetestsComponent implements OnInit {
                   }
                 })
               }
+              this.initialListOfMockTests = this.listOfMockTests
             })
-            //this.testReportDataToSend = response
-            //console.log("User MockTests Result" ,this.testReportDataToSend)
           })
           sub.unsubscribe()
         }
       })
-    })
 
     
 
@@ -78,16 +74,25 @@ export class PracticetestsComponent implements OnInit {
   // })
   }
 
-  startTest(testId: string | undefined, test: MockTest) : void{
-    this.router.navigate(["/practicetest/testInstructions"], {queryParams: {data: testId, testType: this.testType, testTime: test.totalTime}})
-  }
+  // startTest(testId: string | undefined, test: MockTest) : void{
+  //   this.router.navigate(["/practicetest/testInstructions"], {queryParams: {data: testId, testTime: test.totalTime}})
+  // }
 
-  buyTest(testId: string | undefined) : void{
-    const data: TestSubscription ={
-      allSubscribedTests: [testId]
-    }
-    this.testsubscriptionService.subscribeToTest(this.userId, data, this.isFirstSubscription);
-    this.isBought = true;
-  }
+  // buyTest(testId: string | undefined) : void{
+  //   const data: TestSubscription ={
+  //     allSubscribedTests: [testId]
+  //   }
+  //   this.testsubscriptionService.subscribeToTest(this.userId, data, this.isFirstSubscription);
+  // }
+
+  // search(event: any){
+  //   console.log("Search text: ", event.length)
+  //   if(event.length == 0){
+  //     this.listOfMockTests = this.initialListOfMockTests
+  //   }
+  //   else{
+  //     this.listOfMockTests = this.initialListOfMockTests.filter(test => test.testType?.toLowerCase().indexOf((<String>event).toLowerCase())!==-1 )
+  //   }
+  // }
 
 }

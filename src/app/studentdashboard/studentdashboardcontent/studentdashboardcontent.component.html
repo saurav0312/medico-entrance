@@ -8,27 +8,38 @@
     <div style="text-align: center;">
         <h1>List of all teachers available</h1>
     </div>
+    <mat-label style="text-align: left;">Select: </mat-label>
+    <mat-radio-group [(ngModel)]="category" aria-label="Select">
+        <mat-radio-button (change)="categorySelected($event)" *ngFor="let categoryitem of categoryList" [value]="categoryitem">{{categoryitem}}</mat-radio-button>
+    </mat-radio-group>
     <ng-template [ngIf]="listOfTeachers.length != 0">
-        <ng-container class ="col-sm-6"  *ngFor="let myStudent of listOfTeachers; let i = index" style="margin-bottom: 2rem;">
+        <ng-container class ="col-sm-6"  *ngFor="let teacher of listOfTeachers; let i = index" style="margin-bottom: 2rem;">
             <div class ="col-sm-6" style="margin-bottom: 2rem;">
                 <div class="card">
                     <div class="card-body">
-                    <div>
-                        <h3 class="card-title" style="text-align: center; display: inline; ">
-                            <b>Teacher {{i+1}}</b>
-                        </h3>
+                        <div>
+                            <h3 class="card-title" style="text-align: center; display: inline; ">
+                                <b>Teacher {{i+1}}</b>
+                            </h3>
+                        </div>
+                        <div style="float: left;">
+                            <p class="card-text"><b>Teacher Name:</b> {{teacher.firstName}} {{teacher.lastName}}</p>
+                            <p class="card-text"><b>Email:</b> {{teacher.email}}</p>
+                            <p class="card-text"><b>Teacher Id:</b> {{teacher.id}}</p>
+                            <p class="card-text"><b>Phone Number:</b> {{teacher.phoneNumber === 0 ? 'Not available' : teacher.phoneNumber }}</p>
+                            <p class="card-text"><b>Date of birth:</b> {{teacher.dob === undefined ? 'Not available' : teacher.dob }}</p>
+                            <p class="card-text"><b>Address:</b> {{teacher.address === '' ? 'Not available' : teacher.address }}</p>
+                        </div>
+                        <div style="float: right;">
+                            <img class="rounded-circle" width="100" src="{{teacher.imageUrl}}" >
+                        </div>
                     </div>
-                    <div style="float: left;">
-                        <p class="card-text"><b>Teacher Name:</b> {{myStudent.firstName}} {{myStudent.lastName}}</p>
-                        <p class="card-text"><b>Email:</b> {{myStudent.email}}</p>
-                        <p class="card-text"><b>Phone Number:</b> {{myStudent.phoneNumber === 0 ? 'Not available' : myStudent.phoneNumber }}</p>
-                        <p class="card-text"><b>Date of birth:</b> {{myStudent.dob === undefined ? 'Not available' : myStudent.dob }}</p>
-                        <p class="card-text"><b>Address:</b> {{myStudent.address === '' ? 'Not available' : myStudent.address }}</p>
-                    </div>
-                    <div style="float: right;">
-                        <img class="rounded-circle" width="100" src="{{myStudent.imageUrl}}" >
-                    </div>
-                    
+                    <div style="display: block;  margin-left: auto;">
+                    <button [routerLink]="['/studentdashboard/testsByATeacher']" [queryParams]="{ teacherId: teacher.id }" style=" margin-left: auto; margin-right: 0.8em; text-align: center; width: fit-content; margin-bottom: 0.8em;" mat-raised-button color="primary">
+                        View All Tests</button>
+                    <button (click) ="subscribeToTeacher(teacher)" [ngClass]="{'subscribed': teacher.isSubscribed, 'unsubscribed': !teacher.isSubscribed}" style=" margin-left: auto; margin-right: 0.8em; text-align: center; width: fit-content; margin-bottom: 0.8em;"
+                    mat-button [class.mat-flat-button]="teacher.isSubscribed" >
+                        {{teacher.isSubscribed ? 'Subscribed' : 'Subscribe'}}</button>
                     </div>
                 </div>
             </div>

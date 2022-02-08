@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { User } from '../../interface/user';
+import { Userr } from '../../interface/user';
 import { ProfileService } from '../../service/profile.service'
 import { AuthService } from '../../service/auth.service'
 import { ToastrService } from 'ngx-toastr';
@@ -25,7 +25,7 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
   today: Date = new Date();
 
   profileForm!: FormGroup;
-  userDetail! : User;
+  userDetail! : Userr;
 
   firstName!: string;
   lastName!: string;

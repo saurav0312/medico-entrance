@@ -1,0 +1,42 @@
+<div class="row" style="margin-top: 6rem; margin-left: 2rem; margin-right: 2rem; margin-bottom: 2rem;">
+<div style="text-align: center;">
+    <div style="display: block; margin-left: auto;">
+        <h1>Search By Test Type</h1>
+        <mat-form-field appearance="outline" style="border-color: black 2px;">
+            <input [(ngModel)]="searchText" (ngModelChange)="search($event)" type="search" matInput placeholder="Search">
+        </mat-form-field>
+        <!-- <button mat-raised-button color="primary" style="margin-left: 0.8em ;">Search</button> -->
+    </div>
+    <h1>All tests</h1>
+</div>
+<ng-template [ngIf]="listOfMockTests.length != 0">
+    <ng-container class ="col-sm-6"  *ngFor="let individualTest of listOfMockTests; let i = index" style="margin-bottom: 2rem;">
+        <div class ="col-sm-6" style="margin-bottom: 2rem;">
+            <div class="card">
+                <div class="card-body">
+                <div>
+                    <h3 class="card-title" style="text-align: center; display: inline; ">
+                        <b>Test {{i+1}}</b>
+                        <mat-icon *ngIf="individualTest.testType === 'Paid' && !individualTest.isBought">
+                            lock
+                        </mat-icon>
+                    </h3>
+                    <h4 [hidden]="individualTest.testType==='Free' || individualTest.isBought" class="card-title" style="float: right;"><mat-icon>currency_rupee</mat-icon>{{individualTest.testPrice}}</h4>
+                </div>
+                <p class="card-text"><b>Test Name:</b> {{individualTest.testName}}</p>
+                <p class="card-text"><b>By:</b> {{individualTest.testTakenBy}}</p>
+                <p class="card-text"><b>Test Type:</b> {{individualTest.testType}}</p>
+                <p class="card-text"><b>Total Time:</b> {{individualTest.totalTime}} mins</p>
+                <p class="card-text"><b>Total Number Of Questions:</b> {{individualTest.questions.length}}</p>
+                <button (click)="startTest(individualTest.id, individualTest)" class="btn btn-primary" [disabled]="individualTest.testType==='Paid' && !individualTest.isBought" style="margin-right: 2em;">Start Test</button>
+                <button (click)="buyTest(individualTest.id)" class="btn btn-primary" [hidden]="individualTest.testType==='Free' || individualTest.isBought">Buy Test</button>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</ng-template>
+<ng-template [ngIf]="listOfMockTests.length === 0">
+    No Tests Available
+</ng-template>
+</div>
+<app-spinner [loading]="loading"></app-spinner>

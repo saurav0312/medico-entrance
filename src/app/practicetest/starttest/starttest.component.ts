@@ -78,7 +78,7 @@ export class StarttestComponent implements OnInit {
             //console.log("User MockTests Result" ,this.testReportDataToSend)
           })
         })
-         
+        //  will enable it later
         // this.intervalId = setInterval(() =>{
         //   console.log("interval running!")
         //   if(this.totalTimeRemaining === 0){
