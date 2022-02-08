@@ -75,6 +75,10 @@ export class StudentdashboardcontentComponent implements OnInit {
               this.listOfTeachers.forEach(teacher =>{
                 this.initialListOfTeachers.push(teacher)
               });
+
+              this.listOfTeachers.sort((x,y) =>{
+                return x.isSubscribed === y.isSubscribed ? 0 : x.isSubscribed ? -1 : 1
+              })
               // let categoryMap = {
               //   "value":category
               // }
@@ -92,6 +96,7 @@ export class StudentdashboardcontentComponent implements OnInit {
     if(teacher.isSubscribed){
       this.teacherSubscriptionService.deleteEntryFromStudentTeacherSubscriptionCollection(this.currentUserId,teacher.id).subscribe(response =>{
         teacher.isSubscribed = false;
+        this.category = 'All';
         this.ngOnInit()
       })
     }
@@ -101,6 +106,7 @@ export class StudentdashboardcontentComponent implements OnInit {
       }
       // this.searchText =''
       this.teacherSubscriptionService.subscribeToTeacher(this.currentUserId, data, this.isFirstSubscription).subscribe(response =>{
+        this.category = 'All'
         this.ngOnInit()
       });
     }
@@ -123,5 +129,8 @@ export class StudentdashboardcontentComponent implements OnInit {
     else{
       this.listOfTeachers = this.initialListOfTeachers.filter(teacher => teacher.isSubscribed == false)
     }
+    this.listOfTeachers.sort((x,y) =>{
+      return x.isSubscribed === y.isSubscribed ? 0 : x.isSubscribed ? -1 : 1
+    })
   }
 }

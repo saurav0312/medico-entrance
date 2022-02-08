@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { MockTest } from '../interface/mockTest';
 import { Tests } from '../interface/tests';
 
 @Injectable({
@@ -28,4 +29,18 @@ export class SharedService {
 
 
   constructor() { }
+
+  sortData(listOfMockTests : MockTest[]): MockTest[]{
+    listOfMockTests.sort((x,y) =>{
+
+      if(x.testType === 'Free' && y.testType === 'Free'){
+        return 0
+      }
+      if(x.testType === 'Paid' && y.testType === 'Paid'){
+        return x.isBought === y.isBought ? 0 : x.isBought ? -1 : 1
+      }
+      return x.testType ==='Free' ? -1 : 1
+    })
+    return listOfMockTests;
+  }
 }

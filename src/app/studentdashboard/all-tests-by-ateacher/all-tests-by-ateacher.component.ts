@@ -3,6 +3,7 @@ import { ActivatedRoute, Route } from '@angular/router';
 import { MockTest } from 'src/app/interface/mockTest';
 import { TestSubscription } from 'src/app/interface/test-subscription';
 import { AuthService } from 'src/app/service/auth.service';
+import { SharedService } from 'src/app/service/shared.service';
 import { TestsubscriptionService } from 'src/app/service/testsubscription.service';
 
 @Component({
@@ -23,7 +24,8 @@ export class AllTestsByATeacherComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
-    private testsubscriptionService : TestsubscriptionService
+    private testsubscriptionService : TestsubscriptionService,
+    private sharedService: SharedService
   ) { }
 
   ngOnInit(): void {
@@ -43,14 +45,30 @@ export class AllTestsByATeacherComponent implements OnInit {
             this.authService.fetchAllMockTestsCreatedByATeacher(this.teacherId).subscribe(response =>{
               console.log("ALl test by the teacherr: ", response)
               this.listOfMockTests = response
-              this.initialListOfMockTests = response
               if(this.listOfMockTests.length > 0 && this.allSubscribedTests.length > 0){
                 this.listOfMockTests.forEach(test =>{
                   if(this.allSubscribedTests.findIndex(subscribedTest => subscribedTest === test.id) !== -1){
                     test.isBought = true;
                   }
+                  else{
+                    test.isBought = false
+                  }
                 })
               }
+
+              this.listOfMockTests = this.sharedService.sortData(this.listOfMockTests)
+
+              // this.listOfMockTests.sort((x,y) =>{
+
+              //   if(x.testType === 'Free' && y.testType === 'Free'){
+              //     return 0
+              //   }
+              //   if(x.testType === 'Paid' && y.testType === 'Paid'){
+              //     return x.isBought === y.isBought ? 0 : x.isBought ? -1 : 1
+              //   }
+              //   return x.testType ==='Free' ? -1 : 1
+              // })
+              this.initialListOfMockTests = this.listOfMockTests
               this.loading = false
             })
           })

@@ -8,6 +8,7 @@ import { AuthService } from '../../service/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TestsubscriptionService } from 'src/app/service/testsubscription.service';
 import { TestSubscription } from 'src/app/interface/test-subscription';
+import { SharedService } from 'src/app/service/shared.service';
 
 @Component({
   selector: 'app-practicetests',
@@ -33,7 +34,8 @@ export class PracticetestsComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router : Router,
-    private testsubscriptionService: TestsubscriptionService
+    private testsubscriptionService: TestsubscriptionService,
+    private sharedService: SharedService
   ) { }
 
   ngOnInit(): void {
@@ -58,6 +60,19 @@ export class PracticetestsComponent implements OnInit {
                   }
                 })
               }
+
+              this.listOfMockTests = this.sharedService.sortData(this.listOfMockTests)
+
+              // this.listOfMockTests.sort((x,y) =>{
+
+              //   if(x.testType === 'Free' && y.testType === 'Free'){
+              //     return 0
+              //   }
+              //   if(x.testType === 'Paid' && y.testType === 'Paid'){
+              //     return x.isBought === y.isBought ? 0 : x.isBought ? -1 : 1
+              //   }
+              //   return x.testType ==='Free' ? -1 : 1
+              // })
               this.initialListOfMockTests = this.listOfMockTests
             })
           })

@@ -4,6 +4,7 @@ import { TestsubscriptionService } from 'src/app/service/testsubscription.servic
 import { MockTest } from '../../interface/mockTest';
 import { TestSubscription } from 'src/app/interface/test-subscription';
 import { AuthService } from 'src/app/service/auth.service';
+import { SharedService } from 'src/app/service/shared.service';
 
 @Component({
   selector: 'app-all-practice-tests',
@@ -23,7 +24,8 @@ export class AllPracticeTestsComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router : Router,
-    private testsubscriptionService: TestsubscriptionService
+    private testsubscriptionService: TestsubscriptionService,
+    private sharedService: SharedService
   ) { }
 
   ngOnInit(): void {
@@ -49,6 +51,19 @@ export class AllPracticeTestsComponent implements OnInit {
     else{
       this.listOfMockTests = this.initialListOfMockTests.filter(test => test.testType?.toLowerCase().indexOf((<String>event).toLowerCase())!==-1 )
     }
+
+    this.listOfMockTests = this.sharedService.sortData(this.listOfMockTests)
+
+    // this.listOfMockTests.sort((x,y) =>{
+
+    //   if(x.testType === 'Free' && y.testType === 'Free'){
+    //     return 0
+    //   }
+    //   if(x.testType === 'Paid' && y.testType === 'Paid'){
+    //     return x.isBought === y.isBought ? 0 : x.isBought ? -1 : 1
+    //   }
+    //   return x.testType ==='Free' ? -1 : 1
+    // })
   }
 
 }
