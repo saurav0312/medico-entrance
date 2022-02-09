@@ -10,17 +10,17 @@
     <h1>All tests</h1>
 </div>
 <ng-template [ngIf]="listOfMockTests.length != 0">
-    <ng-container class ="col-sm-6"  *ngFor="let individualTest of listOfMockTests; let i = index" style="margin-bottom: 2rem;">
-        <div class ="col-sm-6" style="margin-bottom: 2rem;">
-            <div class="card">
-                <div class="card-body">
+    <ng-container class ="col-sm-3"  *ngFor="let individualTest of listOfMockTests; let i = index" style="margin-bottom: 2rem;">
+        <div class ="col-sm-3" style="margin-bottom: 2rem;">
+            <div class="card" [ngClass]="'mat-elevation-z8'" style="border-radius: 1.2em; border-color: rgb(53, 52, 52);">
+                <div class="card-body" >
                 <div>
-                    <h3 class="card-title" style="text-align: center; display: inline; ">
+                    <h2 class="card-title" style="text-align: center; ">
                         <b>Test {{i+1}}</b>
-                        <mat-icon *ngIf="individualTest.testType === 'Paid' && !individualTest.isBought">
-                            lock
+                        <mat-icon *ngIf="individualTest.testType === 'Paid' ">
+                            {{ individualTest.isBought ? 'lock_open' : 'lock'}}
                         </mat-icon>
-                    </h3>
+                    </h2>
                     <h4 [hidden]="individualTest.testType==='Free' || individualTest.isBought" class="card-title" style="float: right;"><mat-icon>currency_rupee</mat-icon>{{individualTest.testPrice}}</h4>
                 </div>
                 <p class="card-text"><b>Test Name:</b> {{individualTest.testName}}</p>
@@ -28,7 +28,7 @@
                 <p class="card-text"><b>Test Type:</b> {{individualTest.testType}}</p>
                 <p class="card-text"><b>Total Time:</b> {{individualTest.totalTime}} mins</p>
                 <p class="card-text"><b>Total Number Of Questions:</b> {{individualTest.questions.length}}</p>
-                <button (click)="startTest(individualTest.id, individualTest)" class="btn btn-primary" [disabled]="individualTest.testType==='Paid' && !individualTest.isBought" style="margin-right: 2em;">Start Test</button>
+                <button (click)="startTest(individualTest.id, individualTest)" class="btn btn-outline-primary" [disabled]="individualTest.testType==='Paid' && !individualTest.isBought" style="margin-right: 2em;">Start Test</button>
                 <button (click)="buyTest(individualTest.id)" class="btn btn-primary" [hidden]="individualTest.testType==='Free' || individualTest.isBought">Buy Test</button>
                 </div>
             </div>

@@ -15,7 +15,7 @@
     <ng-template [ngIf]="listOfTeachers.length != 0">
         <ng-container class ="col-sm-6"  *ngFor="let teacher of listOfTeachers; let i = index" style="margin-bottom: 2rem;">
             <div class ="col-sm-6" style="margin-bottom: 2rem;">
-                <div class="card">
+                <div class="card" [ngClass]="'mat-elevation-z8'" style="border-radius: 1.2em; border-color: rgb(53, 52, 52);">
                     <div class="card-body">
                         <div>
                             <h3 class="card-title" style="text-align: center; display: inline; ">
@@ -44,6 +44,7 @@
                 </div>
             </div>
         </ng-container>
+
     </ng-template>
     <ng-template [ngIf]="listOfTeachers.length === 0">
         No Teachers Available
