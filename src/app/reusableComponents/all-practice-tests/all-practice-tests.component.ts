@@ -9,7 +9,7 @@ import { SharedService } from 'src/app/service/shared.service';
 @Component({
   selector: 'app-all-practice-tests',
   templateUrl: './all-practice-tests.component.html',
-  styleUrls: ['./all-practice-tests.component.css']
+  styleUrls: ['./all-practice-tests.component.scss']
 })
 export class AllPracticeTestsComponent implements OnInit {
 
