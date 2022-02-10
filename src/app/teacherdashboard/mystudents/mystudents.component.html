@@ -1,36 +1,42 @@
 
 <div class="row" style="margin-top: 6rem; margin-left: 2rem; margin-right: 2rem; margin-bottom: 2rem;">
     <div style="text-align: center;">
-        <h1>List of my students</h1>
+        <h1>List of students who have bought tests from you</h1>
     </div>
     <ng-template [ngIf]="myStudents.length != 0">
         <ng-container class ="col-sm-6"  *ngFor="let myStudent of myStudents; let i = index" style="margin-bottom: 2rem;">
             <div class ="col-sm-6" style="margin-bottom: 2rem;">
-                <div class="card">
+                <div class="card" [ngClass]="'mat-elevation-z8'" style="overflow-y: auto; border-radius: 1.2em; border-color: rgb(53, 52, 52);">
                     <div class="card-body">
-                    <div>
-                        <h3 class="card-title" style="text-align: center; display: inline; ">
-                            <b>Student {{i+1}}</b>
-                        </h3>
+                        <div>
+                            <h3 class="card-title" style="text-align: center; display: inline; ">
+                                <b>Student {{i+1}}</b>
+                            </h3>
+                        </div>
+                        <div style="float: left;">
+                            <p class="card-text"><b>Student Name:</b> {{myStudent.firstName}} {{myStudent.lastName}}</p>
+                            <p class="card-text"><b>Email:</b> {{myStudent.email}}</p>
+                            <p class="card-text"><b>Phone Number:</b> {{myStudent.phoneNumber === 0 ? 'Not available' : myStudent.phoneNumber }}</p>
+                            <p class="card-text"><b>Date of birth:</b> {{myStudent.dob === undefined ? 'Not available' : myStudent.dob }}</p>
+                            <p class="card-text"><b>Address:</b> {{myStudent.address === '' ? 'Not available' : myStudent.address}}</p>
+                        </div>
+                        <div style="float: right;">
+                            <img class="rounded-circle" width="100" src="{{myStudent.imageUrl}}" >
+                        </div>
                     </div>
-                    <div style="float: left;">
-                        <p class="card-text"><b>Student Name:</b> {{myStudent.firstName}} {{myStudent.lastName}}</p>
-                        <p class="card-text"><b>Email:</b> {{myStudent.email}}</p>
-                        <p class="card-text"><b>Phone Number:</b> {{myStudent.phoneNumber === 0 ? 'Not available' : myStudent.phoneNumber }}</p>
-                        <p class="card-text"><b>Date of birth:</b> {{myStudent.dob === undefined ? 'Not available' : myStudent.dob }}</p>
-                        <p class="card-text"><b>Address:</b> {{myStudent.address === '' ? 'Not available' : myStudent.address}}</p>
-                    </div>
-                    <div style="float: right;">
-                        <img class="rounded-circle" width="100" src="{{myStudent.imageUrl}}" >
-                    </div>
-                    
+                    <div style="display: block;  margin-left: auto;">
+                        <button [routerLink]="['/teacherdashboard/myTestsBoughtByAStudent']" [queryParams]="{ myStudentId: myStudent.id, teacherUserId: userId }" 
+                                style=" margin-left: auto; margin-right: 0.8em; text-align: center; width: fit-content; margin-bottom: 0.8em;" 
+                                mat-raised-button color="primary">
+                            View My Bought Tests
+                        </button>
                     </div>
                 </div>
             </div>
         </ng-container>
     </ng-template>
     <ng-template [ngIf]="myStudents.length === 0">
-        No Students Available
+        No one has bought your test yet!
     </ng-template>
 </div>
 <app-spinner [loading]="loading"></app-spinner>

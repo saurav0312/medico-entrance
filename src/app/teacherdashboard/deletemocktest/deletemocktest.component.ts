@@ -1,10 +1,9 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/service/auth.service';
 import { MockTest } from 'src/app/interface/mockTest';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort, Sort } from '@angular/material/sort';
-import { Tests } from '../../interface/tests';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationdialogComponent } from 'src/app/reusableComponents/confirmationdialog/confirmationdialog.component';
 
@@ -17,11 +16,22 @@ export class DeletemocktestComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort!: MatSort;
 
-  loading: boolean = false;
+  private _dataSource : MatTableDataSource<MockTest> = new MatTableDataSource();
+
+  @Input() loading: boolean = false;
 
   displayedColumnsForAllTests: string[] = ['no', 'testId', 'testName', 'testTakenBy', 'testType', 'totalTime','testPrice', 'actions'];
-  dataSource: MatTableDataSource<MockTest> = new MatTableDataSource();
+ 
   @ViewChild(MatPaginator) paginator! : MatPaginator;
+
+  @Input()
+  set dataSource(dataSourceVal : MatTableDataSource< MockTest> ){
+    this._dataSource = dataSourceVal;
+  }
+
+  get dataSource (): MatTableDataSource< MockTest>{
+    return this._dataSource
+  }
 
   constructor(
     private authService: AuthService,
@@ -29,30 +39,12 @@ export class DeletemocktestComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    this.loading = true;
-    let sub = this.authService.getCurrentUser().subscribe(response =>{
-      if(response !== null){
-        this.authService.fetchAllMockTestsCreatedByATeacher(response.uid).subscribe((response:MockTest[]) =>{
-          console.log("tests by a teacher to be deleted: ", response)
-          if(response !== null){
-            this.dataSource.data = response;
-            this.dataSource.paginator = this.paginator
-            this.loading = false;
-          }
-          else{
-            this.loading = false;
-          }
-        })
-      }
-      else{
-        this.loading = false;
-      }
-      sub.unsubscribe()
-    })
+
   }
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginator
   }
 
   deleteMockTest(testId: string){
@@ -60,7 +52,7 @@ export class DeletemocktestComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(result =>{
       console.log("Dialog result: ", result)
       if(result === true){
-        
+        this.loading = true
         let testIdArray = [testId];
         this.authService.fetchAllUserDetailsSubscribedToTeacherTests(testIdArray).subscribe(response =>{
           console.log("Students subscribed to the test: ", response )
@@ -70,6 +62,8 @@ export class DeletemocktestComponent implements OnInit, AfterViewInit {
             })
             this.authService.deleteMockTest(testId).subscribe(response =>{
               console.log("Test deleted: ", response)
+              this.dataSource.data = this.dataSource.data.filter(test => test.id !== testId)
+              this.loading =false;
             })
           }
         })

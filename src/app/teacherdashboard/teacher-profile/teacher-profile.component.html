@@ -1,0 +1,36 @@
+
+    <mat-toolbar class="mat-toolbar-class">
+        <button mat-icon-button *ngIf="sidenav.mode === 'over' " (click)="sidenav.toggle()">
+            <mat-icon *ngIf="!sidenav.opened">menu</mat-icon> 
+            <mat-icon *ngIf="sidenav.opened">close</mat-icon>
+        </button>
+        My Profile     
+      </mat-toolbar>
+      
+      <mat-sidenav-container class="mat-sidenav-container-class">
+        <mat-sidenav #sidenav="matSidenav" class="mat-sidenav-class" mode='over'>
+      
+      
+            <img class="avatar mat-elevation-z8" src="">
+            <h4 class="name">{{username}}</h4>
+      
+            <mat-divider class="mat-divider"></mat-divider>
+            <button routerLink="/editprofileinfo" routerLinkActive="docs-navbar-header-item-selected" mat-button class="menu-button">
+                <mat-icon>person</mat-icon>
+                <span>Profile</span>
+            </button>
+            <button routerLink="/teacherdashboard" routerLinkActive="docs-navbar-header-item-selected" mat-button class="menu-button">
+              <mat-icon>home</mat-icon>
+              <span>Home</span>
+            </button>
+            <button (click)='logout()' mat-button class="menu-button">
+              <mat-icon>logout</mat-icon>
+              <span>Sign out</span>
+            </button>
+        </mat-sidenav>
+      
+        <mat-sidenav-content class="mat-sidenav-content-class">
+            <router-outlet></router-outlet>
+        </mat-sidenav-content>
+      </mat-sidenav-container>
+      

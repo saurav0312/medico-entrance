@@ -12,7 +12,7 @@
 <ng-template [ngIf]="listOfMockTests.length != 0">
     <ng-container class ="col-sm-3"  *ngFor="let individualTest of listOfMockTests; let i = index" style="margin-bottom: 2rem;">
         <div class ="col-sm-3" style="margin-bottom: 2rem;">
-            <div class="card" [ngClass]="'mat-elevation-z8'" style="border-radius: 1.2em; border-color: rgb(53, 52, 52);">
+            <div class="card" [ngClass]="'mat-elevation-z8'" style=" overflow-y: auto; border-radius: 1.2em; border-color: rgb(53, 52, 52);">
                 <div class="card-body" >
                 <div>
                     <h2 class="card-title" style="text-align: center; ">
