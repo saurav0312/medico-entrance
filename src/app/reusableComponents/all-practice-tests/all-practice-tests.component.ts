@@ -5,6 +5,7 @@ import { MockTest } from '../../interface/mockTest';
 import { TestSubscription } from 'src/app/interface/test-subscription';
 import { AuthService } from 'src/app/service/auth.service';
 import { SharedService } from 'src/app/service/shared.service';
+import { StudentsOfTest } from 'src/app/interface/students-of-test';
 
 @Component({
   selector: 'app-all-practice-tests',
@@ -19,6 +20,7 @@ export class AllPracticeTestsComponent implements OnInit {
   searchText!: string;
   @Input() userId!: string | undefined;
   @Input() isFirstSubscription!: boolean;
+  isFirstStudent: boolean = true;
   @Input() loading = true;
 
   constructor(
@@ -41,6 +43,21 @@ export class AllPracticeTestsComponent implements OnInit {
     }
     this.searchText =''
     this.testsubscriptionService.subscribeToTest(this.userId, data, this.isFirstSubscription);
+
+    const studentData : StudentsOfTest ={
+      allStudentsOfTheTest : [this.userId]
+    }
+
+    const sub = this.testsubscriptionService.getAllStudentsOfATest(testId).subscribe(response =>{
+      if(response !== undefined){
+        this.isFirstStudent = false;
+      }
+      else{
+        this.isFirstStudent = true;
+      }
+      sub.unsubscribe()
+      this.testsubscriptionService.addStudentToATest(testId, studentData, this.isFirstStudent)
+    })
   }
 
   search(event: any){

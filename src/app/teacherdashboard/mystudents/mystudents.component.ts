@@ -40,23 +40,28 @@ export class MystudentsComponent implements OnInit {
           })
 
           if(this.allTestsCreatedByATeacher.length !== 0){
-            this.authService.fetchAllUserDetailsSubscribedToTeacherTests(this.allTestsCreatedByATeacher).subscribe(response =>{
-              if(response.length > 0){
-                response.forEach((user:any) =>{
-                  this.profileService.getUserDetails(user['id']).subscribe(response =>{
-                    if(this.myStudents.findIndex(ele => ele.email === response.email) === -1){
-                      if(response.dob !== undefined){
-                        response.dob = (<Timestamp><unknown>response.dob).toDate()
+            while(this.allTestsCreatedByATeacher.length){
+              const testIdList = this.allTestsCreatedByATeacher.splice(0,10);
+              this.authService.fetchAllUserDetailsSubscribedToTeacherTests(testIdList).subscribe(response =>{
+                if(response.length > 0){
+                  response.forEach((studentUser:any) =>{
+                    this.profileService.getUserDetails(studentUser['id']).subscribe(response =>{
+                      if(this.myStudents.findIndex(ele => ele.email === response.email) === -1){
+                        if(response.dob !== undefined){
+                          response.dob = (<Timestamp><unknown>response.dob).toDate()
+                        }
+                        response.id = studentUser.id
+                        this.myStudents.push(response)
                       }
-                      this.myStudents.push(response)
-                    }
+                    })
                   })
-                })
-                console.log("My students id list ", this.myStudents)
-                console.log("My students details: ", response)
-              }
-              this.loading = false;
-            })
+                  console.log("My students id list ", this.myStudents)
+                  console.log("My students details: ", response)
+                }
+                
+              })
+            }
+            this.loading = false;
           }
           else{
             this.loading = false

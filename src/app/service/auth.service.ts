@@ -151,4 +151,10 @@ export class AuthService {
     const q = query(collectionList, where("accountType", "==",  type))
     return collectionData(q,{idField: 'id'})
   }
+
+  //fetches all users who have subscribed to the current logged in teacher's tests
+  fetchAllTestsBoughtByThisStudent(studentId: string | undefined):Observable<any>{
+    const docRef = doc(this.firestore, `TestSubscriptionDetails/${studentId}`);
+    return docData(docRef)
+  }
 }

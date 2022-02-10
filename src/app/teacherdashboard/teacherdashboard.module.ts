@@ -12,6 +12,10 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSortModule } from '@angular/material/sort';
 import { MatRippleModule } from '@angular/material/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -23,6 +27,10 @@ import { AddmocktestComponent } from './addmocktest/addmocktest.component';
 import { MystudentsComponent } from './mystudents/mystudents.component';
 import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
 import { DeletemocktestComponent } from './deletemocktest/deletemocktest.component';
+import { TeacherProfileComponent } from './teacher-profile/teacher-profile.component';
+import { TeacherprofileinfoComponent } from './teacherprofileinfo/teacherprofileinfo.component';
+import { MyTestsBoughtByAStudentComponent } from './my-tests-bought-by-astudent/my-tests-bought-by-astudent.component';
+import { MyMockTestsComponent } from './my-mock-tests/my-mock-tests.component';
 
 
 @NgModule({
@@ -32,7 +40,11 @@ import { DeletemocktestComponent } from './deletemocktest/deletemocktest.compone
     TeacherdashboardhomeComponent,
     AddmocktestComponent,
     MystudentsComponent,
-    DeletemocktestComponent
+    DeletemocktestComponent,
+    TeacherProfileComponent,
+    TeacherprofileinfoComponent,
+    MyTestsBoughtByAStudentComponent,
+    MyMockTestsComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +61,11 @@ import { DeletemocktestComponent } from './deletemocktest/deletemocktest.compone
     MatDialogModule,
     MatSortModule,
     MatRippleModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatSidenavModule,
+    MatDividerModule,
+    MatToolbarModule,
+    MatDatepickerModule
   ]
 })
 export class TeacherdashboardModule { }
