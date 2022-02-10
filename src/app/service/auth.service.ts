@@ -157,4 +157,19 @@ export class AuthService {
     const docRef = doc(this.firestore, `TestSubscriptionDetails/${studentId}`);
     return docData(docRef)
   }
+
+  setTestFinishTime(userId: string | undefined, data: any): void{
+    const docRef = doc(this.firestore, `TestTime/${userId}`);
+    setDoc(docRef, data, {merge: true})
+  }
+
+  getTestFinishTime(userId: string | undefined): Observable<any>{
+    const docRef = doc(this.firestore, `TestTime/${userId}`);
+    return docData(docRef)
+  }
+
+  removeTestFinishTime(userId: string | undefined){
+    const docRef = doc(this.firestore, `TestTime/${userId}`);
+    return from(deleteDoc(docRef));
+  }
 }

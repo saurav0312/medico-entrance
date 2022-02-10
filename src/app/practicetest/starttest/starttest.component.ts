@@ -33,7 +33,7 @@ export class StarttestComponent implements OnInit {
   testToShowInTable! : Tests;
 
   counter = 0;
-  totalTimeRemaining = 10;
+  totalTimeRemaining!: number;
   testFinished : boolean = false;
   noOfQuestionsAnsweredCorrectly! : number;
   noOfQuestionsAnsweredIncorrectly! : number;
@@ -42,6 +42,7 @@ export class StarttestComponent implements OnInit {
   intervalId!: any;
   userId!: string | undefined;
   realtimeDatabaseUrl! : string;  
+  finalTestTimeInSeconds!: number;
 
   constructor(
     private router : Router,
@@ -74,26 +75,44 @@ export class StarttestComponent implements OnInit {
             if(response !== undefined){
               this.isYourFirstTest = false;
             }
+
+            const sub = this.authService.getTestFinishTime(this.userId).subscribe(response =>{
+              if(response !== undefined){
+                console.log("Timer response: ", response);
+                this.finalTestTimeInSeconds = response[this.testId]
+              }
+              else {
+                this.finalTestTimeInSeconds =Math.floor(Date.now()/1000)+40;
+                let data: { [k: string]: number } = {};
+                data[this.testId] = this.finalTestTimeInSeconds
+                this.authService.setTestFinishTime(this.userId,data)
+              }
+
+              sub.unsubscribe()
+              this.intervalId = setInterval(() =>{
+                console.log("interval running!")
+                this.totalTimeRemaining = this.finalTestTimeInSeconds - Math.floor(Date.now()/1000)
+                if(this.totalTimeRemaining == 0){
+                  this.finishInterval()
+                }
+                else{
+                  //this.totalTimeRemaining--;
+                }
+              },1000);
+            })
             //this.testReportDataToSend = response
             //console.log("User MockTests Result" ,this.testReportDataToSend)
           })
         })
         //  will enable it later
-        // this.intervalId = setInterval(() =>{
-        //   console.log("interval running!")
-        //   if(this.totalTimeRemaining === 0){
-        //     this.finishInterval()
-        //   }
-        //   else{
-        //     this.totalTimeRemaining--;
-        //   }
-        // },1000);
+        
       })
     })
   }
 
   finishInterval(){
     clearInterval(this.intervalId)
+    this.authService.removeTestFinishTime(this.userId);
     this.testFinished= true;
     this.evaluateMarks(this.testData);
     console.log(this.testData)
