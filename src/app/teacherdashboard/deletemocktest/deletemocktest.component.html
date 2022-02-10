@@ -30,7 +30,7 @@
             </ng-container>
 
             <ng-container matColumnDef="testTakenBy">
-                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Test Taken By </mat-header-cell>
+                <mat-header-cell mat-sort-header [ngClass]="'table-header-class'" *matHeaderCellDef> Test Taken By </mat-header-cell>
                 <mat-cell *matCellDef="let element"> 
                     <span class="mobile-label">Test Taken By:</span>
                     {{element.testTakenBy}}
@@ -38,7 +38,7 @@
             </ng-container>
 
             <ng-container matColumnDef="testType">
-                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Test Type</mat-header-cell>
+                <mat-header-cell mat-sort-header [ngClass]="'table-header-class'" *matHeaderCellDef> Test Type</mat-header-cell>
                 <mat-cell *matCellDef="let element"> 
                     <span class="mobile-label">Test Type</span>
                     {{element.testType}}
@@ -46,7 +46,7 @@
             </ng-container>
 
             <ng-container matColumnDef="totalTime">
-                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Total Time</mat-header-cell>
+                <mat-header-cell mat-sort-header [ngClass]="'table-header-class'" *matHeaderCellDef> Total Time</mat-header-cell>
                 <mat-cell *matCellDef="let element"> 
                     <span class="mobile-label">Total Time</span>
                     {{element.totalTime}}
@@ -54,7 +54,7 @@
             </ng-container>
 
             <ng-container matColumnDef="testPrice">
-                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Test Price</mat-header-cell>
+                <mat-header-cell mat-sort-header [ngClass]="'table-header-class'" *matHeaderCellDef> Test Price</mat-header-cell>
                 <mat-cell *matCellDef="let element"> 
                     <span class="mobile-label">Test Price</span>
                     {{element.testPrice}}
