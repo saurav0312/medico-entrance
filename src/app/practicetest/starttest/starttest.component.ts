@@ -9,13 +9,14 @@ import { Tests } from '../../interface/tests';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { SharedService } from '../../service/shared.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-starttest',
   templateUrl: './starttest.component.html',
   styleUrls: ['./starttest.component.css']
 })
-export class StarttestComponent implements OnInit {
+export class StarttestComponent implements OnInit, OnDestroy {
 
   displayedColumns: string[] = ['no', 'question', 'selectedOption', 'correctAnswer', 'result'];
   cols!: any[];
@@ -43,6 +44,9 @@ export class StarttestComponent implements OnInit {
   userId!: string | undefined;
   realtimeDatabaseUrl! : string;  
   finalTestTimeInSeconds!: number;
+
+  subscription!: Subscription
+  isResultSubmitted: boolean = false;
 
   constructor(
     private router : Router,
@@ -76,29 +80,40 @@ export class StarttestComponent implements OnInit {
               this.isYourFirstTest = false;
             }
 
-            const sub = this.authService.getTestFinishTime(this.userId).subscribe(response =>{
-              if(response !== undefined){
-                console.log("Timer response: ", response);
-                this.finalTestTimeInSeconds = response[this.testId]
-              }
-              else {
-                this.finalTestTimeInSeconds =Math.floor(Date.now()/1000)+40;
-                let data: { [k: string]: number } = {};
-                data[this.testId] = this.finalTestTimeInSeconds
-                this.authService.setTestFinishTime(this.userId,data)
-              }
+            this.subscription = this.authService.getTestFinishTime(this.userId).subscribe(response =>{
+              if(this.testFinished == false){
+                if(response !== undefined){
+                  console.log("Timer response: ", response);
+                  this.finalTestTimeInSeconds = response[this.testId]
+                }
+                else {
+                  this.finalTestTimeInSeconds =Math.floor(Date.now()/1000)+40;
+                  let data: { [k: string]: number } = {};
+                  data[this.testId] = this.finalTestTimeInSeconds
+                  console.log("Setting timer")
+                  this.authService.setTestFinishTime(this.userId,data)
+                }
 
-              sub.unsubscribe()
-              this.intervalId = setInterval(() =>{
-                console.log("interval running!")
-                this.totalTimeRemaining = this.finalTestTimeInSeconds - Math.floor(Date.now()/1000)
-                if(this.totalTimeRemaining == 0){
-                  this.finishInterval()
+                //this.subscription.unsubscribe()
+                if(typeof(this.intervalId) === 'undefined'){
+                  this.intervalId = setInterval(() =>{
+                    console.log("interval running!")
+                    this.totalTimeRemaining = this.totalTimeRemaining == 0 ? this.totalTimeRemaining : this.finalTestTimeInSeconds - Math.floor(Date.now()/1000)
+                    if(this.totalTimeRemaining <= 0){
+                      console.log("Interval cleared")
+                      clearInterval(this.intervalId)
+                      this.intervalId = undefined
+                      this.finishInterval()
+                    }
+                    else{
+                      //this.totalTimeRemaining--;
+                    }
+                  },1000);
                 }
-                else{
-                  //this.totalTimeRemaining--;
-                }
-              },1000);
+              }
+              else{
+                this.totalTimeRemaining = 0;
+              }
             })
             //this.testReportDataToSend = response
             //console.log("User MockTests Result" ,this.testReportDataToSend)
@@ -110,15 +125,21 @@ export class StarttestComponent implements OnInit {
     })
   }
 
+  
+
   finishInterval(){
-    clearInterval(this.intervalId)
+    //clearInterval(this.intervalId)
     this.authService.removeTestFinishTime(this.userId);
     this.testFinished= true;
-    this.evaluateMarks(this.testData);
-    console.log(this.testData)
+    if(this.isResultSubmitted == false){
+      this.evaluateMarks(this.testData);
+      console.log(this.testData)
+    }
   }
 
   submitTest(): void{
+    clearInterval(this.intervalId)
+    this.intervalId = undefined
     this.totalTimeRemaining = 0;
     this.finishInterval();
   }
@@ -193,11 +214,14 @@ export class StarttestComponent implements OnInit {
     }
     this.testReportDataToSend = testReportDataToSend
 
-    this.authService.createAllMockTestsGivenByAUser(this.userId, testReportDataToSend, this.isYourFirstTest);
+    this.authService.createAllMockTestsGivenByAUser(this.userId, testReportDataToSend, this.isYourFirstTest).subscribe(response =>{
+      this.isResultSubmitted = true;
+    });
   }
 
   ngOnDestroy(){
     clearInterval(this.intervalId)
+    this.subscription.unsubscribe()
   }
 
   increaseCounter(): void{

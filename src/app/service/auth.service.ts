@@ -115,13 +115,13 @@ export class AuthService {
   }
 
   // This method creates a entry when a student gives a test
-  createAllMockTestsGivenByAUser(id: string | undefined, data: any, isYourFirstTest: boolean){
+  createAllMockTestsGivenByAUser(id: string | undefined, data: any, isYourFirstTest: boolean): Observable<any>{
     const docRef = doc(this.firestore, `IndividualUserTests/${id}`);
     if(isYourFirstTest){
-      setDoc(docRef, data, {merge: true})
+      return from(setDoc(docRef, data, {merge: true}))
     }
     else{
-      updateDoc(docRef, {allTests : arrayUnion(data.allTests[0])} )    
+      return from(updateDoc(docRef, {allTests : arrayUnion(data.allTests[0])} ))    
     }
   }
   
