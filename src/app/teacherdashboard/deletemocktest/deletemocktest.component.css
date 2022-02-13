@@ -96,3 +96,13 @@
 
 
   /* css for margin */
+  .testNameCss{
+    justify-content: space-evenly;
+    display: block;
+    text-align: center;
+  }
+
+  .testHeaderCss{
+    justify-content: space-evenly;
+    text-align: center;
+  }

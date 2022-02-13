@@ -45,7 +45,7 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
         firstName: new FormControl('',[Validators.required]),
         lastName: new FormControl('',[Validators.required]),
         email : new FormControl('', [Validators.required, Validators.email]),
-        phoneNumber: new FormControl(''),
+        phoneNumber: new FormControl('',[Validators.maxLength(10)]),
         dob: new FormControl(''),
         address: new FormControl(''),
         education: new FormControl(''),
@@ -67,6 +67,7 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
         this.userId = response?.uid
         const sub = this.profileService.getUserDetails(this.userId)
         .subscribe(response=>{
+          console.log("User profile response: ", response)
           if(response === null || response === undefined){
             this.loading = false;
           }

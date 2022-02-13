@@ -4,7 +4,7 @@
     <ng-container *ngIf="!testFinished; else testFinsihedBlock">
         <div>
             <h1 style="text-align: center; margin-top: 1em;">
-                {{totalTimeRemaining}}
+                {{hour == 0 ? '00': hour <=9 ? '0' + hour : hour}}:{{minutes == 0 ? '00' : minutes <=9 ? '0' + minutes : minutes}}:{{seconds == 0 ? '00' : seconds <= 9 ? '0' + seconds : seconds}}
                 <mat-icon aria-label="home icom">
                     timer
                 </mat-icon>

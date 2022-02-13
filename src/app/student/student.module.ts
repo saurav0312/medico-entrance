@@ -29,6 +29,7 @@ import { DetailtestreportComponent } from './detailtestreport/detailtestreport.c
 import { ViewmytestsComponent } from './viewmytests/viewmytests.component';
 import { EditprofileinfoComponent } from './editprofileinfo/editprofileinfo.component';
 import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
+import { MatSortModule } from '@angular/material/sort';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-    SpinnerModule
+    SpinnerModule,
+    MatSortModule
   ],
   exports: [
     StudentprofileComponent,
