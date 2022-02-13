@@ -44,9 +44,13 @@ export class StarttestComponent implements OnInit, OnDestroy {
   userId!: string | undefined;
   realtimeDatabaseUrl! : string;  
   finalTestTimeInSeconds!: number;
+  testTotalTime: number = 0;
 
   subscription!: Subscription
   isResultSubmitted: boolean = false;
+  hour: number = 0;
+  minutes: number = 0;
+  seconds: number = 0;
 
   constructor(
     private router : Router,
@@ -71,6 +75,7 @@ export class StarttestComponent implements OnInit, OnDestroy {
       this.testId = <string>params.data
       this.authService.getMockTestByID(this.testId).subscribe(response=>{
         this.testData= response;
+        this.testTotalTime = this.testData.totalTime
         const sub = this.authService.getCurrentUser().subscribe(response =>{
           this.userId = response?.uid
           this.realtimeDatabaseUrl = this.authService.realtimeDatabaseUrl;
@@ -87,7 +92,7 @@ export class StarttestComponent implements OnInit, OnDestroy {
                   this.finalTestTimeInSeconds = response[this.testId]
                 }
                 else {
-                  this.finalTestTimeInSeconds =Math.floor(Date.now()/1000)+40;
+                  this.finalTestTimeInSeconds =Math.floor(Date.now()/1000)+this.testTotalTime*60;
                   let data: { [k: string]: number } = {};
                   data[this.testId] = this.finalTestTimeInSeconds
                   console.log("Setting timer")
@@ -99,6 +104,9 @@ export class StarttestComponent implements OnInit, OnDestroy {
                   this.intervalId = setInterval(() =>{
                     console.log("interval running!")
                     this.totalTimeRemaining = this.totalTimeRemaining == 0 ? this.totalTimeRemaining : this.finalTestTimeInSeconds - Math.floor(Date.now()/1000)
+                    this.hour = Math.floor(this.totalTimeRemaining/3600)
+                    this.minutes = Math.floor((this.totalTimeRemaining % 3600)/60)
+                    this.seconds = Math.floor((this.totalTimeRemaining % 3600)%60)
                     if(this.totalTimeRemaining <= 0){
                       console.log("Interval cleared")
                       clearInterval(this.intervalId)

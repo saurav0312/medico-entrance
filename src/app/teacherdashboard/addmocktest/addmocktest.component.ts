@@ -77,6 +77,12 @@ export class AddmocktestComponent implements OnInit{
         let questions: Question[] = [];
         console.log(data)
 
+        if(data.length == 0){
+          this.loading = false;
+          this.createMockTestForm.get('testSourceFile')?.setErrors({notEmpty: false})
+          throw new Error("Can not upload empty question list!")
+        }
+
         data.forEach((questionItem:any) =>{
           let options: Array<any> =[];
           options.push(questionItem.optionA)

@@ -55,7 +55,7 @@
                   <mat-form-field style="width: 100%;" appearance="outline">
                       <mat-label>Total No of Questions</mat-label>
                       <input formControlName="totalNumberOfQuestions" type="number" required matInput>
-                      <mat-error *ngIf="createMockTestForm.get('totalNumberOfQuestions')?.dirty && createMockTestForm.get('totalNumberOfQuestions')?.value.length==0">
+                      <mat-error *ngIf="(createMockTestForm.get('totalNumberOfQuestions')?.dirty || createMockTestForm.controls['totalNumberOfQuestions'].touched) && createMockTestForm.get('totalNumberOfQuestions')?.value.length==0">
                         Total No of Questions is required
                       </mat-error>
                   </mat-form-field>
@@ -69,7 +69,7 @@
                         <mat-radio-button value="Paid">Paid</mat-radio-button>
                       </mat-radio-group>
                       <!-- <input formControlName="testType" type="text" required matInput> -->
-                      <mat-error *ngIf="createMockTestForm.get('testType')?.dirty && createMockTestForm.get('testType')?.value.length==0">
+                      <mat-error *ngIf="(createMockTestForm.get('testType')?.dirty || createMockTestForm.controls['testType'].touched) && createMockTestForm.get('testType')?.value.length==0">
                         Test Type is required
                       </mat-error>
                   <!-- </mat-form-field> -->
@@ -91,11 +91,10 @@
                     <div class="mb-3">
                       <input formControlName="testSourceFile" (change)="uploadFile($event)" class="form-control" type="file" required accept=".xls, .xlsx" id="formFile">
                     </div>
-                    <!-- <label class="btn btn-default">
-                      Browse <input formControlName="testSourceFile" (change)="uploadFile($event)" type="file" required accept=".xls, .xlsx">
-                    </label> -->
-                    <!-- <input formControlName="testSourceFile" (change)="uploadFile($event) " type="file" required accept=".xls, .xlsx"> -->
-                  <!-- </mat-form-field> -->
+
+                    <mat-error *ngIf="createMockTestForm.get('testSourceFile')?.dirty && createMockTestForm.get('testSourceFile')?.errors">
+                        {{createMockTestForm.controls['testSourceFile']?.errors | json}}
+                    </mat-error>
                 </div>
 
 

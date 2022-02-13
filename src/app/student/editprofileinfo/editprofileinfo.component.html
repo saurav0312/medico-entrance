@@ -53,7 +53,7 @@
                     <div>
                         <mat-form-field style="margin-right: 0.5em" appearance="outline">
                             <mat-label>PhoneNumber</mat-label>
-                            <input formControlName="phoneNumber" type="number" matInput>
+                            <input formControlName="phoneNumber" type="number" maxlength="10" pattern="[1-9]{1}[0-9]{9}" required matInput>
                         </mat-form-field>
 
                         <mat-form-field appearance="outline" class="example-form-field">
@@ -87,9 +87,6 @@
                         <mat-form-field style="margin-right: 0.5em" appearance="outline">
                             <mat-label>Country</mat-label>
                             <input formControlName="country" type="text" matInput>
-                            <!-- <mat-select formControlName="country">
-                                <mat-option>None</mat-option>
-                            </mat-select> -->
                         </mat-form-field>
             
                         <mat-form-field appearance="outline">
@@ -99,10 +96,18 @@
                     </div>
 
 
+                    <!-- <div class="submit-btn">
+                        <div class="submit-btn">
+                            <button [ngClass]="'submit-btn'" mat-raised-button type="button" (click) = "clearForm()" class="cancel-class">Cancel</button>
+                            <button [ngClass]="'submit-btn'" mat-raised-button color="primary" [disabled]="profileForm.invalid">Save</button>
+                        </div>
+                    </div> -->
                     <div>
-                        <button style="margin-right: em; margin-top: 1em;" mat-raised-button type="button" (click) = "clearForm()" class="cancel-class">Cancel</button>
-                        <button style="margin-left: 5em ; margin-right: 1em; margin-top: 1em;" mat-raised-button color="primary" [disabled]="profileForm.invalid">Save</button>
+                        <button style="display: inline-flex; margin-right: 3em;" type="button" class="btn btn-danger" (click) = "clearForm()">Cancel</button>
+                        <button style="display: inline-flex;" class="btn btn-primary" [disabled]="profileForm.invalid">Save</button>
                     </div>
+
+                    {{profileForm.invalid}}
 
                     <app-spinner [loading]="loading" [mode]="mode" [diameter]="50" [overlay]="true">
                     </app-spinner>

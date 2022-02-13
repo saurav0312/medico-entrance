@@ -43,12 +43,4 @@ export class StudentprofileComponent implements OnInit {
       this.router.navigateByUrl("/")
     })
   }
-
-  // viewIndividualTestReport(test: Tests): void{
-  //   this.viewTest = true;
-  //   this.testToShowInTable = test;
-  //   console.log("Cell clicked: ", this.testToShowInTable)
-  // }
-
-
 }

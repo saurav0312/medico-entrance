@@ -27,7 +27,7 @@
                             <p class="card-text"><b>Email:</b> {{teacher.email}}</p>
                             <p class="card-text"><b>Teacher Id:</b> {{teacher.id}}</p>
                             <p class="card-text"><b>Phone Number:</b> {{teacher.phoneNumber === 0 ? 'Not available' : teacher.phoneNumber }}</p>
-                            <p class="card-text"><b>Date of birth:</b> {{teacher.dob === undefined ? 'Not available' : teacher.dob }}</p>
+                            <p class="card-text"><b>Date of birth:</b> {{teacher.dob === undefined ? 'Not available' : teacher.dob | date:'yyyy/MM/dd' }}</p>
                             <p class="card-text"><b>Address:</b> {{teacher.address === '' ? 'Not available' : teacher.address }}</p>
                         </div>
                         <div style="float: right;">

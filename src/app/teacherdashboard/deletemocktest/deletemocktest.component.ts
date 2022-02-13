@@ -60,12 +60,12 @@ export class DeletemocktestComponent implements OnInit, AfterViewInit {
             response.forEach((user:any) =>{
               this.authService.deleteEntryFromSubscriptionCollection(user['id'],testId);
             })
-            this.authService.deleteMockTest(testId).subscribe(response =>{
-              console.log("Test deleted: ", response)
-              this.dataSource.data = this.dataSource.data.filter(test => test.id !== testId)
-              this.loading =false;
-            })
           }
+          this.authService.deleteMockTest(testId).subscribe(response =>{
+            console.log("Test deleted: ", response)
+            this.dataSource.data = this.dataSource.data.filter(test => test.id !== testId)
+            this.loading =false;
+          })
         })
       }
     })

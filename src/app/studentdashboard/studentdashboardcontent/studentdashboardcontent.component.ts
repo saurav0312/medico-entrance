@@ -7,6 +7,7 @@ import { AuthService } from '../../service/auth.service';
 import { User } from 'firebase/auth';
 import { TeacherSubscription } from 'src/app/interface/teacher-subscription';
 import { TeacherSubscriptionService } from 'src/app/service/teacher-subscription.service';
+import { Timestamp } from 'firebase/firestore';
 
 @Component({
   selector: 'app-studentdashboardcontent',
@@ -44,6 +45,11 @@ export class StudentdashboardcontentComponent implements OnInit {
         this.authService.getUserDetailsByType("teacher").subscribe((response:any) =>{
           if(response !== null){
             this.listOfTeachers = response
+            this.listOfTeachers.forEach(teacher =>{
+              if(teacher.dob !== undefined){
+                teacher.dob = (<Timestamp><unknown>(teacher.dob)).toDate()
+              }
+            })
             console.log("All teacher details: ", response)
             
             this.teacherSubscriptionService.getAllSubscribedTeachersByAUser(this.currentUserId).subscribe((response:TeacherSubscription) =>{

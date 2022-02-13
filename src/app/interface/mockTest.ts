@@ -4,7 +4,7 @@ export interface MockTest {
   id?: string | undefined;
   testName? : string; 
   testTakenBy? : string;
-  totalTime? : number;
+  totalTime : number;
   totalNumberOfQuestions? : number;
   testType: string;
   questions: Question[];

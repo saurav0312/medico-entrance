@@ -4,7 +4,7 @@
     <h1 style="text-align: center; margin-top: 2em;">All Test Records</h1>
     <div [ngClass]="'mat-elevation-z8'" class="table-contents" id="content" #content>
         <div>
-        <mat-table [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"
+        <mat-table matSort [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"
                     > 
             <ng-container matColumnDef="no">
                 <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> No </mat-header-cell>
@@ -23,7 +23,7 @@
             </ng-container>
 
             <ng-container matColumnDef="testName">
-                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> TestName </mat-header-cell>
+                <mat-header-cell  mat-sort-header [ngClass]="'table-header-class'" *matHeaderCellDef> TestName </mat-header-cell>
                 <mat-cell *matCellDef="let element" (click)="viewIndividualTestReport(element)"> 
                     <span class="mobile-label">TestName:</span>
                     {{element.testName}}
@@ -31,7 +31,7 @@
             </ng-container>
 
             <ng-container matColumnDef="testTakenBy">
-                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Test Taken By </mat-header-cell>
+                <mat-header-cell  mat-sort-header [ngClass]="'table-header-class'" *matHeaderCellDef> Test Taken By </mat-header-cell>
                 <mat-cell *matCellDef="let element" (click)="viewIndividualTestReport(element)"> 
                     <span class="mobile-label">Test Taken By:</span>
                     {{element.testTakenBy}}
@@ -39,7 +39,7 @@
             </ng-container>
 
             <ng-container matColumnDef="testType">
-                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Test Type</mat-header-cell>
+                <mat-header-cell  mat-sort-header [ngClass]="'table-header-class'" *matHeaderCellDef> Test Type</mat-header-cell>
                 <mat-cell *matCellDef="let element" (click)="viewIndividualTestReport(element)"> 
                     <span class="mobile-label">Test Type</span>
                     {{element.testType}}
@@ -47,7 +47,7 @@
             </ng-container>
 
             <ng-container matColumnDef="testTakenDate">
-                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Test Taken Date </mat-header-cell>
+                <mat-header-cell  mat-sort-header [ngClass]="'table-header-class'" *matHeaderCellDef> Test Taken Date </mat-header-cell>
                 <mat-cell *matCellDef="let element" (click)="viewIndividualTestReport(element)">
                     <span class="mobile-label">Test Taken Date:</span>
                         {{element.testTakenDate.toDate() | date}} 

@@ -7,6 +7,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { NavigationExtras, Router } from '@angular/router';
 import { TestReportQuestion } from '../../interface/testReportQuestion';
 import { SharedService } from 'src/app/service/shared.service';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-viewmytests',
@@ -25,6 +26,7 @@ export class ViewmytestsComponent implements OnInit {
 
   dataSource: MatTableDataSource<Tests> = new MatTableDataSource();
   @ViewChild(MatPaginator) paginator! : MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private authService: AuthService,
@@ -41,6 +43,7 @@ export class ViewmytestsComponent implements OnInit {
           this.dataSource.data = this.testReportData.allTests
         }
         this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort
       })
     })
   }

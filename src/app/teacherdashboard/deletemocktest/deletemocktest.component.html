@@ -6,65 +6,65 @@
         <mat-table matSort [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"
                     > 
             <ng-container matColumnDef="no">
-                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> No </mat-header-cell>
-                <mat-cell *matCellDef="let element; let i = index;"> 
+                <mat-header-cell [ngClass]="'table-header-class testHeaderCss'" *matHeaderCellDef> No </mat-header-cell>
+                <mat-cell [ngClass]="'testNameCss'" *matCellDef="let element; let i = index;"> 
                     <span class="mobile-label">No:</span>
                     {{paginator.pageIndex * paginator.pageSize + i + 1}} 
                 </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="testId">
-                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> TestId </mat-header-cell>
-                <mat-cell *matCellDef="let element"> 
+                <mat-header-cell [ngClass]="'table-header-class testHeaderCss'" *matHeaderCellDef> TestId </mat-header-cell>
+                <mat-cell [ngClass]="'testNameCss'" *matCellDef="let element"> 
                     <span class="mobile-label">TestId:</span>
                     {{element.id}}
                     </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="testName">
-                <mat-header-cell mat-sort-header [ngClass]="'table-header-class'" *matHeaderCellDef> TestName </mat-header-cell>
-                <mat-cell *matCellDef="let element"> 
+                <mat-header-cell mat-sort-header [ngClass]="'table-header-class testHeaderCss'" *matHeaderCellDef> TestName </mat-header-cell>
+                <mat-cell [ngClass]="'testNameCss'" *matCellDef="let element"> 
                     <span class="mobile-label">TestName:</span>
                     {{element.testName}}
                     </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="testTakenBy">
-                <mat-header-cell mat-sort-header [ngClass]="'table-header-class'" *matHeaderCellDef> Test Taken By </mat-header-cell>
-                <mat-cell *matCellDef="let element"> 
+                <mat-header-cell mat-sort-header [ngClass]="'table-header-class testHeaderCss'" *matHeaderCellDef> Test Taken By </mat-header-cell>
+                <mat-cell [ngClass]="'testNameCss'" *matCellDef="let element"> 
                     <span class="mobile-label">Test Taken By:</span>
                     {{element.testTakenBy}}
                     </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="testType">
-                <mat-header-cell mat-sort-header [ngClass]="'table-header-class'" *matHeaderCellDef> Test Type</mat-header-cell>
-                <mat-cell *matCellDef="let element"> 
+                <mat-header-cell mat-sort-header [ngClass]="'table-header-class testHeaderCss'" *matHeaderCellDef> Test Type</mat-header-cell>
+                <mat-cell [ngClass]="'testNameCss'" *matCellDef="let element"> 
                     <span class="mobile-label">Test Type</span>
                     {{element.testType}}
                     </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="totalTime">
-                <mat-header-cell mat-sort-header [ngClass]="'table-header-class'" *matHeaderCellDef> Total Time</mat-header-cell>
-                <mat-cell *matCellDef="let element"> 
+                <mat-header-cell mat-sort-header [ngClass]="'table-header-class testHeaderCss'" *matHeaderCellDef> Total Time</mat-header-cell>
+                <mat-cell [ngClass]="'testNameCss'" *matCellDef="let element"> 
                     <span class="mobile-label">Total Time</span>
                     {{element.totalTime}}
                     </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="testPrice">
-                <mat-header-cell mat-sort-header [ngClass]="'table-header-class'" *matHeaderCellDef> Test Price</mat-header-cell>
-                <mat-cell *matCellDef="let element"> 
+                <mat-header-cell mat-sort-header [ngClass]="'table-header-class testHeaderCss'" *matHeaderCellDef> Test Price</mat-header-cell>
+                <mat-cell [ngClass]="'testNameCss'" *matCellDef="let element"> 
                     <span class="mobile-label">Test Price</span>
                     {{element.testPrice}}
                     </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="actions">
-                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Actions</mat-header-cell>
-                <mat-cell *matCellDef="let element"> 
-                    <span class="mobile-label">Delete</span>
+                <mat-header-cell [ngClass]="'table-header-class testHeaderCss'" *matHeaderCellDef> Actions</mat-header-cell>
+                <mat-cell [ngClass]="'testNameCss'" *matCellDef="let element"> 
+                    <span class="mobile-label">Actions</span>
                     <mat-icon matTooltip="Delete" (click)="deleteMockTest(element.id)" style="color: red;">delete</mat-icon>
                     <mat-icon matTooltip="Edit">edit</mat-icon>
                     </mat-cell>
