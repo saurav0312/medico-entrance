@@ -1,0 +1,135 @@
+
+<div style="margin-top: 10em; margin-bottom: 1em; text-align: center;">
+
+    <!-- Test start -->
+    
+    <div class="container  bg-blue mt-5 mb-5">
+      <div class="row">
+        
+          <div class=" border" style="text-align: center; display: inline; border-color: #7c766f !important;">
+              <div class="p-3">
+                  <div class="mb-3">
+                      <h4 class="align-items-center" style="display: inline; text-align: center;"><b>Edit Test</b></h4>
+                  </div>
+    
+                  <form (ngSubmit)="modifyMockTest()" name="modifyMockTestForm" [formGroup]="modifyMockTestForm" >
+                    <div>
+                        <mat-form-field style="width: 100%;" appearance="outline" >
+                            <mat-label>Test Name</mat-label>
+                            <input formControlName="testName" type="text" required matInput >
+                            <mat-error *ngIf="modifyMockTestForm.get('testName')?.dirty && modifyMockTestForm.get('testName')?.value.length==0">
+                                Test name is required
+                            </mat-error>
+    
+                            <mat-error *ngIf="modifyMockTestForm.get('testName')?.errors">
+                              {{modifyMockTestForm.get('testName')?.errors | json}}
+    
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+    
+                    <div>
+                      <mat-form-field style="width: 100%;" appearance="outline">
+                          <mat-label>Test Taker</mat-label>
+                          <input formControlName="testTakenBy" type="text" required matInput>
+                          <mat-error *ngIf="modifyMockTestForm.get('testTakenBy')?.dirty && modifyMockTestForm.get('testTakenBy')?.value.length==0">
+                            Test Taker name is required
+                          </mat-error>
+                      </mat-form-field>
+                    </div>
+    
+                    <div>
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Total Time</mat-label>
+                            <input formControlName="totalTime" type="number" required matInput>
+                            <mat-error *ngIf="modifyMockTestForm.get('totalTime')?.dirty && modifyMockTestForm.get('totalTime')?.value.length==0">
+                              Total time is required
+                            </mat-error>
+                            <mat-error *ngIf="modifyMockTestForm.get('totalTime')?.errors">
+                              {{modifyMockTestForm.get('totalTime')?.errors | json}}
+    
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+    
+                    <div>
+                      <mat-form-field style="width: 100%;" appearance="outline">
+                          <mat-label>Total No of Questions</mat-label>
+                          <input formControlName="totalNumberOfQuestions" type="number" required matInput>
+                          <mat-error *ngIf="(modifyMockTestForm.get('totalNumberOfQuestions')?.dirty || modifyMockTestForm.controls['totalNumberOfQuestions'].touched) && modifyMockTestForm.get('totalNumberOfQuestions')?.value.length==0">
+                            Total No of Questions is required
+                          </mat-error>
+                      </mat-form-field>
+                    </div>
+    
+                    <div style="text-align: left; margin-bottom: 1em;">
+                      <!-- <mat-form-field style="width: 100%;" appearance="outline"> -->
+                          <mat-label style="text-align: left;">Test Type: </mat-label>
+                          <mat-radio-group formControlName="testType" aria-label="Test Type">
+                            <mat-radio-button (change)="testTypeChanged($event)" value="Free">Free</mat-radio-button>
+                            <mat-radio-button value="Paid">Paid</mat-radio-button>
+                          </mat-radio-group>
+                          <!-- <input formControlName="testType" type="text" required matInput> -->
+                          <mat-error *ngIf="(modifyMockTestForm.get('testType')?.dirty || modifyMockTestForm.controls['testType'].touched) && modifyMockTestForm.get('testType')?.value.length==0">
+                            Test Type is required
+                          </mat-error>
+                      <!-- </mat-form-field> -->
+                    </div>
+    
+                    <div>
+                      <mat-form-field *ngIf="modifyMockTestForm.get('testType')?.value === 'Paid'" style="width: 100%;" appearance="outline">
+                          <mat-label>Test Price</mat-label>
+                          <input formControlName="testPrice" type="number" [required]="modifyMockTestForm.get('testType')?.value === 'Paid'" matInput>
+                          <mat-error *ngIf="modifyMockTestForm.get('totalNumberOfQuestions')?.dirty && modifyMockTestForm.get('testType')?.value === 'Paid' && modifyMockTestForm.get('totalNumberOfQuestions')?.value.length==0">
+                            Test Price is required
+                          </mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div>
+                        <mat-form-field style="width: 100%;" appearance="outline">
+                            <mat-label>Edit Question No</mat-label>
+                            <mat-select [(value)]="selectedValue" name="question">
+                              <mat-option *ngFor="let question of testQuestions; let i = index" [value]="i">
+                                {{i+1}}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                    </div>
+
+                    <div *ngIf="selectedValue !== undefined">
+                        <mat-form-field (change)="updateQuestion(selectedValue, $event)" style="width: 100%;" appearance="outline">
+                            <mat-label>Question</mat-label>
+                            <textarea required matInput value="{{testQuestions[selectedValue]?.question}}"></textarea>
+                        </mat-form-field>
+
+                        <mat-form-field (change)="updateOption(selectedValue,i, $event)" *ngFor="let option of testQuestions[selectedValue]?.options; let i = index" style="width: 100%;" appearance="outline">
+                            <mat-label>Option {{i+1}}</mat-label>
+                            <input required matInput value="{{option}}">
+                        </mat-form-field>
+
+                        <mat-form-field (change)="updateCorrectAnswer(selectedValue, $event)" style="width: 100%;" appearance="outline">
+                            <mat-label>Correct Answer</mat-label>
+                            <input required matInput value="{{testQuestions[selectedValue]?.correctAnswer}}">
+                        </mat-form-field>
+                        <!-- 
+                        <p > Options: {{testQuestions[selectedValue]?.options}} </p>
+                        <p > Correct Answer: {{testQuestions[selectedValue]?.correctAnswer}} </p> -->
+                    </div>
+    
+                    <div>
+                        <button style="margin-right: em; margin-top: 1em;" mat-raised-button type="button" (click) = "clearForm()" class="cancel-class">Cancel</button>
+                        <button style="margin-left: 5em ; margin-right: 1em; margin-top: 1em;" mat-raised-button color="primary" [disabled]="modifyMockTestForm.invalid">Save</button>
+                    </div>
+                  </form>
+              </div>
+          </div>
+        
+    </div>
+</div>
+
+<app-spinner [loading]="loading" [mode]="'indeterminate'" [diameter]="50" [overlay]="true">
+</app-spinner>
+    
+    
+    <!-- Test end -->

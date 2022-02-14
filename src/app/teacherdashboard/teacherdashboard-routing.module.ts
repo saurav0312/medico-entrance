@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AddmocktestComponent } from './addmocktest/addmocktest.component';
 import { DeletemocktestComponent } from './deletemocktest/deletemocktest.component';
+import { EditmocktestComponent } from './editmocktest/editmocktest.component';
 import { MyMockTestsComponent } from './my-mock-tests/my-mock-tests.component';
 import { MyTestsBoughtByAStudentComponent } from './my-tests-bought-by-astudent/my-tests-bought-by-astudent.component';
 import { MystudentsComponent } from './mystudents/mystudents.component';
@@ -17,7 +18,8 @@ const routes: Routes = [
     children: [
       { path: 'teacherdashboardcontent', component: TeacherdashboardcontentComponent },
       { path: 'addmocktest', component: AddmocktestComponent },
-      { path: 'deletemocktest', component: MyMockTestsComponent },
+      { path: 'modifymocktest', component: MyMockTestsComponent },
+      { path: 'editmocktest', component: EditmocktestComponent },
       { path: 'viewmystudents', component: MystudentsComponent },
       { path: 'myTestsBoughtByAStudent', component: MyTestsBoughtByAStudentComponent },
       { path: '', redirectTo:'/teacherdashboard/teacherdashboardcontent', pathMatch: 'full' }

@@ -145,7 +145,7 @@ export class AuthService {
     return collectionData(q,{idField: 'id'})
   }
 
-  //get user details based on account type ex: teacher or student
+  //gets user details based on account type ex: teacher or student
   getUserDetailsByType(type: string):Observable<any>{
     const collectionList = collection(this.firestore, 'UserDetails');
     const q = query(collectionList, where("accountType", "==",  type))
@@ -158,18 +158,27 @@ export class AuthService {
     return docData(docRef)
   }
 
+  //sets test finish time in server whenever a student starts a test
   setTestFinishTime(userId: string | undefined, data: any): void{
     const docRef = doc(this.firestore, `TestTime/${userId}`);
     setDoc(docRef, data, {merge: true})
   }
 
+  //fetches test finish time
   getTestFinishTime(userId: string | undefined): Observable<any>{
     const docRef = doc(this.firestore, `TestTime/${userId}`);
     return docData(docRef)
   }
 
+  // remove test finish time after test is finished
   removeTestFinishTime(userId: string | undefined){
     const docRef = doc(this.firestore, `TestTime/${userId}`);
     return from(deleteDoc(docRef));
+  }
+
+  //update mock test details
+  updateMockTestDetails(id: string | undefined, testDetail: MockTest): Observable<any>{
+    const docRef = doc(this.firestore, `MockTests/${id}`);
+    return from(setDoc(docRef, testDetail, {merge: true}))
   }
 }
