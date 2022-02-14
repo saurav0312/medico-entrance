@@ -16,6 +16,8 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatSelectModule}  from '@angular/material/select';
+import { FormsModule } from '@angular/forms';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -31,6 +33,7 @@ import { TeacherProfileComponent } from './teacher-profile/teacher-profile.compo
 import { TeacherprofileinfoComponent } from './teacherprofileinfo/teacherprofileinfo.component';
 import { MyTestsBoughtByAStudentComponent } from './my-tests-bought-by-astudent/my-tests-bought-by-astudent.component';
 import { MyMockTestsComponent } from './my-mock-tests/my-mock-tests.component';
+import { EditmocktestComponent } from './editmocktest/editmocktest.component';
 
 
 @NgModule({
@@ -44,7 +47,8 @@ import { MyMockTestsComponent } from './my-mock-tests/my-mock-tests.component';
     TeacherProfileComponent,
     TeacherprofileinfoComponent,
     MyTestsBoughtByAStudentComponent,
-    MyMockTestsComponent
+    MyMockTestsComponent,
+    EditmocktestComponent
   ],
   imports: [
     CommonModule,
@@ -65,7 +69,9 @@ import { MyMockTestsComponent } from './my-mock-tests/my-mock-tests.component';
     MatSidenavModule,
     MatDividerModule,
     MatToolbarModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatSelectModule,
+    FormsModule
   ]
 })
 export class TeacherdashboardModule { }
