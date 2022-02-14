@@ -1,8 +1,5 @@
 
 <div style="margin-top: 10em; margin-bottom: 1em; text-align: center;">
-
-    <!-- Test start -->
-    
     <div class="container  bg-blue mt-5 mb-5">
       <div class="row">
         
@@ -17,13 +14,8 @@
                         <mat-form-field style="width: 100%;" appearance="outline" >
                             <mat-label>Test Name</mat-label>
                             <input formControlName="testName" type="text" required matInput >
-                            <mat-error *ngIf="modifyMockTestForm.get('testName')?.dirty && modifyMockTestForm.get('testName')?.value.length==0">
+                            <mat-error *ngIf="modifyMockTestForm.get('testName')?.dirty && modifyMockTestForm.get('testName')?.errors">
                                 Test name is required
-                            </mat-error>
-    
-                            <mat-error *ngIf="modifyMockTestForm.get('testName')?.errors">
-                              {{modifyMockTestForm.get('testName')?.errors | json}}
-    
                             </mat-error>
                         </mat-form-field>
                     </div>
@@ -32,7 +24,7 @@
                       <mat-form-field style="width: 100%;" appearance="outline">
                           <mat-label>Test Taker</mat-label>
                           <input formControlName="testTakenBy" type="text" required matInput>
-                          <mat-error *ngIf="modifyMockTestForm.get('testTakenBy')?.dirty && modifyMockTestForm.get('testTakenBy')?.value.length==0">
+                          <mat-error *ngIf="modifyMockTestForm.get('testTakenBy')?.dirty && modifyMockTestForm.get('testTakenBy')?.errors">
                             Test Taker name is required
                           </mat-error>
                       </mat-form-field>
@@ -42,7 +34,7 @@
                         <mat-form-field style="width: 100%;" appearance="outline">
                             <mat-label>Total Time</mat-label>
                             <input formControlName="totalTime" type="number" required matInput>
-                            <mat-error *ngIf="modifyMockTestForm.get('totalTime')?.dirty && modifyMockTestForm.get('totalTime')?.value.length==0">
+                            <mat-error *ngIf="modifyMockTestForm.get('totalTime')?.dirty && modifyMockTestForm.get('totalTime')?.errors">
                               Total time is required
                             </mat-error>
                             <mat-error *ngIf="modifyMockTestForm.get('totalTime')?.errors">
@@ -56,7 +48,7 @@
                       <mat-form-field style="width: 100%;" appearance="outline">
                           <mat-label>Total No of Questions</mat-label>
                           <input formControlName="totalNumberOfQuestions" type="number" required matInput>
-                          <mat-error *ngIf="(modifyMockTestForm.get('totalNumberOfQuestions')?.dirty || modifyMockTestForm.controls['totalNumberOfQuestions'].touched) && modifyMockTestForm.get('totalNumberOfQuestions')?.value.length==0">
+                          <mat-error *ngIf="modifyMockTestForm.get('totalNumberOfQuestions')?.dirty && modifyMockTestForm.get('totalNumberOfQuestions')?.errors">
                             Total No of Questions is required
                           </mat-error>
                       </mat-form-field>
@@ -70,7 +62,7 @@
                             <mat-radio-button value="Paid">Paid</mat-radio-button>
                           </mat-radio-group>
                           <!-- <input formControlName="testType" type="text" required matInput> -->
-                          <mat-error *ngIf="(modifyMockTestForm.get('testType')?.dirty || modifyMockTestForm.controls['testType'].touched) && modifyMockTestForm.get('testType')?.value.length==0">
+                          <mat-error *ngIf="modifyMockTestForm.get('testType')?.dirty && modifyMockTestForm.get('testType')?.errors">
                             Test Type is required
                           </mat-error>
                       <!-- </mat-form-field> -->
@@ -80,7 +72,7 @@
                       <mat-form-field *ngIf="modifyMockTestForm.get('testType')?.value === 'Paid'" style="width: 100%;" appearance="outline">
                           <mat-label>Test Price</mat-label>
                           <input formControlName="testPrice" type="number" [required]="modifyMockTestForm.get('testType')?.value === 'Paid'" matInput>
-                          <mat-error *ngIf="modifyMockTestForm.get('totalNumberOfQuestions')?.dirty && modifyMockTestForm.get('testType')?.value === 'Paid' && modifyMockTestForm.get('totalNumberOfQuestions')?.value.length==0">
+                          <mat-error *ngIf="modifyMockTestForm.get('testPrice')?.dirty && modifyMockTestForm.get('testType')?.value === 'Paid' && modifyMockTestForm.get('testPrice')?.errors">
                             Test Price is required
                           </mat-error>
                       </mat-form-field>
@@ -116,7 +108,7 @@
                         <p > Options: {{testQuestions[selectedValue]?.options}} </p>
                         <p > Correct Answer: {{testQuestions[selectedValue]?.correctAnswer}} </p> -->
                     </div>
-    
+                    {{modifyMockTestForm.invalid}}    
                     <div>
                         <button style="margin-right: em; margin-top: 1em;" mat-raised-button type="button" (click) = "clearForm()" class="cancel-class">Cancel</button>
                         <button style="margin-left: 5em ; margin-right: 1em; margin-top: 1em;" mat-raised-button color="primary" [disabled]="modifyMockTestForm.invalid">Save</button>
@@ -130,6 +122,3 @@
 
 <app-spinner [loading]="loading" [mode]="'indeterminate'" [diameter]="50" [overlay]="true">
 </app-spinner>
-    
-    
-    <!-- Test end -->

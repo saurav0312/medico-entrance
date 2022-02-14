@@ -80,45 +80,56 @@ export class AddmocktestComponent implements OnInit{
         if(data.length == 0){
           this.loading = false;
           this.createMockTestForm.get('testSourceFile')?.setErrors({notEmpty: false})
-          throw new Error("Can not upload empty question list!")
+          this.toastrService.error("Can not upload empty question list!")
         }
+        else{
+          let checkPassed = true;
+          data.forEach((questionItem:any) =>{
+            let options: Array<any> =[];
+            options.push(questionItem.optionA)
+            options.push(questionItem.optionB)
+            options.push(questionItem.optionC)
+            options.push(questionItem.optionD)
+  
+            let question:Question = {
+              "question":questionItem.question,
+              "options":options,
+              "correctAnswer":questionItem.correctAnswer
+            }
+            questions.push(question);
+          })
 
-        data.forEach((questionItem:any) =>{
-          let options: Array<any> =[];
-          options.push(questionItem.optionA)
-          options.push(questionItem.optionB)
-          options.push(questionItem.optionC)
-          options.push(questionItem.optionD)
-
-          let question:Question = {
-            "question":questionItem.question,
-            "options":options,
-            "correctAnswer":questionItem.correctAnswer
+          questions.forEach(question =>{
+            if(question.options.findIndex(ele => ele === question.correctAnswer) === -1){
+              this.toastrService.error("Correct answer should match one of the options.")
+              checkPassed = false;
+              this.loading = false;
+            }
+          })
+  
+          if(checkPassed == true){
+            let tempData =<MockTest> {
+              "testName": this.createMockTestForm.get('testName')?.value,
+              "testTakenBy": this.createMockTestForm.get('testTakenBy')?.value,
+              "totalTime": this.createMockTestForm.get('totalTime')?.value,
+              "totalNumberOfQuestions": this.createMockTestForm.get('totalNumberOfQuestions')?.value,
+              "testType": this.createMockTestForm.get('testType')?.value,
+              "questions": questions,
+              "testPrice": this.createMockTestForm.get('testPrice')?.value,
+              "teacherUserId": this.userId
+            };
+            this.mockTest = tempData;
+            console.log("MockTest Data: ", this.mockTest);
+    
+            this.authService.createMockTest(this.mockTest).then((ref) =>{
+              this.loading = false;
+              this.toastrService.success("Test created successfully");
+              this.createMockTestForm.reset('')
+              this.ngOnInit();
+              console.log(ref)
+            }) 
           }
-          questions.push(question);
-        })
-
-
-        let tempData =<MockTest> {
-          "testName": this.createMockTestForm.get('testName')?.value,
-          "testTakenBy": this.createMockTestForm.get('testTakenBy')?.value,
-          "totalTime": this.createMockTestForm.get('totalTime')?.value,
-          "totalNumberOfQuestions": this.createMockTestForm.get('totalNumberOfQuestions')?.value,
-          "testType": this.createMockTestForm.get('testType')?.value,
-          "questions": questions,
-          "testPrice": this.createMockTestForm.get('testPrice')?.value,
-          "teacherUserId": this.userId
-        };
-        this.mockTest = tempData;
-        console.log("MockTest Data: ", this.mockTest);
-
-        this.authService.createMockTest(this.mockTest).then((ref) =>{
-          this.loading = false;
-          this.toastrService.success("Test created successfully");
-          this.createMockTestForm.reset('')
-          this.ngOnInit();
-          console.log(ref)
-        })
+        }
       })
     }
 

@@ -53,10 +53,6 @@ export class EditmocktestComponent implements OnInit {
         this.modifyMockTestForm.get('testType')?.setValue(response['testType'])
         this.modifyMockTestForm.get('testPrice')?.setValue(response['testPrice'])
         this.loading = false
-        // Object.keys(this.modifyMockTestForm.controls).forEach(key =>{
-        //   this.modifyMockTestForm.get(key)?.setValue(response['id'])
-        // })
-        // this.modifyMockTestForm.controls setValue(response)
       })
     })
   }
@@ -64,24 +60,36 @@ export class EditmocktestComponent implements OnInit {
   modifyMockTest():void{
     this.loading = true;
     console.log("Modified test data: ", this.modifyMockTestForm.getRawValue())
-    let testDetail: MockTest ={
-      "testName": this.modifyMockTestForm.get('testName')?.value,
-      "testTakenBy": this.modifyMockTestForm.get('testTakenBy')?.value,
-      "totalTime": this.modifyMockTestForm.get('totalTime')?.value,
-      "totalNumberOfQuestions": this.modifyMockTestForm.get('totalNumberOfQuestions')?.value,
-      "testType": this.modifyMockTestForm.get('testType')?.value,
-      "testPrice": this.modifyMockTestForm.get('testPrice')?.value,
-      "questions": this.testQuestions
-    }
-    this.authService.updateMockTestDetails(this.testId, testDetail).subscribe(response =>{
-      this.toastrService.success("Test modified successfully")
-      this.loading = false;
+    let checkPassed = true;
+
+    this.testQuestions.forEach(question =>{
+      if(question.options.findIndex(ele => ele === question.correctAnswer) === -1){
+        this.toastrService.error("Correct answer should match one of the options.")
+        checkPassed = false;
+        this.loading = false;
+      }
     })
+
+    if(checkPassed == true){
+      let testDetail: MockTest ={
+        "testName": this.modifyMockTestForm.get('testName')?.value,
+        "testTakenBy": this.modifyMockTestForm.get('testTakenBy')?.value,
+        "totalTime": this.modifyMockTestForm.get('totalTime')?.value,
+        "totalNumberOfQuestions": this.modifyMockTestForm.get('totalNumberOfQuestions')?.value,
+        "testType": this.modifyMockTestForm.get('testType')?.value,
+        "testPrice": this.modifyMockTestForm.get('testPrice')?.value,
+        "questions": this.testQuestions
+      }
+      this.authService.updateMockTestDetails(this.testId, testDetail).subscribe(response =>{
+        this.toastrService.success("Test modified successfully")
+        this.loading = false;
+      })
+    }
 
   }
 
   clearForm():void{
-
+    this.ngOnInit()
   }
 
   testTypeChanged(event: any){
