@@ -57,9 +57,9 @@
                     <div style="text-align: left; margin-bottom: 1em;">
                       <!-- <mat-form-field style="width: 100%;" appearance="outline"> -->
                           <mat-label style="text-align: left;">Test Type: </mat-label>
-                          <mat-radio-group formControlName="testType" aria-label="Test Type">
-                            <mat-radio-button (change)="testTypeChanged($event)" value="Free">Free</mat-radio-button>
-                            <mat-radio-button value="Paid">Paid</mat-radio-button>
+                          <mat-radio-group formControlName="testType" [(ngModel)]="testType" aria-label="Test Type">
+                            <mat-radio-button (change)="testTypeChanged($event)" [checked]="testType === 'Free'" value="Free">Free</mat-radio-button>
+                            <mat-radio-button [checked]="testType === 'Paid'" value="Paid">Paid</mat-radio-button>
                           </mat-radio-group>
                           <!-- <input formControlName="testType" type="text" required matInput> -->
                           <mat-error *ngIf="modifyMockTestForm.get('testType')?.dirty && modifyMockTestForm.get('testType')?.errors">
@@ -81,7 +81,7 @@
                     <div>
                         <mat-form-field style="width: 100%;" appearance="outline">
                             <mat-label>Edit Question No</mat-label>
-                            <mat-select [(value)]="selectedValue" name="question">
+                            <mat-select [disabled]="modifyMockTestForm.invalid" [(value)]="selectedValue" name="question">
                               <mat-option *ngFor="let question of testQuestions; let i = index" [value]="i">
                                 {{i+1}}
                               </mat-option>
@@ -92,17 +92,32 @@
                     <div *ngIf="selectedValue !== undefined">
                         <mat-form-field (change)="updateQuestion(selectedValue, $event)" style="width: 100%;" appearance="outline">
                             <mat-label>Question</mat-label>
-                            <textarea required matInput value="{{testQuestions[selectedValue]?.question}}"></textarea>
+                            <textarea formControlName="question" required matInput value="{{testQuestions[selectedValue]?.question}}"></textarea>
                         </mat-form-field>
 
-                        <mat-form-field (change)="updateOption(selectedValue,i, $event)" *ngFor="let option of testQuestions[selectedValue]?.options; let i = index" style="width: 100%;" appearance="outline">
-                            <mat-label>Option {{i+1}}</mat-label>
-                            <input required matInput value="{{option}}">
+                        <mat-form-field (change)="updateOption(selectedValue,0, $event)" style="width: 100%;" appearance="outline">
+                            <mat-label>Option 1</mat-label>
+                            <input formControlName="optionA" required matInput value="{{testQuestions[selectedValue].options[0]}}">
+                        </mat-form-field>
+
+                        <mat-form-field (change)="updateOption(selectedValue,1, $event)" style="width: 100%;" appearance="outline">
+                            <mat-label>Option 2</mat-label>
+                            <input formControlName="optionB" required matInput value="{{testQuestions[selectedValue].options[1]}}">
+                        </mat-form-field>
+
+                        <mat-form-field (change)="updateOption(selectedValue,2, $event)" style="width: 100%;" appearance="outline">
+                            <mat-label>Option 3</mat-label>
+                            <input formControlName="optionC" required matInput value="{{testQuestions[selectedValue].options[2]}}">
+                        </mat-form-field>
+
+                        <mat-form-field (change)="updateOption(selectedValue,3, $event)" style="width: 100%;" appearance="outline">
+                            <mat-label>Option 4</mat-label>
+                            <input formControlName="optionD" required matInput value="{{testQuestions[selectedValue].options[3]}}">
                         </mat-form-field>
 
                         <mat-form-field (change)="updateCorrectAnswer(selectedValue, $event)" style="width: 100%;" appearance="outline">
                             <mat-label>Correct Answer</mat-label>
-                            <input required matInput value="{{testQuestions[selectedValue]?.correctAnswer}}">
+                            <input formControlName="correctAnswer" required matInput value="{{testQuestions[selectedValue]?.correctAnswer}}">
                         </mat-form-field>
                         <!-- 
                         <p > Options: {{testQuestions[selectedValue]?.options}} </p>
