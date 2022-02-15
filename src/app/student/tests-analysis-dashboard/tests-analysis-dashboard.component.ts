@@ -1,58 +1,77 @@
-import { Component, OnInit, ViewChild, AfterViewInit, Input, ElementRef } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { TestReportQuestion } from '../../interface/testReportQuestion';
-import { Tests } from '../../interface/tests'; 
-import { ActivatedRoute } from '@angular/router';
-import { SharedService } from 'src/app/service/shared.service';
-import { Timestamp } from 'firebase/firestore';
-import { AuthService } from 'src/app/service/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { GoogleChartInterface, GoogleChartType } from 'ng2-google-charts';
+import { TestReportData } from 'src/app/interface/testReportData';
+import { Tests } from 'src/app/interface/tests';
+import { AuthService } from '../../service/auth.service';
 
 declare var google: any;
 
 @Component({
-  selector: 'app-detailtestreport',
-  templateUrl: './detailtestreport.component.html',
-  styleUrls: ['./detailtestreport.component.css']
+  selector: 'app-tests-analysis-dashboard',
+  templateUrl: './tests-analysis-dashboard.component.html',
+  styleUrls: ['./tests-analysis-dashboard.component.css']
 })
-export class DetailtestreportComponent implements OnInit, AfterViewInit {
+export class TestsAnalysisDashboardComponent implements OnInit {
 
-  testId!: string;
-  testTakenDate! : Date | undefined;
-  singleTest!: Tests | undefined;
-
-  subjectTagMap = new Map();
-  topicTagMap = new Map();
+  testReportData! : TestReportData;
+  allTestsGivenByUser!: Tests[] ;
+  singleTest!: Tests;
+  subjectTags: Array<string> = [];
+  topicTags: Array<string> = [];
+  
 
   subjectTagPiechartData: any = []
   topicTagPiechartData: any = []
 
-  @Input() displayedColumns!: string[];
-  @Input() testToShowInTable! : Tests;
-
-  dataSource: MatTableDataSource<TestReportQuestion> = new MatTableDataSource();
-
-  @ViewChild(MatPaginator) paginator! : MatPaginator;
-  @ViewChild('content') content!: ElementRef;
+  subjectTagMap = new Map();
+  topicTagMap = new Map();
 
   constructor(
-    private activatedRoute: ActivatedRoute,
-    private sharedService: SharedService,
     private authService: AuthService
   ) { }
 
   ngOnInit(): void {
-    this.displayedColumns = this.sharedService.displayedColumns
-    this.testToShowInTable = this.sharedService.testData
-    this.testId = this.testToShowInTable.testId;
-    this.testTakenDate = (<Timestamp><unknown>this.testToShowInTable.testTakenDate).toDate()
 
-    this.authService.getCurrentUser().subscribe(userResponse =>{
-      this.authService.getAllMockTestsGivenByAUser(userResponse?.uid).subscribe(response =>{
+    google.charts.load('current', {packages: ['corechart']});
+    
+    let sub = this.authService.getCurrentUser().subscribe(response =>{
+      this.authService.getAllMockTestsGivenByAUser(response?.uid).subscribe(response =>{
+        sub.unsubscribe()
         if(response!== undefined){
-          this.singleTest = response.allTests.find(ele => ele.testId === this.testId)
-          if(this.singleTest !== undefined){
-            //counting correct questions based on subject tags
+          this.testReportData = response
+          console.log("All given tests response: ", response)
+          this.allTestsGivenByUser = this.testReportData.allTests
+          this.singleTest = this.allTestsGivenByUser[0]
+          //maintain subject tags and topic tags array
+          this.singleTest.testQuestions.forEach(testQuestion =>{
+            if(testQuestion.subjectTags?.length !== 0){
+              testQuestion.subjectTags?.forEach(subjectTag =>{
+                if(this.subjectTags.length === 0 ){
+                  this.subjectTags.push(subjectTag)
+                }
+                else if(this.subjectTags.findIndex( ele => ele === subjectTag) === -1){
+                  this.subjectTags.push(subjectTag)
+                }
+              })
+            }
+            
+
+            if(testQuestion.topicTags?.length !== 0){
+              testQuestion.topicTags?.forEach(topicTag =>{
+                if(this.topicTags.length === 0 ){
+                  this.topicTags.push(topicTag)
+                }
+                else if(this.topicTags.findIndex( ele => ele === topicTag) === -1){
+                  this.topicTags.push(topicTag)
+                }
+              })
+            }
+          })
+          console.log("Subject Tags: ", this.subjectTags)
+          console.log("Topic Tags: ", this.topicTags)
+
+
+          //counting correct questions based on subject tags
           this.singleTest.testQuestions.forEach(testQuestion =>{
             if(testQuestion.selectedOption !== null && testQuestion.selectedOption === testQuestion.correctAnswer){
               testQuestion.subjectTags?.forEach(subjectTag =>{
@@ -65,6 +84,12 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
               })
             }
           })
+          this.subjectTags.forEach(subjectTag =>{
+            if(this.subjectTagMap.has(subjectTag) == false){
+              this.subjectTagMap.set(subjectTag, 0);
+            }
+          })
+
 
           //counting correct questions based on topic tags
           this.singleTest.testQuestions.forEach(testQuestion =>{
@@ -84,6 +109,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
           console.log("SubjectTag Map: ", this.subjectTagMap)
           console.log("TopicTag Map: ", this.topicTagMap)
 
+          
           for (let entry of this.subjectTagMap.entries()) {
             console.log(entry[0], entry[1]);
             let temppiechartData = [];
@@ -99,24 +125,15 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
             temppiechartData.push(entry[1]);
             this.topicTagPiechartData.push(temppiechartData)
           }
+
           google.charts.setOnLoadCallback(this.drawChart(this.subjectTagPiechartData, this.topicTagPiechartData));
-
-          }
         }
-
       })
     })
   }
 
-  ngAfterViewInit(): void {
-    this.dataSource.data = this.testToShowInTable.testQuestions
-    this.dataSource.paginator = this.paginator;
-    console.log("Questions",this.testToShowInTable.testQuestions)
-    console.log(this.dataSource.data);
-  } 
-
   drawChart(subjectTagPiechartData : any, topicTagPiechartData: any){
-    // Create the data table.
+    // Create the data table
     var subjectTagData = new google.visualization.DataTable();
     subjectTagData.addColumn('string', 'Question Category');
     subjectTagData.addColumn('number', 'No of Correct Questions Answered');
@@ -146,4 +163,5 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
     topicTagChart.draw(topicTagData, topicTagOptions);
     
   }
+
 }

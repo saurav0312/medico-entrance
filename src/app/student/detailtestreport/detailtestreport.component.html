@@ -26,7 +26,7 @@
             </div> 
             <div style="clear: both;">
             </div>
-            <div [ngClass]="'mat-elevation-z8'" class="table-contents" id="content" #content>
+            <div [ngClass]="'mat-elevation-z8'" class="table-contents" id="content" #content style="display: inline;">
                 <mat-table [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"> 
                     <ng-container matColumnDef="no">
                         <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> No </mat-header-cell>
@@ -78,6 +78,21 @@
                     
                 </mat-table>
                 <mat-paginator [ngClass]="'styled-paginator'" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+            </div>
+            <div>
+                <div class="container rounded bg-blue mt-5 mb-5">
+                    <div class="col-md-5" style="margin-left: 20em;">
+                        <!-- <div class="p-3"> -->
+                
+                            <table class="columns" style="display: inline; text-align: center; align-items: center;">
+                                <tr>
+                                <td><div id="subject_chart_div" style="border: 1px solid #000000; width: 400px; height: 300px;"></div></td>
+                                <td><div id="topic_chart_div" style="border: 1px solid #000000; width: 400px; height: 300px;"></div></td>
+                                </tr>
+                            </table>
+                        <!-- </div> -->
+                    </div>
+                </div>
             </div>
         </div>
     </div>

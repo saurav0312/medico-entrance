@@ -30,6 +30,7 @@
     "jspdf": "^2.5.1",
     "mat-table-exporter": "^10.2.4",
     "ng-http-loader": "^11.0.1",
+    "ng2-google-charts": "^7.0.0",
     "ngx-bootstrap": "^8.0.0",
     "ngx-print": "^1.2.1",
     "ngx-toastr": "^14.2.1",

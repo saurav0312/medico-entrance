@@ -81,7 +81,7 @@ export class EditmocktestComponent implements OnInit {
     let checkPassed = true;
 
     this.testQuestions.forEach(question =>{
-      if(question.options.findIndex(ele => ele === question.correctAnswer) === -1){
+      if(question.options.findIndex(ele => ele == question.correctAnswer) === -1){
         this.toastrService.error("Correct answer should match one of the options.")
         checkPassed = false;
         this.loading = false;
@@ -119,33 +119,15 @@ export class EditmocktestComponent implements OnInit {
   }
 
   updateQuestion(index: number, event: any){
-    if(event.target.value == ''){
-      //this.questionError.push(true);
-    }
-    else{
-      this.testQuestions[index].question = event.target.value
-      //this.questionError.pop()
-    }
+    this.testQuestions[index].question = event.target.value
   }
 
   updateOption(questionIndex: number, optionIndex: number, event: any){
-    if(event.target.value == ''){
-      //this.questionError.push(true);
-    }
-    else{
-      this.testQuestions[questionIndex].options[optionIndex] = event.target.value
-      //this.questionError.pop()
-    }
+    this.testQuestions[questionIndex].options[optionIndex] = event.target.value
   }
 
   updateCorrectAnswer(index: number, event: any){
-    if(event.target.value == ''){
-      //this.questionError.push(true);
-    }
-    else{
-      this.testQuestions[index].correctAnswer = event.target.value
-      //this.questionError.pop()
-    }
+    this.testQuestions[index].correctAnswer = event.target.value
   }
 
 }

@@ -90,11 +90,20 @@ export class AddmocktestComponent implements OnInit{
             options.push(questionItem.optionB)
             options.push(questionItem.optionC)
             options.push(questionItem.optionD)
+
+            let subjectTags: Array<any> = [];
+            subjectTags.push(questionItem.subject_tag)
+
+            let topicTags: Array<any> = [];
+            topicTags.push(questionItem.topic_tag)
+
   
             let question:Question = {
               "question":questionItem.question,
               "options":options,
-              "correctAnswer":questionItem.correctAnswer
+              "correctAnswer":questionItem.correctAnswer,
+              "subjectTags": subjectTags,
+              "topicTags": topicTags
             }
             questions.push(question);
           })

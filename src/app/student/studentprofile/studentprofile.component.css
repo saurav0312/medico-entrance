@@ -11,7 +11,7 @@
   
   .mat-sidenav-class{
     margin: 4px;
-    width: 200px;
+    width: fit-content;
     border-right: none;
     background: #5179c4;
     color: white;
