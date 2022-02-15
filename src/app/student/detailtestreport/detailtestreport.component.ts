@@ -30,7 +30,16 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   @Input() displayedColumns!: string[];
   @Input() testToShowInTable! : Tests;
 
-  dataSource: MatTableDataSource<TestReportQuestion> = new MatTableDataSource();
+  private _dataSource : MatTableDataSource<TestReportQuestion> = new MatTableDataSource();
+
+  @Input()
+  set dataSource(dataSourceVal : MatTableDataSource< TestReportQuestion> ){
+    this._dataSource = dataSourceVal;
+  }
+
+  get dataSource (): MatTableDataSource< TestReportQuestion>{
+    return this._dataSource
+  }
 
   @ViewChild(MatPaginator) paginator! : MatPaginator;
   @ViewChild('content') content!: ElementRef;
@@ -42,10 +51,21 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    this.displayedColumns = this.sharedService.displayedColumns
-    this.testToShowInTable = this.sharedService.testData
-    this.testId = this.testToShowInTable.testId;
-    this.testTakenDate = (<Timestamp><unknown>this.testToShowInTable.testTakenDate).toDate()
+    google.charts.load('current', {packages: ['corechart']});
+
+    this.activatedRoute.queryParams.subscribe(response =>{
+      this.displayedColumns = <string[]>response['displayedColumns']
+      this.testToShowInTable = JSON.parse(response['testData']) as Tests
+      console.log("Query param response: ",response)
+      console.log("test to show in table: ", this.testToShowInTable)
+      this.testId = this.testToShowInTable.testId;
+      this.testTakenDate = this.testToShowInTable.testTakenDate
+      console.log(this.displayedColumns)
+    })
+
+    // this.displayedColumns = this.sharedService.displayedColumns
+    // this.testToShowInTable = this.sharedService.testData
+    
 
     this.authService.getCurrentUser().subscribe(userResponse =>{
       this.authService.getAllMockTestsGivenByAUser(userResponse?.uid).subscribe(response =>{
@@ -117,13 +137,13 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
   drawChart(subjectTagPiechartData : any, topicTagPiechartData: any){
     // Create the data table.
-    var subjectTagData = new google.visualization.DataTable();
+    let subjectTagData = new google.visualization.DataTable();
     subjectTagData.addColumn('string', 'Question Category');
     subjectTagData.addColumn('number', 'No of Correct Questions Answered');
     subjectTagData.addRows(subjectTagPiechartData);
 
     let subjectTagOptions = {
-      title: 'Student Test Analysis Based on Subject',
+      title: 'Test Analysis Based on Subject',
       is3D: true,
     }
 
@@ -133,7 +153,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
     topicTagData.addRows(topicTagPiechartData);
 
     let topicTagOptions = {
-      title: 'Student Test Analysis Based on Topic',
+      title: 'Test Analysis Based on Topic',
       is3D: true,
     }
 

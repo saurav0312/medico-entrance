@@ -1,32 +1,35 @@
 <div>
-    <h1 style="text-align: center; margin-top: 2em;">Here is your detail performance report</h1>
-    <div class ="row" style="margin-left: 10rem;">
-        <div class ="col-md-4">
-            <b>TestId:</b> {{testId}}
-        </div>
-        <div class ="col-md-4">
-            <b>Test Name:</b> {{testToShowInTable.testName}}
-        </div>
-    </div>
-    <div class ="row" style="margin-left: 10rem;">
-        <div class ="col-md-4">
-            <b>Test Holder:</b> {{testToShowInTable.testTakenBy}}
-        </div>
-        <div class ="col-md-4">
-            <b>Date:</b> {{testTakenDate}}
-        </div>
-    </div>
-        <div>
-            <div style="float: right; margin-right: 11.7em;">
+    <h1 style="text-align: center; margin-top: 2em;">Here is your detail performance report
+    </h1>
+    <div class="float-container">
+        <div class="float-child">
+            <div class ="row">
+                <div class ="col-md-4">
+                    <b>TestId:</b> {{testId}}
+                </div>
+                <div class ="col-md-4">
+                    <b>Test Name:</b> {{testToShowInTable.testName}}
+                </div>
+            </div>
+            <div class ="row" style="margin-bottom: 1em;">
+                <div class ="col-md-4">
+                    <b>Test Holder:</b> {{testToShowInTable.testTakenBy}}
+                </div>
+                <div class ="col-md-4">
+                    <b>Date:</b> {{testTakenDate  }}
+                </div>
+            </div>
+            <div class="green">
+            <div style="float: right; margin-right: 2em; margin-bottom: 1em;">
                 <button mat-raised-button style="margin-left: 1em;" (click)="exporter.exportTable('xlsx', {fileName:'test', sheet: 'sheet_name', Props: {Author: 'OnlineExam'}})">Excel</button>
                 <button mat-raised-button style="margin-left: 1em;" (click)="exporter.exportTable('csv')">Csv</button>
                 <button mat-raised-button style="margin-left: 1em;" (click)="exporter.exportTable('json')">Json</button>
                 <button mat-raised-button style="margin-left: 1em;" (click)="exporter.exportTable('txt')">Txt</button>
                 <button mat-raised-button style="margin-left: 1em;" [useExistingCss]="true" printTitle="Your Test Result" printSectionId="content" ngxPrint>Pdf</button> 
-            </div> 
+            </div>
             <div style="clear: both;">
             </div>
-            <div [ngClass]="'mat-elevation-z8'" class="table-contents" id="content" #content style="display: inline;">
+            <div [ngClass]="'mat-elevation-z8'" class="table-contents" id="content" #content>
                 <mat-table [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"> 
                     <ng-container matColumnDef="no">
                         <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> No </mat-header-cell>
@@ -71,6 +74,26 @@
                             </div>
                         </mat-cell>
                     </ng-container>
+
+                    <ng-container matColumnDef="subjectTags">
+                        <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Subject Tag </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> 
+                            <span class="mobile-label"> Subject Tag:</span>
+                            <!-- {{element.subjectTags[0]}}  -->
+                            <button disabled class="btn" style="margin-right: 1em; background-color: green; color: white;" 
+                            *ngFor="let subjectTag of element.subjectTags">{{subjectTag}}</button>
+                        </mat-cell>
+                    </ng-container>
+
+                    <ng-container matColumnDef="topicTags">
+                        <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Topic Tag </mat-header-cell>
+                        <mat-cell *matCellDef="let element"> 
+                            <span class="mobile-label">Topic Tag:</span>
+                            <!-- {{element.topicTags[0]}}  -->
+                            <button disabled class="btn" style="margin-right: 1em; background-color: red; color: white; display: inline;" 
+                            *ngFor="let topicTag of element.topicTags">{{topicTag}}</button>
+                        </mat-cell>
+                    </ng-container>
         
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
                     <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
@@ -79,21 +102,19 @@
                 </mat-table>
                 <mat-paginator [ngClass]="'styled-paginator'" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
             </div>
-            <div>
-                <div class="container rounded bg-blue mt-5 mb-5">
-                    <div class="col-md-5" style="margin-left: 20em;">
-                        <!-- <div class="p-3"> -->
-                
-                            <table class="columns" style="display: inline; text-align: center; align-items: center;">
-                                <tr>
-                                <td><div id="subject_chart_div" style="border: 1px solid #000000; width: 400px; height: 300px;"></div></td>
-                                <td><div id="topic_chart_div" style="border: 1px solid #000000; width: 400px; height: 300px;"></div></td>
-                                </tr>
-                            </table>
-                        <!-- </div> -->
-                    </div>
-                </div>
             </div>
         </div>
-    </div>
+        
+        <div class="float-child">
+            <div class="blue">
+            <table class="columns" style="display: inline; text-align: center; align-items: center;">
+                <tr>
+                <td><div id="subject_chart_div" style="margin-top: 2em;  width: 400px; height: 400px;"></div></td>
+                <td><div id="topic_chart_div" style="margin-top: 2em; width: 400px; height: 400px;"></div></td>
+                </tr>
+            </table>
+            </div>
+        </div>   
+    </div>   
+</div>
     
