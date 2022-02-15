@@ -4,6 +4,7 @@ import { StudentprofileComponent } from './studentprofile/studentprofile.compone
 import { DetailtestreportComponent } from './detailtestreport/detailtestreport.component';
 import { ViewmytestsComponent } from './viewmytests/viewmytests.component';
 import { EditprofileinfoComponent } from './editprofileinfo/editprofileinfo.component';
+import { TestsAnalysisDashboardComponent } from './tests-analysis-dashboard/tests-analysis-dashboard.component';
 
 const routes: Routes = [
   {
@@ -13,6 +14,7 @@ const routes: Routes = [
       { path: 'editprofileinfo', component: EditprofileinfoComponent},
       { path: 'detailTestReport', component: DetailtestreportComponent},
       { path: 'viewMyTests', component: ViewmytestsComponent},
+      { path: 'testsAnalysisDashboard', component: TestsAnalysisDashboardComponent},
       { path: '', redirectTo: '/studentProfile/editprofileinfo', pathMatch: 'full' },
     ]
   }

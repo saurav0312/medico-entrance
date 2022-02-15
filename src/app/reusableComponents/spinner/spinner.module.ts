@@ -10,14 +10,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 
+import { Ng2GoogleChartsModule } from 'ng2-google-charts'
+
 import { AllPracticeTestsComponent } from '../all-practice-tests/all-practice-tests.component';
+import { TestanalysischartComponent } from '../testanalysischart/testanalysischart.component';
 
 
 @NgModule({
   declarations: [
     SpinnerComponent,
     ConfirmationdialogComponent,
-    AllPracticeTestsComponent
+    AllPracticeTestsComponent,
+    TestanalysischartComponent
   ],
   imports: [
     CommonModule,
@@ -27,12 +31,14 @@ import { AllPracticeTestsComponent } from '../all-practice-tests/all-practice-te
     FormsModule,
     MatFormFieldModule,
     MatIconModule,
-    MatInputModule
+    MatInputModule,
+    Ng2GoogleChartsModule
   ],
   exports:[
     SpinnerComponent,
     ConfirmationdialogComponent,
-    AllPracticeTestsComponent
+    AllPracticeTestsComponent,
+    TestanalysischartComponent
 
   ]
 })

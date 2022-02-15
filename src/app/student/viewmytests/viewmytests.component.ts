@@ -22,7 +22,7 @@ export class ViewmytestsComponent implements OnInit {
 
   displayedColumnsForAllTests: string[] = ['no', 'testId', 'testName', 'testTakenBy', 'testType' ,'testTakenDate'];
 
-  displayedColumnsForIndividualTest: string[] = ['no', 'question','selectedOption', 'correctAnswer', 'result'];
+  displayedColumnsForIndividualTest: string[] = ['no', 'question','selectedOption', 'correctAnswer', 'result', 'subjectTags','topicTags'];
 
   dataSource: MatTableDataSource<Tests> = new MatTableDataSource();
   @ViewChild(MatPaginator) paginator! : MatPaginator;
@@ -50,10 +50,24 @@ export class ViewmytestsComponent implements OnInit {
 
   viewIndividualTestReport(test: Tests): void{
 
-    this.sharedService.displayedColumns = this.displayedColumnsForIndividualTest
-    this.sharedService.testData = test
-    console.log("Cell clicked: ", this.testToShowInTable)
-    this.router.navigate(['/detailTestReport'])
+    let params:any ={};
+    params['displayedColumns'] = this.displayedColumnsForIndividualTest
+    params['testData'] = test;
+
+    // this.sharedService.displayedColumns = this.displayedColumnsForIndividualTest
+    // this.sharedService.testData = test
+    console.log("Cell clicked: ", params)
+    this.router.navigate(
+      ['/detailTestReport'],
+      {
+        queryParams: 
+          {
+            testData: JSON.stringify(params['testData']), 
+            displayedColumns: params['displayedColumns']
+          }, 
+          queryParamsHandling:'merge'
+      }
+    )
   }
 
 }

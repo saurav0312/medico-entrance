@@ -24,12 +24,15 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 
+import { Ng2GoogleChartsModule } from 'ng2-google-charts'
+
 
 import { DetailtestreportComponent } from './detailtestreport/detailtestreport.component';
 import { ViewmytestsComponent } from './viewmytests/viewmytests.component';
 import { EditprofileinfoComponent } from './editprofileinfo/editprofileinfo.component';
 import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
 import { MatSortModule } from '@angular/material/sort';
+import { TestsAnalysisDashboardComponent } from './tests-analysis-dashboard/tests-analysis-dashboard.component';
 
 
 @NgModule({
@@ -37,7 +40,8 @@ import { MatSortModule } from '@angular/material/sort';
     StudentprofileComponent,
     DetailtestreportComponent,
     ViewmytestsComponent,
-    EditprofileinfoComponent
+    EditprofileinfoComponent,
+    TestsAnalysisDashboardComponent
   ],
   imports: [
     CommonModule,
@@ -59,7 +63,8 @@ import { MatSortModule } from '@angular/material/sort';
     MatNativeDateModule,
     MatSelectModule,
     SpinnerModule,
-    MatSortModule
+    MatSortModule,
+    Ng2GoogleChartsModule
   ],
   exports: [
     StudentprofileComponent,

@@ -189,7 +189,9 @@ export class StarttestComponent implements OnInit, OnDestroy {
         let testReportQuestion:TestReportQuestion = {
           "question": question?.question,
           "selectedOption": question?.selectedOption,
-          "correctAnswer": question?.correctAnswer
+          "correctAnswer": question?.correctAnswer,
+          "subjectTags": question?.subjectTags,
+          "topicTags": question?.topicTags
         }
         testQuestions.push(testReportQuestion)
       }
@@ -197,7 +199,9 @@ export class StarttestComponent implements OnInit, OnDestroy {
         let testReportQuestion:TestReportQuestion = {
           "question": question?.question,
           "selectedOption": null,
-          "correctAnswer": question?.correctAnswer
+          "correctAnswer": question?.correctAnswer,
+          "subjectTags": question?.subjectTags,
+          "topicTags": question?.topicTags
         }
         testQuestions.push(testReportQuestion)
       }
