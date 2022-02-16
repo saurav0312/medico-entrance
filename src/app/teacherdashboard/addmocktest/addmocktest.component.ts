@@ -108,7 +108,8 @@ export class AddmocktestComponent implements OnInit{
               "options":options,
               "correctAnswer":questionItem.correctAnswer,
               "subjectTags": subjectTags,
-              "topicTags": topicTags
+              "topicTags": topicTags,
+              "totalTimeSpent":0
             }
             questions.push(question);
           })
