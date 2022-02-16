@@ -16,7 +16,7 @@
                     <b>Test Holder:</b> {{testToShowInTable.testTakenBy}}
                 </div>
                 <div class ="col-md-4">
-                    <b>Date:</b> {{testTakenDate  }}
+                    <b>Date:</b> {{testTakenDate | date:'yyyy/MM/dd' }}
                 </div>
             </div>
             <div class="green">
@@ -30,12 +30,12 @@
             <div style="clear: both;">
             </div>
             <div [ngClass]="'mat-elevation-z8'" class="table-contents" id="content" #content>
-                <mat-table [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"> 
+                <mat-table multiTemplateDataRows [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"> 
                     <ng-container matColumnDef="no">
                         <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> No </mat-header-cell>
-                        <mat-cell *matCellDef="let element; let i = index;"> 
+                        <mat-cell *matCellDef="let element; let i = dataIndex;"> 
                             <span class="mobile-label">No:</span>
-                            {{paginator.pageIndex * paginator.pageSize + i + 1}}
+                            {{this.paginator.pageIndex* this.paginator.pageSize + i + 1 }}
                         </mat-cell>
                     </ng-container>
         
@@ -90,13 +90,49 @@
                         <mat-cell *matCellDef="let element"> 
                             <span class="mobile-label">Topic Tag:</span>
                             <!-- {{element.topicTags[0]}}  -->
-                            <button disabled class="btn" style="margin-right: 1em; background-color: red; color: white; display: inline;" 
-                            *ngFor="let topicTag of element.topicTags">{{topicTag}}</button>
+                            <div style="display: inline; float: left;">
+                                <button disabled class="btn" style="margin: 0.2em; background-color: red; color: white; display: inline;" 
+                                    *ngFor="let topicTag of element.topicTags">{{topicTag}}
+                                </button>
+                            </div>
                         </mat-cell>
+                    </ng-container>
+
+                    <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+                    <ng-container matColumnDef="expandedDetail">
+                        <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                        <div class="example-element-detail"
+                            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                            <div class="example-element-diagram float-container">
+                                <div style="display: flex; float: left;">
+                                    <h3 style="margin-right: 2em;">
+                                        <b>All options:</b> 
+                                        <ng-container style="float: left;" *ngFor="let option of element.options">
+                                            {{option}}
+                                        </ng-container>
+                                    </h3>
+
+                                    <!-- <div> -->
+                                        <h3>
+                                            <b>Total Time Spent:</b>
+                                        {{element.totalTimeSpent}} seconds
+                                        </h3> 
+                                    <!-- </div> -->
+
+                                </div>
+                                
+                            </div>
+                        </div>
+                        </td>
                     </ng-container>
         
                     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                    <mat-row *matRowDef="let element; columns: displayedColumns;"
+                    class="example-element-row"
+                    [class.example-expanded-row]="expandedElement === element"
+                    (click)="expandedElement = expandedElement === element ? null : element">
+                    </mat-row>
+                    <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
         
                     
                 </mat-table>
@@ -106,13 +142,20 @@
         </div>
         
         <div class="float-child">
-            <div class="blue">
-            <table class="columns" style="display: inline; text-align: center; align-items: center;">
-                <tr>
-                <td><div id="subject_chart_div" style="margin-top: 2em;  width: 400px; height: 400px;"></div></td>
-                <td><div id="topic_chart_div" style="margin-top: 2em; width: 400px; height: 400px;"></div></td>
-                </tr>
-            </table>
+            <h1 style="text-align: center;">Chart Based Analysis</h1>
+            <div class="float-container">
+            <!-- <table class="columns" style="display: inline; text-align: center; align-items: center;"> -->
+                <!-- <tr> -->
+                    <!-- <td> -->
+                        <div class="float-child" id="subject_chart_div" style="width: 21em; height: 20em; margin-top: 8em;">
+                        </div>
+                    <!-- </td> -->
+                    <!-- <td> -->
+                        <div class="float-child" id="topic_chart_div" style="width: 21em; height: 20em; margin-top: 8em;">
+                        </div>
+                    <!-- </td> -->
+                <!-- </tr> -->
+            <!-- </table> -->
             </div>
         </div>   
     </div>   

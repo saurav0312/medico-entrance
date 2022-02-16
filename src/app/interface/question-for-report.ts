@@ -1,4 +1,4 @@
-export interface Question { 
+export interface QuestionForReport {
     question: string; 
     options: Array<any>;
     correctAnswer: any;
@@ -7,4 +7,4 @@ export interface Question {
     selectedOption?: any;
     answered?: boolean;
     totalTimeSpent?: number | undefined;
-  }
+}

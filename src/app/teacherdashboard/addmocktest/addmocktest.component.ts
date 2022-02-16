@@ -92,11 +92,16 @@ export class AddmocktestComponent implements OnInit{
             options.push(questionItem.optionD)
 
             let subjectTags: Array<any> = [];
-            subjectTags.push(questionItem.subject_tag)
+            let subjectTagsFromFileSplitted: Array<string> = questionItem.subject_tag.split("|")
+            subjectTagsFromFileSplitted.forEach(element =>{
+              subjectTags.push(element)
+            })
 
             let topicTags: Array<any> = [];
-            topicTags.push(questionItem.topic_tag)
-
+            let topicTagsFromFileSplitted:Array<string> = questionItem.topic_tag.split("|")
+            topicTagsFromFileSplitted.forEach(element =>{
+              topicTags.push(element)
+            })
   
             let question:Question = {
               "question":questionItem.question,

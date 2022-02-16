@@ -1,11 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Userr } from '../../interface/user';
 import { MockTest } from '../../interface/mockTest';
-import { Question } from '../../interface/question';
-import { Firestore, collectionData, collection } from '@angular/fire/firestore';
-import { HttpClient } from '@angular/common/http';
 import { AuthService } from '../../service/auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { TestsubscriptionService } from 'src/app/service/testsubscription.service';
 import { TestSubscription } from 'src/app/interface/test-subscription';
 import { SharedService } from 'src/app/service/shared.service';
