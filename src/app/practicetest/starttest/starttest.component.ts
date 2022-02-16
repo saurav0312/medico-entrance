@@ -72,8 +72,6 @@ export class StarttestComponent implements OnInit, OnDestroy {
   ];
 
   this.dataSource = new MatTableDataSource();
-  // this.dataSource.paginator = this.paginator;
-
     this.route.queryParams.subscribe((params: any) =>{
       this.testId = <string>params.data
       this.authService.getMockTestByID(this.testId).subscribe(response=>{
@@ -102,7 +100,6 @@ export class StarttestComponent implements OnInit, OnDestroy {
                   this.authService.setTestFinishTime(this.userId,data)
                 }
 
-                //this.subscription.unsubscribe()
                 if(typeof(this.intervalId) === 'undefined'){
                   this.intervalId = setInterval(() =>{
                     console.log("interval running!")
@@ -117,7 +114,6 @@ export class StarttestComponent implements OnInit, OnDestroy {
                       this.finishInterval()
                     }
                     else{
-                      //this.totalTimeRemaining--;
                     }
                   },1000);
                 }
@@ -128,12 +124,8 @@ export class StarttestComponent implements OnInit, OnDestroy {
                 this.totalTimeRemaining = 0;
               }
             })
-            //this.testReportDataToSend = response
-            //console.log("User MockTests Result" ,this.testReportDataToSend)
           })
         })
-        //  will enable it later
-        
       })
     })
   }
@@ -141,11 +133,12 @@ export class StarttestComponent implements OnInit, OnDestroy {
   
 
   finishInterval(){
-    //clearInterval(this.intervalId)
     this.authService.removeTestFinishTime(this.userId);
     this.testFinished= true;
     if(this.isResultSubmitted == false){
-      this.testData.questions[this.counter].totalTimeSpent = Math.floor(Date.now()/1000) - this.questionStartTime;
+      this.testData.questions[this.counter].totalTimeSpent = this.testData.questions[this.counter].totalTimeSpent === 0 
+                      ? Math.floor(Date.now()/1000) - this.questionStartTime : 
+                      this.testData.questions[this.counter].totalTimeSpent + (Math.floor(Date.now()/1000) - this.questionStartTime);
       this.evaluateMarks(this.testData);
       console.log(this.testData)
     }
@@ -178,11 +171,6 @@ export class StarttestComponent implements OnInit, OnDestroy {
     this.noOfQuestionsAnsweredIncorrectly = questionsAnsweredIncorrectly;
     this.noOfQuestionsAttempted = questionsAttempted;
     this.noOfQuestionsUnattempted = testResult.questions.length - questionsAttempted;
-    // this.httpClient.post(this.realtimeDatabaseUrl +"users.json", {"name": this.testId}).subscribe(res =>{
-    //   console.log("Results sent")
-    // });
-
-    //this.authService.createAllMockTestsGivenByAUser("sa", {});
     this.prepareReportData();
   }
 
@@ -233,25 +221,25 @@ export class StarttestComponent implements OnInit, OnDestroy {
   }
 
   increaseCounter(): void{
-    this.testData.questions[this.counter].totalTimeSpent = Math.floor(Date.now()/1000) - this.questionStartTime;
+    this.testData.questions[this.counter].totalTimeSpent = this.testData.questions[this.counter].totalTimeSpent === 0 
+                      ? Math.floor(Date.now()/1000) - this.questionStartTime : 
+                      this.testData.questions[this.counter].totalTimeSpent + (Math.floor(Date.now()/1000) - this.questionStartTime);
     this.counter++;
     this.questionStartTime = Math.floor(Date.now()/1000)
-    // if(this.counter === this.testData.questions.length ){
-    //   this.counter = this.testData.questions.length-1;
-    // }
   }
 
   decreaseCounter(): void{
-    this.testData.questions[this.counter].totalTimeSpent = Math.floor(Date.now()/1000) - this.questionStartTime;
+    this.testData.questions[this.counter].totalTimeSpent = this.testData.questions[this.counter].totalTimeSpent === 0 
+                      ? Math.floor(Date.now()/1000) - this.questionStartTime : 
+                      this.testData.questions[this.counter].totalTimeSpent + (Math.floor(Date.now()/1000) - this.questionStartTime);
     this.counter --;
     this.questionStartTime = Math.floor(Date.now()/1000)
-    // if(this.counter === -1){
-    //   this.counter = 0;
-    // }
   }
 
   changeQuestion(questionIndex: number): void{
-    this.testData.questions[this.counter].totalTimeSpent = Math.floor(Date.now()/1000) - this.questionStartTime;
+    this.testData.questions[this.counter].totalTimeSpent = this.testData.questions[this.counter].totalTimeSpent === 0 
+                      ? Math.floor(Date.now()/1000) - this.questionStartTime : 
+                      this.testData.questions[this.counter].totalTimeSpent + (Math.floor(Date.now()/1000) - this.questionStartTime);
     this.counter = questionIndex
     this.questionStartTime = Math.floor(Date.now()/1000)
   }
@@ -266,19 +254,9 @@ export class StarttestComponent implements OnInit, OnDestroy {
 
   viewDetailReport(){
     this.viewResult = true;
-    //this.dataSource = new MatTableDataSource<TestReportQuestion>(this.testToShowInTable.testQuestions)
     this.sharedService.displayedColumns = this.displayedColumns
     this.sharedService.testData = this.testToShowInTable
     this.router.navigate(['/studentProfile/detailTestReport'])
-    // this.dataSource.data = this.testToShowInTable.testQuestions;
-    // this.dataSource.paginator = this.paginator;
-    // this.testReportDataToSend.allTests.forEach(test =>{
-    //   this.testQuestions = test.testQuestions
-    // })
-    // this.authService.getAllMockTestsGivenByAUser(this.userId).subscribe(response =>{
-    //   this.testReportDataToSend = response
-    //   console.log("User MockTests Result" ,this.testReportDataToSend)
-    // })
   }
 
   viewProfile(){

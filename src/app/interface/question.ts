@@ -6,5 +6,5 @@ export interface Question {
     topicTags?: Array<any>;
     selectedOption?: any;
     answered?: boolean;
-    totalTimeSpent?: number | undefined;
+    totalTimeSpent: number;
   }
