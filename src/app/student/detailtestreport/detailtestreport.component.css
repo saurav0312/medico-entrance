@@ -70,7 +70,7 @@
 }
 
 .mat-row:hover .mat-cell {
-    border-color: currentColor;
+    /* border-color: currentColor; */
 }
 
 .table-header-class{
@@ -160,7 +160,7 @@
   }
 
   .float-container {
-    border: 3px solid #fff;
+    
     padding: 20px;
 }
 
@@ -169,4 +169,42 @@
     float: left;
     padding: 10px;
     
+    overflow: hidden;
+    
 } 
+
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: whitesmoke;
+}
+
+tr.example-element-row:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.example-element-diagram {
+  min-width: 40px;
+  padding: 8px;
+  font-weight: lighter;
+  margin: 8px 0;
+  height: fit-content;
+}

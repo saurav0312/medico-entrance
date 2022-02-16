@@ -52,6 +52,9 @@ export class StarttestComponent implements OnInit, OnDestroy {
   minutes: number = 0;
   seconds: number = 0;
 
+  questionStartTime!: number ;
+  questionEndTime!: number;
+
   constructor(
     private router : Router,
     private route: ActivatedRoute,
@@ -118,6 +121,8 @@ export class StarttestComponent implements OnInit, OnDestroy {
                     }
                   },1000);
                 }
+
+                this.questionStartTime = Math.floor(Date.now()/1000)
               }
               else{
                 this.totalTimeRemaining = 0;
@@ -140,6 +145,7 @@ export class StarttestComponent implements OnInit, OnDestroy {
     this.authService.removeTestFinishTime(this.userId);
     this.testFinished= true;
     if(this.isResultSubmitted == false){
+      this.testData.questions[this.counter].totalTimeSpent = Math.floor(Date.now()/1000) - this.questionStartTime;
       this.evaluateMarks(this.testData);
       console.log(this.testData)
     }
@@ -185,26 +191,16 @@ export class StarttestComponent implements OnInit, OnDestroy {
     let testQuestions: Array<TestReportQuestion> = [];
 
     this.testData.questions.forEach(question =>{
-      if(question.selectedOption!== undefined){
         let testReportQuestion:TestReportQuestion = {
           "question": question?.question,
-          "selectedOption": question?.selectedOption,
+          "options": question?.options,
+          "selectedOption": question?.selectedOption === undefined ? null : question?.selectedOption,
           "correctAnswer": question?.correctAnswer,
           "subjectTags": question?.subjectTags,
-          "topicTags": question?.topicTags
+          "topicTags": question?.topicTags,
+          "totalTimeSpent": question?.totalTimeSpent === undefined ? 0 : question?.totalTimeSpent
         }
         testQuestions.push(testReportQuestion)
-      }
-      else{
-        let testReportQuestion:TestReportQuestion = {
-          "question": question?.question,
-          "selectedOption": null,
-          "correctAnswer": question?.correctAnswer,
-          "subjectTags": question?.subjectTags,
-          "topicTags": question?.topicTags
-        }
-        testQuestions.push(testReportQuestion)
-      }
     })
 
     let tests: Tests = {
@@ -237,21 +233,27 @@ export class StarttestComponent implements OnInit, OnDestroy {
   }
 
   increaseCounter(): void{
+    this.testData.questions[this.counter].totalTimeSpent = Math.floor(Date.now()/1000) - this.questionStartTime;
     this.counter++;
-    if(this.counter === this.testData.questions.length ){
-      this.counter = this.testData.questions.length-1;
-    }
+    this.questionStartTime = Math.floor(Date.now()/1000)
+    // if(this.counter === this.testData.questions.length ){
+    //   this.counter = this.testData.questions.length-1;
+    // }
   }
 
   decreaseCounter(): void{
+    this.testData.questions[this.counter].totalTimeSpent = Math.floor(Date.now()/1000) - this.questionStartTime;
     this.counter --;
-    if(this.counter === -1){
-      this.counter = 0;
-    }
+    this.questionStartTime = Math.floor(Date.now()/1000)
+    // if(this.counter === -1){
+    //   this.counter = 0;
+    // }
   }
 
   changeQuestion(questionIndex: number): void{
+    this.testData.questions[this.counter].totalTimeSpent = Math.floor(Date.now()/1000) - this.questionStartTime;
     this.counter = questionIndex
+    this.questionStartTime = Math.floor(Date.now()/1000)
   }
 
   optionSelected(questionNumber:number, selectedOption:number): void{

@@ -17,7 +17,7 @@
                     <div class="card-body">
                         <div style="display: inline; float: right;">
                             <button disabled class="btn" style="margin-right: 1em; background-color: green; color: white;" *ngFor="let subjectTag of testData.questions[counter]?.subjectTags">{{subjectTag}}</button>
-                            <button disabled class="btn" style="background-color: red; color: white;" *ngFor="let topicTag of testData.questions[counter]?.topicTags">{{topicTag}}</button>
+                            <button disabled class="btn" style="margin-right: 1em; background-color: red; color: white;" *ngFor="let topicTag of testData.questions[counter]?.topicTags">{{topicTag}}</button>
                         </div>
                         <h1 class="card-title">{{counter + 1}}. {{testData.questions[counter]?.question}}</h1>
                         <ol>
