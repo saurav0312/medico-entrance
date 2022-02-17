@@ -7,4 +7,5 @@ export interface Question {
     selectedOption?: any;
     answered?: boolean;
     totalTimeSpent: number;
+    questionImageUrl?:Array<string>;
   }

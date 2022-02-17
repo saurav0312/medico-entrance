@@ -32,4 +32,13 @@ export class ProfileService {
       )
     )
   }
+
+  uploadQuestionImage(path: Blob | ArrayBuffer | Uint8Array, filename: string, userId: string, testId: string| undefined,questionNumber: string) : Observable<string>{
+    const profileImagesRef = ref(this.storage, `questionImages/${userId}/${testId}/${questionNumber}/${filename}`)
+    const uploadTask = from(uploadBytes(profileImagesRef, path, {contentType: 'image/jpeg'}))
+    return uploadTask.pipe(
+      switchMap((result) => from(getDownloadURL(result.ref))
+      )
+    )
+  }
 }

@@ -28,6 +28,7 @@
     "firebase": "^9.6.4",
     "font-awesome": "^4.7.0",
     "jspdf": "^2.5.1",
+    "jszip": "^3.7.1",
     "mat-table-exporter": "^10.2.4",
     "ng-http-loader": "^11.0.1",
     "ng2-google-charts": "^7.0.0",
