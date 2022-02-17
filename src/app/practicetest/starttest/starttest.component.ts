@@ -76,6 +76,7 @@ export class StarttestComponent implements OnInit, OnDestroy {
       this.testId = <string>params.data
       this.authService.getMockTestByID(this.testId).subscribe(response=>{
         this.testData= response;
+        console.log("test data with image: ", this.testData)
         this.testTotalTime = this.testData.totalTime
         const sub = this.authService.getCurrentUser().subscribe(response =>{
           this.userId = response?.uid

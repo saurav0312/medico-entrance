@@ -97,6 +97,14 @@
                     </mat-error>
                 </div>
 
+                <div style="width: 100%; text-align: left;">
+                  <!-- <mat-form-field style="width: 100%;" appearance="outline"> -->
+                    <mat-label>Select Question Images Zip File:</mat-label> 
+                    <div class="mb-3">
+                      <input formControlName="testQuestionImagesFile" (change)="uploadQuestionImagesFile($event)" class="form-control" type="file" accept=".zip" id="formZipFile">
+                    </div>
+                </div>
+
 
                 <div>
                     <button style="margin-right: em; margin-top: 1em;" mat-raised-button type="button" (click) = "clearForm()" class="cancel-class">Cancel</button>

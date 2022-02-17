@@ -177,8 +177,8 @@ export class AuthService {
   }
 
   //update mock test details
-  updateMockTestDetails(id: string | undefined, testDetail: MockTest): Observable<any>{
-    const docRef = doc(this.firestore, `MockTests/${id}`);
+  updateMockTestDetails(testId: string | undefined, testDetail: MockTest): Observable<any>{
+    const docRef = doc(this.firestore, `MockTests/${testId}`);
     return from(setDoc(docRef, testDetail, {merge: true}))
   }
 }

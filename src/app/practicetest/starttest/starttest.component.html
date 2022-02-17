@@ -20,6 +20,9 @@
                             <button disabled class="btn" style="margin-right: 1em; background-color: red; color: white;" *ngFor="let topicTag of testData.questions[counter]?.topicTags">{{topicTag}}</button>
                         </div>
                         <h1 class="card-title">{{counter + 1}}. {{testData.questions[counter]?.question}}</h1>
+                        <ng-container *ngFor="let imageUrl of testData.questions[counter]?.questionImageUrl ">
+                            <img src="{{imageUrl}}">
+                        </ng-container>
                         <ol>
                             <div>
                                 <li style ="height: 2.5em;" (click)="optionSelected(counter,option)" class="card options-item"
