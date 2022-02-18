@@ -177,7 +177,8 @@
 
     <mat-expansion-panel style="margin: 1.6em;" class="mat-card mat-elevation-z8" 
                         (opened)="expandCharts = true"
-                        (closed)="expandCharts = false">
+                        (closed)="expandCharts = false"
+                        [expanded]="true">
         <mat-expansion-panel-header>
         <mat-panel-title>
             <div class="col-md-12 text-center" >
@@ -186,27 +187,36 @@
             </div>
         </mat-panel-title>
         </mat-expansion-panel-header>
-            <div class="row" style="display: block;">
-                <mat-icon id="fullScreen" style="float: left; display: flex; width: auto; cursor: pointer;">zoom_out_map</mat-icon>
+            <!-- <div class="row" style="display: block;"> -->
+               
                 <!-- <button id="fullScreen" class="btn btn-primary" style="float: left; display: flex; width: auto;">Full Screen</button> -->
-                <mat-icon id="fullScreen1" style="float: right; width: auto; cursor: pointer;">zoom_out_map</mat-icon>
-            </div>
+                
+            <!-- </div> -->
             
             <div class="row">
                 <div class="col-md-6 ">
-                    <div id="subjectwise_chart_div" class="chart mat-elevation-z8" style="height:400px; border: 1px solid black; margin-bottom: 1em; margin-top: 1em;" ></div>
+                    <div>
+                        <div>
+                            <mat-icon id="fullScreen" style="display: flex; flex-flow: row-reverse; width: auto; cursor: pointer;">zoom_out_map
+                            </mat-icon>
+                        </div>
+                        <div id="subjectwise_chart_div" class="chart mat-elevation-z8" style="height:400px; border: 1px solid black; margin-bottom: 1em; margin-top: 1em;" ></div>
                     </div>
-                    <div class="col-md-6 ">
-                    <div id="topicwise_chart_div" class="chart mat-elevation-z8" style="border: 1px solid black; margin-bottom: 1em; margin-top: 1em;"></div>
+                </div>
+                <div class="col-md-6 ">
+                    <div>
+                        <mat-icon id="fullScreen1" style="display: flex; flex-flow: row-reverse; width: auto; cursor: pointer;">zoom_out_map</mat-icon>
+                        <div id="topicwise_chart_div" class="chart mat-elevation-z8" style="height:400px; border: 1px solid black; margin-bottom: 1em; margin-top: 1em;"></div>
+                    </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6 ">
-                <div id="subjectTimeSpent_chart_div" class="chart mat-elevation-z8" style="border: 1px solid black; margin-bottom: 1em; margin-top: 1em;"></div>
+                    <div id="subjectTimeSpent_chart_div" class="chart mat-elevation-z8" style="border: 1px solid black; margin-bottom: 1em; margin-top: 1em;"></div>
                 </div>
                 <div class="col-md-6 ">
-                <div id="topicTimeSpent_chart_div" class="chart mat-elevation-z8" style="border: 1px solid black; margin-bottom: 1em; margin-top: 1em;"></div>
+                    <div id="topicTimeSpent_chart_div" class="chart mat-elevation-z8" style="border: 1px solid black; margin-bottom: 1em; margin-top: 1em;"></div>
                 </div>
             </div>
     </mat-expansion-panel>

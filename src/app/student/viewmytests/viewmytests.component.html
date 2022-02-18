@@ -4,7 +4,7 @@
     <h1 style="text-align: center; margin-top: 2em;">All Test Records</h1>
     <div [ngClass]="'mat-elevation-z8'" class="table-contents" id="content" #content>
         <div>
-        <mat-table matSort [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"
+        <mat-table class="change-arrow-color" matSort [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"
                     > 
             <ng-container matColumnDef="no">
                 <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> No </mat-header-cell>

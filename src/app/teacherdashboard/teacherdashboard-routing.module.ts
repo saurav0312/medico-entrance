@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from '../authentication/auth.guard';
+import { TeacherAuthGuardGuard } from '../authentication/teacher-auth-guard.guard';
 import { AddmocktestComponent } from './addmocktest/addmocktest.component';
 import { DeletemocktestComponent } from './deletemocktest/deletemocktest.component';
 import { EditmocktestComponent } from './editmocktest/editmocktest.component';
@@ -23,7 +25,8 @@ const routes: Routes = [
       { path: 'viewmystudents', component: MystudentsComponent },
       { path: 'myTestsBoughtByAStudent', component: MyTestsBoughtByAStudentComponent },
       { path: '', redirectTo:'/teacherdashboard/teacherdashboardcontent', pathMatch: 'full' }
-    ]
+    ],
+    canActivate: [ TeacherAuthGuardGuard]
   },
   { 
     path: 'teacherProfile', 
@@ -31,7 +34,8 @@ const routes: Routes = [
     children: [
       { path: 'editprofileinfo', component: TeacherprofileinfoComponent},
       { path: '', redirectTo:'/teacherProfile/editprofileinfo', pathMatch: 'full' }
-    ]
+    ],
+    canActivate: [ TeacherAuthGuardGuard]
   },
 ];
 

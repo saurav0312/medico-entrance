@@ -5,6 +5,8 @@ import { DetailtestreportComponent } from './detailtestreport/detailtestreport.c
 import { ViewmytestsComponent } from './viewmytests/viewmytests.component';
 import { EditprofileinfoComponent } from './editprofileinfo/editprofileinfo.component';
 import { TestsAnalysisDashboardComponent } from './tests-analysis-dashboard/tests-analysis-dashboard.component';
+import { AuthGuard } from '../authentication/auth.guard';
+import { StudentAuthGuardGuard } from '../authentication/student-auth-guard.guard';
 
 const routes: Routes = [
   {
@@ -16,7 +18,8 @@ const routes: Routes = [
       { path: 'viewMyTests', component: ViewmytestsComponent},
       { path: 'testsAnalysisDashboard', component: TestsAnalysisDashboardComponent},
       { path: '', redirectTo: '/studentProfile/editprofileinfo', pathMatch: 'full' },
-    ]
+    ],
+    canActivate: [StudentAuthGuardGuard]
   }
 ];
 
