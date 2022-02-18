@@ -2,8 +2,8 @@
     <h1 style="text-align: center; margin-top: 2em;">Here is your detail performance report
     </h1>
     <div class="float-container">
-        <div class="float-child">
-            <div class ="row">
+        <div class=" mat-card mat-elevation-z8" >
+            <div class ="row" style="margin: 1em;">
                 <div class ="col-md-4">
                     <b>TestId:</b> {{testId}}
                 </div>
@@ -11,7 +11,7 @@
                     <b>Test Name:</b> {{testToShowInTable.testName}}
                 </div>
             </div>
-            <div class ="row" style="margin-bottom: 1em;">
+            <div class ="row" style="margin: 1em;">
                 <div class ="col-md-4">
                     <b>Test Holder:</b> {{testToShowInTable.testTakenBy}}
                 </div>
@@ -139,25 +139,32 @@
                 <mat-paginator [ngClass]="'styled-paginator'" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
             </div>
             </div>
-        </div>
-        
-        <div class="float-child">
-            <h1 style="text-align: center;">Chart Based Analysis</h1>
-            <div class="float-container">
-            <!-- <table class="columns" style="display: inline; text-align: center; align-items: center;"> -->
-                <!-- <tr> -->
-                    <!-- <td> -->
-                        <div class="float-child" id="subject_chart_div" style="width: 21em; height: 20em; margin-top: 8em;">
-                        </div>
-                    <!-- </td> -->
-                    <!-- <td> -->
-                        <div class="float-child" id="topic_chart_div" style="width: 21em; height: 20em; margin-top: 8em;">
-                        </div>
-                    <!-- </td> -->
-                <!-- </tr> -->
-            <!-- </table> -->
-            </div>
         </div>   
     </div>   
+    <div class="mat-card mat-elevation-z8" style="margin: 1.6em; ">
+        <div class="card">
+            <div class="card-body">
+                <h1 class="card-title col-md-12 text-center" >Chart Based Analysis</h1>
+                <div class="col-sm-12" >
+                    <div style="display: flex; margin-bottom: 1em;">
+                        <div class="mat-card" id="subjectwise_chart_div" style="border: 1px solid black; width: fit-content; min-width: 700px; min-height: 400px; height: fit-content; margin-right: 1em; ">
+                        </div>
+                    <!-- </div> -->
+                    <!-- <div style="width: fit-content;"> -->
+                        <div class="mat-card" id="topicwise_chart_div" style="border: 1px solid black; width: fit-content; min-width: 700px; min-height: 400px; height: fit-content;  margin-right: 1em;  ">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12" >
+                    <div style="display: flex; margin-bottom: 1em;">
+                        <div class="mat-card" id="subjectTimeSpent_chart_div" style="border: 1px solid black;  min-width: 700px; min-height: 400px;  margin-right: 1em;">
+                        </div>
+                        <div class="mat-card" id="topicTimeSpent_chart_div" style="border: 1px solid black; min-width: 700px; min-height: 400px;  margin-right: 1em;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </div>
 </div>
     
