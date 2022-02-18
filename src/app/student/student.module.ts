@@ -23,6 +23,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { MatListModule } from '@angular/material/list';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 import { Ng2GoogleChartsModule } from 'ng2-google-charts'
 
@@ -64,7 +66,9 @@ import { TestsAnalysisDashboardComponent } from './tests-analysis-dashboard/test
     MatSelectModule,
     SpinnerModule,
     MatSortModule,
-    Ng2GoogleChartsModule
+    Ng2GoogleChartsModule,
+    MatListModule,
+    MatExpansionModule
   ],
   exports: [
     StudentprofileComponent,

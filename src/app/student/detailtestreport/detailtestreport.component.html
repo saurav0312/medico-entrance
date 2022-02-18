@@ -79,7 +79,6 @@
                         <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Subject Tag </mat-header-cell>
                         <mat-cell *matCellDef="let element"> 
                             <span class="mobile-label"> Subject Tag:</span>
-                            <!-- {{element.subjectTags[0]}}  -->
                             <button disabled class="btn" style="margin-right: 1em; background-color: green; color: white;" 
                             *ngFor="let subjectTag of element.subjectTags">{{subjectTag}}</button>
                         </mat-cell>
@@ -89,7 +88,6 @@
                         <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Topic Tag </mat-header-cell>
                         <mat-cell *matCellDef="let element"> 
                             <span class="mobile-label">Topic Tag:</span>
-                            <!-- {{element.topicTags[0]}}  -->
                             <div style="display: inline; float: left;">
                                 <button disabled class="btn" style="margin: 0.2em; background-color: red; color: white; display: inline;" 
                                     *ngFor="let topicTag of element.topicTags">{{topicTag}}
@@ -105,18 +103,29 @@
                             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                             <div class="example-element-diagram float-container">
                                 <div style="display: flex; float: left;">
-                                    <h3 style="margin-right: 2em;">
-                                        <b>All options:</b> 
-                                        <ng-container style="float: left;" *ngFor="let option of element.options">
+                                    <!-- <h3 style="margin-right: 2em;"> -->
+                                        <!-- <b>All options:</b> -->
+                                        <mat-list>
+                                            <div mat-subheader><b>All options:</b></div>
+                                            <mat-list-item *ngFor="let option of element.options">
+                                              <div mat-line>{{option}}</div>
+                                            </mat-list-item>
+                                        </mat-list> 
+                                        <!-- <ng-container style="float: left;" *ngFor="let option of element.options">
                                             {{option}}
-                                        </ng-container>
-                                    </h3>
+                                        </ng-container> -->
+                                    <!-- </h3> -->
 
                                     <!-- <div> -->
-                                        <h3>
-                                            <b>Total Time Spent:</b>
-                                        {{element.totalTimeSpent}} seconds
-                                        </h3> 
+                                        
+                                            
+                                        <mat-list>
+                                            <div mat-subheader><b>Total Time Spent:</b></div>
+                                            <mat-list-item>
+                                              <div mat-line> {{element.totalTimeSpent}} seconds</div>
+                                            </mat-list-item>
+                                        </mat-list> 
+                                        
                                     <!-- </div> -->
 
                                 </div>
@@ -141,7 +150,7 @@
             </div>
         </div>   
     </div>   
-    <div class="mat-card mat-elevation-z8" style="margin: 1.6em; ">
+    <!-- <div class="mat-card mat-elevation-z8" style="margin: 1.6em; ">
         <div class="card">
             <div class="card-body">
                 <h1 class="card-title col-md-12 text-center" >Chart Based Analysis</h1>
@@ -149,8 +158,6 @@
                     <div style="display: flex; margin-bottom: 1em;">
                         <div class="mat-card" id="subjectwise_chart_div" style="border: 1px solid black; width: fit-content; min-width: 700px; min-height: 400px; height: fit-content; margin-right: 1em; ">
                         </div>
-                    <!-- </div> -->
-                    <!-- <div style="width: fit-content;"> -->
                         <div class="mat-card" id="topicwise_chart_div" style="border: 1px solid black; width: fit-content; min-width: 700px; min-height: 400px; height: fit-content;  margin-right: 1em;  ">
                         </div>
                     </div>
@@ -165,6 +172,39 @@
                 </div>
             </div>
         </div> 
-    </div>
+    </div> -->
+
+
+    <mat-expansion-panel style="margin: 1.6em;" class="mat-card mat-elevation-z8" 
+                        (opened)="expandCharts = true"
+                        (closed)="expandCharts = false">
+        <mat-expansion-panel-header>
+        <mat-panel-title>
+            <div class="col-md-12 text-center" >
+                <h1 style="margin: 1em;">Chart Based Analysis</h1>
+            
+            </div>
+        </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="row ">
+            <div class="col-md-6 ">
+            <div id="subjectwise_chart_div" class="chart mat-elevation-z8" style="border: 1px solid black; margin-bottom: 1em; margin-top: 1em;" ></div>
+            </div>
+            <div class="col-md-6 ">
+            <div id="topicwise_chart_div" class="chart mat-elevation-z8" style="border: 1px solid black; margin-bottom: 1em; margin-top: 1em;"></div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 ">
+            <div id="subjectTimeSpent_chart_div" class="chart mat-elevation-z8" style="border: 1px solid black; margin-bottom: 1em; margin-top: 1em;"></div>
+            </div>
+            <div class="col-md-6 ">
+            <div id="topicTimeSpent_chart_div" class="chart mat-elevation-z8" style="border: 1px solid black; margin-bottom: 1em; margin-top: 1em;"></div>
+            </div>
+        </div>
+    </mat-expansion-panel>
+
+    
 </div>
     
