@@ -41,7 +41,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   subjectWiseTimeSpentPiechartData: any = []
   topicWiseTimeSpentPiechartData: any = []
 
-  
+  expandCharts: boolean = false; 
 
   @Input() displayedColumns!: string[];
   @Input() testToShowInTable! : Tests;
@@ -206,7 +206,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   buildChart(subjectTagPiechartData : any, topicTagPiechartData: any, subjectWiseTimeSpentPiechartData:any ,topicWiseTimeSpentPiechartData:any){
     var renderChart = ()=>{
 
-      // Create the data table.
+      // Create the data table for subjectwise time spent piechart.
       let subjectTimeSpentData = new google.visualization.DataTable();
       subjectTimeSpentData.addColumn('string', 'Subject');
       subjectTimeSpentData.addColumn('number', 'Total Time Spent');
@@ -221,6 +221,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         }
       }
 
+      //Create the data table for topicwise time spent piechart
       var topicTimeSpentData = new google.visualization.DataTable();
       topicTimeSpentData.addColumn('string', 'Topic');
       topicTimeSpentData.addColumn('number', 'Total Time Spent');
@@ -244,7 +245,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
       formatter.format(subjectTimeSpentData, 1)
       formatter.format(topicTimeSpentData, 1)
 
-      // Instantiate and draw our chart, passing in some options.
+      // Instantiate and draw pie chart, passing in some options.
       var subject_chart_div =  document.getElementById('subjectTimeSpent_chart_div');
       var subjectTagChart = () => new google.visualization.PieChart(subject_chart_div);
       var topicTagChart = () => new google.visualization.PieChart(document.getElementById('topicTimeSpent_chart_div'));
@@ -254,7 +255,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
 
       //Bar chart Subjectwise
-
       let subjectTagData = new google.visualization.DataTable();
       subjectTagData.addColumn('string', 'Subject');
       subjectTagData.addColumn('number', 'Correct');
@@ -277,19 +277,23 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         bold: true,
         italic: true,
         series: {5: {type: 'line'}},
-        animation:{
-          duration: 3000,
-          easing: 'out',
-          startup: true
-        },
+        
         isStacked: true
       };
 
+     
+      // var subjectwise_image_chart_div: any = document.getElementById('subjectwise_chart_div_png')
       var subjectChart = new google.visualization.ComboChart(document.getElementById('subjectwise_chart_div'));
+       
+      // Wait for the chart to finish drawing before calling the getImageURI() method.
+      //  google.visualization.events.addListener(subjectChart, 'ready', function () {
+      //   subjectwise_image_chart_div.outerHTML = '<a href="' + subjectChart.getImageURI() + '">Print</a>';
+      //   console.log(subjectwise_image_chart_div.outerHTML);
+      // });
       subjectChart.draw(subjectTagData, options);
 
-      //Bar chart Topic Wise
 
+      //Bar chart Topic Wise
       let topicTagData = new google.visualization.DataTable();
       topicTagData.addColumn('string', 'Subject');
       topicTagData.addColumn('number', 'Correct');
@@ -312,16 +316,16 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         bold: true,
         italic: true,
         series: {5: {type: 'line'}},
-        animation:{
-          duration: 3000,
-          easing: 'out',
-          startup: true
-        },
+        
         isStacked: true
       };
 
       var topiChart = new google.visualization.ComboChart(document.getElementById('topicwise_chart_div'));
       topiChart.draw(topicTagData, options1);
+
+      
+
+
 
 
     }
@@ -331,6 +335,9 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
     var callback = () =>renderChart()
     google.charts.setOnLoadCallback( callback);
+    window.onresize = ()=>{
+        callback()
+    };
   }
 
   ngAfterViewInit(): void {
