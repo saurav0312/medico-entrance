@@ -208,3 +208,8 @@ tr.example-element-row:not(.example-expanded-row):active {
   margin: 8px 0;
   height: fit-content;
 }
+
+.chart {
+  width: 100%; 
+  min-height: 450px;
+}
