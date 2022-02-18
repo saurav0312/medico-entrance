@@ -92,3 +92,7 @@
     max-height: 500px;
     min-width: 300px;
   }
+
+  ::ng-deep .change-arrow-color .mat-sort-header-arrow {
+    color: white;
+}

@@ -7,8 +7,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HttpClientModule } from '@angular/common/http';
 
+import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
 import { provideAuth,getAuth } from '@angular/fire/auth';
-import { initializeApp,provideFirebaseApp, getApp } from '@angular/fire/app';
+import { initializeApp,provideFirebaseApp, getApp,  } from '@angular/fire/app';
 import { getStorage, provideStorage } from '@angular/fire/storage'
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 

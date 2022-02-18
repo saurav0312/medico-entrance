@@ -11,7 +11,7 @@ import {
   deleteUser
 } from '@angular/fire/auth';
 import { HttpClient } from '@angular/common/http';
-import { from, Observable, switchMap } from 'rxjs';
+import { from, map, Observable, switchMap, take } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MockTest} from '../interface/mockTest';
 import { Firestore, addDoc, collectionData, collection, doc, docData, setDoc, updateDoc, arrayUnion, getDocs } from '@angular/fire/firestore';
@@ -19,6 +19,7 @@ import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
 import { uploadBytes } from 'firebase/storage';
 import { TestReportData } from '../interface/testReportData';
 import { arrayRemove, deleteDoc, FieldValue, query, where } from 'firebase/firestore';
+import { ProfileService } from './profile.service';
 
 @Injectable({
   providedIn: 'root'
@@ -34,7 +35,8 @@ export class AuthService {
     private router : Router,
     private activatedRoute: ActivatedRoute,
     private firestore: Firestore,
-    private storage: Storage
+    private storage: Storage,
+    private profileService: ProfileService
     ) { 
 
   }
@@ -43,9 +45,28 @@ export class AuthService {
     return authState(this.auth)
   }
 
+  // getCurrentUserAccountType(): Observable<string>{
+  //   return this.getCurrentUser() pipe(
+  //     map(currentUser =>{
+  //       // return currentUser.uid
+  //       console.log("Current user logged in is : ", currentUser)
+  //       let accountType ='';
+  //       this.profileService.getUserDetails(currentUser.uid).subscribe(response =>{
+  //         accountType = response.accountType
+  //         console.log("User acc typee: ",accountType)
+  //       })
+  //       return accountType
+  //     }))
+  // }
+
   // Login a user
   loginUser(loginForm: any) : Observable<any>{
-    return from(signInWithEmailAndPassword(this.auth, loginForm.get('email')?.value, loginForm.get('password')?.value))
+    return from(signInWithEmailAndPassword(this.auth, loginForm.get('email')?.value, loginForm.get('password')?.value)).pipe(
+      map((userCredentials) =>{
+        console.log("Logged in user: ", userCredentials.user.uid)
+        localStorage.setItem('userId',userCredentials.user.uid)
+      })
+    )
   }
 
   // Creates a user
@@ -64,7 +85,11 @@ export class AuthService {
 
   //logs out a user
   logout(): Observable<any> {
-    return from(this.auth.signOut());
+    return from(this.auth.signOut()).pipe(
+      map(() =>{
+        localStorage.setItem('userId','')
+      })
+    );
   }
 
   //send change password email
