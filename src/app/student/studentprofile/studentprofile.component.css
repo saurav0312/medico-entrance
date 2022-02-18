@@ -1,6 +1,6 @@
 .mat-toolbar-class{
     /* background:darkslateblue; */
-    background: #5179c4;
+    background: #3b465a;
     color: white;
   }
   
@@ -13,7 +13,7 @@
     margin: 4px;
     width: fit-content;
     border-right: none;
-    background: #5179c4;
+    background: #3b465a;
     color: white;
     border-radius: 2px;
     padding: 4px;

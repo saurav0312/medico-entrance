@@ -40,6 +40,7 @@
     "raw-loader": "^4.0.2",
     "rxjs": "~7.4.0",
     "save-dev": "^0.0.1-security",
+    "screenfull": "^6.0.1",
     "tslib": "^2.3.0",
     "xlsx": "^0.17.5",
     "zone.js": "~0.11.4"

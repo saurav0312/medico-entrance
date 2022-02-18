@@ -74,7 +74,7 @@
 }
 
 .table-header-class{
-    background-color: #009879;
+    background-color: #7c8482;
     color: #ffffff;
     text-align: left;
 }
@@ -214,6 +214,4 @@ tr.example-element-row:not(.example-expanded-row):active {
   min-height: 450px;
 }
 
-.row {
-  margin:0.8em !important;
-}
+

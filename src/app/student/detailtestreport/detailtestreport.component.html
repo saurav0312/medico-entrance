@@ -186,23 +186,29 @@
             </div>
         </mat-panel-title>
         </mat-expansion-panel-header>
-        <div class="row ">
-            <div class="col-md-6 ">
-            <div id="subjectwise_chart_div" class="chart mat-elevation-z8" style="border: 1px solid black; margin-bottom: 1em; margin-top: 1em;" ></div>
+            <div class="row" style="display: block;">
+                <mat-icon id="fullScreen" style="float: left; display: flex; width: auto; cursor: pointer;">zoom_out_map</mat-icon>
+                <!-- <button id="fullScreen" class="btn btn-primary" style="float: left; display: flex; width: auto;">Full Screen</button> -->
+                <mat-icon id="fullScreen1" style="float: right; width: auto; cursor: pointer;">zoom_out_map</mat-icon>
             </div>
-            <div class="col-md-6 ">
-            <div id="topicwise_chart_div" class="chart mat-elevation-z8" style="border: 1px solid black; margin-bottom: 1em; margin-top: 1em;"></div>
+            
+            <div class="row">
+                <div class="col-md-6 ">
+                    <div id="subjectwise_chart_div" class="chart mat-elevation-z8" style="height:400px; border: 1px solid black; margin-bottom: 1em; margin-top: 1em;" ></div>
+                    </div>
+                    <div class="col-md-6 ">
+                    <div id="topicwise_chart_div" class="chart mat-elevation-z8" style="border: 1px solid black; margin-bottom: 1em; margin-top: 1em;"></div>
+                </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-6 ">
-            <div id="subjectTimeSpent_chart_div" class="chart mat-elevation-z8" style="border: 1px solid black; margin-bottom: 1em; margin-top: 1em;"></div>
+            <div class="row">
+                <div class="col-md-6 ">
+                <div id="subjectTimeSpent_chart_div" class="chart mat-elevation-z8" style="border: 1px solid black; margin-bottom: 1em; margin-top: 1em;"></div>
+                </div>
+                <div class="col-md-6 ">
+                <div id="topicTimeSpent_chart_div" class="chart mat-elevation-z8" style="border: 1px solid black; margin-bottom: 1em; margin-top: 1em;"></div>
+                </div>
             </div>
-            <div class="col-md-6 ">
-            <div id="topicTimeSpent_chart_div" class="chart mat-elevation-z8" style="border: 1px solid black; margin-bottom: 1em; margin-top: 1em;"></div>
-            </div>
-        </div>
     </mat-expansion-panel>
 
     

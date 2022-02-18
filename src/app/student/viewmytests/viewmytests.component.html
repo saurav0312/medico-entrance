@@ -15,7 +15,9 @@
             </ng-container>
 
             <ng-container matColumnDef="testId">
-                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> TestId </mat-header-cell>
+                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef>
+                    <div style="text-align: center;">TestId</div> 
+                </mat-header-cell>
                 <mat-cell *matCellDef="let element" (click)="viewIndividualTestReport(element)"> 
                     <span class="mobile-label">TestId:</span>
                     {{element.testId}}
@@ -23,7 +25,15 @@
             </ng-container>
 
             <ng-container matColumnDef="testName">
-                <mat-header-cell  mat-sort-header [ngClass]="'table-header-class'" *matHeaderCellDef> TestName </mat-header-cell>
+                <mat-header-cell  mat-sort-header [ngClass]="'table-header-class'" *matHeaderCellDef> 
+                    <div> 
+                    <div>TestName</div> 
+                    <div> 
+                        <input matInput placeholder="filter" style="text-align:center">
+                        <mat-divider></mat-divider>
+                    </div>
+                    </div>
+                </mat-header-cell>
                 <mat-cell *matCellDef="let element" (click)="viewIndividualTestReport(element)"> 
                     <span class="mobile-label">TestName:</span>
                     {{element.testName}}

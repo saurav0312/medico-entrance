@@ -8,6 +8,8 @@ import { SharedService } from 'src/app/service/shared.service';
 import { Timestamp } from 'firebase/firestore';
 import { AuthService } from 'src/app/service/auth.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
+import screenfull from 'screenfull';
+
 
 declare var google: any;
 
@@ -277,12 +279,11 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         bold: true,
         italic: true,
         series: {5: {type: 'line'}},
-        
         isStacked: true
       };
-
      
-      // var subjectwise_image_chart_div: any = document.getElementById('subjectwise_chart_div_png')
+      var subjectwise_image_chart_div: any = document.getElementById('subjectwise_chart_div_png')
+      var subjectwise_chart_div_ele: any =  document.getElementById('subjectwise_chart_div')
       var subjectChart = new google.visualization.ComboChart(document.getElementById('subjectwise_chart_div'));
        
       // Wait for the chart to finish drawing before calling the getImageURI() method.
@@ -290,6 +291,10 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
       //   subjectwise_image_chart_div.outerHTML = '<a href="' + subjectChart.getImageURI() + '">Print</a>';
       //   console.log(subjectwise_image_chart_div.outerHTML);
       // });
+
+    //   google.visualization.events.addListener(subjectChart, "click", function() {
+    //     subjectwise_chart_div_ele.requestFullscreen();
+    // });
       subjectChart.draw(subjectTagData, options);
 
 
@@ -338,6 +343,26 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
     window.onresize = ()=>{
         callback()
     };
+
+    const subjectwise_chart : any = document.getElementById('subjectwise_chart_div');
+    const topicwise_chart: any = document.getElementById('topicwise_chart_div');
+      const buttonElement :any = document.getElementById('fullScreen')
+      buttonElement.addEventListener('click', () => {
+        if (screenfull.isEnabled) {
+          screenfull.request(subjectwise_chart);
+          
+        }
+      });
+
+      const buttonElement1 :any = document.getElementById('fullScreen1')
+      buttonElement1.addEventListener('click', () => {
+        if (screenfull.isEnabled) {
+          screenfull.request(topicwise_chart);
+          
+        }
+      });
+
+      // screenfull.off('change', callback);
   }
 
   ngAfterViewInit(): void {
