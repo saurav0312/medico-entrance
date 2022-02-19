@@ -190,9 +190,18 @@ p {
   color: white;
 }
 
-.card:hover{
-  -webkit-box-shadow: -1px 9px 40px -12px rgba(0,0,0,0.75);
-  -moz-box-shadow: -1px 9px 40px -12px rgba(0,0,0,0.75);
-  box-shadow: -1px 9px 40px -12px rgba(0,0,0,0.75);
-  background-color: aliceblue;
+// .card:hover{
+//   -webkit-box-shadow: -1px 9px 40px -12px rgba(0,0,0,0.75);
+//   -moz-box-shadow: -1px 9px 40px -12px rgba(0,0,0,0.75);
+//   box-shadow: -1px 9px 40px -12px rgba(0,0,0,0.75);
+//   background-color: aliceblue;
+// }
+
+
+.container{
+  width: 100%;
+  padding-right: 7px;
+  padding-left: 7px;
+  margin-right: auto;
+  margin-left: auto;
 }

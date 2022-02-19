@@ -22,7 +22,7 @@ export class ViewmytestsComponent implements OnInit {
 
   displayedColumnsForAllTests: string[] = ['no', 'testId', 'testName', 'testTakenBy', 'testType' ,'testTakenDate'];
 
-  displayedColumnsForIndividualTest: string[] = ['no', 'question','selectedOption', 'correctAnswer', 'result', 'subjectTags','topicTags'];
+  displayedColumnsForIndividualTest: string[] = ['no', 'question','selectedOption', 'correctAnswer', 'result', 'timeSpent' , 'subjectTags','topicTags'];
 
   dataSource: MatTableDataSource<Tests> = new MatTableDataSource();
   @ViewChild(MatPaginator) paginator! : MatPaginator;
@@ -35,6 +35,11 @@ export class ViewmytestsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    this.dataSource.filterPredicate = function(data, filter: string): boolean {
+      return data.testName?.toLowerCase().includes(filter) || data.testTakenBy?.toLowerCase().includes(filter) || data.testType?.toLowerCase().includes(filter);
+    };
+
     let sub = this.authService.getCurrentUser().subscribe(response =>{
       this.authService.getAllMockTestsGivenByAUser(response?.uid).subscribe(response =>{
         sub.unsubscribe()
@@ -68,6 +73,11 @@ export class ViewmytestsComponent implements OnInit {
           queryParamsHandling:'merge'
       }
     )
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 }

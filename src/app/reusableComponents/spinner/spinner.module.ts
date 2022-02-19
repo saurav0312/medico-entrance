@@ -14,6 +14,7 @@ import { Ng2GoogleChartsModule } from 'ng2-google-charts'
 
 import { AllPracticeTestsComponent } from '../all-practice-tests/all-practice-tests.component';
 import { TestanalysischartComponent } from '../testanalysischart/testanalysischart.component';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { TestanalysischartComponent } from '../testanalysischart/testanalysischa
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    Ng2GoogleChartsModule
+    Ng2GoogleChartsModule,
+    MatDividerModule
   ],
   exports:[
     SpinnerComponent,

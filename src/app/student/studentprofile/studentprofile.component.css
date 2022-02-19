@@ -1,7 +1,7 @@
 .mat-toolbar-class{
     /* background:darkslateblue; */
-    background: #3b465a;
-    color: white;
+    background: #cacae2eb;
+    /* color: white; */
   }
   
   .mat-sidenav-container-class{
@@ -10,13 +10,13 @@
   }
   
   .mat-sidenav-class{
-    margin: 4px;
+    /* margin: 4px; */
     width: fit-content;
     border-right: none;
-    background: #3b465a;
-    color: white;
-    border-radius: 2px;
-    padding: 4px;
+    background: #cacae2eb;
+    /* color: white; */
+    /* border-radius: 2px; */
+    /* padding: 4px; */
     text-align: center;
   }
   

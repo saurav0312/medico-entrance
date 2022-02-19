@@ -25,6 +25,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { FormsModule } from '@angular/forms';
 
 import { Ng2GoogleChartsModule } from 'ng2-google-charts'
 
@@ -68,7 +69,8 @@ import { TestsAnalysisDashboardComponent } from './tests-analysis-dashboard/test
     MatSortModule,
     Ng2GoogleChartsModule,
     MatListModule,
-    MatExpansionModule
+    MatExpansionModule,
+    FormsModule
   ],
   exports: [
     StudentprofileComponent,

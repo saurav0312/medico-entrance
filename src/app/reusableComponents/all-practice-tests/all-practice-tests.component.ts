@@ -17,7 +17,7 @@ export class AllPracticeTestsComponent implements OnInit {
   @Input() listOfMockTests: MockTest[] =[];
   @Input() initialListOfMockTests: MockTest[] =[];
 
-  searchText!: string;
+  searchText: string ='';
   @Input() userId!: string | undefined;
   @Input() isFirstSubscription!: boolean;
   isFirstStudent: boolean = true;
@@ -66,21 +66,40 @@ export class AllPracticeTestsComponent implements OnInit {
       this.listOfMockTests = this.initialListOfMockTests
     }
     else{
-      this.listOfMockTests = this.initialListOfMockTests.filter(test => test.testType?.toLowerCase().indexOf((<String>event).toLowerCase())!==-1 )
+
+      //filter by test name
+      this.listOfMockTests = this.initialListOfMockTests.filter(test => test.testName?.toLowerCase().indexOf((<string>event).toLowerCase())!==-1 )
+      let tempListOfMockTestsByTestType: MockTest[] =[];
+
+      //filter by test type
+      tempListOfMockTestsByTestType = this.initialListOfMockTests.filter(test => test.testType?.toLowerCase().indexOf((<String>event).toLowerCase())!==-1 )
+      
+      let uniqueTests: MockTest[] = [];
+      tempListOfMockTestsByTestType.forEach(test =>{
+        if(this.listOfMockTests.findIndex(ele => ele.id === test.id) ===-1){
+          uniqueTests.push(test)
+        }
+      })
+
+      this.listOfMockTests = this.listOfMockTests.concat(uniqueTests)
+
+
+      //filter by test taken by
+      let tempListOfMockTestsByTestTakenBy: MockTest[] =[];
+      tempListOfMockTestsByTestTakenBy = this.initialListOfMockTests.filter(test => test.testTakenBy?.toLowerCase().indexOf((<String>event).toLowerCase())!==-1 )
+
+      uniqueTests = [];
+      tempListOfMockTestsByTestTakenBy.forEach(test =>{
+        if(this.listOfMockTests.findIndex(ele => ele.id === test.id) ===-1){
+          uniqueTests.push(test)
+        }
+      })
+
+      this.listOfMockTests = this.listOfMockTests.concat(uniqueTests)
+      
     }
 
     this.listOfMockTests = this.sharedService.sortData(this.listOfMockTests)
-
-    // this.listOfMockTests.sort((x,y) =>{
-
-    //   if(x.testType === 'Free' && y.testType === 'Free'){
-    //     return 0
-    //   }
-    //   if(x.testType === 'Paid' && y.testType === 'Paid'){
-    //     return x.isBought === y.isBought ? 0 : x.isBought ? -1 : 1
-    //   }
-    //   return x.testType ==='Free' ? -1 : 1
-    // })
   }
 
 }

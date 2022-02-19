@@ -28,7 +28,8 @@ export class StudentdashboardcontentComponent implements OnInit {
   loading = false;
   currentUserId!: string;
 
-  category!: string;
+  category: string ='All';
+  searchText: string ='';
 
   categoryList: string[] =["All","Subscribed","Unsubscribed"];
 
@@ -138,5 +139,33 @@ export class StudentdashboardcontentComponent implements OnInit {
     this.listOfTeachers.sort((x,y) =>{
       return x.isSubscribed === y.isSubscribed ? 0 : x.isSubscribed ? -1 : 1
     })
+
+    console.log("Search text: ", this.searchText)
+    if(this.searchText!==''){
+      let event ={
+        'target':{
+          'value': this.searchText
+        }
+      }
+      this.searchByName(event)
+    }
+  }
+
+  searchByName(event:any){
+    let filterValue = (event.target as HTMLInputElement).value;
+    console.log("Filtervalue: ", filterValue)
+    filterValue = filterValue.trim().toLowerCase()
+    
+    if(filterValue ==''){
+      console.log("Current category: ", this.category)
+      let data = {
+        'value': this.category
+      }
+      this.categorySelected(data)
+      //this.listOfTeachers = this.initialListOfTeachers
+    }
+    else{
+      this.listOfTeachers = this.listOfTeachers.filter(teacher => teacher.firstName.includes(filterValue) || teacher.lastName.includes(filterValue))
+    }
   }
 }

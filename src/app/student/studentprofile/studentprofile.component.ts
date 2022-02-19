@@ -7,6 +7,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { ToastrService } from 'ngx-toastr';
 import { NavigationExtras, Router } from '@angular/router';
 import { TestReportQuestion } from '../../interface/testReportQuestion';
+import { ProfileService } from 'src/app/service/profile.service';
 
 
 @Component({
@@ -20,6 +21,7 @@ export class StudentprofileComponent implements OnInit {
   // testToShowInTable! : Tests;
   // viewTest : boolean = false;
   username!: string | undefined | null;
+  profileImageUrl: string | undefined ='';
 
   dataSource: MatTableDataSource<Tests> = new MatTableDataSource();
   @ViewChild(MatPaginator) paginator! : MatPaginator;
@@ -27,12 +29,17 @@ export class StudentprofileComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private router : Router,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private profileService: ProfileService
   ) { }
 
   ngOnInit(): void {
     let sub = this.authService.getCurrentUser().subscribe(response =>{
-      this.username = response?.displayName
+      this.profileService.getUserDetails(response.uid).subscribe(userDetails =>{
+        this.username = userDetails.firstName
+        this.profileImageUrl = userDetails.imageUrl
+        console.log("Image url: ", this.profileImageUrl)
+      })
       sub.unsubscribe()
     })
   }

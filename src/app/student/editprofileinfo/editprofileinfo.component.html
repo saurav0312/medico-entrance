@@ -94,21 +94,10 @@
                             <input formControlName="state" type="text" matInput>
                         </mat-form-field>
                     </div>
-
-
-                    <!-- <div class="submit-btn">
-                        <div class="submit-btn">
-                            <button [ngClass]="'submit-btn'" mat-raised-button type="button" (click) = "clearForm()" class="cancel-class">Cancel</button>
-                            <button [ngClass]="'submit-btn'" mat-raised-button color="primary" [disabled]="profileForm.invalid">Save</button>
-                        </div>
-                    </div> -->
                     <div>
                         <button style="display: inline-flex; margin-right: 3em;" type="button" class="btn btn-danger" (click) = "clearForm()">Cancel</button>
                         <button style="display: inline-flex;" class="btn btn-primary" [disabled]="profileForm.invalid">Save</button>
                     </div>
-
-                    {{profileForm.invalid}}
-
                     <app-spinner [loading]="loading" [mode]="mode" [diameter]="50" [overlay]="true">
                     </app-spinner>
                 </form>

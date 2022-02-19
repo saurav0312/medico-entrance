@@ -8,11 +8,62 @@
     <div style="text-align: center;">
         <h1>List of all teachers available</h1>
     </div>
+    <h2>Search for teacher</h2> 
+    <input style="margin-bottom: 0.4em;" class="form-control" id="myInput" type="text" [(ngModel)]="searchText" (keyup)="searchByName($event)" placeholder="Search by name">
+    <br>
     <mat-label style="text-align: left;">Select: </mat-label>
     <mat-radio-group [(ngModel)]="category" aria-label="Select">
         <mat-radio-button (change)="categorySelected($event)" *ngFor="let categoryitem of categoryList" [value]="categoryitem">{{categoryitem}}</mat-radio-button>
     </mat-radio-group>
+
+    <!-- Test start -->
     <ng-template [ngIf]="listOfTeachers.length != 0">
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="row">
+                <ng-container class ="col-sm-6"  *ngFor="let teacher of listOfTeachers; let i = index" style="margin-bottom: 2rem;">
+                    <div class="col-md-6">
+                        <div class="card mb-4 box-shadow">
+                            <div class="card-body">
+                                <div>
+                                    <h3 class="card-title" style="text-align: center; display: inline; ">
+                                        <b>Teacher {{i+1}}</b>
+                                    </h3>
+                                </div>
+                                <div style="float: left;">
+                                    <p class="card-text"><b>Teacher Name:</b> {{teacher.firstName}} {{teacher.lastName}}</p>
+                                    <p class="card-text"><b>Email:</b> {{teacher.email}}</p>
+                                    <p class="card-text"><b>Teacher Id:</b> {{teacher.id}}</p>
+                                    <p class="card-text"><b>Phone Number:</b> {{teacher.phoneNumber === 0 ? 'Not available' : teacher.phoneNumber }}</p>
+                                    <p class="card-text"><b>Date of birth:</b> {{teacher.dob === undefined ? 'Not available' : teacher.dob | date:'yyyy/MM/dd' }}</p>
+                                    <p class="card-text"><b>Address:</b> {{teacher.address === '' ? 'Not available' : teacher.address }}</p>
+                                </div>
+                                <div style="float: right;">
+                                    <img class="rounded-circle" width="100" src="{{teacher.imageUrl}}" >
+                                </div>
+                            </div>
+                            <div style="display: block;  margin-left: auto;">
+                                <button [routerLink]="['/studentdashboard/testsByATeacher']" [queryParams]="{ teacherId: teacher.id }" style=" margin-left: auto; margin-right: 0.8em; text-align: center; width: fit-content; margin-bottom: 0.8em;" mat-raised-button color="primary">
+                                View All Tests
+                                </button>
+                                <button (click) ="subscribeToTeacher(teacher)" [ngClass]="{'subscribed': teacher.isSubscribed, 'unsubscribed': !teacher.isSubscribed}" style=" margin-left: auto; margin-right: 0.8em; text-align: center; width: fit-content; margin-bottom: 0.8em;"
+                                    mat-button [class.mat-flat-button]="teacher.isSubscribed" >
+                                {{teacher.isSubscribed ? 'Subscribed' : 'Subscribe'}}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>  
+    </ng-template>  
+
+    <!-- Test end -->
+
+    <!-- Commenting below code for now. Above code will be used to show all available tests -->
+
+    <!-- <ng-template [ngIf]="listOfTeachers.length != 0">
         <ng-container class ="col-sm-6"  *ngFor="let teacher of listOfTeachers; let i = index" style="margin-bottom: 2rem;">
             <div class ="col-sm-6" style="margin-bottom: 2rem;">
                 <div class="card" [ngClass]="'mat-elevation-z8'" style=" overflow-y: auto; border-radius: 1.2em; border-color: rgb(53, 52, 52);">
@@ -47,9 +98,12 @@
             </div>
         </ng-container>
 
+    </ng-template> -->
+    <ng-template [ngIf]="listOfTeachers.length === 0 && searchText ==='' && category ===''">
+        Currently no teachers have registered to this website.
     </ng-template>
-    <ng-template [ngIf]="listOfTeachers.length === 0">
-        No Teachers Available
+    <ng-template [ngIf]="listOfTeachers.length === 0 && searchText !=='' && category !==''">
+        No teacher found with current filter
     </ng-template>
 </div>
 <app-spinner [loading]="loading"></app-spinner>
