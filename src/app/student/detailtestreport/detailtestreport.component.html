@@ -195,28 +195,59 @@
             
             <div class="row">
                 <div class="col-md-6 ">
-                    <div>
-                        <div>
-                            <mat-icon id="fullScreen" style="display: flex; flex-flow: row-reverse; width: auto; cursor: pointer;">zoom_out_map
+                    <div class="mat-elevation-z8" style="border: 1px solid black; margin-bottom: 0.7em;">
+                        <div style="display: flex; flex-flow: row-reverse;">
+                            <mat-icon id="fullScreen1" style="width: auto; cursor: pointer;">zoom_out_map
                             </mat-icon>
+                            <a download="subjectWiseBarGraph.png" id="download1">
+                                <mat-icon  style="width: auto; cursor: pointer;" >file_download
+                                </mat-icon>
+                            </a>
                         </div>
-                        <div id="subjectwise_chart_div" class="chart mat-elevation-z8" style="height:400px; border: 1px solid black; margin-bottom: 1em; margin-top: 1em;" ></div>
+                        <div id="subjectwise_chart_div" class="chart" style="height:400px; margin-bottom: 1em; margin-top: 1em;" ></div>
                     </div>
                 </div>
                 <div class="col-md-6 ">
-                    <div>
-                        <mat-icon id="fullScreen1" style="display: flex; flex-flow: row-reverse; width: auto; cursor: pointer;">zoom_out_map</mat-icon>
-                        <div id="topicwise_chart_div" class="chart mat-elevation-z8" style="height:400px; border: 1px solid black; margin-bottom: 1em; margin-top: 1em;"></div>
+                    <div class="mat-elevation-z8" style="border: 1px solid black; margin-bottom: 0.7em;">
+                        <div style="display: flex; flex-flow: row-reverse;">
+                            <mat-icon id="fullScreen2" style="width: auto; cursor: pointer;">zoom_out_map
+                            </mat-icon>
+                            <a download="topicWiseBarGraph.png" id="download2">
+                                <mat-icon style="width: auto; cursor: pointer;">file_download
+                                </mat-icon>
+                            </a>
+                        </div>
+                        <div id="topicwise_chart_div" class="chart" style="height:400px; margin-bottom: 1em; margin-top: 1em;"></div>
                     </div>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-6 ">
-                    <div id="subjectTimeSpent_chart_div" class="chart mat-elevation-z8" style="border: 1px solid black; margin-bottom: 1em; margin-top: 1em;"></div>
+                    <div class="mat-elevation-z8" style="border: 1px solid black; margin-bottom: 0.7em;">
+                        <div style="display: flex; flex-flow: row-reverse; ">
+                            <mat-icon id="fullScreen3" style="width: auto; cursor: pointer;">zoom_out_map
+                            </mat-icon>
+                            <a href="" download="subjectWiseTimeSpentPieChart.png" id="download3">
+                                <mat-icon style="width: auto; cursor: pointer;">file_download
+                                </mat-icon>
+                            </a>
+                        </div>
+                        <div id="subjectTimeSpent_chart_div" class="chart" style="height: 400px; margin-bottom: 1em; margin-top: 1em;"></div>
+                    </div>
                 </div>
                 <div class="col-md-6 ">
-                    <div id="topicTimeSpent_chart_div" class="chart mat-elevation-z8" style="border: 1px solid black; margin-bottom: 1em; margin-top: 1em;"></div>
+                    <div class="mat-elevation-z8" style="border: 1px solid black; margin-bottom: 0.7em;">
+                        <div style="display: flex; flex-flow: row-reverse; ">
+                            <mat-icon id="fullScreen4" style="width: auto; cursor: pointer;">zoom_out_map
+                            </mat-icon>
+                            <a href ="" download="topicWiseTimeSpentPieChart.png" id="download4">
+                                <mat-icon style="width: auto; cursor: pointer;">file_download
+                                </mat-icon>
+                            </a>
+                        </div>
+                        <div id="topicTimeSpent_chart_div" class="chart" style="height: 400px; margin-bottom: 1em; margin-top: 1em;"></div>
+                    </div>
                 </div>
             </div>
     </mat-expansion-panel>

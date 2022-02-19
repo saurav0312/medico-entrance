@@ -35,8 +35,8 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
   subjectTagMap: {[key:string]:{[key:string]:number}} ={};
   topicTagMap: {[key:string]:{[key:string]:number}} ={};
-  subjectTagPiechartData: any = []
-  topicTagPiechartData: any = []
+  subjectTagBarGraphData: any = []
+  topicTagBarGraphData: any = []
 
   subjectWiseTimeSpent = new Map();
   topicWiseTimeSpent = new Map();
@@ -169,7 +169,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
           temppiechartData.push(this.subjectTagMap[key]['correct'])
           temppiechartData.push(this.subjectTagMap[key]['incorrect'])
           temppiechartData.push(this.subjectTagMap[key]['not_answered'])
-          this.subjectTagPiechartData.push(temppiechartData)
+          this.subjectTagBarGraphData.push(temppiechartData)
         })
 
         //prepare data for topic bar graph
@@ -180,7 +180,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
           temppiechartData.push(this.topicTagMap[key]['correct'])
           temppiechartData.push(this.topicTagMap[key]['incorrect'])
           temppiechartData.push(this.topicTagMap[key]['not_answered'])
-          this.topicTagPiechartData.push(temppiechartData)
+          this.topicTagBarGraphData.push(temppiechartData)
         })
 
         for (let entry of this.subjectWiseTimeSpent.entries()) {
@@ -200,12 +200,12 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         }
 
 
-        this.buildChart(this.subjectTagPiechartData, this.topicTagPiechartData, this.subjectWiseTimeSpentPiechartData, this.topicWiseTimeSpentPiechartData )
+        this.buildChart(this.subjectTagBarGraphData, this.topicTagBarGraphData, this.subjectWiseTimeSpentPiechartData, this.topicWiseTimeSpentPiechartData )
       }
     })    
   }
 
-  buildChart(subjectTagPiechartData : any, topicTagPiechartData: any, subjectWiseTimeSpentPiechartData:any ,topicWiseTimeSpentPiechartData:any){
+  buildChart(subjectTagBarGraphData : any, topicTagBarGraphData: any, subjectWiseTimeSpentPiechartData:any ,topicWiseTimeSpentPiechartData:any){
     var renderChart = ()=>{
 
       // Create the data table for subjectwise time spent piechart.
@@ -248,21 +248,35 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
       formatter.format(topicTimeSpentData, 1)
 
       // Instantiate and draw pie chart, passing in some options.
-      var subject_chart_div =  document.getElementById('subjectTimeSpent_chart_div');
-      var subjectTagChart = () => new google.visualization.PieChart(subject_chart_div);
-      var topicTagChart = () => new google.visualization.PieChart(document.getElementById('topicTimeSpent_chart_div'));
+      var subjectTimeSpent_chart_download_button: any=  document.getElementById('download3');
+      var topicTimeSpent_chart_download_button: any = document.getElementById('download4')
+      
+      var subjectTimeSpentChart = new google.visualization.PieChart(document.getElementById('subjectTimeSpent_chart_div'));
+      var topicTimeSpentChart = new google.visualization.PieChart(document.getElementById('topicTimeSpent_chart_div'));
 
-      subjectTagChart().draw(subjectTimeSpentData, subjectTimeSpentOptions);
-      topicTagChart().draw(topicTimeSpentData, topicTimeSpentOptions);
+      google.visualization.events.addListener(subjectTimeSpentChart, 'ready', function () {
+        subjectTimeSpent_chart_download_button.href = subjectTimeSpentChart.getImageURI();
+        console.log(subjectTimeSpent_chart_download_button.href);
+      });
+
+      google.visualization.events.addListener(topicTimeSpentChart, 'ready', function () {
+        topicTimeSpent_chart_download_button.href = topicTimeSpentChart.getImageURI();
+        console.log(topicTimeSpent_chart_download_button.href);
+      });
+
+      subjectTimeSpentChart.draw(subjectTimeSpentData, subjectTimeSpentOptions);
+      topicTimeSpentChart.draw(topicTimeSpentData, topicTimeSpentOptions);
+
+
 
 
       //Bar chart Subjectwise
-      let subjectTagData = new google.visualization.DataTable();
-      subjectTagData.addColumn('string', 'Subject');
-      subjectTagData.addColumn('number', 'Correct');
-      subjectTagData.addColumn('number', 'Incorrect');
-      subjectTagData.addColumn('number', 'Not Answered');
-      subjectTagData.addRows(subjectTagPiechartData);
+      let subjectWiseBarGraphData = new google.visualization.DataTable();
+      subjectWiseBarGraphData.addColumn('string', 'Subject');
+      subjectWiseBarGraphData.addColumn('number', 'Correct');
+      subjectWiseBarGraphData.addColumn('number', 'Incorrect');
+      subjectWiseBarGraphData.addColumn('number', 'Not Answered');
+      subjectWiseBarGraphData.addRows(subjectTagBarGraphData);
 
       var options = {
         title : 'Test Analysis By Subject',
@@ -282,29 +296,25 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         isStacked: true
       };
      
-      var subjectwise_image_chart_div: any = document.getElementById('subjectwise_chart_div_png')
-      var subjectwise_chart_div_ele: any =  document.getElementById('subjectwise_chart_div')
+      var subjectwise_bar_graph_download_button: any = document.getElementById('download1')
       var subjectChart = new google.visualization.ComboChart(document.getElementById('subjectwise_chart_div'));
        
       // Wait for the chart to finish drawing before calling the getImageURI() method.
-      //  google.visualization.events.addListener(subjectChart, 'ready', function () {
-      //   subjectwise_image_chart_div.outerHTML = '<a href="' + subjectChart.getImageURI() + '">Print</a>';
-      //   console.log(subjectwise_image_chart_div.outerHTML);
-      // });
+       google.visualization.events.addListener(subjectChart, 'ready', function () {
+        subjectwise_bar_graph_download_button.href = subjectChart.getImageURI();
+        console.log(subjectwise_bar_graph_download_button.href);
+      });
 
-    //   google.visualization.events.addListener(subjectChart, "click", function() {
-    //     subjectwise_chart_div_ele.requestFullscreen();
-    // });
-      subjectChart.draw(subjectTagData, options);
+      subjectChart.draw(subjectWiseBarGraphData, options);
 
 
       //Bar chart Topic Wise
-      let topicTagData = new google.visualization.DataTable();
-      topicTagData.addColumn('string', 'Subject');
-      topicTagData.addColumn('number', 'Correct');
-      topicTagData.addColumn('number', 'Incorrect');
-      topicTagData.addColumn('number', 'Not Answered');
-      topicTagData.addRows(topicTagPiechartData);
+      let topicWiseBarGraphData = new google.visualization.DataTable();
+      topicWiseBarGraphData.addColumn('string', 'Subject');
+      topicWiseBarGraphData.addColumn('number', 'Correct');
+      topicWiseBarGraphData.addColumn('number', 'Incorrect');
+      topicWiseBarGraphData.addColumn('number', 'Not Answered');
+      topicWiseBarGraphData.addRows(topicTagBarGraphData);
 
       var options1 = {
         title : 'Test Analysis By Topic',
@@ -325,14 +335,15 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         isStacked: true
       };
 
-      var topiChart = new google.visualization.ComboChart(document.getElementById('topicwise_chart_div'));
-      topiChart.draw(topicTagData, options1);
+      var topicChart = new google.visualization.ComboChart(document.getElementById('topicwise_chart_div'));
 
-      
+      var topicwise_bar_graph_download_button: any = document.getElementById('download2')
+      google.visualization.events.addListener(topicChart, 'ready', function () {
+        topicwise_bar_graph_download_button.href = topicChart.getImageURI();
+        console.log(subjectwise_bar_graph_download_button.href);
+      });
 
-
-
-
+      topicChart.draw(topicWiseBarGraphData, options1);
     }
     // var subject_chart_div =  document.getElementById('subject_chart_div');
     // var subjectTagChart = () => new google.visualization.PieChart(subject_chart_div);
@@ -346,21 +357,40 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
     const subjectwise_chart : any = document.getElementById('subjectwise_chart_div');
     const topicwise_chart: any = document.getElementById('topicwise_chart_div');
-      const buttonElement :any = document.getElementById('fullScreen')
-      buttonElement.addEventListener('click', () => {
-        if (screenfull.isEnabled) {
-          screenfull.request(subjectwise_chart);
-          
-        }
-      });
+    const subjectTimeSpent_chart : any = document.getElementById('subjectTimeSpent_chart_div');
+    const topicTimeSpent_chart: any = document.getElementById('topicTimeSpent_chart_div');
 
-      const buttonElement1 :any = document.getElementById('fullScreen1')
-      buttonElement1.addEventListener('click', () => {
-        if (screenfull.isEnabled) {
-          screenfull.request(topicwise_chart);
-          
-        }
-      });
+    const buttonElement1 :any = document.getElementById('fullScreen1')
+    buttonElement1.addEventListener('click', () => {
+      if (screenfull.isEnabled) {
+        screenfull.request(subjectwise_chart);
+        
+      }
+    });
+
+    const buttonElement2 :any = document.getElementById('fullScreen2')
+    buttonElement2.addEventListener('click', () => {
+      if (screenfull.isEnabled) {
+        screenfull.request(topicwise_chart);
+        
+      }
+    });
+
+    const buttonElement3 :any = document.getElementById('fullScreen3')
+    buttonElement3.addEventListener('click', () => {
+      if (screenfull.isEnabled) {
+        screenfull.request(subjectTimeSpent_chart);
+        
+      }
+    });
+
+    const buttonElement4 :any = document.getElementById('fullScreen4')
+    buttonElement4.addEventListener('click', () => {
+      if (screenfull.isEnabled) {
+        screenfull.request(topicTimeSpent_chart);
+        
+      }
+    });
 
       // screenfull.off('change', callback);
   }
