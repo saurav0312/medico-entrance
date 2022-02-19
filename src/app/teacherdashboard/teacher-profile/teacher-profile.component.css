@@ -1,7 +1,7 @@
 .mat-toolbar-class{
     /* background:darkslateblue; */
-    background: #5179c4;
-    color: white;
+    background: #cacae2eb;
+    /* color: white; */
   }
   
   .mat-sidenav-container-class{
@@ -10,13 +10,13 @@
   }
   
   .mat-sidenav-class{
-    margin: 4px;
+    /* margin: 4px; */
     width: 200px;
     border-right: none;
-    background: #5179c4;
-    color: white;
+    background: #cacae2eb;
+    /* color: white;
     border-radius: 2px;
-    padding: 4px;
+    padding: 4px; */
     text-align: center;
   }
   
@@ -44,7 +44,7 @@
   .mat-divider{
     margin-top: 16px;
     margin-bottom: 16px;
-    background-color: rgba(255,255,255,0.5);
+    background-color: rgba(20, 19, 19, 0.5);
   }
   
   

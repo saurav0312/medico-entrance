@@ -33,7 +33,7 @@ const routes: Routes = [
     component: TeacherProfileComponent,
     children: [
       { path: 'editprofileinfo', component: TeacherprofileinfoComponent},
-      { path: '', redirectTo:'/teacherProfile/editprofileinfo', pathMatch: 'full' }
+      { path: '', redirectTo:'/teacherdashboard/teacherProfile/editprofileinfo', pathMatch: 'full' }
     ],
     canActivate: [ TeacherAuthGuardGuard]
   },
