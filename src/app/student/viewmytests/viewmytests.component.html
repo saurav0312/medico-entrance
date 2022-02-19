@@ -4,7 +4,7 @@
     <h1 style="text-align: center; margin-top: 2em;">All Test Records</h1>
     <div [ngClass]="'mat-elevation-z8'" class="table-contents" id="content" #content>
         <div>
-        <mat-table class="change-arrow-color" matSort [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"
+        <mat-table style="border-top-left-radius: 1em; border-top-right-radius: 1em;" class="change-arrow-color" matSort [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"
                     > 
             <ng-container matColumnDef="no">
                 <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> No </mat-header-cell>
@@ -71,7 +71,7 @@
         </mat-table>
         </div>
         <div>
-        <mat-paginator [ngClass]="'styled-paginator'" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        <mat-paginator style="border-bottom-left-radius: 1em; border-bottom-right-radius: 1em;" [ngClass]="'styled-paginator'" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
         </div>
     </div>
 </div>
