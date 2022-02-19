@@ -1,15 +1,88 @@
 <div class="row" style="margin-top: 6rem; margin-left: 2rem; margin-right: 2rem; margin-bottom: 2rem;">
-<div style="text-align: center;">
+<!-- <div style="text-align: center;">
     <div style="display: block; margin-left: auto;">
         <h1>Search By Test Type</h1>
         <mat-form-field appearance="outline" style="border-color: black 2px;">
             <input [(ngModel)]="searchText" (ngModelChange)="search($event)" type="search" matInput placeholder="Search">
         </mat-form-field>
-        <!-- <button mat-raised-button color="primary" style="margin-left: 0.8em ;">Search</button> -->
     </div>
     <h1>All tests</h1>
-</div>
+</div> -->
+
+<!-- Test start-->
+
+<!-- <div class="album py-5">
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Dropdown link
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div> -->
+
+<h2>Filter Tests
+</h2>
+<p>Type something in the input field to filter tests by test name, test taken by or test type:</p>  
+<input style="margin-bottom: 0.4em;" class="form-control" id="myInput" type="text" [(ngModel)]="searchText" (ngModelChange)="search($event)" placeholder="Search..">
+<br>
+
 <ng-template [ngIf]="listOfMockTests.length != 0">
+<div class="album py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <ng-container class ="col-sm-3"  *ngFor="let individualTest of listOfMockTests; let i = index" style="margin-bottom: 2rem;">
+                <div class="col-md-4">
+                    <div class="card mb-4 box-shadow">
+                        <div class="card-body">
+                            <div>
+                                <h2 class="card-title" style="text-align: center; ">
+                                    <b>Test {{i+1}}</b>
+                                    <mat-icon *ngIf="individualTest.testType === 'Paid' ">
+                                        {{ individualTest.isBought ? 'lock_open' : 'lock'}}
+                                    </mat-icon>
+                                </h2>
+                                <h4 [hidden]="individualTest.testType==='Free' || individualTest.isBought" class="card-title" style="float: right;"><mat-icon>currency_rupee</mat-icon>{{individualTest.testPrice}}</h4>
+                            </div>
+                            <p class="card-text"><b>Test Name:</b> {{individualTest.testName}}</p>
+                            <p class="card-text"><b>Test Taken By:</b> {{individualTest.testTakenBy}}</p>
+                            <p class="card-text"><b>Test Type:</b> {{individualTest.testType}}</p>
+                            <p class="card-text"><b>Total Time:</b> {{individualTest.totalTime}} mins</p>
+                            <p class="card-text"><b>Total Number Of Questions:</b> {{individualTest.questions.length}}</p>
+                            <mat-divider></mat-divider>
+                            <p></p>
+                            <p class="card-text">
+                                This is the sample test taken by IOE. This is the sample test taken by IOE. This is the sample test taken by IOE
+                            </p>
+                            <button (click)="startTest(individualTest.id, individualTest)" class="btn btn-outline-primary" [disabled]="individualTest.testType==='Paid' && !individualTest.isBought" style="margin-right: 2em;">Start Test</button>
+                            <button (click)="buyTest(individualTest.id)" class="btn btn-primary" [hidden]="individualTest.testType==='Free' || individualTest.isBought">Buy Test</button>
+                            
+                        </div>
+                    </div>
+                </div> 
+            </ng-container>
+        </div>
+    </div>
+</div>
+</ng-template>
+
+<!-- Test end -->
+
+<!-- Commenting below code for now. Above code will be used to show all available tests -->
+
+<!-- <ng-template [ngIf]="listOfMockTests.length != 0">
     <ng-container class ="col-sm-3"  *ngFor="let individualTest of listOfMockTests; let i = index" style="margin-bottom: 2rem;">
         <div class ="col-sm-3" style="margin-bottom: 2rem;">
             <div class="card" [ngClass]="'mat-elevation-z8'" style=" overflow-y: auto; border-radius: 1.2em; border-color: rgb(53, 52, 52);">
@@ -34,9 +107,12 @@
             </div>
         </div>
     </ng-container>
+</ng-template> -->
+<ng-template [ngIf]="listOfMockTests.length === 0 && searchText ===''">
+    The teacher has not published practice tests yet.
 </ng-template>
-<ng-template [ngIf]="listOfMockTests.length === 0">
-    No Tests Available
+<ng-template [ngIf]="listOfMockTests.length === 0 && searchText !==''">
+    No test with given type found
 </ng-template>
 </div>
 <app-spinner [loading]="loading"></app-spinner>

@@ -21,10 +21,12 @@ import { AuthenticationModule } from './authentication/authentication.module';
 import { StudentdashboardModule } from './studentdashboard/studentdashboard.module';
 import { PracticetestModule } from './practicetest/practicetest.module';
 import { TeacherdashboardModule } from './teacherdashboard/teacherdashboard.module';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 // import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
 
 const routes: Routes = [
@@ -33,7 +34,8 @@ const routes: Routes = [
     path: 'teacherdashboard',
     loadChildren: () =>
       import('./teacherdashboard/teacherdashboard.module').then((m) => m.TeacherdashboardModule),
-  }
+  },
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({

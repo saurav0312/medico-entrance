@@ -44,6 +44,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   topicWiseTimeSpentPiechartData: any = []
 
   expandCharts: boolean = true; 
+  expandTable: boolean = true;
 
   @Input() displayedColumns!: string[];
   @Input() testToShowInTable! : Tests;

@@ -2,10 +2,16 @@
 
 <div >
     <h1 style="text-align: center; margin-top: 2em;">All Test Records</h1>
+    <div style="margin-left: 9.8em; margin-right: 11.5em;">
+    <h2>Filter Tests</h2>
+    <p>Type something in the input field to filter tests by test name, test taken by or test type:</p> 
+     
+        <input style="margin-bottom: 0.4em; padding: 4px;" (keyup)="applyFilter($event)" class="form-control" #myInput type="text" placeholder="Search..">
+    </div>
+    <br>
     <div [ngClass]="'mat-elevation-z8'" class="table-contents" id="content" #content>
         <div>
-        <mat-table style="border-top-left-radius: 1em; border-top-right-radius: 1em;" class="change-arrow-color" matSort [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"
-                    > 
+        <mat-table class="change-arrow-color" matSort [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"> 
             <ng-container matColumnDef="no">
                 <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> No </mat-header-cell>
                 <mat-cell *matCellDef="let element; let i = index;" (click)="viewIndividualTestReport(element)"> 
@@ -28,10 +34,6 @@
                 <mat-header-cell  mat-sort-header [ngClass]="'table-header-class'" *matHeaderCellDef> 
                     <div> 
                     <div>TestName</div> 
-                    <div> 
-                        <input matInput placeholder="filter" style="text-align:center">
-                        <mat-divider></mat-divider>
-                    </div>
                     </div>
                 </mat-header-cell>
                 <mat-cell *matCellDef="let element" (click)="viewIndividualTestReport(element)"> 
@@ -66,12 +68,15 @@
 
             <mat-header-row *matHeaderRowDef="displayedColumnsForAllTests"></mat-header-row>
             <mat-row *matRowDef="let row; columns: displayedColumnsForAllTests;"></mat-row>
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="6">No data matched the filter "{{myInput.value}}"</td>
+              </tr>
 
             
         </mat-table>
         </div>
         <div>
-        <mat-paginator style="border-bottom-left-radius: 1em; border-bottom-right-radius: 1em;" [ngClass]="'styled-paginator'" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        <mat-paginator [ngClass]="'styled-paginator'" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
         </div>
     </div>
 </div>
