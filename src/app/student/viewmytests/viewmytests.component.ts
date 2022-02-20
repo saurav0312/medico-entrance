@@ -63,7 +63,7 @@ export class ViewmytestsComponent implements OnInit {
     // this.sharedService.testData = test
     console.log("Cell clicked: ", params)
     this.router.navigate(
-      ['/detailTestReport'],
+      ['/studentProfile/detailTestReport'],
       {
         queryParams: 
           {
