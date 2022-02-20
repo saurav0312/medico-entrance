@@ -45,6 +45,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
   expandCharts: boolean = true; 
   expandTable: boolean = true;
+  count: number = 0;
 
   @Input() displayedColumns!: string[];
   @Input() testToShowInTable! : Tests;
@@ -206,7 +207,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         }
 
 
-        this.buildChart(this.subjectTagBarGraphData, this.topicTagBarGraphData, this.subjectWiseTimeSpentPiechartData, this.topicWiseTimeSpentPiechartData )
+        // this.buildChart(this.subjectTagBarGraphData, this.topicTagBarGraphData, this.subjectWiseTimeSpentPiechartData, this.topicWiseTimeSpentPiechartData )
       }
     })    
   }
@@ -406,5 +407,17 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
     this.dataSource.paginator = this.paginator;
     console.log("Questions",this.testToShowInTable.testQuestions)
     console.log(this.dataSource.data);
+
+    // google.charts.load('current', {packages: ['corechart']});
+    // this.buildChart(this.subjectTagBarGraphData, this.topicTagBarGraphData, this.subjectWiseTimeSpentPiechartData, this.topicWiseTimeSpentPiechartData )
   } 
+
+  tabChanged(event:any):void{
+    console.log("Tab event: ", event)
+    if(event['index']==1 && this.count == 0){
+      this.count++;
+      console.log("Chart entered: ", this.count)
+      this.buildChart(this.subjectTagBarGraphData, this.topicTagBarGraphData, this.subjectWiseTimeSpentPiechartData, this.topicWiseTimeSpentPiechartData )
+    }
+  }
 }
