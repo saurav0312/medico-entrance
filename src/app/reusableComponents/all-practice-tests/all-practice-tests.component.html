@@ -33,11 +33,13 @@
   </nav>
 </div> -->
 
+<ng-template [ngIf]="listOfMockTests.length != 0">
 <h2>Filter Tests
 </h2>
 <p>Type something in the input field to filter tests by test name, test taken by or test type:</p>  
 <input style="margin-bottom: 0.4em;" class="form-control" id="myInput" type="text" [(ngModel)]="searchText" (ngModelChange)="search($event)" placeholder="Search..">
 <br>
+</ng-template>
 
 <ng-template [ngIf]="listOfMockTests.length != 0">
 <div class="album py-5 bg-light">

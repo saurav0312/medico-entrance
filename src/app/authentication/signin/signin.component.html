@@ -26,6 +26,9 @@
                         </mat-error>
                     </mat-form-field>
                  </div>
+                 <ng-template [ngIf] ="loginError">
+                     <p style="color: red;">Invalid credentials</p>
+                 </ng-template>
                  <div class="forgetPassword cursor-icon" routerLink="/authentication/forgetpassword">Forgot Password?</div>
                 <div class="login-container-form-btn">
                     <div class="bb-login-form-btn">
