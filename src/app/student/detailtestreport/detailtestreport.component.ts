@@ -103,32 +103,37 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         console.log("Subject tag map: ", this.subjectTagMap)
 
         this.singleTest.testQuestions.forEach(testQuestion =>{
+
+          //calculate time spent on the question based on subject
+          testQuestion.subjectTags?.forEach(subjectTag =>{
+            if(this.subjectWiseTimeSpent.has(subjectTag) == false){
+              this.subjectWiseTimeSpent.set(subjectTag,testQuestion.totalTimeSpent)
+            }
+            else{
+              this.subjectWiseTimeSpent.set(subjectTag, this.subjectWiseTimeSpent.get(subjectTag)+testQuestion.totalTimeSpent)
+            }
+          })
+
+          //calculate time spent on the question based on topic
+          testQuestion.topicTags?.forEach(topicTag =>{
+            if(this.topicWiseTimeSpent.has(topicTag) == false){
+              this.topicWiseTimeSpent.set(topicTag,testQuestion.totalTimeSpent)
+            }
+            else{
+              this.topicWiseTimeSpent.set(topicTag, this.topicWiseTimeSpent.get(topicTag)+testQuestion.totalTimeSpent)
+            }
+          })
+
+
           if(testQuestion.selectedOption !== null){
             if(testQuestion.selectedOption === testQuestion.correctAnswer){
               //increase correct count for each subject type
               testQuestion.subjectTags?.forEach(subjectTag =>{
-                //calculate time spent on each subject
-                if(this.subjectWiseTimeSpent.has(subjectTag) == false){
-                  this.subjectWiseTimeSpent.set(subjectTag,testQuestion.totalTimeSpent)
-                }
-                else{
-                  this.subjectWiseTimeSpent.set(subjectTag, this.subjectWiseTimeSpent.get(subjectTag)+testQuestion.totalTimeSpent)
-                }
-
                 this.subjectTagMap[subjectTag]['correct'] = this.subjectTagMap[subjectTag]['correct'] === undefined ? 1 : this.subjectTagMap[subjectTag]['correct']+1
               })
 
               //increase correct count for each topic type
               testQuestion.topicTags?.forEach(topicTag =>{
-
-                //calculate time spent on each topic
-                if(this.topicWiseTimeSpent.has(topicTag) == false){
-                  this.topicWiseTimeSpent.set(topicTag,testQuestion.totalTimeSpent)
-                }
-                else{
-                  this.topicWiseTimeSpent.set(topicTag, this.topicWiseTimeSpent.get(topicTag)+testQuestion.totalTimeSpent)
-                }
-
                 this.topicTagMap[topicTag]['correct'] = this.topicTagMap[topicTag]['correct'] === undefined ? 1 : this.topicTagMap[topicTag]['correct']+1
               })
             }
