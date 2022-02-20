@@ -26,6 +26,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FormsModule } from '@angular/forms';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { Ng2GoogleChartsModule } from 'ng2-google-charts'
 
@@ -70,7 +71,8 @@ import { TestsAnalysisDashboardComponent } from './tests-analysis-dashboard/test
     Ng2GoogleChartsModule,
     MatListModule,
     MatExpansionModule,
-    FormsModule
+    FormsModule,
+    MatTabsModule
   ],
   exports: [
     StudentprofileComponent,

@@ -2,233 +2,247 @@
     <h1 style="text-align: center; margin-top: 2em;">Here is your detail performance report
     </h1>
 
-    <mat-expansion-panel style="margin: 1.6em;" class="mat-card mat-elevation-z8" 
-                        (opened)="expandTable = true"
-                        (closed)="expandTable = false"
-                        [expanded]="true">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                <div class="col-md-12 text-center" >
-                    <h1 style="margin: 1em;">Table Based Analysis</h1>
-                </div>
-            </mat-panel-title>
-        </mat-expansion-panel-header>
+    <mat-tab-group mat-align-tabs="center" (selectedTabChange)="tabChanged($event)">
+        <mat-tab label="Tabular Report">
+            <ng-container *ngTemplateOutlet="tabularReportTemplate"></ng-container>
+        </mat-tab>
+        
+        <mat-tab label="Chart Report">
+            <ng-container *ngTemplateOutlet="chartReportTemplate"></ng-container>
+        </mat-tab>
+    </mat-tab-group>
 
-        <div class="float-container">
-            <div class="mat-card " style="border: 1px solid black;">
-                <div class ="row" style="margin: 1em;">
-                    <div class ="col-md-4">
-                        <b>TestId:</b> {{testId}}
-                    </div>
-                    <div class ="col-md-4">
-                        <b>Test Name:</b> {{testToShowInTable.testName}}
-                    </div>
-                </div>
-                <div class ="row" style="margin: 1em;">
-                    <div class ="col-md-4">
-                        <b>Test Taken By:</b> {{testToShowInTable.testTakenBy}}
-                    </div>
-                    <div class ="col-md-4">
-                        <b>Date:</b> {{testTakenDate | date:'yyyy/MM/dd' }}
-                    </div>
-                </div>
-                <div class="green">
-                    <div style="float: right; margin-right: 2em; margin-bottom: 1em; margin-top: 1em;">
-                        <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('xlsx', {fileName:'test', sheet: 'sheet_name', Props: {Author: 'OnlineExam'}})">Excel</button>
-                        <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('csv')">Csv</button>
-                        <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('json')">Json</button>
-                        <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('txt')">Txt</button>
-                        <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" [useExistingCss]="true" printTitle="Your Test Result" printSectionId="content" ngxPrint>Pdf</button> 
-                    </div>
-                    <div style="clear: both;">
-                    </div>
-                    <div class="table-contents" id="content" #content>
-                        <mat-table multiTemplateDataRows [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"> 
-                            <ng-container matColumnDef="no">
-                                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> No 
-                                </mat-header-cell>
-                                <mat-cell *matCellDef="let element; let i = dataIndex;"> 
-                                    <span class="mobile-label">No:</span>
-                                    {{this.paginator.pageIndex* this.paginator.pageSize + i + 1 }}
-                                </mat-cell>
-                            </ng-container>
-                
-                            <ng-container matColumnDef="question">
-                                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Question 
-                                </mat-header-cell>
-                                <mat-cell *matCellDef="let element"> 
-                                    <span class="mobile-label">Question:</span>
-                                    {{element.question}} 
-                                </mat-cell>
-                            </ng-container>
-                
-                            <ng-container matColumnDef="selectedOption">
-                                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Selected Option 
-                                </mat-header-cell>
-                                <mat-cell *matCellDef="let element"> 
-                                    <span class="mobile-label">Selected Option:</span>
-                                    {{element.selectedOption}} 
-                                </mat-cell>
-                            </ng-container>
-                
-                            <ng-container matColumnDef="correctAnswer">
-                                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Correct Answer 
-                                </mat-header-cell>
-                                <mat-cell *matCellDef="let element"> 
-                                    <span class="mobile-label">Correct Answer:</span>
-                                    {{element.correctAnswer}} 
-                                </mat-cell>
-                            </ng-container>
 
-                            <ng-container matColumnDef="timeSpent">
-                                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Time Spent
-                                </mat-header-cell>
-                                <mat-cell *matCellDef="let element"> 
-                                    <span class="mobile-label">Time Spent:</span>
-                                    {{element.totalTimeSpent}} s 
-                                </mat-cell>
-                            </ng-container>
-                
-                            <ng-container matColumnDef="result">
-                                <mat-header-cell [ngClass]="['table-header-class','quest-width']" *matHeaderCellDef> Result
-                                </mat-header-cell>
-                                <mat-cell [ngClass]="'quest-width'" *matCellDef="let element">
-                                    <span class="mobile-label">Result:</span>
-                                    <div> 
-                                        <mat-icon *ngIf ='element.correctAnswer === element.selectedOption' style="color: green;">done</mat-icon>
-                                        <mat-icon *ngIf ='element.selectedOption!== null && element.correctAnswer !== element.selectedOption' style="color: red;">close</mat-icon>
-                                        <mat-icon *ngIf ='element.selectedOption === null' style="color: green;">question_mark</mat-icon> 
-                                    </div>
-                                </mat-cell>
-                            </ng-container>
+    <ng-template #tabularReportTemplate>
+        <mat-expansion-panel style="margin: 1.6em;" class="mat-card mat-elevation-z8" 
+                            (opened)="expandTable = true"
+                            (closed)="expandTable = false"
+                            [expanded]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div class="col-md-12 text-center" >
+                        <h1 style="margin: 1em;">Table Based Analysis</h1>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
 
-                            <ng-container matColumnDef="subjectTags">
-                                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Subject Tag 
-                                </mat-header-cell>
-                                <mat-cell *matCellDef="let element"> 
-                                    <span class="mobile-label"> Subject Tag:</span>
-                                    <button disabled class="btn" style="margin-right: 1em; background-color: green; color: white;" 
-                                    *ngFor="let subjectTag of element.subjectTags">{{subjectTag}}</button>
-                                </mat-cell>
-                            </ng-container>
+            <div class="float-container">
+                <div class="mat-card " style="border: 1px solid black;">
+                    <div class ="row" style="margin: 1em;">
+                        <div class ="col-md-4">
+                            <b>TestId:</b> {{testId}}
+                        </div>
+                        <div class ="col-md-4">
+                            <b>Test Name:</b> {{testToShowInTable.testName}}
+                        </div>
+                    </div>
+                    <div class ="row" style="margin: 1em;">
+                        <div class ="col-md-4">
+                            <b>Test Taken By:</b> {{testToShowInTable.testTakenBy}}
+                        </div>
+                        <div class ="col-md-4">
+                            <b>Date:</b> {{testTakenDate | date:'yyyy/MM/dd' }}
+                        </div>
+                    </div>
+                    <div class="green">
+                        <div style="float: right; margin-right: 2em; margin-bottom: 1em; margin-top: 1em;">
+                            <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('xlsx', {fileName:'test', sheet: 'sheet_name', Props: {Author: 'OnlineExam'}})">Excel</button>
+                            <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('csv')">Csv</button>
+                            <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('json')">Json</button>
+                            <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('txt')">Txt</button>
+                            <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" [useExistingCss]="true" printTitle="Your Test Result" printSectionId="content" ngxPrint>Pdf</button> 
+                        </div>
+                        <div style="clear: both;">
+                        </div>
+                        <div class="table-contents" id="content" #content>
+                            <mat-table multiTemplateDataRows [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"> 
+                                <ng-container matColumnDef="no">
+                                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> No 
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let element; let i = dataIndex;"> 
+                                        <span class="mobile-label">No:</span>
+                                        {{this.paginator.pageIndex* this.paginator.pageSize + i + 1 }}
+                                    </mat-cell>
+                                </ng-container>
+                    
+                                <ng-container matColumnDef="question">
+                                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Question 
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> 
+                                        <span class="mobile-label">Question:</span>
+                                        {{element.question}} 
+                                    </mat-cell>
+                                </ng-container>
+                    
+                                <ng-container matColumnDef="selectedOption">
+                                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Selected Option 
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> 
+                                        <span class="mobile-label">Selected Option:</span>
+                                        {{element.selectedOption}} 
+                                    </mat-cell>
+                                </ng-container>
+                    
+                                <ng-container matColumnDef="correctAnswer">
+                                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Correct Answer 
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> 
+                                        <span class="mobile-label">Correct Answer:</span>
+                                        {{element.correctAnswer}} 
+                                    </mat-cell>
+                                </ng-container>
 
-                            <ng-container matColumnDef="topicTags">
-                                <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Topic Tag 
-                                </mat-header-cell>
-                                <mat-cell *matCellDef="let element"> 
-                                    <span class="mobile-label">Topic Tag:</span>
-                                    <div style="display: inline; float: left;">
-                                        <button disabled class="btn" style="margin: 0.2em; background-color: red; color: white; display: inline;" 
-                                            *ngFor="let topicTag of element.topicTags">{{topicTag}}
-                                        </button>
-                                    </div>
-                                </mat-cell>
-                            </ng-container>
+                                <ng-container matColumnDef="timeSpent">
+                                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Time Spent
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> 
+                                        <span class="mobile-label">Time Spent:</span>
+                                        {{element.totalTimeSpent}} s 
+                                    </mat-cell>
+                                </ng-container>
+                    
+                                <ng-container matColumnDef="result">
+                                    <mat-header-cell [ngClass]="['table-header-class','quest-width']" *matHeaderCellDef> Result
+                                    </mat-header-cell>
+                                    <mat-cell [ngClass]="'quest-width'" *matCellDef="let element">
+                                        <span class="mobile-label">Result:</span>
+                                        <div> 
+                                            <mat-icon *ngIf ='element.correctAnswer === element.selectedOption' style="color: green;">done</mat-icon>
+                                            <mat-icon *ngIf ='element.selectedOption!== null && element.correctAnswer !== element.selectedOption' style="color: red;">close</mat-icon>
+                                            <mat-icon *ngIf ='element.selectedOption === null' style="color: green;">question_mark</mat-icon> 
+                                        </div>
+                                    </mat-cell>
+                                </ng-container>
 
-                            <!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
-                            <ng-container matColumnDef="expandedDetail">
-                                <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-                                    <div class="example-element-detail"
-                                        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                                        <div class="example-element-diagram float-container">
-                                            <div style="display: flex; float: left;">
-                                                <mat-list>
-                                                    <div mat-subheader><b>All options:</b></div>
-                                                    <mat-list-item *ngFor="let option of element.options">
-                                                        <div mat-line>{{option}}</div>
-                                                    </mat-list-item>
-                                                </mat-list> 
+                                <ng-container matColumnDef="subjectTags">
+                                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Subject Tag 
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> 
+                                        <span class="mobile-label"> Subject Tag:</span>
+                                        <button disabled class="btn" style="margin-right: 1em; background-color: green; color: white;" 
+                                        *ngFor="let subjectTag of element.subjectTags">{{subjectTag}}</button>
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="topicTags">
+                                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Topic Tag 
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> 
+                                        <span class="mobile-label">Topic Tag:</span>
+                                        <div style="display: inline; float: left;">
+                                            <button disabled class="btn" style="margin: 0.2em; background-color: red; color: white; display: inline;" 
+                                                *ngFor="let topicTag of element.topicTags">{{topicTag}}
+                                            </button>
+                                        </div>
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="expandedDetail">
+                                    <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+                                        <div class="example-element-detail"
+                                            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+                                            <div class="example-element-diagram float-container">
+                                                <div style="display: flex; float: left;">
+                                                    <mat-list>
+                                                        <div mat-subheader><b>All options:</b></div>
+                                                        <mat-list-item *ngFor="let option of element.options">
+                                                            <div mat-line>{{option}}</div>
+                                                        </mat-list-item>
+                                                    </mat-list> 
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </ng-container>
-                
-                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                            <mat-row *matRowDef="let element; columns: displayedColumns;"
-                            class="example-element-row"
-                            [class.example-expanded-row]="expandedElement === element"
-                            (click)="expandedElement = expandedElement === element ? null : element">
-                            </mat-row>
-                            <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-                
-                            
-                        </mat-table>
-                        <mat-paginator [ngClass]="'styled-paginator'" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                                    </td>
+                                </ng-container>
+                    
+                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                                <mat-row *matRowDef="let element; columns: displayedColumns;"
+                                class="example-element-row"
+                                [class.example-expanded-row]="expandedElement === element"
+                                (click)="expandedElement = expandedElement === element ? null : element">
+                                </mat-row>
+                                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+                    
+                                
+                            </mat-table>
+                            <mat-paginator [ngClass]="'styled-paginator'" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                        </div>
                     </div>
-                </div>
-            </div>   
-        </div> 
-    </mat-expansion-panel>  
+                </div>   
+            </div> 
+        </mat-expansion-panel>
+    </ng-template>
 
-    <mat-expansion-panel style="margin: 1.6em;" class="mat-card mat-elevation-z8" 
-                        (opened)="expandCharts = true"
-                        (closed)="expandCharts = false"
-                        [expanded]="true">
-        <mat-expansion-panel-header>
-            <mat-panel-title>
-                <div class="col-md-12 text-center" >
-                    <h1 style="margin: 1em;">Chart Based Analysis</h1>
-                </div>
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-        <div class="row">
-            <div class="col-md-6 ">
-                <div  style="border: 1px solid black; margin-bottom: 0.7em;">
-                    <div style="display: flex; flex-flow: row-reverse;">
-                        <mat-icon id="fullScreen1" style="width: auto; cursor: pointer;">zoom_out_map
-                        </mat-icon>
-                        <a download="subjectWiseBarGraph.png" id="download1">
-                            <mat-icon  style="width: auto; cursor: pointer;" >file_download
-                            </mat-icon>
-                        </a>
+    <ng-template #chartReportTemplate>
+        <mat-expansion-panel style="margin: 1.6em;" class="mat-card mat-elevation-z8" 
+                            (opened)="expandCharts = true"
+                            (closed)="expandCharts = false"
+                            [expanded]="true">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div class="col-md-12 text-center" >
+                        <h1 style="margin: 1em;">Chart Based Analysis</h1>
                     </div>
-                    <div id="subjectwise_chart_div" class="chart" style="height:400px; margin-bottom: 1em; margin-top: 1em;" ></div>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div class="row">
+                <div class="col-md-6 ">
+                    <div  style="border: 1px solid black; margin-bottom: 0.7em;">
+                        <div style="display: flex; flex-flow: row-reverse;">
+                            <mat-icon id="fullScreen1" style="width: auto; cursor: pointer;">zoom_out_map
+                            </mat-icon>
+                            <a download="subjectWiseBarGraph.png" id="download1">
+                                <mat-icon  style="width: auto; cursor: pointer;" >file_download
+                                </mat-icon>
+                            </a>
+                        </div>
+                        <div id="subjectwise_chart_div" class="chart" style="height:400px; margin-bottom: 1em; margin-top: 1em;" ></div>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <div style="border: 1px solid black; margin-bottom: 0.7em;">
+                        <div style="display: flex; flex-flow: row-reverse;">
+                            <mat-icon id="fullScreen2" style="width: auto; cursor: pointer;">zoom_out_map
+                            </mat-icon>
+                            <a download="topicWiseBarGraph.png" id="download2">
+                                <mat-icon style="width: auto; cursor: pointer;">file_download
+                                </mat-icon>
+                            </a>
+                        </div>
+                        <div id="topicwise_chart_div" class="chart" style="height:400px; margin-bottom: 1em; margin-top: 1em;"></div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6 ">
-                <div style="border: 1px solid black; margin-bottom: 0.7em;">
-                    <div style="display: flex; flex-flow: row-reverse;">
-                        <mat-icon id="fullScreen2" style="width: auto; cursor: pointer;">zoom_out_map
-                        </mat-icon>
-                        <a download="topicWiseBarGraph.png" id="download2">
-                            <mat-icon style="width: auto; cursor: pointer;">file_download
-                            </mat-icon>
-                        </a>
-                    </div>
-                    <div id="topicwise_chart_div" class="chart" style="height:400px; margin-bottom: 1em; margin-top: 1em;"></div>
-                </div>
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-md-6 ">
-                <div style="border: 1px solid black; margin-bottom: 0.7em;">
-                    <div style="display: flex; flex-flow: row-reverse; ">
-                        <mat-icon id="fullScreen3" style="width: auto; cursor: pointer;">zoom_out_map
-                        </mat-icon>
-                        <a href="" download="subjectWiseTimeSpentPieChart.png" id="download3">
-                            <mat-icon style="width: auto; cursor: pointer;">file_download
+            <div class="row">
+                <div class="col-md-6 ">
+                    <div style="border: 1px solid black; margin-bottom: 0.7em;">
+                        <div style="display: flex; flex-flow: row-reverse; ">
+                            <mat-icon id="fullScreen3" style="width: auto; cursor: pointer;">zoom_out_map
                             </mat-icon>
-                        </a>
+                            <a href="" download="subjectWiseTimeSpentPieChart.png" id="download3">
+                                <mat-icon style="width: auto; cursor: pointer;">file_download
+                                </mat-icon>
+                            </a>
+                        </div>
+                        <div id="subjectTimeSpent_chart_div" class="chart" style="height: 400px; margin-bottom: 1em; margin-top: 1em;"></div>
                     </div>
-                    <div id="subjectTimeSpent_chart_div" class="chart" style="height: 400px; margin-bottom: 1em; margin-top: 1em;"></div>
+                </div>
+                <div class="col-md-6 ">
+                    <div style="border: 1px solid black; margin-bottom: 0.7em;">
+                        <div style="display: flex; flex-flow: row-reverse; ">
+                            <mat-icon id="fullScreen4" style="width: auto; cursor: pointer;">zoom_out_map
+                            </mat-icon>
+                            <a href ="" download="topicWiseTimeSpentPieChart.png" id="download4">
+                                <mat-icon style="width: auto; cursor: pointer;">file_download
+                                </mat-icon>
+                            </a>
+                        </div>
+                        <div id="topicTimeSpent_chart_div" class="chart" style="height: 400px; margin-bottom: 1em; margin-top: 1em;"></div>
+                    </div>
                 </div>
             </div>
-            <div class="col-md-6 ">
-                <div style="border: 1px solid black; margin-bottom: 0.7em;">
-                    <div style="display: flex; flex-flow: row-reverse; ">
-                        <mat-icon id="fullScreen4" style="width: auto; cursor: pointer;">zoom_out_map
-                        </mat-icon>
-                        <a href ="" download="topicWiseTimeSpentPieChart.png" id="download4">
-                            <mat-icon style="width: auto; cursor: pointer;">file_download
-                            </mat-icon>
-                        </a>
-                    </div>
-                    <div id="topicTimeSpent_chart_div" class="chart" style="height: 400px; margin-bottom: 1em; margin-top: 1em;"></div>
-                </div>
-            </div>
-        </div>
-    </mat-expansion-panel>
+        </mat-expansion-panel>
+    </ng-template>
 </div>
     
