@@ -8,7 +8,7 @@
      
         <input style="margin-bottom: 0.4em; padding: 4px;" (keyup)="applyFilter($event)" class="form-control" #myInput type="text" placeholder="Search..">
     </div>
-    <br>
+    <!-- <br> -->
     <div [ngClass]="'mat-elevation-z8'" class="table-contents" id="content" #content>
         <div>
         <mat-table class="change-arrow-color" matSort [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"> 

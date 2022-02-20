@@ -22,6 +22,8 @@ export class SigninComponent implements OnInit {
   mode: ProgressSpinnerMode  = "indeterminate";
   loading : boolean = false;
 
+  loginError: boolean = false;
+
   constructor(
     private router : Router, 
     private httpClient : HttpClient,
@@ -90,7 +92,8 @@ export class SigninComponent implements OnInit {
         },
         error =>{
           this.loading = false
-          window.alert(error.message)
+          this.loginError = true;
+          // window.alert("Invalid Credentials")
         }
       )
      }
