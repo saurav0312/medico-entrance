@@ -18,7 +18,7 @@ declare var google: any;
 @Component({
   selector: 'app-detailtestreport',
   templateUrl: './detailtestreport.component.html',
-  styleUrls: ['./detailtestreport.component.css'],
+  styleUrls: ['./detailtestreport.component.scss'],
   animations: [
     trigger('detailExpand', [
       state('collapsed', style({height: '0px', minHeight: '0'})),
@@ -49,6 +49,10 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   expandTable: boolean = true;
   count: number = 0;
   totalScore : number = 0;
+  success: number = 0;
+
+  subjectTagsList: string[] = [];
+  topicTagsList: string[] = [];
 
   @Input() displayedColumns!: string[];
   @Input() testToShowInTable! : Tests;
@@ -76,6 +80,15 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
+
+    // Get the root element
+    this.success =((100 * 6) - ((100 * 6) * ((21*80)/100)) / 100)
+    console.log("Success value: ", this.success)
+    // var r:any = document.querySelector(':root');
+    // r.style.setProperty('--successValue', 80);
+
+
+
     google.charts.load('current', {packages: ['corechart']});
 
     this.activatedRoute.queryParams.subscribe(response =>{
@@ -178,6 +191,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         //prepare data for subject bar graph
         Object.keys(this.subjectTagMap).forEach(key =>{
           console.log("Each subject name: ", key)
+          this.subjectTagsList.push(key);
           let temppiechartData = [];
           temppiechartData.push(key)
           temppiechartData.push(this.subjectTagMap[key]['correct'])
@@ -189,6 +203,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         //prepare data for topic bar graph
         Object.keys(this.topicTagMap).forEach(key =>{
           console.log("Each subject name: ", key)
+          this.topicTagsList.push(key)
           let temppiechartData = [];
           temppiechartData.push(key)
           temppiechartData.push(this.topicTagMap[key]['correct'])
