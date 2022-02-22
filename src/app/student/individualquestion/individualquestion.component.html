@@ -1,0 +1,107 @@
+<div style="width: 100%; font-family: 'Times New Roman', Times, serif;">
+    <div>
+        <div style="float: right;">
+            <mat-icon [mat-dialog-close]="true" style="color: #b6b2b2;">close</mat-icon>
+        </div>
+    
+        <div>
+            <h1 mat-dialog-title>Reviewing Question {{data.questionNumber + 1 }}</h1>
+            <div style="min-width: 512px; max-width: 1024px;">
+                <!-- <div>
+                    <p style="font-size: 16px; font-weight: 400; font-family: 'Times New Roman', Times, serif;"><b>Question {{data.questionNumber + 1 }}</b></p>
+                </div> -->
+                <div class="col-sm-12" style="display: block;">
+                    <p>
+                    {{data.testReportQuestion.question}} Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample Sample
+                    </p>
+                </div>
+            </div>
+            <br>
+            <div style="text-align: center;">
+                <div style="display: inline-block; padding: 4px;">
+                    <div class="question-choices" style="border: 1px solid black; width: 250px; padding: 4px;">
+                        <ng-container *ngFor="let option of data.testReportQuestion.options; let i = index">
+                            <div>
+                                <div style="cursor: pointer;">
+                                    <span style="float: left; margin-left: 5px;">{{option}}</span>
+                                    <span *ngIf = "(data.testReportQuestion.correctAnswer === option && data.testReportQuestion.selectedOption === option) || (data.testReportQuestion.correctAnswer === option && data.testReportQuestion.selectedOption !== option)" style="float: right; margin-right: 5px; color: #5eb65e"> Correct Answer</span>
+                                    <span *ngIf = "data.testReportQuestion.correctAnswer !== option && data.testReportQuestion.selectedOption === option" style="float: right; margin-right: 5px; color: red"> Your Answer</span>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <mat-divider *ngIf="i !== data.testReportQuestion.options.length-1"></mat-divider>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+    <div>
+        <mat-divider></mat-divider>
+        <div style="margin-top: 10px; margin-left: 10px; margin-bottom: 10px;">
+            <div class="row" style="display: block;">
+                <mat-icon (click)="hideQuestionExplanation = !hideQuestionExplanation" style="float: left; margin-right: 13px; font-weight: bold; cursor: pointer;">{{hideQuestionExplanation ? 'expand_more' : 'expand_less'}}</mat-icon>
+                <div style="margin-top: 10px; font-size: 20px; margin-bottom: 5px;">Question Explanation</div>
+            </div>
+            <div *ngIf="!hideQuestionExplanation" style="display: inline-block; margin-left: 1.7em; ">
+                <div style="font-size: 15px;"><b>Answer: 
+                    <ng-container [ngSwitch]="correctAnswerIndex">
+                        <ng-container *ngSwitchCase=0>
+                            A
+                        </ng-container>
+                        <ng-container *ngSwitchCase=1>
+                            B
+                        </ng-container>
+                        <ng-container *ngSwitchCase=2>
+                            C
+                        </ng-container>
+                        <ng-container *ngSwitchCase=3>
+                            D
+                        </ng-container>
+                    </ng-container>
+                </b></div>
+                <div>The reason is that it is the most accepted answer. The reason is that it is the most accepted answer. The reason is that it is the most accepted answer. The reason is that it is the most accepted answer.The reason is that it is the most accepted answer.The reason is that it is the most accepted answer.The reason is that it is the most accepted answer.The reason is that it is the most accepted answer.The reason is that it is the most accepted answer.The reason is that it is the most accepted answer.The reason is that it is the most accepted answer.</div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <mat-divider></mat-divider>
+        <div style="margin-top: 10px; margin-left: 10px;">
+            <div class="row" style="display: block;">
+                
+                <div style="margin-top: 10px; font-size: 20px; margin-bottom: 5px;">Concepts Tested</div>
+            </div>
+            <div style="display: inline-block; margin-left: 1.7em; ">
+                <div style="display: inline;">
+                    <div style="font-size: 15px;">
+                        <p><b>Subject: </b>
+                            <ng-container *ngFor="let tag of data.testReportQuestion.subjectTags; let i = index">
+                                {{tag}}
+                                <ng-container *ngIf="i !== data.testReportQuestion.subjectTags.length-1">
+                                    |
+                                </ng-container>
+                            </ng-container>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: block; margin-left: 1.7em; ">
+                <div style="display: inline;">
+                    <div style="font-size: 15px;">
+                        <p><b>Topic: </b>
+                            <ng-container *ngFor="let tag of data.testReportQuestion.topicTags; let i = index">
+                                {{tag}}
+                                <ng-container *ngIf="i !== data.testReportQuestion.topicTags.length-1">
+                                    |
+                                </ng-container>
+                            </ng-container>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

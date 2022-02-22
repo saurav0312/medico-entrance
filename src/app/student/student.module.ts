@@ -27,6 +27,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { FormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { Ng2GoogleChartsModule } from 'ng2-google-charts'
 
@@ -37,6 +39,7 @@ import { EditprofileinfoComponent } from './editprofileinfo/editprofileinfo.comp
 import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
 import { MatSortModule } from '@angular/material/sort';
 import { TestsAnalysisDashboardComponent } from './tests-analysis-dashboard/tests-analysis-dashboard.component';
+import { IndividualquestionComponent } from './individualquestion/individualquestion.component';
 
 
 @NgModule({
@@ -45,7 +48,8 @@ import { TestsAnalysisDashboardComponent } from './tests-analysis-dashboard/test
     DetailtestreportComponent,
     ViewmytestsComponent,
     EditprofileinfoComponent,
-    TestsAnalysisDashboardComponent
+    TestsAnalysisDashboardComponent,
+    IndividualquestionComponent
   ],
   imports: [
     CommonModule,
@@ -72,11 +76,14 @@ import { TestsAnalysisDashboardComponent } from './tests-analysis-dashboard/test
     MatListModule,
     MatExpansionModule,
     FormsModule,
-    MatTabsModule
+    MatTabsModule,
+    MatTooltipModule,
+    MatDialogModule
   ],
   exports: [
     StudentprofileComponent,
-    DetailtestreportComponent
+    DetailtestreportComponent,
+    ViewmytestsComponent
   ]
 })
 export class StudentModule { }

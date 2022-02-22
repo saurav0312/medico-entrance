@@ -22,7 +22,7 @@ export class ViewmytestsComponent implements OnInit {
 
   displayedColumnsForAllTests: string[] = ['no', 'testId', 'testName', 'testTakenBy', 'testType' ,'testTakenDate'];
 
-  displayedColumnsForIndividualTest: string[] = ['no', 'question','selectedOption', 'correctAnswer', 'result', 'timeSpent' , 'subjectTags','topicTags'];
+  displayedColumnsForIndividualTest: string[] = ['no','subjectTags','topicTags', 'result', 'timeSpent', 'timesViewed' ];
 
   dataSource: MatTableDataSource<Tests> = new MatTableDataSource();
   @ViewChild(MatPaginator) paginator! : MatPaginator;

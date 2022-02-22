@@ -22,11 +22,13 @@ import { StudentdashboardModule } from './studentdashboard/studentdashboard.modu
 import { PracticetestModule } from './practicetest/practicetest.module';
 import { TeacherdashboardModule } from './teacherdashboard/teacherdashboard.module';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { StudentdashboardhomeComponent } from './studentdashboard/studentdashboardhome/studentdashboardhome.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    StudentdashboardhomeComponent
   ],
   imports: [
     BrowserModule,
