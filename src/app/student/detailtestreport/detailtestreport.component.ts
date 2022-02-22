@@ -11,6 +11,7 @@ import { animate, state, style, transition, trigger } from '@angular/animations'
 import screenfull from 'screenfull';
 import { MatDialog } from '@angular/material/dialog';
 import { IndividualquestionComponent } from '../individualquestion/individualquestion.component';
+import { IPerformance } from 'src/app/interface/performance';
 
 
 declare var google: any;
@@ -51,8 +52,21 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   totalScore : number = 0;
   success: number = 0;
 
-  subjectTagsList: string[] = [];
-  topicTagsList: string[] = [];
+  subjectThresholdValue: number = 1;
+  topicThresholdValue: number = 1;
+
+  strongSubjectList: {'strongSubject':Array<IPerformance>} = {
+    'strongSubject': []
+  };
+  weakSubjectList: {'weakSubject':Array<IPerformance>} = {
+    'weakSubject': []
+  };
+  strongTopicList: {'strongTopic':Array<IPerformance>} = {
+    'strongTopic': []
+  };
+  weakTopicList: {'weakTopic':Array<IPerformance>} = {
+    'weakTopic': []
+  };
 
   @Input() displayedColumns!: string[];
   @Input() testToShowInTable! : Tests;
@@ -191,9 +205,29 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         //prepare data for subject bar graph
         Object.keys(this.subjectTagMap).forEach(key =>{
           console.log("Each subject name: ", key)
-          this.subjectTagsList.push(key);
           let temppiechartData = [];
+
+          let totalNoOfSubjectQuestion = this.subjectTagMap[key]['correct'] + this.subjectTagMap[key]['incorrect'] +
+                                            this.subjectTagMap[key]['not_answered']
+
           temppiechartData.push(key)
+
+          let successPercent = (this.subjectTagMap[key]['correct']/totalNoOfSubjectQuestion)*100;
+          this.success =((100 * 6) - ((100 * 6) * ((21*successPercent)/100)) / 100)
+          let tempSuccessValue: any ={
+            'name': key,
+            'successValue': this.success,
+            'successPercent': successPercent
+          }
+
+          if(this.subjectTagMap[key]['correct'] >= this.subjectThresholdValue){
+
+            this.strongSubjectList['strongSubject'].push(tempSuccessValue)
+          }
+          else{
+            this.weakSubjectList['weakSubject'].push(tempSuccessValue)
+          }
+
           temppiechartData.push(this.subjectTagMap[key]['correct'])
           temppiechartData.push(this.subjectTagMap[key]['incorrect'])
           temppiechartData.push(this.subjectTagMap[key]['not_answered'])
@@ -203,9 +237,29 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         //prepare data for topic bar graph
         Object.keys(this.topicTagMap).forEach(key =>{
           console.log("Each subject name: ", key)
-          this.topicTagsList.push(key)
           let temppiechartData = [];
+
+          let totalNoOfTopicQuestion = this.topicTagMap[key]['correct'] + this.topicTagMap[key]['incorrect'] +
+                                            this.topicTagMap[key]['not_answered']
           temppiechartData.push(key)
+
+          let successPercent = (this.topicTagMap[key]['correct']/totalNoOfTopicQuestion)*100;
+
+          this.success =((100 * 6) - ((100 * 6) * ((21*successPercent)/100)) / 100)
+
+          let tempSuccessValue: any ={
+            'name': key,
+            'successValue': this.success,
+            'successPercent': successPercent
+          }
+
+          if(this.topicTagMap[key]['correct'] >= this.topicThresholdValue){
+            this.strongTopicList['strongTopic'].push(tempSuccessValue)
+          }
+          else{
+            this.weakTopicList['weakTopic'].push(tempSuccessValue)
+          }
+
           temppiechartData.push(this.topicTagMap[key]['correct'])
           temppiechartData.push(this.topicTagMap[key]['incorrect'])
           temppiechartData.push(this.topicTagMap[key]['not_answered'])
@@ -227,6 +281,11 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
           temppiechartData.push(entry[1]);
           this.topicWiseTimeSpentPiechartData.push(temppiechartData)
         }
+
+        console.log("Strong subject ", this.strongSubjectList);
+        console.log("Weak subject ",this.weakSubjectList)
+        console.log("Strong topic", this.strongTopicList)
+        console.log("Weak topic ",this.weakTopicList)
 
 
         // this.buildChart(this.subjectTagBarGraphData, this.topicTagBarGraphData, this.subjectWiseTimeSpentPiechartData, this.topicWiseTimeSpentPiechartData )
