@@ -1,6 +1,6 @@
-<app-studentdashboardnavigationbar></app-studentdashboardnavigationbar>
+<!-- <app-studentdashboardnavigationbar></app-studentdashboardnavigationbar> -->
 <div style="margin-top: 10em; text-align: center;">
-    <h2 style="text-align: center;">Welcome Student</h2>
+    <h2 style="text-align: center;">Welcome {{username}}</h2>
 </div>
 
 
@@ -18,7 +18,7 @@
 
     <!-- Test start -->
     <ng-template [ngIf]="listOfTeachers.length != 0">
-    <div class="album py-5 bg-light">
+    <div class="album py-5 background-css" style="margin-bottom: 1.4em;">
         <div class="container">
             <div class="row">
                 <ng-container class ="col-sm-6"  *ngFor="let teacher of listOfTeachers; let i = index" style="margin-bottom: 2rem;">

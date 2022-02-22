@@ -15,13 +15,19 @@ import { StudentdashboardRoutingModule } from './studentdashboard-routing.module
 import { StudentdashboardnavigationbarComponent } from './studentdashboardnavigationbar/studentdashboardnavigationbar.component';
 import { StudentdashboardcontentComponent } from './studentdashboardcontent/studentdashboardcontent.component';
 import { AllTestsByATeacherComponent } from './all-tests-by-ateacher/all-tests-by-ateacher.component';
+import { PerformanceanalysisComponent } from './performanceanalysis/performanceanalysis.component';
+import { MatDividerModule } from '@angular/material/divider';
+import { PerformancereportComponent } from './performancereport/performancereport.component';
+import { StudentModule } from '../student/student.module';
 
 
 @NgModule({
   declarations: [
     StudentdashboardnavigationbarComponent,
     StudentdashboardcontentComponent,
-    AllTestsByATeacherComponent
+    AllTestsByATeacherComponent,
+    PerformanceanalysisComponent,
+    PerformancereportComponent
   ],
   imports: [
     CommonModule,
@@ -33,7 +39,9 @@ import { AllTestsByATeacherComponent } from './all-tests-by-ateacher/all-tests-b
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    FormsModule
+    FormsModule,
+    MatDividerModule,
+    StudentModule
   ],
   exports:[
     StudentdashboardnavigationbarComponent

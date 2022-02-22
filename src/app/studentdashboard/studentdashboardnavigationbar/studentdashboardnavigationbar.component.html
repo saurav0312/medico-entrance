@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light" style="background-color: #cacae2eb !important;">
+<nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light" style="background-color: #e5e5e5 !important;">
     <div class="container">
       <a routerLink="/studentdashboard" class="navbar-brand">Entrance<span class="text-primary">.com</span></a>
 
@@ -12,8 +12,11 @@
           <li class="nav-item" >
             <a routerLink="/studentdashboard" class="nav-link">Home</a>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a [routerLink]="['/practicetest']" class="nav-link" [matBadge]="noOfAllMockTest">All Mock Tests</a>
+          </li> -->
+          <li class="nav-item">
+            <a [routerLink]="['/studentdashboard/allTeachers']" class="nav-link">View All Teachers</a>
           </li>
         </ul>
         <ul class="navbar-nav ml-auto">

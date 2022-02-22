@@ -33,6 +33,8 @@ export class StudentdashboardcontentComponent implements OnInit {
 
   categoryList: string[] =["All","Subscribed","Unsubscribed"];
 
+  username: string | null = '';
+
   constructor(
     private authService: AuthService,
     private teacherSubscriptionService: TeacherSubscriptionService
@@ -43,6 +45,7 @@ export class StudentdashboardcontentComponent implements OnInit {
     this.authService.getCurrentUser().subscribe((response:User) =>{
       if(response !== null){
         this.currentUserId = response.uid
+        this.username = response.displayName
         this.authService.getUserDetailsByType("teacher").subscribe((response:any) =>{
           if(response !== null){
             this.listOfTeachers = response

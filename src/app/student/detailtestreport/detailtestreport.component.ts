@@ -3,12 +3,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { TestReportQuestion } from '../../interface/testReportQuestion';
 import { Tests } from '../../interface/tests'; 
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from 'src/app/service/shared.service';
 import { Timestamp } from 'firebase/firestore';
 import { AuthService } from 'src/app/service/auth.service';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import screenfull from 'screenfull';
+import { MatDialog } from '@angular/material/dialog';
+import { IndividualquestionComponent } from '../individualquestion/individualquestion.component';
 
 
 declare var google: any;
@@ -46,6 +48,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   expandCharts: boolean = true; 
   expandTable: boolean = true;
   count: number = 0;
+  totalScore : number = 0;
 
   @Input() displayedColumns!: string[];
   @Input() testToShowInTable! : Tests;
@@ -67,7 +70,9 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private sharedService: SharedService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -128,6 +133,8 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
           if(testQuestion.selectedOption !== null){
             if(testQuestion.selectedOption === testQuestion.correctAnswer){
+              this.totalScore += 1;
+
               //increase correct count for each subject type
               testQuestion.subjectTags?.forEach(subjectTag =>{
                 this.subjectTagMap[subjectTag]['correct'] = this.subjectTagMap[subjectTag]['correct'] === undefined ? 1 : this.subjectTagMap[subjectTag]['correct']+1
@@ -419,5 +426,30 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
       console.log("Chart entered: ", this.count)
       this.buildChart(this.subjectTagBarGraphData, this.topicTagBarGraphData, this.subjectWiseTimeSpentPiechartData, this.topicWiseTimeSpentPiechartData )
     }
+  }
+
+  viewIndividualQuestion(element: TestReportQuestion, questionNumber: number):void{
+
+    const dialogRef = this.dialog.open(IndividualquestionComponent,{
+      data: {
+        testReportQuestion: element,
+        questionNumber: questionNumber
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+
+    // console.log("elementt: ", element)
+    // this.router.navigate(
+    //   ['studentProfile/individualQuestion'],
+    //   {
+    //     queryParams: 
+    //       {
+    //         question: JSON.stringify(element)
+    //       }, 
+    //   }
+    // )
   }
 }

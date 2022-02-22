@@ -3,13 +3,18 @@
 <div >
     <h1 style="text-align: center; margin-top: 2em;">All Test Records</h1>
     <div style="margin-left: 9.8em; margin-right: 11.5em;">
-    <h2>Filter Tests</h2>
-    <p>Type something in the input field to filter tests by test name, test taken by or test type:</p> 
+        <h2>Filter Tests</h2>
+        <p>Type something in the input field to filter tests by test name, test taken by or test type:</p> 
      
-        <input style="margin-bottom: 0.4em; padding: 4px;" (keyup)="applyFilter($event)" class="form-control" #myInput type="text" placeholder="Search..">
+        
     </div>
+    
     <!-- <br> -->
-    <div [ngClass]="'mat-elevation-z8'" class="table-contents" id="content" #content>
+    <div class="table-contents" id="content" #content>
+        <div>
+        <input style="margin-bottom: auto; padding: 4px; margin-left:auto;" (keyup)="applyFilter($event)" class="form-control table-contents" #myInput type="text" placeholder="Search..">
+        <br>
+        </div>
         <div>
         <mat-table class="change-arrow-color" matSort [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"> 
             <ng-container matColumnDef="no">

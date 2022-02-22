@@ -1,5 +1,5 @@
 <div>
-    <h1 style="text-align: center; margin-top: 2em;">Here is your detail performance report
+    <h1 style="text-align: center; margin-top: 2em;">Test Result Analysis
     </h1>
 
     <mat-tab-group mat-align-tabs="center" (selectedTabChange)="tabChanged($event)">
@@ -14,14 +14,19 @@
 
 
     <ng-template #tabularReportTemplate>
-        <mat-expansion-panel style="margin: 1.6em;" class="mat-card mat-elevation-z8" 
+        <div class="row">
+        <div class="col-sm-3" style="border-right: 1px solid #bfc3c2; margin-top: 1.2em; margin-bottom: 1.2em;">
+            Sample
+        </div>
+        <div class="col-sm-9">
+        <mat-expansion-panel style="margin-right: 1.2em; margin-top: 1.2em; margin-bottom: 1.2em;" class="mat-card mat-elevation-z8" 
                             (opened)="expandTable = true"
                             (closed)="expandTable = false"
                             [expanded]="true">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     <div class="col-md-12 text-center" >
-                        <h1 style="margin: 1em;">Table Based Analysis</h1>
+                        <h1 style="margin: 1em; font-weight: 500;">Score Summary</h1>
                     </div>
                 </mat-panel-title>
             </mat-expansion-panel-header>
@@ -34,6 +39,9 @@
                         </div>
                         <div class ="col-md-4">
                             <b>Test Name:</b> {{testToShowInTable.testName}}
+                        </div>
+                        <div class="col-md-4">
+                            <b>Total Score:</b> {{totalScore}}
                         </div>
                     </div>
                     <div class ="row" style="margin: 1em;">
@@ -55,40 +63,15 @@
                         <div style="clear: both;">
                         </div>
                         <div class="table-contents" id="content" #content>
-                            <mat-table multiTemplateDataRows [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"> 
+                            <mat-table [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"> 
                                 <ng-container matColumnDef="no">
                                     <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> No 
                                     </mat-header-cell>
-                                    <mat-cell *matCellDef="let element; let i = dataIndex;"> 
+                                    <mat-cell *matCellDef="let element; let i = index;"> 
                                         <span class="mobile-label">No:</span>
-                                        {{this.paginator.pageIndex* this.paginator.pageSize + i + 1 }}
-                                    </mat-cell>
-                                </ng-container>
-                    
-                                <ng-container matColumnDef="question">
-                                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Question 
-                                    </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> 
-                                        <span class="mobile-label">Question:</span>
-                                        {{element.question}} 
-                                    </mat-cell>
-                                </ng-container>
-                    
-                                <ng-container matColumnDef="selectedOption">
-                                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Selected Option 
-                                    </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> 
-                                        <span class="mobile-label">Selected Option:</span>
-                                        {{element.selectedOption}} 
-                                    </mat-cell>
-                                </ng-container>
-                    
-                                <ng-container matColumnDef="correctAnswer">
-                                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Correct Answer 
-                                    </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> 
-                                        <span class="mobile-label">Correct Answer:</span>
-                                        {{element.correctAnswer}} 
+                                        <div matTooltip="Click to review question" matTooltipPosition='right' (click)="viewIndividualQuestion(element, i)" style="display: inline-block; vertical-align: middle;">
+                                            <a style="text-align: center; color: #0490f4;">{{this.paginator.pageIndex* this.paginator.pageSize + i + 1 }}</a> 
+                                        </div>
                                     </mat-cell>
                                 </ng-container>
 
@@ -98,6 +81,15 @@
                                     <mat-cell *matCellDef="let element"> 
                                         <span class="mobile-label">Time Spent:</span>
                                         {{element.totalTimeSpent}} s 
+                                    </mat-cell>
+                                </ng-container>
+
+                                <ng-container matColumnDef="timesViewed">
+                                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Times Viewed
+                                    </mat-header-cell>
+                                    <mat-cell *matCellDef="let element"> 
+                                        <span class="mobile-label">Times Viewed:</span>
+                                        1 
                                     </mat-cell>
                                 </ng-container>
                     
@@ -115,20 +107,20 @@
                                 </ng-container>
 
                                 <ng-container matColumnDef="subjectTags">
-                                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Subject Tag 
+                                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Subject Area 
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let element"> 
-                                        <span class="mobile-label"> Subject Tag:</span>
+                                        <span class="mobile-label"> Subject Area:</span>
                                         <button disabled class="btn" style="margin-right: 1em; background-color: green; color: white;" 
                                         *ngFor="let subjectTag of element.subjectTags">{{subjectTag}}</button>
                                     </mat-cell>
                                 </ng-container>
 
                                 <ng-container matColumnDef="topicTags">
-                                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Topic Tag 
+                                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Topic Area 
                                     </mat-header-cell>
                                     <mat-cell *matCellDef="let element"> 
-                                        <span class="mobile-label">Topic Tag:</span>
+                                        <span class="mobile-label">Topic Area:</span>
                                         <div style="display: inline; float: left;">
                                             <button disabled class="btn" style="margin: 0.2em; background-color: red; color: white; display: inline;" 
                                                 *ngFor="let topicTag of element.topicTags">{{topicTag}}
@@ -136,41 +128,56 @@
                                         </div>
                                     </mat-cell>
                                 </ng-container>
-
-                                <ng-container matColumnDef="expandedDetail">
-                                    <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-                                        <div class="example-element-detail"
-                                            [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-                                            <div class="example-element-diagram float-container">
-                                                <div style="display: flex; float: left;">
-                                                    <mat-list>
-                                                        <div mat-subheader><b>All options:</b></div>
-                                                        <mat-list-item *ngFor="let option of element.options">
-                                                            <div mat-line>{{option}}</div>
-                                                        </mat-list-item>
-                                                    </mat-list> 
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </ng-container>
-                    
-                                <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-                                <mat-row *matRowDef="let element; columns: displayedColumns;"
-                                class="example-element-row"
-                                [class.example-expanded-row]="expandedElement === element"
-                                (click)="expandedElement = expandedElement === element ? null : element">
-                                </mat-row>
-                                <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
-                    
-                                
+                                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                                <mat-row *matRowDef="let element; columns: displayedColumns;">
+                                </mat-row> 
                             </mat-table>
                             <mat-paginator [ngClass]="'styled-paginator'" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
                         </div>
                     </div>
                 </div>   
             </div> 
+
+            <mat-divider></mat-divider>
+            <div style="margin-top: 3em; margin-bottom:  1.5em;">
+                <p style="font-size: 21px; font-weight: 500;">Now let's look at what to do next:</p>
+            </div>
+            <mat-divider></mat-divider>
+            <div class="row" style="margin-top: 2em;">
+                <div class="col-sm-6" style="font-size: 18px; font-weight: 300; border-right: 1.7px solid #dadada;">
+                    <b>Areas of Strength</b>
+                    <div>
+                    <p>Based on this test, these are your strengths</p>
+                    <!-- <div class="row d-flex">
+                        <div class="col-md-6">
+                            <div class="progress blue"> <span class="progress-left"> <span class="progress-bar"></span> </span> <span class="progress-right"> <span class="progress-bar"></span> </span>
+                                <div class="progress-value">90%</div>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="box">
+                        <div class="percent">
+                            <svg>
+                                <circle cx="30" cy="30" r="30">
+                                </circle>
+                                <circle cx="30" cy="30" r="30">
+                                </circle>
+                            </svg>
+                            <div class="number">
+                                <h2>87<span>%</span></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="col-sm-6" style="font-size: 18px; font-weight: 300;">
+                    <b>Areas of Focus</b>
+                    <p>Based on this test, these are your weakness</p>
+                </div>
+            </div>
         </mat-expansion-panel>
+    </div>
+</div>
     </ng-template>
 
     <ng-template #chartReportTemplate>

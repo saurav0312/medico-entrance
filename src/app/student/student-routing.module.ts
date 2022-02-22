@@ -7,6 +7,7 @@ import { EditprofileinfoComponent } from './editprofileinfo/editprofileinfo.comp
 import { TestsAnalysisDashboardComponent } from './tests-analysis-dashboard/tests-analysis-dashboard.component';
 import { AuthGuard } from '../authentication/auth.guard';
 import { StudentAuthGuardGuard } from '../authentication/student-auth-guard.guard';
+import { IndividualquestionComponent } from './individualquestion/individualquestion.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,7 @@ const routes: Routes = [
       { path: 'detailTestReport', component: DetailtestreportComponent},
       { path: 'viewMyTests', component: ViewmytestsComponent},
       { path: 'testsAnalysisDashboard', component: TestsAnalysisDashboardComponent},
+      { path: 'individualQuestion', component: IndividualquestionComponent },
       { path: '', redirectTo: '/studentProfile/editprofileinfo', pathMatch: 'full' },
     ],
     canActivate: [StudentAuthGuardGuard]
