@@ -15,169 +15,195 @@
 
     <ng-template #tabularReportTemplate>
         <div class="row">
-        <div class="col-sm-3" style="border-right: 1px solid #bfc3c2; margin-top: 1.2em; margin-bottom: 1.2em;">
-            Sample
-        </div>
-        <div class="col-sm-9">
-        <mat-expansion-panel style="margin-right: 1.2em; margin-top: 1.2em; margin-bottom: 1.2em;" class="mat-card mat-elevation-z8" 
-                            (opened)="expandTable = true"
-                            (closed)="expandTable = false"
-                            [expanded]="true">
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <div class="col-md-12 text-center" >
-                        <h1 style="margin: 1em; font-weight: 500;">Score Summary</h1>
-                    </div>
-                </mat-panel-title>
-            </mat-expansion-panel-header>
-
-            <div class="float-container">
-                <div class="mat-card " style="border: 1px solid black;">
-                    <div class ="row" style="margin: 1em;">
-                        <div class ="col-md-4">
-                            <b>TestId:</b> {{testId}}
-                        </div>
-                        <div class ="col-md-4">
-                            <b>Test Name:</b> {{testToShowInTable.testName}}
-                        </div>
-                        <div class="col-md-4">
-                            <b>Total Score:</b> {{totalScore}}
-                        </div>
-                    </div>
-                    <div class ="row" style="margin: 1em;">
-                        <div class ="col-md-4">
-                            <b>Test Taken By:</b> {{testToShowInTable.testTakenBy}}
-                        </div>
-                        <div class ="col-md-4">
-                            <b>Date:</b> {{testTakenDate | date:'yyyy/MM/dd' }}
-                        </div>
-                    </div>
-                    <div class="green">
-                        <div style="float: right; margin-right: 2em; margin-bottom: 1em; margin-top: 1em;">
-                            <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('xlsx', {fileName:'test', sheet: 'sheet_name', Props: {Author: 'OnlineExam'}})">Excel</button>
-                            <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('csv')">Csv</button>
-                            <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('json')">Json</button>
-                            <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('txt')">Txt</button>
-                            <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" [useExistingCss]="true" printTitle="Your Test Result" printSectionId="content" ngxPrint>Pdf</button> 
-                        </div>
-                        <div style="clear: both;">
-                        </div>
-                        <div class="table-contents" id="content" #content>
-                            <mat-table [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"> 
-                                <ng-container matColumnDef="no">
-                                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> No 
-                                    </mat-header-cell>
-                                    <mat-cell *matCellDef="let element; let i = index;"> 
-                                        <span class="mobile-label">No:</span>
-                                        <div matTooltip="Click to review question" matTooltipPosition='right' (click)="viewIndividualQuestion(element, i)" style="display: inline-block; vertical-align: middle;">
-                                            <a style="text-align: center; color: #0490f4;">{{this.paginator.pageIndex* this.paginator.pageSize + i + 1 }}</a> 
-                                        </div>
-                                    </mat-cell>
-                                </ng-container>
-
-                                <ng-container matColumnDef="timeSpent">
-                                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Time Spent
-                                    </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> 
-                                        <span class="mobile-label">Time Spent:</span>
-                                        {{element.totalTimeSpent}} s 
-                                    </mat-cell>
-                                </ng-container>
-
-                                <ng-container matColumnDef="timesViewed">
-                                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Times Viewed
-                                    </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> 
-                                        <span class="mobile-label">Times Viewed:</span>
-                                        1 
-                                    </mat-cell>
-                                </ng-container>
-                    
-                                <ng-container matColumnDef="result">
-                                    <mat-header-cell [ngClass]="['table-header-class','quest-width']" *matHeaderCellDef> Result
-                                    </mat-header-cell>
-                                    <mat-cell [ngClass]="'quest-width'" *matCellDef="let element">
-                                        <span class="mobile-label">Result:</span>
-                                        <div> 
-                                            <mat-icon *ngIf ='element.correctAnswer === element.selectedOption' style="color: green;">done</mat-icon>
-                                            <mat-icon *ngIf ='element.selectedOption!== null && element.correctAnswer !== element.selectedOption' style="color: red;">close</mat-icon>
-                                            <mat-icon *ngIf ='element.selectedOption === null' style="color: green;">question_mark</mat-icon> 
-                                        </div>
-                                    </mat-cell>
-                                </ng-container>
-
-                                <ng-container matColumnDef="subjectTags">
-                                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Subject Area 
-                                    </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> 
-                                        <span class="mobile-label"> Subject Area:</span>
-                                        <button disabled class="btn" style="margin-right: 1em; background-color: green; color: white;" 
-                                        *ngFor="let subjectTag of element.subjectTags">{{subjectTag}}</button>
-                                    </mat-cell>
-                                </ng-container>
-
-                                <ng-container matColumnDef="topicTags">
-                                    <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Topic Area 
-                                    </mat-header-cell>
-                                    <mat-cell *matCellDef="let element"> 
-                                        <span class="mobile-label">Topic Area:</span>
-                                        <div style="display: inline; float: left;">
-                                            <button disabled class="btn" style="margin: 0.2em; background-color: red; color: white; display: inline;" 
-                                                *ngFor="let topicTag of element.topicTags">{{topicTag}}
-                                            </button>
-                                        </div>
-                                    </mat-cell>
-                                </ng-container>
-                                <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
-                                <mat-row *matRowDef="let element; columns: displayedColumns;">
-                                </mat-row> 
-                            </mat-table>
-                            <mat-paginator [ngClass]="'styled-paginator'" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-                        </div>
-                    </div>
-                </div>   
-            </div> 
-
-            <mat-divider></mat-divider>
-            <div style="margin-top: 3em; margin-bottom:  1.5em;">
-                <p style="font-size: 21px; font-weight: 500;">Now let's look at what to do next:</p>
-            </div>
-            <mat-divider></mat-divider>
-            <div class="row" style="margin-top: 2em;">
-                <div class="col-sm-6" style="font-size: 18px; font-weight: 300; border-right: 1.7px solid #dadada;">
+            <div class="col-sm-3" style="border-right: 1px solid #bfc3c2; margin-top: 1.2em; margin-bottom: 1.2em;">
+                <div class="col-sm-12" style="font-size: 18px; font-weight: 300; margin-bottom: 1em;">
                     <b>Areas of Strength</b>
-                    <div>
-                    <p>Based on this test, these are your strengths</p>
-                    <!-- <div class="row d-flex">
-                        <div class="col-md-6">
-                            <div class="progress blue"> <span class="progress-left"> <span class="progress-bar"></span> </span> <span class="progress-right"> <span class="progress-bar"></span> </span>
-                                <div class="progress-value">90%</div>
+                    <!-- <div> -->
+                    <p style="margin-top: 1.2em;">Based on this test, these are your strengths</p>
+
+                    <div class="row" style="margin-top: 2em">
+                        <ng-container  *ngFor="let subjectTag of subjectTagsList">
+                            <div class="col-sm-6" style="display: flex; width: 46px; height: 49px;">
+                                <div class="circle_box" style="display: contents;">
+                                    <div>
+                                        <svg>
+                                            <circle cx="20" cy="20" r="20" />
+                                            <circle [attr.stroke-dashoffset]="success" cx="20" cy="20" r="20" />
+                                        </svg>
+                                        <!-- <span>90%</span> -->
+                                    </div>
+                                </div>
+                                <div style="margin-left: 1.3em;">{{subjectTag}}</div>
                             </div>
-                        </div>
-                    </div> -->
-                    <div class="box">
-                        <div class="percent">
-                            <svg>
-                                <circle cx="30" cy="30" r="30">
-                                </circle>
-                                <circle cx="30" cy="30" r="30">
-                                </circle>
-                            </svg>
-                            <div class="number">
-                                <h2>87<span>%</span></h2>
-                            </div>
-                        </div>
+                        </ng-container>
                     </div>
                 </div>
-                </div>
-                <div class="col-sm-6" style="font-size: 18px; font-weight: 300;">
+                <mat-divider></mat-divider>
+
+                <div class="col-sm-12" style="font-size: 18px; font-weight: 300; margin-top: 1em">
                     <b>Areas of Focus</b>
-                    <p>Based on this test, these are your weakness</p>
+                    <!-- <div> -->
+                    <p style="margin-top: 1.2em;">Based on this test, these are your weakness</p>
+
+                    <div class="row" style="margin-top: 2em">
+                        <ng-container  *ngFor="let subjectTag of subjectTagsList">
+                            <div class="col-sm-6" style="display: flex; width: 46px; height: 49px;">
+                                <div class="circle_box" style="display: contents;">
+                                    <div>
+                                        <svg>
+                                            <circle cx="20" cy="20" r="20" />
+                                            <circle [attr.stroke-dashoffset]="success" cx="20" cy="20" r="20" />
+                                        </svg>
+                                        <!-- <span>90%</span> -->
+                                    </div>
+                                </div>
+                                <div style="margin-left: 1.3em;">{{subjectTag}}</div>
+                            </div>
+                        </ng-container>
+                    </div>
                 </div>
             </div>
-        </mat-expansion-panel>
-    </div>
-</div>
+            <div class="col-sm-9">
+                <mat-expansion-panel style="margin-right: 1.2em; margin-top: 1.2em; margin-bottom: 1.2em;" class="mat-card mat-elevation-z8" 
+                                    (opened)="expandTable = true"
+                                    (closed)="expandTable = false"
+                                    [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <div class="col-md-12 text-center" >
+                                <h1 style="margin: 1em; font-weight: 500;">Score Summary</h1>
+                            </div>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="float-container">
+                        <div class="mat-card " style="border: 1px solid black;">
+                            <div class ="row" style="margin: 1em;">
+                                <div class ="col-md-4">
+                                    <b>TestId:</b> {{testId}}
+                                </div>
+                                <div class ="col-md-4">
+                                    <b>Test Name:</b> {{testToShowInTable.testName}}
+                                </div>
+                                <div class="col-md-4">
+                                    <b>Total Score:</b> {{totalScore}}
+                                </div>
+                            </div>
+                            <div class ="row" style="margin: 1em;">
+                                <div class ="col-md-4">
+                                    <b>Test Taken By:</b> {{testToShowInTable.testTakenBy}}
+                                </div>
+                                <div class ="col-md-4">
+                                    <b>Date:</b> {{testTakenDate | date:'yyyy/MM/dd' }}
+                                </div>
+                            </div>
+                            <div class="green">
+                                <div style="float: right; margin-right: 2em; margin-bottom: 1em; margin-top: 1em;">
+                                    <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('xlsx', {fileName:'test', sheet: 'sheet_name', Props: {Author: 'OnlineExam'}})">Excel</button>
+                                    <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('csv')">Csv</button>
+                                    <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('json')">Json</button>
+                                    <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('txt')">Txt</button>
+                                    <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" [useExistingCss]="true" printTitle="Your Test Result" printSectionId="content" ngxPrint>Pdf</button> 
+                                </div>
+                                <div style="clear: both;">
+                                </div>
+                                <div class="table-contents" id="content" #content>
+                                    <mat-table [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"> 
+                                        <ng-container matColumnDef="no">
+                                            <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> No 
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let element; let i = index;"> 
+                                                <span class="mobile-label">No:</span>
+                                                <div matTooltip="Click to review question" matTooltipPosition='right' (click)="viewIndividualQuestion(element, i)" style="display: inline-block; vertical-align: middle;">
+                                                    <a style="text-align: center; color: #0490f4;">{{this.paginator.pageIndex* this.paginator.pageSize + i + 1 }}</a> 
+                                                </div>
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="timeSpent">
+                                            <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Time Spent
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let element"> 
+                                                <span class="mobile-label">Time Spent:</span>
+                                                {{element.totalTimeSpent}} s 
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="timesViewed">
+                                            <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Times Viewed
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let element"> 
+                                                <span class="mobile-label">Times Viewed:</span>
+                                                1 
+                                            </mat-cell>
+                                        </ng-container>
+                            
+                                        <ng-container matColumnDef="result">
+                                            <mat-header-cell [ngClass]="['table-header-class','quest-width']" *matHeaderCellDef> Result
+                                            </mat-header-cell>
+                                            <mat-cell [ngClass]="'quest-width'" *matCellDef="let element">
+                                                <span class="mobile-label">Result:</span>
+                                                <div> 
+                                                    <mat-icon *ngIf ='element.correctAnswer === element.selectedOption' style="color: green;">done</mat-icon>
+                                                    <mat-icon *ngIf ='element.selectedOption!== null && element.correctAnswer !== element.selectedOption' style="color: red;">close</mat-icon>
+                                                    <mat-icon *ngIf ='element.selectedOption === null' style="color: green;">question_mark</mat-icon> 
+                                                </div>
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="subjectTags">
+                                            <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Subject Area 
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let element"> 
+                                                <span class="mobile-label"> Subject Area:</span>
+                                                <button disabled class="btn" style="margin-right: 1em; background-color: green; color: white;" 
+                                                *ngFor="let subjectTag of element.subjectTags">{{subjectTag}}</button>
+                                            </mat-cell>
+                                        </ng-container>
+
+                                        <ng-container matColumnDef="topicTags">
+                                            <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> Topic Area 
+                                            </mat-header-cell>
+                                            <mat-cell *matCellDef="let element"> 
+                                                <span class="mobile-label">Topic Area:</span>
+                                                <div style="display: inline; float: left;">
+                                                    <button disabled class="btn" style="margin: 0.2em; background-color: red; color: white; display: inline;" 
+                                                        *ngFor="let topicTag of element.topicTags">{{topicTag}}
+                                                    </button>
+                                                </div>
+                                            </mat-cell>
+                                        </ng-container>
+                                        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+                                        <mat-row *matRowDef="let element; columns: displayedColumns;">
+                                        </mat-row> 
+                                    </mat-table>
+                                    <mat-paginator [ngClass]="'styled-paginator'" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                                </div>
+                            </div>
+                        </div>   
+                    </div> 
+
+                    <mat-divider></mat-divider>
+                    <div style="margin-top: 3em; margin-bottom:  1.5em;">
+                        <p style="font-size: 21px; font-weight: 500;">Now let's look at what to do next:</p>
+                    </div>
+                    <mat-divider></mat-divider>
+                        <div class="row" style="margin-top: 2em;">
+                            <div class="col-sm-6" style="font-size: 18px; font-weight: 300; border-right: 1.7px solid #dadada;">
+                                <b>Areas of Strength</b>
+                                <div>
+                                <p>Based on this test, these are your strengths</p>
+                                
+                            </div>
+                        </div>
+                        <div class="col-sm-6" style="font-size: 18px; font-weight: 300;">
+                            <b>Areas of Focus</b>
+                            <p>Based on this test, these are your weakness</p>
+                        </div>
+                    </div>
+                </mat-expansion-panel>
+            </div>
+        </div>
     </ng-template>
 
     <ng-template #chartReportTemplate>
