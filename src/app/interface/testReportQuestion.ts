@@ -6,4 +6,5 @@ export interface TestReportQuestion{
     subjectTags?: Array<any>;
     topicTags?: Array<any>;
     totalTimeSpent?: number;
+    answerExplanation: string;
 }

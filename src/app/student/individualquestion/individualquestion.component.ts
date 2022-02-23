@@ -24,6 +24,7 @@ export class IndividualquestionComponent implements OnInit {
     //   this.question =response['question'] as TestReportQuestion
     //   console.log("Individual Question: ", this.question);
     // })
+    console.log("Individual test data: ", this.data);
     this.correctAnswerIndex = this.data.testReportQuestion.options.findIndex((option: any) => option === this.data.testReportQuestion.correctAnswer)
     console.log("Correct Answer index: ", this.correctAnswerIndex)
   }

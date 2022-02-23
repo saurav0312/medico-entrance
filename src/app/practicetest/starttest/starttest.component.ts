@@ -187,7 +187,8 @@ export class StarttestComponent implements OnInit, OnDestroy {
           "correctAnswer": question?.correctAnswer,
           "subjectTags": question?.subjectTags,
           "topicTags": question?.topicTags,
-          "totalTimeSpent": question?.totalTimeSpent === undefined ? 0 : question?.totalTimeSpent
+          "totalTimeSpent": question?.totalTimeSpent === undefined ? 0 : question?.totalTimeSpent,
+          "answerExplanation": question.answerExplanation
         }
         testQuestions.push(testReportQuestion)
     })

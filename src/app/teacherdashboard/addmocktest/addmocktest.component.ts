@@ -164,6 +164,7 @@ export class AddmocktestComponent implements OnInit{
               "correctAnswer":questionItem.correctAnswer,
               "subjectTags": subjectTags,
               "topicTags": topicTags,
+              "answerExplanation": questionItem.answerExplanation,
               "totalTimeSpent":0,
               "questionImageUrl":[]
             }
@@ -187,7 +188,8 @@ export class AddmocktestComponent implements OnInit{
               "testType": this.createMockTestForm.get('testType')?.value,
               "questions": questions,
               "testPrice": this.createMockTestForm.get('testPrice')?.value,
-              "teacherUserId": this.userId
+              "teacherUserId": this.userId,
+              "testUploadDate": new Date()
             };
             this.mockTest = tempData;
             console.log("MockTest Data: ", this.mockTest);
@@ -206,73 +208,66 @@ export class AddmocktestComponent implements OnInit{
                     console.log("Mocktest reponse: ", response)
 
                     let allImageList:Array<string> = []
-                    Object.keys(this.zipFileContent.files).forEach((filename) =>{
-                      if(this.zipFileContent.files[filename].dir === false){
-                        allImageList.push(filename)
-                      }
-                    })
-                    console.log("All image files: ", allImageList)
-                    //let filenameToQuestionNumberToImageMap : { [key:string]: {[key: string]: Array<string>}} = {};
-                    let questionNumberToImageMap : {[key: string]: Array<string>} ={};
+                    if(this.zipFileContent !== undefined){
+                      Object.keys(this.zipFileContent.files).forEach((filename) =>{
+                        if(this.zipFileContent.files[filename].dir === false){
+                          allImageList.push(filename)
+                        }
+                      })
 
-                    allImageList.forEach((filename,i) =>{
-                      let filenameContentsArray = filename.split('/')
-                      let questionNumber = (parseInt(filenameContentsArray[1])-1).toString()
-                      
+                      console.log("All image files: ", allImageList)
+                      let questionNumberToImageMap : {[key: string]: Array<string>} ={};
 
-                      if(questionNumberToImageMap[questionNumber]!== undefined){
-                        questionNumberToImageMap[questionNumber].push(filenameContentsArray[2])
-                      }
-                      else{
-                        questionNumberToImageMap[questionNumber] = [];
-                        questionNumberToImageMap[questionNumber].push(filenameContentsArray[2])
-                      }
-                    })
-                    console.log("Question number to ImageList: ", questionNumberToImageMap)
-                    let imagesUploadedCount= 0;
+                      allImageList.forEach((filename,i) =>{
+                        let filenameContentsArray = filename.split('/')
+                        let questionNumber = (parseInt(filenameContentsArray[1])-1).toString()
+                        
 
-                    let totalNoOfQuestions = Object.keys(questionNumberToImageMap).length
+                        if(questionNumberToImageMap[questionNumber]!== undefined){
+                          questionNumberToImageMap[questionNumber].push(filenameContentsArray[2])
+                        }
+                        else{
+                          questionNumberToImageMap[questionNumber] = [];
+                          questionNumberToImageMap[questionNumber].push(filenameContentsArray[2])
+                        }
+                      })
 
-                    Object.keys(questionNumberToImageMap).forEach((questionNumber,i) =>{
-                      imagesUploadedCount+=1
-                      console.log("Question Number: ", questionNumber)
-                      console.log("Imagesuploaded count: ", imagesUploadedCount)
-                      questionNumberToImageMap[questionNumber].forEach(questionImage =>{
-                        this.zipFileContent.files['QuestionImages/'+(parseInt(questionNumber)+1).toString() +'/'+questionImage].async('arraybuffer').then((fileData:Uint8Array) =>{
+                      console.log("Question number to ImageList: ", questionNumberToImageMap)
+                      let imagesUploadedCount= 0;
 
-                          let subs = this.profileService.uploadQuestionImage(fileData,questionImage,userDetail.uid,ref.id, questionNumber).subscribe(imageUrl =>{
-                            console.log("Image uploaded: ", imageUrl)
-                            subs.unsubscribe()
-                            
-                            createdMockTest.questions[parseInt(questionNumber)].questionImageUrl?.push(imageUrl)
-                            console.log("Updated mocktest with image url: ", createdMockTest)
-                            if(imagesUploadedCount == totalNoOfQuestions){
-                              console.log("entered")
-                              console.log("Final Updated mocktest with image url: ", createdMockTest)
-                              this.authService.updateMockTestDetails(ref.id, createdMockTest).subscribe(response =>{
-                                console.log("test updated in db: ", response)
-                              })
-                            }
-                            
+                      let totalNoOfQuestions = Object.keys(questionNumberToImageMap).length
+
+                      Object.keys(questionNumberToImageMap).forEach((questionNumber,i) =>{
+                        imagesUploadedCount+=1
+                        console.log("Question Number: ", questionNumber)
+                        console.log("Imagesuploaded count: ", imagesUploadedCount)
+                        questionNumberToImageMap[questionNumber].forEach(questionImage =>{
+                          this.zipFileContent.files['QuestionImages/'+(parseInt(questionNumber)+1).toString() +'/'+questionImage].async('arraybuffer').then((fileData:Uint8Array) =>{
+  
+                            let subs = this.profileService.uploadQuestionImage(fileData,questionImage,userDetail.uid,ref.id, questionNumber).subscribe(imageUrl =>{
+                              console.log("Image uploaded: ", imageUrl)
+                              subs.unsubscribe()
+                              
+                              createdMockTest.questions[parseInt(questionNumber)].questionImageUrl?.push(imageUrl)
+                              console.log("Updated mocktest with image url: ", createdMockTest)
+                              if(imagesUploadedCount == totalNoOfQuestions){
+                                console.log("entered")
+                                console.log("Final Updated mocktest with image url: ", createdMockTest)
+                                this.authService.updateMockTestDetails(ref.id, createdMockTest).subscribe(response =>{
+                                  console.log("test updated in db: ", response)
+                                })
+                              }
+                              
+                            })
                           })
                         })
                       })
-                      
-                    })
 
-                    
-
-                    
-                    
-    
-                    console.log("Updated Mock Test: ", createdMockTest)
-    
+                      console.log("Updated Mock Test: ", createdMockTest)
+                    }
                   })
-
                 }
               })
-              
-
               
               this.loading = false;
               this.toastrService.success("Test created successfully");
