@@ -11,4 +11,5 @@ export interface MockTest {
   isBought?: boolean;
   testPrice?: number;
   teacherUserId?: string | undefined;
+  testUploadDate: Date;
 }

@@ -96,7 +96,8 @@ export class EditmocktestComponent implements OnInit {
         "totalNumberOfQuestions": this.modifyMockTestForm.get('totalNumberOfQuestions')?.value,
         "testType": this.modifyMockTestForm.get('testType')?.value,
         "testPrice": this.modifyMockTestForm.get('testPrice')?.value,
-        "questions": this.testQuestions
+        "questions": this.testQuestions,
+        "testUploadDate": new Date()
       }
       this.authService.updateMockTestDetails(this.testId, testDetail).subscribe(response =>{
         this.toastrService.success("Test modified successfully")

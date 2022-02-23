@@ -20,7 +20,9 @@
                             <button disabled class="btn" style="margin-right: 1em; background-color: green; color: white;" *ngFor="let subjectTag of testData.questions[counter]?.subjectTags">{{subjectTag}}</button>
                             <button disabled class="btn" style="margin-right: 1em; background-color: red; color: white;" *ngFor="let topicTag of testData.questions[counter]?.topicTags">{{topicTag}}</button>
                         </div>
+                        <div style="display: inline-block; margin-top: 1em ">
                         <h1 class="card-title">Q{{counter + 1}}. {{testData.questions[counter]?.question}}</h1>
+                        </div>
                         <div>
                         <div style="display: flex;">
                             <ng-container style="text-align: center;"  *ngFor="let imageUrl of testData.questions[counter]?.questionImageUrl; let i= index">
