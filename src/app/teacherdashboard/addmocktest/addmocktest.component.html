@@ -5,15 +5,15 @@
 <div class="container rounded bg-blue mt-5 mb-5">
   <div class="row" >
       
-      <div class="col-md-5 border" style="text-align: center; border-color: #7c766f !important;">
+      <div class="border card" style=" border-color: #e0e0e0 !important;">
           <div class="p-3">
-              <div class="d-flex  align-items-center mb-3">
+              <div class="mb-3" style="align-content: center;">
                   <h4 class="align-items-center"><b>Create Mock Test</b></h4>
               </div>
 
               <form (ngSubmit)="createMockTest()" name="createMockTestForm" [formGroup]="createMockTestForm" >
-                <div>
-                    <mat-form-field style="width: 100%;" appearance="outline" >
+                <div style="width: 100%; display: flex;">
+                    <mat-form-field style="margin-right: 0.5em; width: 50%;" appearance="outline" >
                         <mat-label>Test Name</mat-label>
                         <input formControlName="testName" type="text" required matInput >
                         <mat-error *ngIf="createMockTestForm.get('testName')?.dirty && createMockTestForm.get('testName')?.value.length==0">
@@ -25,10 +25,7 @@
 
                         </mat-error>
                     </mat-form-field>
-                </div>
-
-                <div>
-                  <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-form-field style="width: 50%;" appearance="outline">
                       <mat-label>Test Taker</mat-label>
                       <input formControlName="testTakenBy" type="text" required matInput>
                       <mat-error *ngIf="createMockTestForm.get('testTakenBy')?.dirty && createMockTestForm.get('testTakenBy')?.value.length==0">
@@ -37,8 +34,8 @@
                   </mat-form-field>
                 </div>
 
-                <div>
-                    <mat-form-field style="width: 100%;" appearance="outline">
+                <div style="width: 100%; display: flex;">
+                    <mat-form-field style="margin-right: 0.5em; width: 50%;" appearance="outline">
                         <mat-label>Total Time</mat-label>
                         <input formControlName="totalTime" type="number" required matInput>
                         <mat-error *ngIf="createMockTestForm.get('totalTime')?.dirty && createMockTestForm.get('totalTime')?.value.length==0">
@@ -49,10 +46,8 @@
 
                         </mat-error>
                     </mat-form-field>
-                </div>
 
-                <div>
-                  <mat-form-field style="width: 100%;" appearance="outline">
+                    <mat-form-field style="width: 50%;" appearance="outline">
                       <mat-label>Total No of Questions</mat-label>
                       <input formControlName="totalNumberOfQuestions" type="number" required matInput>
                       <mat-error *ngIf="(createMockTestForm.get('totalNumberOfQuestions')?.dirty || createMockTestForm.controls['totalNumberOfQuestions'].touched) && createMockTestForm.get('totalNumberOfQuestions')?.value.length==0">
@@ -65,12 +60,26 @@
                   <!-- <mat-form-field style="width: 100%;" appearance="outline"> -->
                       <mat-label style="text-align: left;">Test Type: </mat-label>
                       <mat-radio-group formControlName="testType" aria-label="Test Type">
-                        <mat-radio-button (change)="testTypeChanged($event)" value="Free">Free</mat-radio-button>
+                        <mat-radio-button style="margin-right: 1em;" (change)="testTypeChanged($event)" value="Free">Free</mat-radio-button>
                         <mat-radio-button value="Paid">Paid</mat-radio-button>
                       </mat-radio-group>
                       <!-- <input formControlName="testType" type="text" required matInput> -->
                       <mat-error *ngIf="(createMockTestForm.get('testType')?.dirty || createMockTestForm.controls['testType'].touched) && createMockTestForm.get('testType')?.value.length==0">
                         Test Type is required
+                      </mat-error>
+                  <!-- </mat-form-field> -->
+                </div>
+
+                <div style="text-align: left; margin-bottom: 1em;">
+                  <!-- <mat-form-field style="width: 100%;" appearance="outline"> -->
+                      <mat-label style="text-align: left;">Test Category: </mat-label>
+                      <mat-radio-group formControlName="testCategory" aria-label="Test Category">
+                        <mat-radio-button style="margin-right: 1em;" value="Mock">Mock Test</mat-radio-button>
+                        <mat-radio-button value="Subject">Subject Test</mat-radio-button>
+                      </mat-radio-group>
+                      <!-- <input formControlName="testType" type="text" required matInput> -->
+                      <mat-error *ngIf="(createMockTestForm.get('testCategory')?.dirty || createMockTestForm.controls['testCategory'].touched) && createMockTestForm.get('testCategory')?.value.length==0">
+                        Test Category is required
                       </mat-error>
                   <!-- </mat-form-field> -->
                 </div>

@@ -1,10 +1,10 @@
-<div class="container rounded bg-blue mt-5 mb-5">
-    <div class="row" >
+<div class="container rounded bg-blue mt-5 mb-5 ">
+    <div style="max-width: 500px; margin-left: auto; margin-right: auto;">
         
-        <div class="col-md-5 border" style="margin-left: 20em; border-color: #7c766f !important;">
+        <div class="border card" style="border-color: #e0e0e0 !important;">
             <div class="p-3">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                    <h4 class="align-items-center"><b>Edit Profile</b></h4>
+                <div class="mb-3">
+                    <h4 class="align-items-center" style="display: inline; text-align: center;"><b>Edit Profile</b></h4>
                 </div>
                 <div style="margin-bottom: 2em;" class="d-flex flex-column align-items-center text-center">
                     <div class="profile-pic">
@@ -22,8 +22,8 @@
 
                 <form (ngSubmit)="saveProfile()" name="profileForm" [formGroup]="profileForm" fxLayoutAlign ="stretch" fxLayout="column">
                     
-                    <div >
-                        <mat-form-field style="margin-right: 0.5em" appearance="outline" >
+                    <div style="width: 100%; display: flex;">
+                        <mat-form-field style="width: 50%; margin-right: 0.5em" appearance="outline" >
                             <mat-label>First Name</mat-label>
                             <input formControlName="firstName" type="text" required matInput >
                             <mat-error *ngIf="profileForm.dirty && profileForm.get('firstName')?.value.length==0">
@@ -31,7 +31,7 @@
                             </mat-error>
                         </mat-form-field>
         
-                        <mat-form-field appearance="outline">
+                        <mat-form-field style="width: 50%;" appearance="outline">
                             <mat-label>Last Name</mat-label>
                             <input formControlName="lastName" type="text" required matInput>
                             <mat-error *ngIf="profileForm.dirty && profileForm.get('lastName')?.value.length==0">
@@ -50,13 +50,13 @@
                         </mat-form-field>
                     </div>
 
-                    <div>
-                        <mat-form-field style="margin-right: 0.5em" appearance="outline">
+                    <div style="width: 100%; display: flex;">
+                        <mat-form-field style="width: 50%; margin-right: 0.5em" appearance="outline">
                             <mat-label>PhoneNumber</mat-label>
                             <input formControlName="phoneNumber" type="number" matInput>
                         </mat-form-field>
 
-                        <mat-form-field appearance="outline" class="example-form-field">
+                        <mat-form-field style="width: 50%;" appearance="outline" class="example-form-field">
                             <mat-label>Date of birth</mat-label>
                             <input formControlName="dob"  matInput [matDatepicker]="datepicker" [max]="today">
                             <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
@@ -83,8 +83,8 @@
                         </mat-form-field>
                     </div>
 
-                    <div>
-                        <mat-form-field style="margin-right: 0.5em" appearance="outline">
+                    <div style="width: 100%; display: flex;">
+                        <mat-form-field style="width: 50%; margin-right: 0.5em" appearance="outline">
                             <mat-label>Country</mat-label>
                             <input formControlName="country" type="text" matInput>
                             <!-- <mat-select formControlName="country">
@@ -92,7 +92,7 @@
                             </mat-select> -->
                         </mat-form-field>
             
-                        <mat-form-field appearance="outline">
+                        <mat-form-field style="width: 50%;" appearance="outline">
                             <mat-label>State</mat-label>
                             <input formControlName="state" type="text" matInput>
                         </mat-form-field>

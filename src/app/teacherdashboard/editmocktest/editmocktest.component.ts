@@ -18,6 +18,7 @@ export class EditmocktestComponent implements OnInit {
   testQuestions!: Array<Question>;
   selectedValue: number = 0;
   testType!: string;
+  testCategory!: string;
 
   modifyMockTestForm!: FormGroup;
   loading: boolean = false;
@@ -40,8 +41,10 @@ export class EditmocktestComponent implements OnInit {
         totalTime : new FormControl('', [Validators.required, Validators.min(1)]),
         totalNumberOfQuestions: new FormControl('', [Validators.required]),
         testType: new FormControl('', [Validators.required]),
+        testCategory: new FormControl('', [Validators.required]),
         testPrice: new FormControl(''),
         question: new FormControl('',[Validators.required]),
+        answerExplanation: new FormControl('',[Validators.required]),
         optionA: new FormControl('',[Validators.required]),
         optionB: new FormControl('',[Validators.required]),
         optionC: new FormControl('',[Validators.required]),
@@ -56,21 +59,25 @@ export class EditmocktestComponent implements OnInit {
         console.log("Edit test: ", response)
         this.testQuestions = response.questions
         this.testType = response['testType']
+        this.testCategory = response['testCategory']
 
         this.modifyMockTestForm.get('testName')?.setValue(response['testName'])
         this.modifyMockTestForm.get('testTakenBy')?.setValue(response['testTakenBy'])
         this.modifyMockTestForm.get('totalTime')?.setValue(response['totalTime'])
         this.modifyMockTestForm.get('totalNumberOfQuestions')?.setValue(response['totalNumberOfQuestions'])
         this.modifyMockTestForm.get('testType')?.setValue(response['testType'])
+        this.modifyMockTestForm.get('testCategory')?.setValue(response['testCategory'])
         this.modifyMockTestForm.get('testPrice')?.setValue(response['testPrice'])
 
         this.modifyMockTestForm.get('question')?.setValue(this.testQuestions[0].question)
+        this.modifyMockTestForm.get('answerExplanation')?.setValue(this.testQuestions[0].answerExplanation)
         this.modifyMockTestForm.get('optionA')?.setValue(this.testQuestions[0].options[0])
         this.modifyMockTestForm.get('optionB')?.setValue(this.testQuestions[0].options[1])
         this.modifyMockTestForm.get('optionC')?.setValue(this.testQuestions[0].options[2])
         this.modifyMockTestForm.get('optionD')?.setValue(this.testQuestions[0].options[3])
         this.modifyMockTestForm.get('correctAnswer')?.setValue(this.testQuestions[0].correctAnswer)
         this.loading = false
+        this.selectedValue = 0
       })
     })
   }
@@ -95,6 +102,7 @@ export class EditmocktestComponent implements OnInit {
         "totalTime": this.modifyMockTestForm.get('totalTime')?.value,
         "totalNumberOfQuestions": this.modifyMockTestForm.get('totalNumberOfQuestions')?.value,
         "testType": this.modifyMockTestForm.get('testType')?.value,
+        "testCategory": this.modifyMockTestForm.get('testCategory')?.value,
         "testPrice": this.modifyMockTestForm.get('testPrice')?.value,
         "questions": this.testQuestions,
         "testUploadDate": new Date()
@@ -121,6 +129,10 @@ export class EditmocktestComponent implements OnInit {
 
   updateQuestion(index: number, event: any){
     this.testQuestions[index].question = event.target.value
+  }
+
+  updateAnswerExplanation(index: number, event: any){
+    this.testQuestions[index].answerExplanation = event.target.value
   }
 
   updateOption(questionIndex: number, optionIndex: number, event: any){
