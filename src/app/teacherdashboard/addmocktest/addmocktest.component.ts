@@ -46,6 +46,7 @@ export class AddmocktestComponent implements OnInit{
         totalTime : new FormControl('', [Validators.required, Validators.min(1)]),
         totalNumberOfQuestions: new FormControl('', [Validators.required]),
         testType: new FormControl('', [Validators.required]),
+        testCategory: new FormControl('',[Validators.required]),
         testSourceFile: new FormControl('' ,[Validators.required]),
         testPrice: new FormControl(''),
         testQuestionImagesFile: new FormControl('')
@@ -61,20 +62,17 @@ export class AddmocktestComponent implements OnInit{
   }
 
   uploadFile(event : any): void{
-    console.log("Question set excel file: ", event)
     if(event.target.files.length !== 1){
       throw new Error("Cannot upload multiple files!")
     }
 
     this.testSourceFile = <DataTransfer>(event.target)
-    console.log("FormData:",this.createMockTestForm)
   }
 
   uploadQuestionImagesFile(event : any): void{
 
-    console.log("Zip file content: ",event)
     if(event.target.files.length !== 1){
-      throw new Error("Cannot upload multiple files!")
+      throw new Error("Cannot upload multiple zip files!")
     }
 
     this.testQuestionImagesFile = <DataTransfer>(event.target)
@@ -83,42 +81,11 @@ export class AddmocktestComponent implements OnInit{
     reader.readAsArrayBuffer(this.testQuestionImagesFile.files[0])
 
     reader.onload = (event) =>{
-      console.log("Zip file event: ", event)
       const jsZip = require('jszip');
       jsZip.loadAsync(event.target?.result).then((zip: any) =>{
         this.zipFileContent = zip
-        console.log("Jszip zip data: ", zip)
-        
       })
     }
-
-    
-    // jsZip.loadAsync(this.testQuestionImagesFile.files[0]).then((zip:any) => {
-    //   console.log("Zip files: ",zip) 
-    //   zip.file("QuestionImages/1/my_picture.jpg").async("base64").then( (imgData:Blob) =>{
-    //     console.log("Img data: ", imgData)
-    //     this.profileService.uploadQuestionImage(imgData,"my_picture.jpg","sample","testSample").subscribe(response =>{
-    //       console.log("Image uploaded: ", response)
-    //     })
-    //   })
-      // zip.files["QuestionImages/1/my_picture.jpg"].async("uint8array").then((data:any) =>{
-      //   console.log("Image data: ", data)
-      //   let fileObj =new Blob(data)
-      //   console.log("Image file data: ", fileObj)
-      //   this.profileService.uploadQuestionImage(fileObj,"my_picture.jpg","sample","testSample").subscribe(response =>{
-      //     console.log("Image uploaded: ", response)
-      //   })
-
-      // })
-    //   Object.keys(zip.files).forEach((filename) => { 
-    //     console.log("Filename: ", filename)// <----- HERE
-    //     zip.files[filename].async('string').then((fileData:any) => { // <----- HERE
-          
-    //     });
-    //   });
-    // });
-
-    console.log("FormData:",this.createMockTestForm)
   }
 
   createMockTest(){
@@ -186,17 +153,16 @@ export class AddmocktestComponent implements OnInit{
               "totalTime": this.createMockTestForm.get('totalTime')?.value,
               "totalNumberOfQuestions": this.createMockTestForm.get('totalNumberOfQuestions')?.value,
               "testType": this.createMockTestForm.get('testType')?.value,
+              "testCategory": this.createMockTestForm.get('testCategory')?.value,
               "questions": questions,
               "testPrice": this.createMockTestForm.get('testPrice')?.value,
               "teacherUserId": this.userId,
               "testUploadDate": new Date()
             };
             this.mockTest = tempData;
-            console.log("MockTest Data: ", this.mockTest);
     
             //create mock test
             this.authService.createMockTest(this.mockTest).then((ref) =>{
-              console.log("Test id: ",ref.id)
 
               //upload each question image to firebase storage and maintain map of the image id
               let subss = this.authService.getCurrentUser().subscribe(userDetail =>{
@@ -205,7 +171,6 @@ export class AddmocktestComponent implements OnInit{
                   let sub = this.authService.getMockTestByID(ref.id).subscribe(response =>{
                     let createdMockTest: MockTest = response
                     sub.unsubscribe()
-                    console.log("Mocktest reponse: ", response)
 
                     let allImageList:Array<string> = []
                     if(this.zipFileContent !== undefined){
@@ -286,8 +251,6 @@ export class AddmocktestComponent implements OnInit{
   }
 
   clearForm() : void{
-    // console.log("Cancel clicked")
-    // console.log(this.createMockTestForm)
     this.createMockTestForm.reset();
     this.ngOnInit();
 

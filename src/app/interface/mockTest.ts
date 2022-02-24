@@ -7,6 +7,7 @@ export interface MockTest {
   totalTime : number;
   totalNumberOfQuestions? : number;
   testType: string;
+  testCategory: string;
   questions: Question[];
   isBought?: boolean;
   testPrice?: number;
