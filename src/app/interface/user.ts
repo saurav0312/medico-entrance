@@ -12,4 +12,5 @@ export interface Userr {
     accountType: string;
     id?: string;
     isSubscribed?: boolean;
+    teacherCode?: string;
   }

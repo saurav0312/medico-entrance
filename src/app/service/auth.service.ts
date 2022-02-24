@@ -20,6 +20,7 @@ import { uploadBytes } from 'firebase/storage';
 import { TestReportData } from '../interface/testReportData';
 import { arrayRemove, deleteDoc, FieldValue, query, where } from 'firebase/firestore';
 import { ProfileService } from './profile.service';
+import { ContactRequest } from '../interface/contact-request';
 
 @Injectable({
   providedIn: 'root'
@@ -39,6 +40,11 @@ export class AuthService {
     private profileService: ProfileService
     ) { 
 
+  }
+
+  createContactRequest(contactFormData: ContactRequest):Observable<any>{
+    const docRef = collection(this.firestore, 'ContactRequests'); 
+    return from(addDoc(docRef, contactFormData));
   }
 
   getCurrentUser(): Observable<any>{

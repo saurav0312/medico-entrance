@@ -1,0 +1,38 @@
+.login-container {
+    width: 100%;
+    min-height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    background: #f2f2f2
+}
+
+.bb-login {
+    width: auto;
+    background: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+    padding: 26px 23px 35px 21px;
+    box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+    -o-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
+    -ms-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1)
+}
+
+.bb-login {
+    margin-top: 100px;
+    margin-bottom: 300px
+}
+
+@media (max-width: 576px) {
+    .bb-login {
+        padding: 77px 15px 33px 15px
+    }
+}

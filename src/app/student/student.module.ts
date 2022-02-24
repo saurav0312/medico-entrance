@@ -30,6 +30,11 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
 
+import { TreeModule } from 'primeng/tree';
+import { TableModule } from 'primeng/table';
+import { PaginatorModule } from 'primeng/paginator';
+import { TooltipModule } from 'primeng/tooltip';
+
 import { Ng2GoogleChartsModule } from 'ng2-google-charts'
 
 
@@ -78,7 +83,11 @@ import { IndividualquestionComponent } from './individualquestion/individualques
     FormsModule,
     MatTabsModule,
     MatTooltipModule,
-    MatDialogModule
+    MatDialogModule,
+    TreeModule,
+    TableModule,
+    PaginatorModule,
+    TooltipModule
   ],
   exports: [
     StudentprofileComponent,

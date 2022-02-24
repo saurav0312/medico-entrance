@@ -17,8 +17,16 @@
         <div class="row">
             <div class="col-sm-3" style="border-left: 1px solid #bfc3c2; border-right: 1px solid #bfc3c2; margin-top: 1.2em; margin-bottom: 1.2em;">
                 <div style="margin-top: 3em; margin-bottom:  1.5em;">
-                    <p style="font-size: 21px; font-weight: 500;">Now let's look at what to do next:</p>
+                    <p style="font-size: 21px; font-weight: 500;">All Tests History</p>
                 </div>
+
+                <p-tree 
+                [value]="allTests" 
+                selectionMode="single" 
+                [(selection)]="defaultSelectedTest" 
+                (onNodeSelect)="nodeSelected($event)"
+                [filter]="true"></p-tree>
+
                 <!-- <div class="col-sm-12" style="font-size: 18px; font-weight: 300; margin-bottom: 1em;">
                     <b>Areas of Strength</b>
                     
@@ -126,17 +134,64 @@
                                 </div>
                             </div>
                             <div class="green">
-                                <div style="float: right; margin-right: 2em; margin-bottom: 1em; margin-top: 1em;">
+                                <!-- <div style="float: right; margin-right: 2em; margin-bottom: 1em; margin-top: 1em;">
                                     <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('xlsx', {fileName:'test', sheet: 'sheet_name', Props: {Author: 'OnlineExam'}})">Excel</button>
                                     <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('csv')">Csv</button>
                                     <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('json')">Json</button>
                                     <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('txt')">Txt</button>
                                     <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" [useExistingCss]="true" printTitle="Your Test Result" printSectionId="content" ngxPrint>Pdf</button> 
-                                </div>
+                                </div> -->
                                 <div style="clear: both;">
                                 </div>
                                 <div class="table-contents" id="content" #content>
-                                    <mat-table [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"> 
+
+                                    <p-table 
+                                            [columns]="displayedColumns" 
+                                            [paginator]="true" 
+                                            [rows]="5" 
+                                            [showCurrentPageReport]="true" 
+                                            responsiveLayout="scroll"
+                                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+                                            [rowsPerPageOptions]="[5,10,20]" 
+                                            [value]="testToShowInTable.testQuestions"
+                                            styleClass="p-datatable-striped">
+                                        <ng-template pTemplate="header" let-columns>
+                                            <tr>
+                                                <th>No</th>
+                                                <th [pSortableColumn]="col.field" *ngFor="let col of columns">
+                                                    {{col.header}}
+                                                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                                                </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-row let-i= "rowIndex" let-columns="columns">
+                                            <tr>
+                                                <td>
+                                                    <div pTooltip="Click to review question" matTooltipPosition='right' 
+                                                        style="cursor: pointer;" (click)="viewIndividualQuestion(row, i)">
+                                                        <a style="text-align: center; color: #0490f4;">{{i + 1}}</a>
+                                                    </div>
+                                                </td>
+                                                <td *ngFor="let col of columns">
+                                                    <div *ngIf="col.field == 'result'; else resultElseBlock">
+                                                        <div> 
+                                                            <mat-icon *ngIf ='row.correctAnswer === row.selectedOption' style="color: green;">done</mat-icon>
+                                                            <mat-icon *ngIf ='row.selectedOption!== null && row.correctAnswer !== row.selectedOption' style="color: red;">close</mat-icon>
+                                                            <mat-icon *ngIf ='row.selectedOption === null' style="color: green;">question_mark</mat-icon> 
+                                                        </div>
+                                                    </div>
+                                                    <ng-template #resultElseBlock>
+                                                        {{row[col.field]}}
+                                                    </ng-template>
+                                                        
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+
+                                    
+
+                                    <!-- <mat-table [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"  #exporter="matTableExporter"> 
                                         <ng-container matColumnDef="no">
                                             <mat-header-cell [ngClass]="'table-header-class'" *matHeaderCellDef> No 
                                             </mat-header-cell>
@@ -205,7 +260,7 @@
                                         <mat-row *matRowDef="let element; columns: displayedColumns;">
                                         </mat-row> 
                                     </mat-table>
-                                    <mat-paginator [ngClass]="'styled-paginator'" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                                    <mat-paginator [ngClass]="'styled-paginator'" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
                                 </div>
                             </div>
                         </div>   

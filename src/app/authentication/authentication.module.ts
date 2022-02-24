@@ -11,6 +11,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+import { TabViewModule } from 'primeng/tabview';
+
 import { AuthenticationRoutingModule } from './authentication-routing.module';
 import { SigninComponent } from './signin/signin.component';
 import { ChoosesignupoptionComponent } from './choosesignupoption/choosesignupoption.component';
@@ -39,7 +41,8 @@ import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
     FlexLayoutModule,
     StudentModule,
     HomepageModule,
-    SpinnerModule
+    SpinnerModule,
+    TabViewModule
   ]
 })
 export class AuthenticationModule { }

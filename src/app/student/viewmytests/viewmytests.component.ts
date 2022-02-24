@@ -67,8 +67,8 @@ export class ViewmytestsComponent implements OnInit {
       {
         queryParams: 
           {
-            testData: JSON.stringify(params['testData']), 
-            displayedColumns: params['displayedColumns']
+            
+            
           }, 
           queryParamsHandling:'merge'
       }

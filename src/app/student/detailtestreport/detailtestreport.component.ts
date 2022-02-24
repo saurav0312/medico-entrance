@@ -12,6 +12,9 @@ import screenfull from 'screenfull';
 import { MatDialog } from '@angular/material/dialog';
 import { IndividualquestionComponent } from '../individualquestion/individualquestion.component';
 import { IPerformance } from 'src/app/interface/performance';
+import { TreeNode } from 'primeng/api';
+import { TestReportData } from 'src/app/interface/testReportData';
+import { formatDate } from '@angular/common';
 
 
 declare var google: any;
@@ -68,7 +71,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
     'weakTopic': []
   };
 
-  @Input() displayedColumns!: string[];
+  // @Input() displayedColumns!: string[];
   @Input() testToShowInTable! : Tests;
 
   private _dataSource : MatTableDataSource<TestReportQuestion> = new MatTableDataSource();
@@ -85,6 +88,19 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator! : MatPaginator;
   @ViewChild('content') content!: ElementRef;
 
+
+  displayedColumns = [
+    { field: 'subjectTags', header: 'Subject Tags' },
+    { field: 'topicTags', header: 'Topic Tags' },
+    { field: 'result', header: 'Result' },
+    { field: 'totalTimeSpent', header: 'Time Spent' },
+  ];
+
+  allTests: TreeNode[] = [];
+  uniqueTestsList: {[key:string]: Array<any>} = {};
+  testReportData! : TestReportData;
+  defaultSelectedTest!: TreeNode;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private sharedService: SharedService,
@@ -95,34 +111,109 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
 
-    // Get the root element
-    this.success =((100 * 6) - ((100 * 6) * ((21*80)/100)) / 100)
-    console.log("Success value: ", this.success)
-    // var r:any = document.querySelector(':root');
-    // r.style.setProperty('--successValue', 80);
+
+    let sub = this.authService.getCurrentUser().subscribe(response =>{
+      this.authService.getAllMockTestsGivenByAUser(response?.uid).subscribe(response =>{
+        sub.unsubscribe()
+        if(response!== undefined){
+          this.testReportData = response
+          console.log("Unique tests list before: ", this.uniqueTestsList)
+          this.uniqueTestsList = {}
+          this.testReportData.allTests.forEach(test =>{
+            if(this.uniqueTestsList[test.testId]=== undefined){
+              this.uniqueTestsList[test.testId] = [];
+              this.uniqueTestsList[test.testId].push(test)
+            }
+            else{
+              if(!this.uniqueTestsList[test.testId].find(ele => ele.testTakenDate === test.testTakenDate))
+              this.uniqueTestsList[test.testId].push(test)
+            }
+          })
+          console.log("Unique tests list: ", this.uniqueTestsList)
+
+          let count = 0;
+          let expanded =true;
+
+          Object.keys(this.uniqueTestsList).forEach(key =>{
+            if(count > 0){
+              expanded = false;
+            }
+
+            if(this.allTests.length == 0 || !this.allTests.find(node => node.data === key))
+            {
+
+              let tempTreeData: TreeNode = {
+                "label": this.uniqueTestsList[key][0].testName,
+                "data": key,
+                "children":[],
+                "leaf":false,
+                "expanded": expanded
+              }
+
+              this.uniqueTestsList[key].forEach(individualTest =>{
+                let childrenTempData: TreeNode ={
+                  "label": formatDate((<Timestamp><unknown>(individualTest.testTakenDate)).toDate(), 'medium','en-US'),
+                  "data": individualTest,
+                  "leaf": true
+                }
+                tempTreeData.children?.push(childrenTempData)
+              })
+
+              this.allTests.push(tempTreeData);
+              count++;
+            }
+          })
+          console.log("All testss: ", this.allTests)
+
+          if(this.allTests.length >1 && this.allTests[0].children !== undefined){
+            this.defaultSelectedTest = this.allTests[0].children[0]
+            let nodeData ={
+              'node': this.defaultSelectedTest
+            }
+            this.nodeSelected(nodeData)
+          }
+        }
+      })
+    })
+
+    google.charts.load('current', {packages: ['corechart']}); 
+  }
 
 
-
-    google.charts.load('current', {packages: ['corechart']});
-
-    this.activatedRoute.queryParams.subscribe(response =>{
-      this.displayedColumns = <string[]>response['displayedColumns']
-      this.testToShowInTable = JSON.parse(response['testData']) as Tests
-      console.log("Query param response: ",response)
-      console.log("test to show in table: ", this.testToShowInTable)
+  prepareData(){
       this.testId = this.testToShowInTable.testId;
-      console.log("Date from db: ", this.testToShowInTable.testTakenDate)
-      //this.testTakenDate = new Date(this.testToShowInTable.testTakenDate).toDateString()
       if(this.testToShowInTable.testTakenDate !== undefined){
         const dateValue = <Timestamp><unknown>this.testToShowInTable.testTakenDate
         this.testTakenDate = new Date(dateValue['seconds']*1000)
       }
-      console.log("Date: ", this.testTakenDate)
 
       this.singleTest = this.testToShowInTable
-      console.log("Single test: ",this.singleTest)
       if(this.singleTest !== undefined){
         
+        //reseting all values to initial state
+        this.subjectTagMap ={};
+        this.topicTagMap ={};
+        this.subjectTagBarGraphData = []
+        this.topicTagBarGraphData = []
+
+        this.subjectWiseTimeSpent = new Map();
+        this.topicWiseTimeSpent = new Map();
+        this.subjectWiseTimeSpentPiechartData = []
+        this.topicWiseTimeSpentPiechartData = []
+
+        this.strongSubjectList= {
+          'strongSubject': []
+        };
+        this.weakSubjectList = {
+          'weakSubject': []
+        };
+        this.strongTopicList = {
+          'strongTopic': []
+        };
+        this.weakTopicList = {
+          'weakTopic': []
+        };
+
         this.singleTest.testQuestions.forEach(testQuestion =>{
           testQuestion.subjectTags?.forEach(subjectTag =>{
             this.subjectTagMap[subjectTag] ={'correct':0, 'incorrect':0,'not_answered':0}
@@ -132,8 +223,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
             this.topicTagMap[topicTag] ={'correct':0, 'incorrect':0,'not_answered':0}
           })
         })
-
-        console.log("Subject tag map: ", this.subjectTagMap)
 
         this.singleTest.testQuestions.forEach(testQuestion =>{
 
@@ -197,14 +286,8 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
           }
         })
 
-        
-
-        console.log("SubjectTag Map: ", this.subjectTagMap)
-        console.log("TopicTag Map: ", this.topicTagMap)
-
         //prepare data for subject bar graph
         Object.keys(this.subjectTagMap).forEach(key =>{
-          console.log("Each subject name: ", key)
           let temppiechartData = [];
 
           let totalNoOfSubjectQuestion = this.subjectTagMap[key]['correct'] + this.subjectTagMap[key]['incorrect'] +
@@ -236,7 +319,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
         //prepare data for topic bar graph
         Object.keys(this.topicTagMap).forEach(key =>{
-          console.log("Each subject name: ", key)
           let temppiechartData = [];
 
           let totalNoOfTopicQuestion = this.topicTagMap[key]['correct'] + this.topicTagMap[key]['incorrect'] +
@@ -267,7 +349,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         })
 
         for (let entry of this.subjectWiseTimeSpent.entries()) {
-          console.log(entry[0], entry[1]);
           let temppiechartData = [];
           temppiechartData.push(entry[0]);
           temppiechartData.push(entry[1]);
@@ -275,22 +356,14 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         }
 
         for (let entry of this.topicWiseTimeSpent.entries()) {
-          console.log(entry[0], entry[1]);
           let temppiechartData = [];
           temppiechartData.push(entry[0]);
           temppiechartData.push(entry[1]);
           this.topicWiseTimeSpentPiechartData.push(temppiechartData)
         }
 
-        console.log("Strong subject ", this.strongSubjectList);
-        console.log("Weak subject ",this.weakSubjectList)
-        console.log("Strong topic", this.strongTopicList)
-        console.log("Weak topic ",this.weakTopicList)
-
-
         // this.buildChart(this.subjectTagBarGraphData, this.topicTagBarGraphData, this.subjectWiseTimeSpentPiechartData, this.topicWiseTimeSpentPiechartData )
       }
-    })    
   }
 
   buildChart(subjectTagBarGraphData : any, topicTagBarGraphData: any, subjectWiseTimeSpentPiechartData:any ,topicWiseTimeSpentPiechartData:any){
@@ -390,7 +463,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
       // Wait for the chart to finish drawing before calling the getImageURI() method.
        google.visualization.events.addListener(subjectChart, 'ready', function () {
         subjectwise_bar_graph_download_button.href = subjectChart.getImageURI();
-        console.log(subjectwise_bar_graph_download_button.href);
       });
 
       subjectChart.draw(subjectWiseBarGraphData, options);
@@ -428,7 +500,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
       var topicwise_bar_graph_download_button: any = document.getElementById('download2')
       google.visualization.events.addListener(topicChart, 'ready', function () {
         topicwise_bar_graph_download_button.href = topicChart.getImageURI();
-        console.log(subjectwise_bar_graph_download_button.href);
       });
 
       topicChart.draw(topicWiseBarGraphData, options1);
@@ -479,27 +550,14 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         
       }
     });
-
-      // screenfull.off('change', callback);
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.data = this.testToShowInTable.testQuestions
-    this.dataSource.paginator = this.paginator;
-    console.log("Questions",this.testToShowInTable.testQuestions)
-    console.log(this.dataSource.data);
-
-    // google.charts.load('current', {packages: ['corechart']});
-    // this.buildChart(this.subjectTagBarGraphData, this.topicTagBarGraphData, this.subjectWiseTimeSpentPiechartData, this.topicWiseTimeSpentPiechartData )
+    
   } 
 
   tabChanged(event:any):void{
-    console.log("Tab event: ", event)
-    if(event['index']==1 && this.count == 0){
-      this.count++;
-      console.log("Chart entered: ", this.count)
-      this.buildChart(this.subjectTagBarGraphData, this.topicTagBarGraphData, this.subjectWiseTimeSpentPiechartData, this.topicWiseTimeSpentPiechartData )
-    }
+    this.buildChart(this.subjectTagBarGraphData, this.topicTagBarGraphData, this.subjectWiseTimeSpentPiechartData, this.topicWiseTimeSpentPiechartData )
   }
 
   viewIndividualQuestion(element: TestReportQuestion, questionNumber: number):void{
@@ -514,16 +572,13 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
 
-    // console.log("elementt: ", element)
-    // this.router.navigate(
-    //   ['studentProfile/individualQuestion'],
-    //   {
-    //     queryParams: 
-    //       {
-    //         question: JSON.stringify(element)
-    //       }, 
-    //   }
-    // )
+  nodeSelected(event:any){
+    console.log("Node selected: ", event)
+    if(event.node.leaf == true){
+      this.testToShowInTable = event.node.data
+      this.prepareData()
+    }
   }
 }

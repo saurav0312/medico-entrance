@@ -8,6 +8,11 @@ import { HomeComponent } from './home/home.component';
 import { HomenavigationbarComponent } from './homenavigationbar/homenavigationbar.component';
 import { HomepagecontentComponent } from './homepagecontent/homepagecontent.component';
 import { ContactComponent } from './contact/contact.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
 
 
 @NgModule({
@@ -20,7 +25,12 @@ import { ContactComponent } from './contact/contact.component';
   imports: [
     CommonModule,
     HomepageRoutingModule,
-    MatCardModule
+    MatCardModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    SpinnerModule
   ],
   exports:[
     HomenavigationbarComponent
