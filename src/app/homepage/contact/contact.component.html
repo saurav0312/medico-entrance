@@ -1,26 +1,59 @@
-<div style="margin-top: 5em;">
-    <mat-card fxFlex="25">
-        
-        <mat-card-content>
-    <div class="col-lg-6 py-3 wow fadeInUp">
-        <div class="subhead">Contact Us</div>
-        <h2 class="title-section">Drop Us a Line</h2>
-        <div class="divider"></div>
-        
-        <form action="#">
-            
-            <div class="py-2">
-                <input type="text" class="form-control" placeholder="Full name">
-              </div>
-              <div class="py-2">
-                <input type="text" class="form-control" placeholder="Email">
-              </div>
-              <div class="py-2">
-                <textarea rows="6" class="form-control" placeholder="Enter message"></textarea>
-              </div>
-              <button type="submit" class="btn btn-primary rounded-pill mt-4">Send Message</button>
-        </form>
+<div style="margin-top: 2em;">
+  <div class="login-container">
+    <div class="bb-login">
+      <div>
+        <!-- Sign up for teacher -->
+    <form (ngSubmit)="submitForm()" name="contactForm" [formGroup]="contactForm" fxLayoutAlign ="stretch" fxLayout="column">
+      <div>
+        <ng-container *ngFor="let field of commonFormFieldsName">
+            <ng-container [ngTemplateOutlet]="commonFormFieldsTemplateList[field]" [ngTemplateOutletContext]= "{$implicit: contactForm}">
+            </ng-container>
+        </ng-container>
       </div>
-    </mat-card-content>
-    </mat-card>
+      
+      <ng-container *ngTemplateOutlet="submitCancel">
+      </ng-container>
+  </form>
+      </div>
     </div>
+  </div>
+</div>
+
+<app-spinner [loading]="loading" [mode]="mode" [diameter]="50" [overlay]="true">
+</app-spinner>
+
+<ng-template #contactHeaderTemplate>
+    <p style="text-align: center; font-size: 20px;">CONTACT US</p>
+</ng-template>
+
+<ng-template #nameTemplate let-contactForm>
+  <mat-form-field style="width: 100%;" appearance="outline">
+    <mat-label>Full Name</mat-label> 
+    <input [formControl]="contactForm.get('name')" type="text" required matInput>
+    <mat-error *ngIf="contactForm.dirty && contactForm.get('name')?.value.length==0">
+        Firstname is required
+    </mat-error>
+  </mat-form-field>
+</ng-template>
+
+<ng-template #emailTemplate let-contactForm>
+  <mat-form-field style="width: 100%;" appearance="outline">
+    <mat-label>Email</mat-label> 
+    <input [formControl]="contactForm.get('email')" type="text" required matInput>
+    <mat-error *ngIf="contactForm.dirty && contactForm.get('email')?.value.length==0">
+        Email is required
+    </mat-error>
+  </mat-form-field>
+</ng-template>
+
+<ng-template #messageTemplate let-contactForm>
+  <mat-form-field style="width: 100%;" appearance="outline">
+    <mat-label>Message</mat-label> 
+    <textarea rows="5" [formControl]="contactForm.get('message')" matInput></textarea>
+  </mat-form-field>
+</ng-template>
+
+<ng-template #submitCancel>
+  <button class="btn btn-danger" type="button" (click)="clearForm()" style="margin-right: 2em;">Cancel</button>
+  <button class="btn btn-success" type="submit" [disabled]="contactForm.invalid">Submit</button>
+</ng-template>
