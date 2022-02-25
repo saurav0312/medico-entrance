@@ -64,6 +64,16 @@
                       <!-- </mat-form-field> -->
                     </div>
 
+                    <div>
+                      <mat-form-field *ngIf="modifyMockTestForm.get('testType')?.value === 'Paid'" style="width: 100%;" appearance="outline">
+                          <mat-label>Test Price</mat-label>
+                          <input formControlName="testPrice" type="number" [required]="modifyMockTestForm.get('testType')?.value === 'Paid'" matInput>
+                          <mat-error *ngIf="modifyMockTestForm.get('testPrice')?.dirty && modifyMockTestForm.get('testType')?.value === 'Paid' && modifyMockTestForm.get('testPrice')?.errors">
+                            Test Price is required
+                          </mat-error>
+                      </mat-form-field>
+                    </div>
+
                     <div style="text-align: left; margin-bottom: 1em;">
                       <!-- <mat-form-field style="width: 100%;" appearance="outline"> -->
                           <mat-label style="text-align: left;">Test Category: </mat-label>
@@ -76,16 +86,6 @@
                             Test Category is required
                           </mat-error>
                       <!-- </mat-form-field> -->
-                    </div>
-    
-                    <div>
-                      <mat-form-field *ngIf="modifyMockTestForm.get('testType')?.value === 'Paid'" style="width: 100%;" appearance="outline">
-                          <mat-label>Test Price</mat-label>
-                          <input formControlName="testPrice" type="number" [required]="modifyMockTestForm.get('testType')?.value === 'Paid'" matInput>
-                          <mat-error *ngIf="modifyMockTestForm.get('testPrice')?.dirty && modifyMockTestForm.get('testType')?.value === 'Paid' && modifyMockTestForm.get('testPrice')?.errors">
-                            Test Price is required
-                          </mat-error>
-                      </mat-form-field>
                     </div>
 
                     <div>
@@ -136,8 +136,8 @@
                         </mat-form-field>
                     </div>    
                     <div>
-                        <button style="margin-right: em; margin-top: 1em;" mat-raised-button type="button" (click) = "clearForm()" class="cancel-class">Cancel</button>
-                        <button style="margin-left: 5em ; margin-right: 1em; margin-top: 1em;" mat-raised-button color="primary" [disabled]="modifyMockTestForm.invalid">Save</button>
+                        <button class="btn btn-danger" style="margin-right: 2em;" type="button" (click) = "clearForm()">Cancel</button>
+                        <button class="btn btn-success" type="submit" [disabled]="modifyMockTestForm.invalid">Save</button>
                     </div>
                   </form>
               </div>

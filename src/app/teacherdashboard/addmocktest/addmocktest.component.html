@@ -5,8 +5,8 @@
   <div class="row" > 
     <div class="border card" style="width: auto; margin: auto; border-color: #e0e0e0 !important;">
       <div class="p-3">
-        <div class="mb-3">
-          <h4 class="align-items-center" style="display: inline; text-align: center;"><b>Create Mock Test</b></h4>
+        <div class="mb-3" style="text-align: center;">
+          <h4 style="display: inline; text-align: center;"><b>Create Mock Test</b></h4>
         </div>
 
         <form (ngSubmit)="createMockTest()" name="createMockTestForm" [formGroup]="createMockTestForm" >
@@ -142,6 +142,6 @@
 </ng-template>
 
 <ng-template #saveCancelTemplate let-createMockTestForm>
-  <button style="margin-right: 2em;" type="button" (click) = "clearForm()" class="btn btn-danger">Cancel</button>
+  <button class="btn btn-danger" style="margin-right: 2em;" type="button" (click) = "clearForm()" >Cancel</button>
   <button class="btn btn-success" type="submit" [disabled]="createMockTestForm.invalid">Save</button>
 </ng-template>
