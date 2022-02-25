@@ -57,6 +57,7 @@ export class ContactComponent implements OnInit {
       this.ngOnInit()
     },
     error =>{
+      this.loading = false;
       window.alert(error.message)
     })
   }

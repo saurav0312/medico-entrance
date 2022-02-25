@@ -17,12 +17,11 @@
                  <ng-template [ngIf] ="loginError">
                      <p style="color: red;">Invalid credentials</p>
                  </ng-template>
-                 <div class="forgetPassword cursor-icon" routerLink="/authentication/forgetpassword">Forgot Password?</div>
+                 <div style="color: #1414e9;" class="forgetPassword cursor-icon" routerLink="/authentication/forgetpassword">Forgot Password?</div>
                 <div class="login-container-form-btn">
                     <div class="bb-login-form-btn">
                         <div class="bb-form-bgbtn"></div> <button class="bb-form-btn" [disabled]="loginForm.invalid"> Login </button>
                     </div>
-                    
                 </div>
             </form>
             <div class="text-center p-t-115" routerLink="/authentication/chooseSignUpOption" style="cursor: pointer;"> 

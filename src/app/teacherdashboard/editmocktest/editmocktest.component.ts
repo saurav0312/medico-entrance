@@ -78,6 +78,10 @@ export class EditmocktestComponent implements OnInit {
         this.modifyMockTestForm.get('correctAnswer')?.setValue(this.testQuestions[0].correctAnswer)
         this.loading = false
         this.selectedValue = 0
+      },
+      error =>{
+        this.loading =false;
+        this.toastrService.error(error.error)
       })
     })
   }
@@ -111,6 +115,10 @@ export class EditmocktestComponent implements OnInit {
         this.toastrService.success("Test modified successfully")
         this.loading = false;
         this.selectedValue = 0;
+      },
+      error=>{
+        this.loading = false
+        this.toastrService.error(error.error)
       })
     }
 

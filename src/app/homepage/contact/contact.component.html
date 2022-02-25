@@ -2,18 +2,17 @@
   <div class="login-container">
     <div class="bb-login">
       <div>
-        <!-- Sign up for teacher -->
-    <form (ngSubmit)="submitForm()" name="contactForm" [formGroup]="contactForm" fxLayoutAlign ="stretch" fxLayout="column">
-      <div>
-        <ng-container *ngFor="let field of commonFormFieldsName">
-            <ng-container [ngTemplateOutlet]="commonFormFieldsTemplateList[field]" [ngTemplateOutletContext]= "{$implicit: contactForm}">
+        <form (ngSubmit)="submitForm()" name="contactForm" [formGroup]="contactForm" fxLayoutAlign ="stretch" fxLayout="column">
+          <div>
+            <ng-container *ngFor="let field of commonFormFieldsName">
+                <ng-container [ngTemplateOutlet]="commonFormFieldsTemplateList[field]" [ngTemplateOutletContext]= "{$implicit: contactForm}">
+                </ng-container>
             </ng-container>
-        </ng-container>
-      </div>
-      
-      <ng-container *ngTemplateOutlet="submitCancel">
-      </ng-container>
-  </form>
+          </div>
+          
+          <ng-container *ngTemplateOutlet="submitCancel">
+          </ng-container>
+        </form>
       </div>
     </div>
   </div>

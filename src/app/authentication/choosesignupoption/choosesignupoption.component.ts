@@ -120,6 +120,7 @@ export class ChoosesignupoptionComponent implements OnInit {
           })
         },
         error=>{
+          this.loading = false;
           window.alert(error.message)
         })
       },
@@ -139,20 +140,6 @@ export class ChoosesignupoptionComponent implements OnInit {
     console.log("Send a teacher code")
     this.toastrService.success("Teacher code has been sent to the provided email")
   }
-
-  setObject(value: any) : void{
-    //in case of teacher
-    if(value === 1){
-      this.isTeacher = true
-      this.isStudent = false
-    }
-    //in case of student
-    else{
-      this.isTeacher = false
-      this.isStudent = true
-    }
-  }
-
 
   signIn(): void{
     this.router.navigate(["../","signin"], {relativeTo:this.activatedRoute})

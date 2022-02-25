@@ -19,8 +19,8 @@ const routes: Routes = [
     component: TeacherdashboardhomeComponent,
     children: [
       { path: 'teacherdashboardcontent', component: TeacherdashboardcontentComponent },
-      { path: 'addmocktest', component: AddmocktestComponent },
-      { path: 'modifymocktest', component: MyMockTestsComponent },
+      { path: 'addtest', component: AddmocktestComponent },
+      { path: 'modifytest', component: MyMockTestsComponent },
       { path: 'editmocktest', component: EditmocktestComponent },
       { path: 'viewmystudents', component: MystudentsComponent },
       { path: 'myTestsBoughtByAStudent', component: MyTestsBoughtByAStudentComponent },

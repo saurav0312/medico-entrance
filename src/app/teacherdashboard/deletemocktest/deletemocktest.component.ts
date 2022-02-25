@@ -21,7 +21,7 @@ export class DeletemocktestComponent implements OnInit, AfterViewInit {
 
   @Input() loading: boolean = false;
 
-  displayedColumnsForAllTests: string[] = ['no', 'testId', 'testName', 'testTakenBy', 'testType', 'totalTime','testPrice', 'actions'];
+  displayedColumnsForAllTests: string[] = ['no', 'testId', 'testName', 'testTakenBy', 'testCategory' ,'testType', 'totalTime','testPrice', 'actions'];
  
   @ViewChild(MatPaginator) paginator! : MatPaginator;
 

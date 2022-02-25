@@ -134,11 +134,7 @@
                           <mat-label>Answer Explanation</mat-label>
                           <textarea rows="6" formControlName="answerExplanation" required matInput value="{{testQuestions[selectedValue]?.answerExplanation}}"></textarea>
                         </mat-form-field>
-                        <!-- 
-                        <p > Options: {{testQuestions[selectedValue]?.options}} </p>
-                        <p > Correct Answer: {{testQuestions[selectedValue]?.correctAnswer}} </p> -->
-                    </div>
-                    {{modifyMockTestForm.invalid}}    
+                    </div>    
                     <div>
                         <button style="margin-right: em; margin-top: 1em;" mat-raised-button type="button" (click) = "clearForm()" class="cancel-class">Cancel</button>
                         <button style="margin-left: 5em ; margin-right: 1em; margin-top: 1em;" mat-raised-button color="primary" [disabled]="modifyMockTestForm.invalid">Save</button>
