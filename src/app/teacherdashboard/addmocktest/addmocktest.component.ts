@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { MockTest } from '../../interface/mockTest';
 import { Question } from '../../interface/question';
@@ -31,6 +31,27 @@ export class AddmocktestComponent implements OnInit{
 
   userId!: string | undefined;
 
+  @ViewChild('testNameTemplate', {static: true} ) testNameTemplate! : TemplateRef<ElementRef>;
+  @ViewChild('testTakerTemplate',{static: true} ) testTakerTemplate! : TemplateRef<ElementRef>;
+  @ViewChild('totalTimeTemplate', {static: true} ) totalTimeTemplate! : TemplateRef<ElementRef>;
+  @ViewChild('totalNoOfQuestionTemplate', {static: true} ) totalNoOfQuestionTemplate! : TemplateRef<ElementRef>;
+  @ViewChild('testTypeTemplate', {static: true} ) testTypeTemplate! : TemplateRef<ElementRef>;
+  @ViewChild('testPriceTemplate',{static: true} ) testPriceTemplate! : TemplateRef<ElementRef>;
+  @ViewChild('testCategoryTemplate', {static: true} ) testCategoryTemplate! : TemplateRef<ElementRef>;
+  @ViewChild('excelFileTemplate', {static: true} ) excelFileTemplate! : TemplateRef<ElementRef>;
+  @ViewChild('testQuestionsZipTemplate', {static: true} ) testQuestionsZipTemplate! : TemplateRef<ElementRef>;
+  @ViewChild('saveCancelTemplate',{static: true} ) saveCancelTemplate! : TemplateRef<ElementRef>;
+
+  templateNameList : Array<string[]> =[
+          ['testNameTemplate','testTakerTemplate'],
+          ['totalTimeTemplate', 'totalNoOfQuestionTemplate'],
+          ['testTypeTemplate'], ['testPriceTemplate'],
+          ['testCategoryTemplate'], ['excelFileTemplate'],
+          ['testQuestionsZipTemplate'], ['saveCancelTemplate']
+          ]
+
+  templateRefList: any;
+
   constructor(
     private authService: AuthService,
     private toastrService: ToastrService,
@@ -39,6 +60,15 @@ export class AddmocktestComponent implements OnInit{
   ) { }
 
   ngOnInit(): void {
+
+    this.templateRefList = {
+                            'testNameTemplate': this.testNameTemplate, 'testTakerTemplate': this.testTakerTemplate,
+                            'totalTimeTemplate': this.totalTimeTemplate, 'totalNoOfQuestionTemplate': this.totalNoOfQuestionTemplate,
+                            'testTypeTemplate': this.testTypeTemplate, 'testPriceTemplate': this.testPriceTemplate,
+                            'testCategoryTemplate': this.testCategoryTemplate, 'excelFileTemplate': this.excelFileTemplate,
+                            'testQuestionsZipTemplate': this.testQuestionsZipTemplate, 'saveCancelTemplate': this.saveCancelTemplate
+                            }
+
     this.createMockTestForm = new FormGroup(
       {
         testName: new FormControl('',[Validators.required]),

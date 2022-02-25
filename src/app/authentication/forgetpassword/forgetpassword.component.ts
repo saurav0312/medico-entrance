@@ -12,6 +12,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ForgetpasswordComponent implements OnInit {
 
   changePasswordForm!: FormGroup;
+  loading: boolean = false;
 
   constructor(
     private router : Router, 
@@ -28,12 +29,15 @@ export class ForgetpasswordComponent implements OnInit {
   }
 
   changePassword(): void{
+    this.loading = true;
     this.authService.changePassword(this.changePasswordForm).subscribe(
       response =>{
+        this.loading = false;
         this.toastrService.success("Password reset mail sent successfully")
         this.router.navigateByUrl("/")
       },
       error =>{
+        this.loading = false;
         window.alert(error.message)
       }
     )

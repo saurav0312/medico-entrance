@@ -37,6 +37,14 @@
                     </mat-cell>
             </ng-container>
 
+            <ng-container matColumnDef="testCategory">
+                <mat-header-cell mat-sort-header [ngClass]="'table-header-class testHeaderCss'" *matHeaderCellDef> Test Category</mat-header-cell>
+                <mat-cell [ngClass]="'testNameCss'" *matCellDef="let element"> 
+                    <span class="mobile-label">Test Category</span>
+                    {{element.testCategory}}
+                    </mat-cell>
+            </ng-container>
+
             <ng-container matColumnDef="testType">
                 <mat-header-cell mat-sort-header [ngClass]="'table-header-class testHeaderCss'" *matHeaderCellDef> Test Type</mat-header-cell>
                 <mat-cell [ngClass]="'testNameCss'" *matCellDef="let element"> 
