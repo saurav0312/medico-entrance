@@ -24,6 +24,11 @@ export class ProfileService {
     return docData(bookRef) as Observable<Userr>;
   }
 
+  getCountryDetails(): Observable<any>{
+    const bookRef = collection(this.firestore, `CountriesWithState`);
+    return collectionData(bookRef) as Observable<any>;
+  }
+
   uploadProfileImage(path: Blob, filename: string| undefined) : Observable<string>{
     const profileImagesRef = ref(this.storage, `profileImages/${filename}`)
     const uploadTask = from(uploadBytes(profileImagesRef, path))

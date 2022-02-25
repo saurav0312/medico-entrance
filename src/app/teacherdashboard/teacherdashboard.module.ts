@@ -19,6 +19,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule}  from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 
+import { DropdownModule }  from 'primeng/dropdown';
+
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { TeacherdashboardRoutingModule } from './teacherdashboard-routing.module';
@@ -71,7 +73,8 @@ import { EditmocktestComponent } from './editmocktest/editmocktest.component';
     MatToolbarModule,
     MatDatepickerModule,
     MatSelectModule,
-    FormsModule
+    FormsModule,
+    DropdownModule
   ]
 })
 export class TeacherdashboardModule { }

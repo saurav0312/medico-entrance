@@ -3,8 +3,8 @@
         
         <div class="border card" style="border-color: #e0e0e0 !important;">
             <div class="p-3">
-                <div class="mb-3">
-                    <h4 class="align-items-center" style="display: inline; text-align: center;"><b>Edit Profile</b></h4>
+                <div class="mb-3" style="text-align: center;">
+                    <h4 style="display: inline; text-align: center;"><b>Edit Profile</b></h4>
                 </div>
                 <div style="margin-bottom: 2em;" class="d-flex flex-column align-items-center text-center">
                     <div class="profile-pic">
@@ -86,22 +86,38 @@
                     <div style="width: 100%; display: flex;">
                         <mat-form-field style="width: 50%; margin-right: 0.5em" appearance="outline">
                             <mat-label>Country</mat-label>
-                            <input formControlName="country" type="text" matInput>
-                            <!-- <mat-select formControlName="country">
-                                <mat-option>None</mat-option>
-                            </mat-select> -->
+                            <!-- <input formControlName="country" type="text" matInput> -->
+                            <mat-select (selectionChange)="countryChanged($event.value)" formControlName="country">
+                                <mat-option *ngFor="let country of countries; let i = index" [value]="country">
+                                  {{country}}
+                                </mat-option>
+                            </mat-select>
                         </mat-form-field>
             
                         <mat-form-field style="width: 50%;" appearance="outline">
                             <mat-label>State</mat-label>
-                            <input formControlName="state" type="text" matInput>
+                            <!-- <input formControlName="state" type="text" matInput> -->
+                            <mat-select formControlName="state">
+                                <!-- <input class="p-2" [(ngModel)]="stateFilter" 
+                                        type="text" (keyup)="filterState($event)" matInput>
+                                <mat-divider></mat-divider> -->
+                                <mat-option *ngFor="let state of states; let i = index" [value]="state">
+                                  {{state}}
+                                </mat-option>
+                            </mat-select>
                         </mat-form-field>
+
+                        
+                        <!-- <mat-form-field style="width: 50%;" appearance="outline"> -->
+                        <!-- <p-dropdown [options]="states" [filter]="true" ></p-dropdown> -->
+                        <!-- </mat-form-field> -->
+
                     </div>
 
 
                     <div>
-                        <button style="margin-right: em; margin-top: 1em;" mat-raised-button type="button" (click) = "clearForm()" class="cancel-class">Cancel</button>
-                        <button style="margin-left: 5em ; margin-right: 1em; margin-top: 1em;" mat-raised-button color="primary" [disabled]="profileForm.invalid">Save</button>
+                        <button class="btn btn-danger" style="margin-right: 2em;" type="button" (click) = "clearForm()">Cancel</button>
+                        <button class="btn btn-success" color="primary" [disabled]="profileForm.invalid">Save</button>
                     </div>
 
                     <app-spinner [loading]="loading" [mode]="mode" [diameter]="50" [overlay]="true">
