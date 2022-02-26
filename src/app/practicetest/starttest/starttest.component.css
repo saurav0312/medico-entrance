@@ -17,20 +17,20 @@
 }
 
 .question-number-btn-class:hover{
-    background-color: blue;
+    background-color: #3006d7ad;
 }
 
 
 .question-number-btn-class-focus{
-    background-color: gray;
+    background-color: #727272a1;
 }
 
 .question-number-answered{
-    background-color: green;
+    background-color: #5aad5a;
 }
 
 .option-selected{
-    background-color: green;
+    background-color: #5aad5a;
 }
 
 .option-not-selected{
@@ -40,11 +40,12 @@
 
 .float-container {
     padding: 20px;
+    display: flex;
 }
 
 .float-child {
     width: 50%;
-    float: left;
+    /* float: left; */
     padding: 20px;
 }  
 
@@ -67,4 +68,29 @@
     max-width: 100%;
     height: auto;
     margin-right: 0.8em;
+}
+
+.answered-dot{
+    width: 25px;
+    height: 25px;
+    background-color: #5aad5a;
+    border-radius: 50%;
+    display: inherit;
+}
+
+.not-answered-dot{
+    width: 25px;
+    height: 25px;
+    background-color: white;
+    border-radius: 50%;
+    display: inherit;
+    border: 1px solid;
+}
+
+.active-dot{
+    width: 25px;
+    height: 25px;
+    background-color: #727272a1;
+    border-radius: 50%;
+    display: inherit;
 }

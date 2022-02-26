@@ -13,45 +13,71 @@
             
         </div>    
         <div class="float-container" style="width: fit-content; float: left;">
-            <div class="float-child mat-card" style="width: auto; border: 1px solid black;">
-                <div class="card" style="float: left; width: 50em; min-width: 20em; max-width: 50em; border: black;">
-                    <div class="card-body">
-                        <div style="display: inline; float: right;">
-                            <button disabled class="btn" style="margin-right: 1em; background-color: green; color: white;" *ngFor="let subjectTag of testData.questions[counter]?.subjectTags">{{subjectTag}}</button>
-                            <button disabled class="btn" style="margin-right: 1em; background-color: red; color: white;" *ngFor="let topicTag of testData.questions[counter]?.topicTags">{{topicTag}}</button>
-                        </div>
-                        <div style="display: inline-block; margin-top: 1em ">
-                        <h1 class="card-title">Q{{counter + 1}}. {{testData.questions[counter]?.question}}</h1>
-                        </div>
-                        <div>
-                        <div style="display: flex;">
-                            <ng-container style="text-align: center;"  *ngFor="let imageUrl of testData.questions[counter]?.questionImageUrl; let i= index">
-                                <div style="float: left;">
-                                    <img  class="responsive" src="{{imageUrl}}">
-                                    <p style="text-align: center;">Fig: {{i+1}}</p>
-                                </div>
-                            </ng-container>
-                        </div>
-                        </div>
-                        <ol style="display: inline;">
-                            <div>
-                                <li style ="height: 2.5em;" (click)="optionSelected(counter,option)" class="card options-item btn"
-                                [ngClass]="testData.questions[counter].selectedOption === option ? 'option-selected' : 'option-not-selected'"  *ngFor="let option of testData.questions[counter]?.options" style="cursor: pointer; margin: 10px 0;">{{option}}</li>
+            <div style="float: left;">
+                <div class="float-child mat-card" style="width: auto; border: 1px solid black;">
+                    <div class="card" style="float: left; width: 70em; min-width: 20em; max-width: 70em; border: black;">
+                        <div class="card-body">
+                            <div style="display: inline; float: right;">
+                                <button disabled class="btn" style="margin-right: 1em; background-color: green; color: white;" *ngFor="let subjectTag of testData.questions[counter]?.subjectTags">{{subjectTag}}</button>
+                                <button disabled class="btn" style="margin-right: 1em; background-color: red; color: white;" *ngFor="let topicTag of testData.questions[counter]?.topicTags">{{topicTag}}</button>
                             </div>
-                        </ol>
+                            <div style="display: inline-block; margin-top: 1em ">
+                            <h1 class="card-title">Q{{counter + 1}}. {{testData.questions[counter]?.question}}</h1>
+                            </div>
+                            <div>
+                            <div style="display: flex;">
+                                <ng-container style="text-align: center;"  *ngFor="let imageUrl of testData.questions[counter]?.questionImageUrl; let i= index">
+                                    <div style="float: left;">
+                                        <img  class="responsive" src="{{imageUrl}}">
+                                        <p style="text-align: center;">Fig: {{i+1}}</p>
+                                    </div>
+                                </ng-container>
+                            </div>
+                            </div>
+                            <ol style="display: inline;">
+                                <div>
+                                    <li style ="height: 2.5em;" (click)="optionSelected(counter,option)" class="card options-item btn"
+                                    [ngClass]="testData.questions[counter].selectedOption === option ? 'option-selected' : 'option-not-selected'"  *ngFor="let option of testData.questions[counter]?.options" style="cursor: pointer; margin: 10px 0;">{{option}}</li>
+                                </div>
+                            </ol>
+                        </div>
+                    </div>
+
+                    <div>
+                        <button class="btn btn-primary" [disabled]="counter === 0"  (click)="decreaseCounter()" style="width:fit-content; float: lef; margin-top: 1em; ">Previous</button>
+                        <button class="btn btn-primary" [disabled]="counter === testData.questions.length-1" (click)="increaseCounter()" style="width:fit-content; float: right; margin-top: 1em;">Next</button>
                     </div>
                 </div>
 
-                <div>
-                    <button class="btn btn-primary" [disabled]="counter === 0"  (click)="decreaseCounter()" style="width:fit-content; float: lef; margin-top: 1em; ">Previous</button>
-                    <button class="btn btn-primary" [disabled]="counter === testData.questions.length-1" (click)="increaseCounter()" style="width:fit-content; float: right; margin-top: 1em;">Next</button>
+                <div style="margin: 1em; float: right;">
+                    <button (click)="submitTest()" class="btn btn-primary"> Submit</button>
                 </div>
             </div>
 
-            <div class="float-child mat-card" style="width: 25em; margin-left: 2em; float: right; border: 1px solid black;" >
-                <div   *ngFor="let question of testData.questions; let i = index" [attr.data-index]="i">
-                    <div style="float: left; column-width: 4em;">
-                        <button style ="width:3rem; height: auto;" (click)="changeQuestion(i)" [ngClass]="{'question-number-btn-class-focus' : counter === i, 'question-number-answered': testData.questions[i].answered === true}" class="btn question-number-btn-class">{{i+1}}</button>
+            <div style="float: right;">
+                <div class="float-child mat-card" style="width: 25em; margin-left: 2em; float: right; border: 1px solid black;" >
+                    <div style="font-size: 20px; text-align:center; margin-bottom:0.5em; height: 1.5em; border-bottom: 1px solid;">
+                        Question Status
+                    </div>
+                    <div *ngFor="let question of testData.questions; let i = index" [attr.data-index]="i">
+                        <div style="float: left; column-width: 4em;">
+                            <button style ="width:3rem; height: auto;" (click)="changeQuestion(i)" [ngClass]="{'question-number-btn-class-focus' : counter === i, 'question-number-answered': testData.questions[i].answered === true}" class="btn question-number-btn-class">{{i+1}}</button>
+                        </div>
+                    </div>
+                </div>
+                <div style="width: 25em; margin-left: 2em; float: right;">
+                    <div style="display: inline-flex; margin: 0.5em;">
+                        <span class="answered-dot"></span>
+                        <p style="margin-left: 1em;">Answered</p>
+                    </div>
+
+                    <div style="display: inline-flex; margin: 0.5em;">
+                        <span class="not-answered-dot"></span>
+                        <p style="margin-left: 1em;">Not Answered</p>
+                    </div>
+                    <div style="display: inline-flex; margin: 0.5em;">
+                        <span class="active-dot"></span>
+                        <p style="margin-left: 1em;">Currently Active</p>
                     </div>
                 </div>
             </div>
@@ -59,9 +85,9 @@
 
         <div class="clear"></div>
 
-        <div style="padding-left: 49em;">
+        <!-- <div style="padding-left: 49em;">
             <button (click)="submitTest()" class="btn btn-primary"> Submit</button>
-        </div>
+        </div> -->
     </ng-container>
 <!-- </ng-container> -->
 
