@@ -3,121 +3,69 @@
         
         <div class="border card" style="border-color: #e0e0e0 !important;">
             <div class="p-3">
-                <div class="mb-3" style="text-align: center;">
-                    <h4 style="display: inline; text-align: center;"><b>Edit Profile</b></h4>
-                </div>
-                <div style="margin-bottom: 2em;" class="d-flex flex-column align-items-center text-center">
-                    <div class="profile-pic">
-                        <label class="-label" for="file">
-                            <!-- <span class="glyphicon glyphicon-camera"></span> -->
-                            <span>Change Image</span>
-                        </label>
-                        <input id="file" type="file" (change)="loadProfileImage($event)" accept=".png, .jpg, .jpeg"/>
-                        <img class="rounded-circle" src="{{imageUrl}}" width="100">
-                    </div>
-                    <span class="font-weight-bold">{{firstName}} {{lastName}}</span>
-                    <span class="text-black-50">{{email}}</span>
-                    <span>{{country}}</span>
-                </div>
+
+                <ng-container *ngTemplateOutlet="headerTemplate">
+
+                </ng-container>
+                
+                <ng-container *ngTemplateOutlet="profileImageTemplate">
+
+                </ng-container>
 
                 <form (ngSubmit)="saveProfile()" name="profileForm" [formGroup]="profileForm" fxLayoutAlign ="stretch" fxLayout="column">
                     
                     <div style="width: 100%; display: flex;">
-                        <mat-form-field style="width: 50%; margin-right: 0.5em" appearance="outline" >
-                            <mat-label>First Name</mat-label>
-                            <input formControlName="firstName" type="text" required matInput >
-                            <mat-error *ngIf="profileForm.dirty && profileForm.get('firstName')?.value.length==0">
-                                First name is required
-                            </mat-error>
-                        </mat-form-field>
-        
-                        <mat-form-field style="width: 50%;" appearance="outline">
-                            <mat-label>Last Name</mat-label>
-                            <input formControlName="lastName" type="text" required matInput>
-                            <mat-error *ngIf="profileForm.dirty && profileForm.get('lastName')?.value.length==0">
-                                Last Name is required
-                            </mat-error>
-                        </mat-form-field>
+                        <ng-container *ngTemplateOutlet="firstNameTemplate; context:{$implicit: profileForm}">
+
+                        </ng-container>
+
+                        <ng-container *ngTemplateOutlet="lastNameTemplate; context:{$implicit: profileForm}">
+
+                        </ng-container>
                     </div>
 
                     <div>
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Email</mat-label>
-                            <input formControlName="email" type="email" required matInput readonly>
-                            <mat-error *ngIf="profileForm.dirty && profileForm.get('email')?.value.length==0">
-                                Email is required
-                            </mat-error>
-                        </mat-form-field>
+                        <ng-container *ngTemplateOutlet="emailTemplate; context:{$implicit: profileForm}">
+
+                        </ng-container>
                     </div>
 
                     <div style="width: 100%; display: flex;">
-                        <mat-form-field style="width: 50%; margin-right: 0.5em" appearance="outline">
-                            <mat-label>PhoneNumber</mat-label>
-                            <input formControlName="phoneNumber" type="number" matInput>
-                        </mat-form-field>
+                        <ng-container *ngTemplateOutlet="phoneTemplate; context:{$implicit: profileForm}">
 
-                        <mat-form-field style="width: 50%;" appearance="outline" class="example-form-field">
-                            <mat-label>Date of birth</mat-label>
-                            <input formControlName="dob"  matInput [matDatepicker]="datepicker" [max]="today">
-                            <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
-                            <mat-datepicker #datepicker>
-                              <mat-datepicker-actions>
-                                <button mat-button matDatepickerCancel>Cancel</button>
-                                <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
-                              </mat-datepicker-actions>
-                            </mat-datepicker>
-                          </mat-form-field>
+                        </ng-container>
+
+                        <ng-container *ngTemplateOutlet="dobTemplate; context:{$implicit: profileForm}">
+
+                        </ng-container>
                     </div>
 
                     <div>
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Address</mat-label>
-                            <input formControlName="address" type="text" matInput>
-                        </mat-form-field>
+                        <ng-container *ngTemplateOutlet="addressTemplate; context:{$implicit: profileForm}">
+
+                        </ng-container>
                     </div>
 
                     <div>
-                        <mat-form-field style="width: 100%;" appearance="outline">
-                            <mat-label>Education</mat-label>
-                            <input formControlName="education" type="text" matInput>
-                        </mat-form-field>
+                        <ng-container *ngTemplateOutlet="educationTemplate; context:{$implicit: profileForm}">
+
+                        </ng-container>
                     </div>
 
                     <div style="width: 100%; display: flex;">
-                        <mat-form-field style="width: 50%; margin-right: 0.5em" appearance="outline">
-                            <mat-label>Country</mat-label>
-                            <!-- <input formControlName="country" type="text" matInput> -->
-                            <mat-select (selectionChange)="countryChanged($event.value)" formControlName="country">
-                                <mat-option *ngFor="let country of countries; let i = index" [value]="country">
-                                  {{country}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-            
-                        <mat-form-field style="width: 50%;" appearance="outline">
-                            <mat-label>State</mat-label>
-                            <!-- <input formControlName="state" type="text" matInput> -->
-                            <mat-select formControlName="state">
-                                <!-- <input class="p-2" [(ngModel)]="stateFilter" 
-                                        type="text" (keyup)="filterState($event)" matInput>
-                                <mat-divider></mat-divider> -->
-                                <mat-option *ngFor="let state of states; let i = index" [value]="state">
-                                  {{state}}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
+                        <ng-container *ngTemplateOutlet="countryTemplate; context:{$implicit: profileForm}">
 
-                        
-                        <!-- <mat-form-field style="width: 50%;" appearance="outline"> -->
-                        <!-- <p-dropdown [options]="states" [filter]="true" ></p-dropdown> -->
-                        <!-- </mat-form-field> -->
+                        </ng-container>
 
+                        <ng-container *ngTemplateOutlet="stateTemplate; context:{$implicit: profileForm}">
+
+                        </ng-container>
                     </div>
 
-
                     <div>
-                        <button class="btn btn-danger" style="margin-right: 2em;" type="button" (click) = "clearForm()">Cancel</button>
-                        <button class="btn btn-success" color="primary" [disabled]="profileForm.invalid">Save</button>
+                        <ng-container *ngTemplateOutlet="saveCancelTemplate; context:{$implicit: profileForm}">
+
+                        </ng-container>
                     </div>
 
                     <app-spinner [loading]="loading" [mode]="mode" [diameter]="50" [overlay]="true">
@@ -127,3 +75,121 @@
         </div>
     </div>
 </div>
+
+
+<ng-template #headerTemplate>
+    <div class="mb-3" style="text-align: center;">
+        <h4 style="display: inline; text-align: center;"><b>Edit Profile</b></h4>
+    </div>
+</ng-template>
+
+<ng-template #profileImageTemplate>
+    <div style="margin-bottom: 2em;" class="d-flex flex-column align-items-center text-center">
+        <div class="profile-pic">
+            <label class="-label" for="file">
+                <!-- <span class="glyphicon glyphicon-camera"></span> -->
+                <span>Change Image</span>
+            </label>
+            <input id="file" type="file" (change)="loadProfileImage($event)" accept=".png, .jpg, .jpeg"/>
+            <img class="rounded-circle" src="{{imageUrl}}" width="100">
+        </div>
+        <span class="font-weight-bold">{{firstName}} {{lastName}}</span>
+        <span class="text-black-50">{{email}}</span>
+        <span>{{country}}</span>
+    </div>
+</ng-template>
+
+<ng-template #firstNameTemplate let-profileForm>
+    <mat-form-field style="width: 50%; margin-right: 0.5em" appearance="outline" >
+        <mat-label>First Name</mat-label>
+        <input [formControl]="profileForm.get('firstName')" type="text" required matInput >
+        <mat-error *ngIf="profileForm.dirty && profileForm.get('firstName')?.value.length==0">
+            First name is required
+        </mat-error>
+    </mat-form-field>
+</ng-template>
+
+<ng-template #lastNameTemplate let-profileForm>
+    <mat-form-field style="width: 50%;" appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input [formControl]="profileForm.get('lastName')" type="text" required matInput>
+        <mat-error *ngIf="profileForm.dirty && profileForm.get('lastName')?.value.length==0">
+            Last Name is required
+        </mat-error>
+    </mat-form-field>
+</ng-template>
+
+<ng-template #emailTemplate let-profileForm>
+    <mat-form-field style="width: 100%;" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input [formControl]="profileForm.get('email')" type="email" required matInput readonly>
+        <mat-error *ngIf="profileForm.dirty && profileForm.get('email')?.value.length==0">
+            Email is required
+        </mat-error>
+    </mat-form-field>
+</ng-template>
+
+<ng-template #phoneTemplate let-profileForm>
+    <mat-form-field style="width: 50%; margin-right: 0.5em" appearance="outline">
+        <mat-label>PhoneNumber</mat-label>
+        <input [formControl]="profileForm.get('phoneNumber')" type="number" matInput>
+    </mat-form-field>
+</ng-template>
+
+<ng-template #dobTemplate let-profileForm>
+    <mat-form-field style="width: 50%;" appearance="outline" class="example-form-field">
+        <mat-label>Date of birth</mat-label>
+        <input [formControl]="profileForm.get('dob')"  matInput [matDatepicker]="datepicker" [max]="today">
+        <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle>
+        <mat-datepicker #datepicker>
+          <mat-datepicker-actions>
+            <button mat-button matDatepickerCancel>Cancel</button>
+            <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+          </mat-datepicker-actions>
+        </mat-datepicker>
+    </mat-form-field>
+</ng-template>
+
+<ng-template #addressTemplate let-profileForm>
+    <mat-form-field style="width: 100%;" appearance="outline">
+        <mat-label>Address</mat-label>
+        <textarea rows="3" [formControl]="profileForm.get('address')" matInput></textarea>
+    </mat-form-field>
+</ng-template>
+
+<ng-template #educationTemplate let-profileForm>
+    <mat-form-field style="width: 100%;" appearance="outline">
+        <mat-label>Education</mat-label>
+        <input [formControl]="profileForm.get('education')" type="text" matInput>
+    </mat-form-field>
+</ng-template>
+
+<ng-template  #countryTemplate let-profileForm>
+    <mat-form-field style="width: 50%; margin-right: 0.5em" appearance="outline">
+        <mat-label>Country</mat-label>
+        <mat-select (selectionChange)="countryChanged($event.value)" [formControl]="profileForm.get('country')">
+            <mat-option *ngFor="let country of countries; let i = index" [value]="country">
+              {{country}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</ng-template>
+
+<ng-template #stateTemplate let-profileForm>
+    <mat-form-field style="width: 50%;" appearance="outline">
+        <mat-label>State</mat-label>
+        <mat-select [formControl]="profileForm.get('state')">
+            <input style="width: auto; margin-left: 0.3em; margin-right: 0.3em; margin-top: 0.3em;" class="p-2" [(ngModel)]="stateFilter" 
+                    type="text" (keyup)="filterState($event)" autocomplete="off" placeholder="Search" matInput>
+            <mat-divider style="margin-left: 0.3em; margin-right: 0.3em;"></mat-divider>
+            <mat-option *ngFor="let state of states; let i = index" [value]="state">
+              {{state}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+</ng-template>
+
+<ng-template #saveCancelTemplate let-profileForm>
+    <button class="btn btn-danger" style="margin-right: 2em;" type="button" (click) = "clearForm()">Cancel</button>
+    <button class="btn btn-success" color="primary" [disabled]="profileForm.invalid">Save</button>
+</ng-template>

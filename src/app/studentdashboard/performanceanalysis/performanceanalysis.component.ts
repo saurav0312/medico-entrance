@@ -12,13 +12,15 @@ export class PerformanceanalysisComponent implements OnInit {
       'title': "Mock Test",
       'description': "Practice with our standardized mock tests.",
       'url': '/practicetest',
-      'imageName': '../../assets/img/student_home_page.jpg' 
+      'imageName': '../../assets/img/student_home_page.jpg',
+      'testCategory': 'Mock' 
     },
     {
       'title': "Subject Test",
       'description': "Test your performance in each subjects.",
-      'url': '#',
-      'imageName': '../../assets/img//student_home_page.jpg' 
+      'url': '/practicetest',
+      'imageName': '../../assets/img//student_home_page.jpg',
+      'testCategory': 'Subject' 
     },
     {
       'title': "My Dashboard",

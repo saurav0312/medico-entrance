@@ -20,6 +20,7 @@ import { MatSelectModule}  from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
 
 import { DropdownModule }  from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -74,7 +75,8 @@ import { EditmocktestComponent } from './editmocktest/editmocktest.component';
     MatDatepickerModule,
     MatSelectModule,
     FormsModule,
-    DropdownModule
+    DropdownModule,
+    InputTextModule
   ]
 })
 export class TeacherdashboardModule { }

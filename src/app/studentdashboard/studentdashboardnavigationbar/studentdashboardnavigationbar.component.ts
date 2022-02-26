@@ -25,9 +25,9 @@ export class StudentdashboardnavigationbarComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.authService.readMockTest().subscribe((response: any) =>{
-      this.noOfAllMockTest = response.length
-    })
+    // this.authService.readMockTest().subscribe((response: any) =>{
+    //   this.noOfAllMockTest = response.length
+    // })
     let sub = this.authService.getCurrentUser().subscribe(response =>{
       this.profileService.getUserDetails(response?.uid).subscribe(response =>{
         sub.unsubscribe()
