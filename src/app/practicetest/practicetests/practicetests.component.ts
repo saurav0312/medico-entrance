@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MockTest } from '../../interface/mockTest';
 import { AuthService } from '../../service/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { TestsubscriptionService } from 'src/app/service/testsubscription.service';
 import { TestSubscription } from 'src/app/interface/test-subscription';
 import { SharedService } from 'src/app/service/shared.service';
@@ -27,11 +27,14 @@ export class PracticetestsComponent implements OnInit {
   @Input() listOfMockTests : MockTest[] = [];
   initialListOfMockTests: MockTest[] =[];
 
+  testCategory!: string;
+
   constructor(
     private authService: AuthService,
     private router : Router,
     private testsubscriptionService: TestsubscriptionService,
-    private sharedService: SharedService
+    private sharedService: SharedService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit(): void {
@@ -45,31 +48,34 @@ export class PracticetestsComponent implements OnInit {
               console.log("Subscribed Tests:", response)
               this.isFirstSubscription = false;
             }
-            this.authService.readMockTest().subscribe((response: MockTest[]) =>{
-              this.loading = false;
-              this.listOfMockTests = response
-              console.log("Collection of MockTests: ", response)
-              if(this.listOfMockTests.length > 0 && this.allSubscribedTests.length > 0){
-                this.listOfMockTests.forEach(test =>{
-                  if(this.allSubscribedTests.findIndex(subscribedTest => subscribedTest === test.id) !== -1){
-                    test.isBought = true;
-                  }
-                })
-              }
-
-              this.listOfMockTests = this.sharedService.sortData(this.listOfMockTests)
-
-              // this.listOfMockTests.sort((x,y) =>{
-
-              //   if(x.testType === 'Free' && y.testType === 'Free'){
-              //     return 0
-              //   }
-              //   if(x.testType === 'Paid' && y.testType === 'Paid'){
-              //     return x.isBought === y.isBought ? 0 : x.isBought ? -1 : 1
-              //   }
-              //   return x.testType ==='Free' ? -1 : 1
-              // })
-              this.initialListOfMockTests = this.listOfMockTests
+            this.route.queryParams.subscribe((params: any) =>{
+              this.testCategory = <string>params.testCategory
+              this.authService.readMockTest(this.testCategory).subscribe((response: MockTest[]) =>{
+                this.loading = false;
+                this.listOfMockTests = response
+                console.log("Collection of MockTests: ", response)
+                if(this.listOfMockTests.length > 0 && this.allSubscribedTests.length > 0){
+                  this.listOfMockTests.forEach(test =>{
+                    if(this.allSubscribedTests.findIndex(subscribedTest => subscribedTest === test.id) !== -1){
+                      test.isBought = true;
+                    }
+                  })
+                }
+  
+                this.listOfMockTests = this.sharedService.sortData(this.listOfMockTests)
+  
+                // this.listOfMockTests.sort((x,y) =>{
+  
+                //   if(x.testType === 'Free' && y.testType === 'Free'){
+                //     return 0
+                //   }
+                //   if(x.testType === 'Paid' && y.testType === 'Paid'){
+                //     return x.isBought === y.isBought ? 0 : x.isBought ? -1 : 1
+                //   }
+                //   return x.testType ==='Free' ? -1 : 1
+                // })
+                this.initialListOfMockTests = this.listOfMockTests
+              })
             })
           })
           sub.unsubscribe()

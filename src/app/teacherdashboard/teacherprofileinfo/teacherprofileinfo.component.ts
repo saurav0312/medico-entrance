@@ -137,12 +137,14 @@ export class TeacherprofileinfoComponent implements OnInit {
 
   filterState(event: any){
     console.log("State filter : ", event.target.value)
+    console.log("Initial states: ", this.initialStates)
     if(event.target.value === '')
     {
       this.states = this.initialStates
     }
     else{
-      this.states = this.initialStates.filter(state => state.includes( (event.target.value).toLowerCase()))
+      this.states = this.initialStates.filter(state => state.toLocaleLowerCase().includes( (event.target.value).toLocaleLowerCase()))
+      console.log("Filtered states: ", this.states)
     }
   }
 

@@ -27,7 +27,7 @@ import { ContactRequest } from '../interface/contact-request';
 })
 export class AuthService {
 
-  mock$ = this.readMockTest();
+  // mock$ = this.readMockTest();
   realtimeDatabaseUrl = environment.firebase.realtimeDatabaseUrl;
 
   constructor(
@@ -130,10 +130,11 @@ export class AuthService {
   }
 
   // This method reads all mock tests of particular test type ex: free or paid
-  readMockTest(testType?: string): Observable<any>{
+  readMockTest(testCategory: string, testType?: string): Observable<any>{
     const collectionList = collection(this.firestore, 'MockTests');
     if(testType === undefined){
-      return collectionData(collectionList, {idField: 'id'})
+      const q = query(collectionList, where("testCategory","==", testCategory))
+      return collectionData(q, {idField: 'id'})
     }
     const q = query(collectionList, where("testType", "==", testType))
     return collectionData(q,{idField: 'id'})

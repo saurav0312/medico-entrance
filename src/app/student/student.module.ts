@@ -34,6 +34,7 @@ import { TreeModule } from 'primeng/tree';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { TooltipModule } from 'primeng/tooltip';
+import { KnobModule } from "primeng/knob";
 
 import { Ng2GoogleChartsModule } from 'ng2-google-charts'
 
@@ -87,7 +88,8 @@ import { IndividualquestionComponent } from './individualquestion/individualques
     TreeModule,
     TableModule,
     PaginatorModule,
-    TooltipModule
+    TooltipModule,
+    KnobModule
   ],
   exports: [
     StudentprofileComponent,

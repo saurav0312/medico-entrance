@@ -32,6 +32,11 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
   email!: string;
   country!: string | undefined;
   imageUrl!: string | undefined;
+  countries: string[] =[];
+  countriesWithState!: Array<any>;
+  states: string[] = [];
+  initialStates: string[] = [];
+  stateFilter: string = '';
 
   constructor(
     private profileService: ProfileService,
@@ -81,13 +86,27 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
               else{
                 response.dob = (<Timestamp><unknown>(response.dob)).toDate()
               }
-              this.profileForm.setValue(response)
-              this.firstName = response.firstName
-              this.lastName = response.lastName 
-              this.email = response.email
-              this.country = response.country
-              this.imageUrl = response.imageUrl;
-              this.loading= false
+
+              this.profileService.getCountryDetails().subscribe(countryDetails =>{
+                console.log("Country details: ", countryDetails)
+                this.countriesWithState = countryDetails[0].countriesWithState
+
+                countryDetails[0].countriesWithState.forEach((countryWithState:any) =>{
+                  if(this.countries.length == 0 || !this.countries.find(countryName => countryName === countryWithState.countryName))
+                    this.countries.push(countryWithState.countryName)
+                })
+                this.profileForm.setValue(response)
+                this.firstName = response.firstName
+                this.lastName = response.lastName 
+                this.email = response.email
+                this.country = response.country
+                this.imageUrl = response.imageUrl;
+                this.loading= false
+              },
+              error =>{
+                this.loading = false;
+                window.alert(error.error)
+              })
             }
           }
         },
@@ -106,6 +125,26 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
       
+  }
+
+  countryChanged(countryName: string| undefined){
+    console.log("Country Name: ", countryName)
+    let selectedCountry: any = this.countriesWithState.find(country => country.countryName === countryName)
+    this.states = selectedCountry.statesName
+    this.initialStates = this.states
+  }
+
+  filterState(event: any){
+    console.log("State filter : ", event.target.value)
+    console.log("Initial states: ", this.initialStates)
+    if(event.target.value === '')
+    {
+      this.states = this.initialStates
+    }
+    else{
+      this.states = this.initialStates.filter(state => state.toLocaleLowerCase().includes( (event.target.value).toLocaleLowerCase()))
+      console.log("Filtered states: ", this.states)
+    }
   }
 
   clearForm(){
