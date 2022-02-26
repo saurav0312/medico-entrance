@@ -14,6 +14,7 @@ import { StudentdashboardModule } from '../studentdashboard/studentdashboard.mod
 import { TestinstructionsComponent } from './testinstructions/testinstructions.component';
 import { StarttestComponent } from './starttest/starttest.component';
 import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 @NgModule({
@@ -31,7 +32,8 @@ import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
-    FormsModule
+    FormsModule,
+    MatDividerModule
   ]
 })
 export class PracticetestModule { }
