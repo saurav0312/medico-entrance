@@ -16,7 +16,7 @@
     </nav>
     
     <mat-sidenav-container class="mat-sidenav-container-class">
-      <mat-sidenav #sidenav="matSidenav" class="mat-sidenav-class" mode='over'>
+      <mat-sidenav #sidenav="matSidenav" class="mat-sidenav-class" mode='side' opened>
     
     
           <p></p>
@@ -24,6 +24,12 @@
           <h4 class="name">{{username}}</h4>
     
           <mat-divider class="mat-divider"></mat-divider>
+
+          <button routerLink="overallAnalysisDashboard" routerLinkActive="docs-navbar-header-item-selected" mat-button class="menu-button">
+            <mat-icon>dashboard</mat-icon>
+            <span>Dashboard</span>
+          </button>
+
           <button routerLink="editprofileinfo" routerLinkActive="docs-navbar-header-item-selected" mat-button class="menu-button">
               <mat-icon>person</mat-icon>
               <span>Profile</span>

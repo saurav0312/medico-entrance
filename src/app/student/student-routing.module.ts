@@ -4,10 +4,10 @@ import { StudentprofileComponent } from './studentprofile/studentprofile.compone
 import { DetailtestreportComponent } from './detailtestreport/detailtestreport.component';
 import { ViewmytestsComponent } from './viewmytests/viewmytests.component';
 import { EditprofileinfoComponent } from './editprofileinfo/editprofileinfo.component';
-import { TestsAnalysisDashboardComponent } from './tests-analysis-dashboard/tests-analysis-dashboard.component';
 import { AuthGuard } from '../authentication/auth.guard';
 import { StudentAuthGuardGuard } from '../authentication/student-auth-guard.guard';
 import { IndividualquestionComponent } from './individualquestion/individualquestion.component';
+import { StudentPerformanceAnalysisDashboardComponent } from './student-performance-analysis-dashboard/student-performance-analysis-dashboard.component';
 
 const routes: Routes = [
   {
@@ -17,7 +17,7 @@ const routes: Routes = [
       { path: 'editprofileinfo', component: EditprofileinfoComponent},
       { path: 'detailTestReport', component: DetailtestreportComponent},
       { path: 'viewMyTests', component: ViewmytestsComponent},
-      { path: 'testsAnalysisDashboard', component: TestsAnalysisDashboardComponent},
+      { path: 'overallAnalysisDashboard', component: StudentPerformanceAnalysisDashboardComponent},
       { path: 'individualQuestion', component: IndividualquestionComponent },
       { path: '', redirectTo: '/studentProfile/editprofileinfo', pathMatch: 'full' },
     ],

@@ -35,6 +35,7 @@ import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { TooltipModule } from 'primeng/tooltip';
 import { KnobModule } from "primeng/knob";
+import { ProgressBarModule } from 'primeng/progressbar';
 
 import { Ng2GoogleChartsModule } from 'ng2-google-charts'
 
@@ -44,8 +45,9 @@ import { ViewmytestsComponent } from './viewmytests/viewmytests.component';
 import { EditprofileinfoComponent } from './editprofileinfo/editprofileinfo.component';
 import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
 import { MatSortModule } from '@angular/material/sort';
-import { TestsAnalysisDashboardComponent } from './tests-analysis-dashboard/tests-analysis-dashboard.component';
 import { IndividualquestionComponent } from './individualquestion/individualquestion.component';
+import { StudentPerformanceAnalysisDashboardComponent } from './student-performance-analysis-dashboard/student-performance-analysis-dashboard.component';
+import { TabViewModule } from 'primeng/tabview';
 
 
 @NgModule({
@@ -54,8 +56,8 @@ import { IndividualquestionComponent } from './individualquestion/individualques
     DetailtestreportComponent,
     ViewmytestsComponent,
     EditprofileinfoComponent,
-    TestsAnalysisDashboardComponent,
-    IndividualquestionComponent
+    IndividualquestionComponent,
+    StudentPerformanceAnalysisDashboardComponent
   ],
   imports: [
     CommonModule,
@@ -89,7 +91,9 @@ import { IndividualquestionComponent } from './individualquestion/individualques
     TableModule,
     PaginatorModule,
     TooltipModule,
-    KnobModule
+    KnobModule,
+    ProgressBarModule,
+    TabViewModule
   ],
   exports: [
     StudentprofileComponent,

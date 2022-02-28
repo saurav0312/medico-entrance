@@ -8,6 +8,8 @@ export interface MockTest {
   totalNumberOfQuestions? : number;
   testType: string;
   testCategory: string;
+  subjectName: string;
+  topicName: string;
   questions: Question[];
   isBought?: boolean;
   testPrice?: number;

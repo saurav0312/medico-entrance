@@ -23,6 +23,21 @@
                     </div>
                   </div>
 
+                  <div *ngSwitchCase="'testCategoryTemplate'">
+                    <ng-container *ngTemplateOutlet="templateRefList[templateName] ; context: {$implicit: createMockTestForm}">
+                    </ng-container>
+
+                    <div *ngIf="createMockTestForm.get('testCategory')?.value === 'Subject'">
+                      <div>
+                        <ng-container *ngTemplateOutlet="subjectFieldTemplate ; context: {$implicit: createMockTestForm}">
+                        </ng-container>
+
+                        <ng-container *ngTemplateOutlet="topicFieldTemplate ; context: {$implicit: createMockTestForm}">
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+
                   <div *ngSwitchDefault>
                     <ng-container [ngTemplateOutlet]="templateRefList[templateName]" [ngTemplateOutletContext]="{$implicit: createMockTestForm}">
                     </ng-container>
@@ -106,7 +121,7 @@
 <ng-template #testCategoryTemplate let-createMockTestForm>
   <div style="margin-bottom: 1em;">
     <mat-label style="text-align: left;">Test Category: </mat-label>
-    <mat-radio-group [formControl]="createMockTestForm.get('testCategory')" aria-label="Test Category">
+    <mat-radio-group [formControl]="createMockTestForm.get('testCategory')" (change)="testCategoryChanged($event)" aria-label="Test Category">
       <mat-radio-button style="margin-right: 1em;" value="Mock">Mock Test</mat-radio-button>
       <mat-radio-button value="Subject">Subject Test</mat-radio-button>
     </mat-radio-group>
@@ -114,6 +129,26 @@
       Test Category is required
     </mat-error>
   </div>
+</ng-template>
+
+<ng-template #subjectFieldTemplate let-createMockTestForm>
+  <mat-form-field style="margin-right: 0.5em;" appearance="outline">
+    <mat-label>Subject Name</mat-label>
+    <input [formControl]="createMockTestForm.get('subjectField')" type="text" [required]="createMockTestForm.get('testCategory')?.value === 'Subject'" matInput>
+    <mat-error *ngIf="createMockTestForm.get('subjectField')?.dirty && createMockTestForm.get('subjectField')?.value.length==0">
+      Subject name is required
+    </mat-error>
+  </mat-form-field>
+</ng-template>
+
+<ng-template #topicFieldTemplate let-createMockTestForm>
+  <mat-form-field appearance="outline">
+    <mat-label>Topic Name</mat-label>
+    <input [formControl]="createMockTestForm.get('topicField')" type="text" [required]="createMockTestForm.get('testCategory')?.value === 'Subject'" matInput>
+    <mat-error *ngIf="createMockTestForm.get('topicField')?.dirty && createMockTestForm.get('topicField')?.value.length==0">
+      Topic name is required
+    </mat-error>
+  </mat-form-field>
 </ng-template>
 
 <ng-template #excelFileTemplate let-createMockTestForm>

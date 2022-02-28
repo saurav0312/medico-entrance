@@ -22,6 +22,7 @@ export class AllPracticeTestsComponent implements OnInit {
   @Input() isFirstSubscription!: boolean;
   isFirstStudent: boolean = true;
   @Input() loading = true;
+  @Input() testCategory = '';
 
   constructor(
     private authService: AuthService,
@@ -34,7 +35,7 @@ export class AllPracticeTestsComponent implements OnInit {
   }
 
   startTest(testId: string | undefined, test: MockTest) : void{
-    this.router.navigate(["/practicetest/testInstructions"], {queryParams: {data: testId, testTime: test.totalTime}})
+    this.router.navigate(["/practicetest/testInstructions"], {queryParams: {data: testId, testTime: test.totalTime, testCategory:  this.testCategory}})
   }
 
   buyTest(testId: string | undefined) : void{
