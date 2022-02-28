@@ -1,0 +1,117 @@
+<div class="col-sm-12" style="font-size: 20px; font-weight: 600; margin-top: 1em;">
+    <div style="margin-bottom: 0.5em; margin-top: 0.5em;">
+        Dashboard
+    </div>
+    <!-- Left side of dashboard -->
+    <div class="col-sm-4 card" style="float: left; width: -webkit-fill-available; border-color: azure;">
+        
+        <div style="margin-top: 0.3em;">
+            <div style="margin-top: 0.5em; margin-bottom: 0.5em;">
+                Overall Performance
+            </div>
+            <div id="donutchart" class="chart" style="height:180px; width: 320px;" >
+            </div>
+            <div>
+                <div style="margin-bottom: 0.5em; margin-top: 0.5em;">
+                    Your Progress
+                </div>
+                <div class="card" style="padding: 5px; margin-bottom: 20px; background-color: #f7f7f7; border: slategrey;">
+                    <div style="margin-left:0.3em; margin-bottom: 0.5em;">
+                        <p class="card-title" style="font-size: 15px; font-weight: 500;">Subjects</p>
+                        <div style="display: grid; margin-right: 0.3em;">
+                            <div style="display: inline;">
+                                <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: left;">200 done out of 300</h6>
+                                <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: right;">{{subjectProgressValue}}%</h6>
+                            </div>
+                            <div>
+                                <p-progressBar [value]="subjectProgressValue" [showValue]="false" [style]="{'height': '6px'}"></p-progressBar>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 5px; margin-bottom: 20px; background-color: #f7f7f7; border: slategrey;">
+                    <div style="margin-left:0.3em; margin-bottom: 0.5em;">
+                        <p class="card-title" style="font-size: 15px; font-weight: 500;">Mock Tests</p>
+                        <div style="display: grid; margin-right: 0.3em;">
+                            <div style="display: inline;">
+                                <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: left;">50 done out of 70</h6>
+                                <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: right;">{{mockTestProgressValue}}%</h6>
+                            </div>
+                            <div>
+                                <p-progressBar [value]="mockTestProgressValue" [showValue]="false" [style]="{'height': '6px'}"></p-progressBar>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right side of dashboard -->
+    <div class="col-sm-8" style="float: right;">
+        Let's start a quick test 
+        <div>
+            <p-tabView>
+                <p-tabPanel header="Subject Tests">
+                   <ng-container *ngTemplateOutlet="subjectTestsTemplate">
+    
+                   </ng-container>
+                </p-tabPanel>
+                <p-tabPanel header="Mock Tests">
+                    <ng-container *ngTemplateOutlet="mockTestsTemplate">
+    
+                    </ng-container>
+                </p-tabPanel>
+            </p-tabView>
+        </div>
+    </div>     
+</div>
+
+<ng-template #subjectTestsTemplate>
+    <div *ngIf="subjectNameList.length > 0">
+        <p>Choose the Subject</p>
+        <div class="row" style="margin-bottom: 1.3em;">
+            <ng-container *ngFor="let subjectName of subjectNameList; let i = index">
+                <div (click)="onSelectingSubject(i)" class="col-sm-2 questions-list-class" [ngClass]="selectedSubjectIndex === i? 'questions-list-class-selected':''">
+                    <p style="text-align: center;">{{subjectName}}</p>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+
+    <div class="row">
+        <div>
+            <p *ngIf="selectedSubjectIndex !== -1">Topics</p>
+
+            <ng-container *ngFor="let topic of subjectToTopicList; let i = index">
+                <div (click)="onSelectingTopic(i)" class="topic-list-class" 
+                [ngClass]="selectedTopicIndex === i? 'questions-list-class-selected':''">
+                    {{topic}}
+                    <ng-container *ngIf="selectedTopicIndex === i">
+                        <div class="row">
+                            <ng-container *ngFor="let testIdMap of subjectTestsIdList; let j = index" style="margin-top: 1em;">
+                                
+                                    <div (click) ="startTest(testIdMap)" class="test-level-css">
+                                        <p style="text-align: center; margin-top: 1em;">
+                                            {{testIdMap.testName}}                                    
+                                        </p>
+                                    </div>
+                                
+                                <!-- <div class="test-level-css">Medium</div>
+                                <div class="test-level-css">Hard</div> -->
+                            </ng-container>
+                        </div>
+                    </ng-container>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</ng-template>
+
+<ng-template #mockTestsTemplate>
+Choose the Mock Test
+</ng-template>
+
+<app-spinner [loading]="loading" [overlay]="true">
+</app-spinner>

@@ -20,6 +20,10 @@ import { MatDividerModule } from '@angular/material/divider';
 import { PerformancereportComponent } from './performancereport/performancereport.component';
 import { StudentModule } from '../student/student.module';
 
+import { SidebarModule } from 'primeng/sidebar';
+import { MatSidenav, MatSidenavContainer, MatSidenavModule } from '@angular/material/sidenav';
+import { MatIconModule } from '@angular/material/icon';
+
 
 @NgModule({
   declarations: [
@@ -41,7 +45,10 @@ import { StudentModule } from '../student/student.module';
     MatInputModule,
     FormsModule,
     MatDividerModule,
-    StudentModule
+    StudentModule,
+    SidebarModule,
+    MatSidenavModule,
+    MatIconModule
   ],
   exports:[
     StudentdashboardnavigationbarComponent

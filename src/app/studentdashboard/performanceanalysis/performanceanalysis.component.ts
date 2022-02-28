@@ -25,7 +25,7 @@ export class PerformanceanalysisComponent implements OnInit {
     {
       'title': "My Dashboard",
       'description': "View your overall performance report on each tests.",
-      'url': '/studentProfile/detailTestReport',
+      'url': '/studentProfile/overallAnalysisDashboard',
       'imageName': '../../assets/img/student_home_page.jpg' 
     }
   ];

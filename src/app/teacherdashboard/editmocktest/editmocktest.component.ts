@@ -107,6 +107,8 @@ export class EditmocktestComponent implements OnInit {
         "totalNumberOfQuestions": this.modifyMockTestForm.get('totalNumberOfQuestions')?.value,
         "testType": this.modifyMockTestForm.get('testType')?.value,
         "testCategory": this.modifyMockTestForm.get('testCategory')?.value,
+        "subjectName": this.modifyMockTestForm.get('subjectField')?.value,
+        "topicName": this.modifyMockTestForm.get('topicField')?.value,
         "testPrice": this.modifyMockTestForm.get('testPrice')?.value,
         "questions": this.testQuestions,
         "testUploadDate": new Date()

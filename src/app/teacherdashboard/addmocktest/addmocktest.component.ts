@@ -77,6 +77,8 @@ export class AddmocktestComponent implements OnInit{
         totalNumberOfQuestions: new FormControl('', [Validators.required]),
         testType: new FormControl('', [Validators.required]),
         testCategory: new FormControl('',[Validators.required]),
+        subjectField: new FormControl(''),
+        topicField: new FormControl(''),
         testSourceFile: new FormControl('' ,[Validators.required]),
         testPrice: new FormControl(''),
         testQuestionImagesFile: new FormControl('')
@@ -177,18 +179,39 @@ export class AddmocktestComponent implements OnInit{
           })
   
           if(checkPassed == true){
-            let tempData =<MockTest> {
-              "testName": this.createMockTestForm.get('testName')?.value,
-              "testTakenBy": this.createMockTestForm.get('testTakenBy')?.value,
-              "totalTime": this.createMockTestForm.get('totalTime')?.value,
-              "totalNumberOfQuestions": this.createMockTestForm.get('totalNumberOfQuestions')?.value,
-              "testType": this.createMockTestForm.get('testType')?.value,
-              "testCategory": this.createMockTestForm.get('testCategory')?.value,
-              "questions": questions,
-              "testPrice": this.createMockTestForm.get('testPrice')?.value,
-              "teacherUserId": this.userId,
-              "testUploadDate": new Date()
-            };
+            let tempData;
+            if(this.createMockTestForm.get('testCategory')?.value === 'Subject'){
+              tempData =<MockTest> {
+                "testName": this.createMockTestForm.get('testName')?.value,
+                "testTakenBy": this.createMockTestForm.get('testTakenBy')?.value,
+                "totalTime": this.createMockTestForm.get('totalTime')?.value,
+                "totalNumberOfQuestions": this.createMockTestForm.get('totalNumberOfQuestions')?.value,
+                "testType": this.createMockTestForm.get('testType')?.value,
+                "testCategory": this.createMockTestForm.get('testCategory')?.value,
+                "subjectName": this.createMockTestForm.get('subjectField')?.value,
+                "topicName": this.createMockTestForm.get('topicField')?.value,
+                "questions": questions,
+                "testPrice": this.createMockTestForm.get('testPrice')?.value,
+                "teacherUserId": this.userId,
+                "testUploadDate": new Date()
+              };
+            }
+            else{
+              tempData =<MockTest> {
+                "testName": this.createMockTestForm.get('testName')?.value,
+                "testTakenBy": this.createMockTestForm.get('testTakenBy')?.value,
+                "totalTime": this.createMockTestForm.get('totalTime')?.value,
+                "totalNumberOfQuestions": this.createMockTestForm.get('totalNumberOfQuestions')?.value,
+                "testType": this.createMockTestForm.get('testType')?.value,
+                "testCategory": this.createMockTestForm.get('testCategory')?.value,
+                "subjectName": this.createMockTestForm.get('subjectField')?.value,
+                "topicName": this.createMockTestForm.get('topicField')?.value,
+                "questions": questions,
+                "testPrice": this.createMockTestForm.get('testPrice')?.value,
+                "teacherUserId": this.userId,
+                "testUploadDate": new Date()
+              };
+            }
             this.mockTest = tempData;
     
             //create mock test
@@ -289,6 +312,18 @@ export class AddmocktestComponent implements OnInit{
   testTypeChanged(event: any){
     if(event['value']=='Free'){
       this.createMockTestForm.get('testPrice')?.setValue(0);
+    }
+  }
+
+  testCategoryChanged(event: any){
+    if(event['value'] ==='Mock')
+    {
+      this.createMockTestForm.get('subjectField')?.setValue('sample');
+      this.createMockTestForm.get('topicField')?.setValue('sample');
+    }
+    else{
+      this.createMockTestForm.get('subjectField')?.setValue('sample');
+      this.createMockTestForm.get('topicField')?.setValue('sample');
     }
   }
 
