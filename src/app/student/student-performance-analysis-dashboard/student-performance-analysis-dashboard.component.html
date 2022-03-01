@@ -120,7 +120,7 @@
                                 This is the sample test taken by IOE. This is the sample test taken by IOE. This is the sample test taken by IOE
                             </p>
                             <button (click)="startTest(individualTest)" class="btn btn-outline-primary" [disabled]="individualTest.testType==='Paid' && !individualTest.isBought" style="margin-right: 2em;">Start Test</button>
-                            <button class="btn btn-primary" [hidden]="individualTest.testType==='Free' || individualTest.isBought">Buy Test</button>
+                            <button (click)="buySubjectTest(individualTest.id)" class="btn btn-primary" [hidden]="individualTest.testType==='Free' || individualTest.isBought">Buy Test</button>
                             
                         </div>
                     </div>
@@ -161,7 +161,7 @@
                         This is the sample test taken by IOE. This is the sample test taken by IOE. This is the sample test taken by IOE
                     </p>
                     <button (click)="startTest(individualTest)" class="btn btn-outline-primary" [disabled]="individualTest.testType==='Paid' && !individualTest.isBought" style="margin-right: 2em;">Start Test</button>
-                    <button class="btn btn-primary" [hidden]="individualTest.testType==='Free' || individualTest.isBought">Buy Test</button>
+                    <button (click)="buyMockTest(individualTest.id)" class="btn btn-primary" [hidden]="individualTest.testType==='Free' || individualTest.isBought">Buy Test</button>
                     
                 </div>
             </div>
