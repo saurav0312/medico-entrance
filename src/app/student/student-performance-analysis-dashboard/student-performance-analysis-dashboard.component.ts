@@ -3,8 +3,11 @@ import { Router } from '@angular/router';
 import { Chart } from 'chart.js'
 import { Observable } from 'rxjs';
 import { MockTest } from 'src/app/interface/mockTest';
+import { StudentsOfTest } from 'src/app/interface/students-of-test';
 import { TestIdWithName } from 'src/app/interface/test-id-with-name';
+import { TestSubscription } from 'src/app/interface/test-subscription';
 import { AuthService } from 'src/app/service/auth.service';
+import { TestsubscriptionService } from 'src/app/service/testsubscription.service';
 
 declare var google: any;
 
@@ -46,10 +49,16 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
 
   loading: boolean = false;
   allSubjectTestsList: MockTest[] = [];
+  userId: string = '';
+  isFirstSubscription: boolean = true;
+  allSubscribedTests: Array<string | undefined> =[];
+  allTestsList: MockTest[] = [];
+  isFirstStudent: boolean = true;
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private testsubscriptionService: TestsubscriptionService
   ) { }
 
   ngOnInit(): void {
@@ -57,7 +66,9 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
     google.charts.load('current', {packages: ['corechart']});
 
     this.authService.getCurrentUser().subscribe(currentUser =>{
-      this.authService.getAllMockTestsGivenByAUser(currentUser.uid).subscribe(allMockTestsGivenByUser =>{
+      this.userId = currentUser.uid
+
+      this.authService.getAllMockTestsGivenByAUser(this.userId).subscribe(allMockTestsGivenByUser =>{
         console.log("All mock tests given by user: ", allMockTestsGivenByUser)
         let totalNumberOfTestsGiven = allMockTestsGivenByUser.allTests.length
         let allSubjectTestGiven = allMockTestsGivenByUser.allTests.filter(test => test.testCategory ==='Subject')
@@ -124,58 +135,84 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
         chartData.push(['Unanswered',  this.noOfQuestionsNotAnswered])
         this.buildOverallPerformanceChart(chartData);
 
+      },
+      error =>{
+        window.alert(error.error)
+        this.loading = false;
       })
-    })
 
+      //fetch all subscribed tests by the user
+      this.testsubscriptionService.getAllSubscribedTestsByAUser(this.userId).subscribe((response:TestSubscription) =>{
+        if(response !== undefined){
+          this.allSubscribedTests = response.allSubscribedTests
+          console.log("Subscribed Tests:", response)
+          this.isFirstSubscription = false;
+        }
 
-    this.fetchTestsList("Subject").subscribe((response: MockTest[]) =>{
-      console.log("All subject Test lists: ", response)
-      this.allSubjectTestsList = response
-      if(response!== undefined && response.length > 0){
-        response.forEach((subjectTest:MockTest) =>{
-          if(this.subjectNameList.find(subjectName => subjectName === subjectTest.subjectName) === undefined){
-            this.subjectNameList.push(subjectTest.subjectName)
+        //fetch all mock and subject tests
+        this.fetchTestsList().subscribe((allTests: MockTest[]) =>{
+          this.allTestsList = allTests
+          if(this.allTestsList.length > 0 && this.allSubscribedTests.length > 0){
+            this.allTestsList.forEach(test =>{
+              if(this.allSubscribedTests.findIndex(subscribedTest => subscribedTest === test.id) !== -1){
+                test.isBought = true;
+              }
+            })
           }
-          if(this.subjectToTopicListMap[subjectTest.subjectName] === undefined){
-            this.subjectToTopicListMap[subjectTest.subjectName] = []
-          }
-          if(this.subjectToTopicListMap[subjectTest.subjectName].find(topicName => topicName === subjectTest.topicName) === undefined){
-            this.subjectToTopicListMap[subjectTest.subjectName].push(subjectTest.topicName)
-          }
+
+        this.allSubjectTestsList = this.allTestsList.filter(test => test.testCategory === 'Subject');
+        console.log("All subject Test lists: ", this.allSubjectTestsList)
   
-          if(this.subjectToTopicToTestIdList[subjectTest.subjectName] === undefined){
-            this.subjectToTopicToTestIdList[subjectTest.subjectName] = {};
+        
+        this.listOfMockTests = this.allTestsList.filter(test => test.testCategory === 'Mock');
+        console.log("Mock tests list: ", this.listOfMockTests)
+        this.listOfMockTests.sort((a,b) =>{
+          if(a.testType < b.testType){
+            return -1;
           }
-          if(this.subjectToTopicToTestIdList[subjectTest.subjectName][subjectTest.topicName] === undefined){
-            this.subjectToTopicToTestIdList[subjectTest.subjectName][subjectTest.topicName] = [];
+          else if(a.testType > b.testType){
+            return 1;
           }
-          this.subjectToTopicToTestIdList[subjectTest.subjectName][subjectTest.topicName].push(
-          {
-            "testId": subjectTest.id,
-            "testName": subjectTest.testName 
-          })
+          else{
+            return 0;
+          }
         })
-      }
-      this.loading= false;
-    },
-    error =>{
-      window.alert(error.error)
-      this.loading = false;
-    });
+  
+        
+        if(this.allSubjectTestsList!== undefined && this.allSubjectTestsList.length > 0){
+          this.allSubjectTestsList.forEach((subjectTest:MockTest) =>{
+            if(this.subjectNameList.find(subjectName => subjectName === subjectTest.subjectName) === undefined){
+              this.subjectNameList.push(subjectTest.subjectName)
+            }
+            if(this.subjectToTopicListMap[subjectTest.subjectName] === undefined){
+              this.subjectToTopicListMap[subjectTest.subjectName] = []
+            }
+            if(this.subjectToTopicListMap[subjectTest.subjectName].find(topicName => topicName === subjectTest.topicName) === undefined){
+              this.subjectToTopicListMap[subjectTest.subjectName].push(subjectTest.topicName)
+            }
+    
+            if(this.subjectToTopicToTestIdList[subjectTest.subjectName] === undefined){
+              this.subjectToTopicToTestIdList[subjectTest.subjectName] = {};
+            }
+            if(this.subjectToTopicToTestIdList[subjectTest.subjectName][subjectTest.topicName] === undefined){
+              this.subjectToTopicToTestIdList[subjectTest.subjectName][subjectTest.topicName] = [];
+            }
+            this.subjectToTopicToTestIdList[subjectTest.subjectName][subjectTest.topicName].push(
+            {
+              "testId": subjectTest.id,
+              "testName": subjectTest.testName 
+            })
+          })
+        }
+        this.loading= false;
+      },
+      error =>{
+        window.alert(error.error)
+        this.loading = false;
+      });
 
-    this.fetchTestsList("Mock").subscribe(mockTestResponse =>{
-      console.log("Mock tests list: ", mockTestResponse)
-      this.listOfMockTests = mockTestResponse
-      this.listOfMockTests.sort((a,b) =>{
-        if(a.testType < b.testType){
-          return -1;
-        }
-        else if(a.testType > b.testType){
-          return 1;
-        }
-        else{
-          return 0;
-        }
+
+
       })
     },
     error =>{
@@ -211,8 +248,8 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
     google.charts.setOnLoadCallback( callback);
   }
 
-  fetchTestsList(testCategory: string): Observable<any>{
-    return this.authService.fetchTestsList(testCategory);
+  fetchTestsList(): Observable<any>{
+    return this.authService.fetchTestsList();
   }
   
   onSelectingSubject(index: number){
@@ -263,5 +300,53 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
     if(test !== undefined){
       this.router.navigate(["/practicetest/testInstructions"], {queryParams: {data: test.id, testTime: test.totalTime, testCategory: "Subject"}})
     }
+  }
+
+  buySubjectTest(testId: string | undefined) : void{
+    console.log("Buy the test: ", testId)
+    const data: TestSubscription ={
+      allSubscribedTests: [testId]
+    }
+    this.testsubscriptionService.subscribeToTest(this.userId, data, this.isFirstSubscription);
+    this.listOfSubjectTests.forEach(test =>{
+      if(test.id === testId){
+        test.isBought = true;
+      }
+    })
+
+    this.addStudentToTestList(testId);
+    
+  }
+
+  buyMockTest(testId: string | undefined): void{
+    console.log("Buy the test: ", testId)
+    const data: TestSubscription ={
+      allSubscribedTests: [testId]
+    }
+    this.testsubscriptionService.subscribeToTest(this.userId, data, this.isFirstSubscription);
+    this.listOfMockTests.forEach(test =>{
+      if(test.id === testId){
+        test.isBought = true;
+      }
+    })
+
+    this.addStudentToTestList(testId);
+  }
+
+  addStudentToTestList(testId: string | undefined){
+    const studentData : StudentsOfTest ={
+      allStudentsOfTheTest : [this.userId]
+    }
+
+    const sub = this.testsubscriptionService.getAllStudentsOfATest(testId).subscribe(response =>{
+      if(response !== undefined){
+        this.isFirstStudent = false;
+      }
+      else{
+        this.isFirstStudent = true;
+      }
+      sub.unsubscribe()
+      this.testsubscriptionService.addStudentToATest(testId, studentData, this.isFirstStudent)
+    })
   }
 }

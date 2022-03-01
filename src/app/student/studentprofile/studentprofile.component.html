@@ -25,33 +25,36 @@
     
           <mat-divider class="mat-divider"></mat-divider>
 
-          <button routerLink="overallAnalysisDashboard" routerLinkActive="docs-navbar-header-item-selected" mat-button class="menu-button">
+          <button routerLink="/studentdashboard" routerLinkActive="active-link" mat-button class="menu-button">
+            <mat-icon>home</mat-icon>
+            <span>Home</span>
+          </button>
+          <button routerLink="editprofileinfo" routerLinkActive="active-link" mat-button class="menu-button">
+            <mat-icon>person</mat-icon>
+            <span>Profile</span>
+          </button>
+          <button routerLink="overallAnalysisDashboard" routerLinkActive="active-link" mat-button class="menu-button">
             <mat-icon>dashboard</mat-icon>
             <span>Dashboard</span>
           </button>
 
-          <button routerLink="editprofileinfo" routerLinkActive="docs-navbar-header-item-selected" mat-button class="menu-button">
-              <mat-icon>person</mat-icon>
-              <span>Profile</span>
-          </button>
-
-          <button routerLink="detailSubjectTestReport" routerLinkActive="docs-navbar-header-item-selected" mat-button class="menu-button">
+          <button routerLink="detailSubjectTestReport" routerLinkActive="active-link" mat-button class="menu-button">
             <mat-icon>article</mat-icon>
             <span>Subject Tests History</span>
           </button>
 
-          <button routerLink="detailMockTestReport" routerLinkActive="docs-navbar-header-item-selected" mat-button class="menu-button">
+          <button routerLink="detailMockTestReport" routerLinkActive="active-link" mat-button class="menu-button">
               <mat-icon>article</mat-icon>
               <span>Mock Tests History</span>
+          </button>
+          <button routerLink="/studentdashboard/allTeachers" routerLinkActive="active-link" mat-button class="menu-button">
+            <mat-icon>person</mat-icon>
+            <span>View All Teachers</span>
           </button>
           <!-- <button routerLink="testsAnalysisDashboard" routerLinkActive="docs-navbar-header-item-selected" mat-button class="menu-button">
             <mat-icon>pie_chart</mat-icon>
             <span>Tests Analysis Dashboard</span>
           </button> -->
-          <button routerLink="/studentdashboard" routerLinkActive="docs-navbar-header-item-selected" mat-button class="menu-button">
-            <mat-icon>home</mat-icon>
-            <span>Home</span>
-          </button>
           <button (click)='logout()' mat-button class="menu-button">
             <mat-icon>logout</mat-icon>
             <span>Sign out</span>
