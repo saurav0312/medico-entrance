@@ -17,14 +17,14 @@
                 </div>
                 <div class="card" style="padding: 5px; margin-bottom: 20px; background-color: #f7f7f7; border: slategrey;">
                     <div style="margin-left:0.3em; margin-bottom: 0.5em;">
-                        <p class="card-title" style="font-size: 15px; font-weight: 500;">Subjects</p>
+                        <p class="card-title" style="font-size: 15px; font-weight: 500;">Subject Tests</p>
                         <div style="display: grid; margin-right: 0.3em;">
                             <div style="display: inline;">
-                                <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: left;">200 done out of 300</h6>
-                                <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: right;">{{subjectProgressValue}}%</h6>
+                                <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: left;">{{noOfSubjectTestsGivenByTheUser}} done out of {{allSubjectTestsList.length}}</h6>
+                                <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: right;">{{((noOfSubjectTestsGivenByTheUser*100)/allSubjectTestsList.length)}}%</h6>
                             </div>
                             <div>
-                                <p-progressBar [value]="subjectProgressValue" [showValue]="false" [style]="{'height': '6px'}"></p-progressBar>
+                                <p-progressBar [value]="((noOfSubjectTestsGivenByTheUser*100)/allSubjectTestsList.length)" [showValue]="false" [style]="{'height': '6px'}"></p-progressBar>
                             </div>
                         </div>
                     </div>
@@ -35,11 +35,11 @@
                         <p class="card-title" style="font-size: 15px; font-weight: 500;">Mock Tests</p>
                         <div style="display: grid; margin-right: 0.3em;">
                             <div style="display: inline;">
-                                <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: left;">50 done out of 70</h6>
-                                <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: right;">{{mockTestProgressValue}}%</h6>
+                                <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: left;">{{noOfMockTestsGivenByTheUser}} done out of {{listOfMockTests.length}}</h6>
+                                <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: right;">{{((noOfMockTestsGivenByTheUser*100)/listOfMockTests.length)}}%</h6>
                             </div>
                             <div>
-                                <p-progressBar [value]="mockTestProgressValue" [showValue]="false" [style]="{'height': '6px'}"></p-progressBar>
+                                <p-progressBar [value]="((noOfMockTestsGivenByTheUser*100)/listOfMockTests.length)" [showValue]="false" [style]="{'height': '6px'}"></p-progressBar>
                             </div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
     <!-- Right side of dashboard -->
     <div class="col-sm-8" style="float: right;">
         Let's start a quick test 
-        <div>
+        <div style="margin-top: 1em;">
             <p-tabView>
                 <p-tabPanel header="Subject Tests">
                    <ng-container *ngTemplateOutlet="subjectTestsTemplate">
@@ -69,7 +69,7 @@
 </div>
 
 <ng-template #subjectTestsTemplate>
-    <div *ngIf="subjectNameList.length > 0">
+    <div *ngIf="subjectNameList.length > 0; else noSubjectTestsAvailable">
         <p>Choose the Subject</p>
         <div class="row" style="margin-bottom: 1.3em;">
             <ng-container *ngFor="let subjectName of subjectNameList; let i = index">
@@ -82,35 +82,97 @@
 
     <div class="row">
         <div>
-            <p *ngIf="selectedSubjectIndex !== -1">Topics</p>
+            <p *ngIf="selectedSubjectIndex !== -1"> Choose the Topic</p>
+            <div class="row" style="margin-bottom: 1.3em;">
+                <ng-container *ngFor="let topicName of subjectToTopicList; let i = index">
+                    <div (click)="onSelectingTopic(i)" class="col-sm-2 topic-list-class" [ngClass]="selectedTopicIndex === i? 'questions-list-class-selected':''">
+                        <p style="text-align: center;">{{topicName}}</p>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
 
-            <ng-container *ngFor="let topic of subjectToTopicList; let i = index">
-                <div (click)="onSelectingTopic(i)" class="topic-list-class" 
-                [ngClass]="selectedTopicIndex === i? 'questions-list-class-selected':''">
-                    {{topic}}
-                    <ng-container *ngIf="selectedTopicIndex === i">
-                        <div class="row">
-                            <ng-container *ngFor="let testIdMap of subjectTestsIdList; let j = index" style="margin-top: 1em;">
-                                
-                                    <div (click) ="startTest(testIdMap)" class="test-level-css">
-                                        <p style="text-align: center; margin-top: 1em;">
-                                            {{testIdMap.testName}}                                    
-                                        </p>
-                                    </div>
-                                
-                                <!-- <div class="test-level-css">Medium</div>
-                                <div class="test-level-css">Hard</div> -->
-                            </ng-container>
+    <div class="row">
+        <!-- Test -->
+        <div class="row">
+            <ng-container class ="col-sm-6"  *ngFor="let individualTest of listOfSubjectTests; let i = index" style="margin-bottom: 2rem;">
+                <div class="col-md-6">
+                    <div class="card mb-4 box-shadow">
+                        <div class="card-body">
+                            <div>
+                                <h2 class="card-title" style="text-align: center; ">
+                                    <b>{{individualTest.testName}}</b>
+                                    <mat-icon *ngIf="individualTest.testType === 'Paid' ">
+                                        {{ individualTest.isBought ? 'lock_open' : 'lock'}}
+                                    </mat-icon>
+                                </h2>
+                                <h4 [hidden]="individualTest.testType==='Free' || individualTest.isBought" class="card-title" style="float: right;"><mat-icon>currency_rupee</mat-icon>{{individualTest.testPrice}}</h4>
+                            </div>
+                            <p class="card-text"><b>Test Taken By:</b> {{individualTest.testTakenBy}}</p>
+                            <p class="card-text"><b>Test Type:</b> {{individualTest.testType}}</p>
+                            <p class="card-text"><b>Test Category:</b> {{individualTest.testCategory}}</p>
+                            <p class="card-text"><b>Total Time:</b> {{individualTest.totalTime}} mins</p>
+                            <p class="card-text"><b>Total Number Of Questions:</b> {{individualTest.questions.length}}</p>
+                            <mat-divider></mat-divider>
+                            <p></p>
+                            <p class="card-text">
+                                This is the sample test taken by IOE. This is the sample test taken by IOE. This is the sample test taken by IOE
+                            </p>
+                            <button (click)="startTest(individualTest)" class="btn btn-outline-primary" [disabled]="individualTest.testType==='Paid' && !individualTest.isBought" style="margin-right: 2em;">Start Test</button>
+                            <button class="btn btn-primary" [hidden]="individualTest.testType==='Free' || individualTest.isBought">Buy Test</button>
+                            
                         </div>
-                    </ng-container>
-                </div>
+                    </div>
+                </div> 
             </ng-container>
         </div>
+        <!-- Test end -->
     </div>
 </ng-template>
 
 <ng-template #mockTestsTemplate>
-Choose the Mock Test
+<p style="margin-bottom: 0.8em;">Choose the Mock Test</p>
+
+<!-- Test -->
+<div class="row">
+    <ng-container class ="col-sm-6"  *ngFor="let individualTest of listOfMockTests; let i = index" style="margin-bottom: 2rem;">
+        <div class="col-md-6">
+            <div class="card mb-4 box-shadow">
+                <div class="card-body">
+                    <div>
+                        <h2 class="card-title" style="text-align: center; ">
+                            <b>Test {{i+1}}</b>
+                            <mat-icon *ngIf="individualTest.testType === 'Paid' ">
+                                {{ individualTest.isBought ? 'lock_open' : 'lock'}}
+                            </mat-icon>
+                        </h2>
+                        <h4 [hidden]="individualTest.testType==='Free' || individualTest.isBought" class="card-title" style="float: right;"><mat-icon>currency_rupee</mat-icon>{{individualTest.testPrice}}</h4>
+                    </div>
+                    <p class="card-text"><b>Test Name:</b> {{individualTest.testName}}</p>
+                    <p class="card-text"><b>Test Taken By:</b> {{individualTest.testTakenBy}}</p>
+                    <p class="card-text"><b>Test Type:</b> {{individualTest.testType}}</p>
+                    <p class="card-text"><b>Test Category:</b> {{individualTest.testCategory}}</p>
+                    <p class="card-text"><b>Total Time:</b> {{individualTest.totalTime}} mins</p>
+                    <p class="card-text"><b>Total Number Of Questions:</b> {{individualTest.questions.length}}</p>
+                    <mat-divider></mat-divider>
+                    <p></p>
+                    <p class="card-text">
+                        This is the sample test taken by IOE. This is the sample test taken by IOE. This is the sample test taken by IOE
+                    </p>
+                    <button (click)="startTest(individualTest)" class="btn btn-outline-primary" [disabled]="individualTest.testType==='Paid' && !individualTest.isBought" style="margin-right: 2em;">Start Test</button>
+                    <button class="btn btn-primary" [hidden]="individualTest.testType==='Free' || individualTest.isBought">Buy Test</button>
+                    
+                </div>
+            </div>
+        </div> 
+    </ng-container>
+</div>
+<!-- Test end -->
+</ng-template>
+
+<ng-template #noSubjectTestsAvailable>
+    No subject tests available at the moment.
 </ng-template>
 
 <app-spinner [loading]="loading" [overlay]="true">

@@ -42,6 +42,8 @@ export class EditmocktestComponent implements OnInit {
         totalNumberOfQuestions: new FormControl('', [Validators.required]),
         testType: new FormControl('', [Validators.required]),
         testCategory: new FormControl('', [Validators.required]),
+        subjectName: new FormControl(''),
+        topicName: new FormControl(''),
         testPrice: new FormControl(''),
         question: new FormControl('',[Validators.required]),
         answerExplanation: new FormControl('',[Validators.required]),
@@ -67,6 +69,8 @@ export class EditmocktestComponent implements OnInit {
         this.modifyMockTestForm.get('totalNumberOfQuestions')?.setValue(response['totalNumberOfQuestions'])
         this.modifyMockTestForm.get('testType')?.setValue(response['testType'])
         this.modifyMockTestForm.get('testCategory')?.setValue(response['testCategory'])
+        this.modifyMockTestForm.get('subjectName')?.setValue(response['subjectName'])
+        this.modifyMockTestForm.get('topicName')?.setValue(response['topicName'])
         this.modifyMockTestForm.get('testPrice')?.setValue(response['testPrice'])
 
         this.modifyMockTestForm.get('question')?.setValue(this.testQuestions[0].question)
@@ -107,8 +111,10 @@ export class EditmocktestComponent implements OnInit {
         "totalNumberOfQuestions": this.modifyMockTestForm.get('totalNumberOfQuestions')?.value,
         "testType": this.modifyMockTestForm.get('testType')?.value,
         "testCategory": this.modifyMockTestForm.get('testCategory')?.value,
-        "subjectName": this.modifyMockTestForm.get('subjectField')?.value,
-        "topicName": this.modifyMockTestForm.get('topicField')?.value,
+        "subjectName": this.modifyMockTestForm.get('testCategory')?.value ==='Subject' ? 
+                        this.modifyMockTestForm.get('subjectName')?.value: 'sample',
+        "topicName": this.modifyMockTestForm.get('testCategory')?.value ==='Subject' ? 
+                      this.modifyMockTestForm.get('topicName')?.value: 'sample',
         "testPrice": this.modifyMockTestForm.get('testPrice')?.value,
         "questions": this.testQuestions,
         "testUploadDate": new Date()

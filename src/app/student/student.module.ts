@@ -48,6 +48,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { IndividualquestionComponent } from './individualquestion/individualquestion.component';
 import { StudentPerformanceAnalysisDashboardComponent } from './student-performance-analysis-dashboard/student-performance-analysis-dashboard.component';
 import { TabViewModule } from 'primeng/tabview';
+import { DetailSubjectTestReportComponent } from './detail-subject-test-report/detail-subject-test-report.component';
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { TabViewModule } from 'primeng/tabview';
     ViewmytestsComponent,
     EditprofileinfoComponent,
     IndividualquestionComponent,
-    StudentPerformanceAnalysisDashboardComponent
+    StudentPerformanceAnalysisDashboardComponent,
+    DetailSubjectTestReportComponent
   ],
   imports: [
     CommonModule,

@@ -23,13 +23,6 @@ declare var google: any;
   selector: 'app-detailtestreport',
   templateUrl: './detailtestreport.component.html',
   styleUrls: ['./detailtestreport.component.scss'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
 })
 export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
@@ -117,6 +110,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         sub.unsubscribe()
         if(response!== undefined){
           this.testReportData = response
+          this.testReportData.allTests = this.testReportData.allTests.filter(test => test.testCategory ==='Mock')
           console.log("Unique tests list before: ", this.uniqueTestsList)
           this.uniqueTestsList = {}
           this.testReportData.allTests.forEach(test =>{
@@ -165,11 +159,12 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
           })
           console.log("All testss: ", this.allTests)
 
-          if(this.allTests.length >1 && this.allTests[0].children !== undefined){
+          if(this.allTests.length > 0 && this.allTests[0].children !== undefined){
             this.defaultSelectedTest = this.allTests[0].children[0]
             let nodeData ={
               'node': this.defaultSelectedTest
             }
+            console.log("Node data: ", nodeData)
             this.nodeSelected(nodeData)
           }
         }

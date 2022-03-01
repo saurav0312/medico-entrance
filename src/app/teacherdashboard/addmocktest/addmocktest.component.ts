@@ -152,10 +152,14 @@ export class AddmocktestComponent implements OnInit{
             options.push(questionItem.optionC)
             options.push(questionItem.optionD)
 
-            
-            let subjectTags: Array<string> = questionItem.subject_tag.split("|")
+            let subjectTags : Array<string> = [];
+            let topicTags : Array<string> = [];
 
-            let topicTags:Array<string> = questionItem.topic_tag.split("|")
+            if(this.createMockTestForm.get('testCategory')?.value === 'Mock'){
+              subjectTags = questionItem.subject_tag.split("|")
+
+              topicTags = questionItem.topic_tag.split("|")
+            }
   
             let question:Question = {
               "question":questionItem.question,
@@ -180,38 +184,21 @@ export class AddmocktestComponent implements OnInit{
   
           if(checkPassed == true){
             let tempData;
-            if(this.createMockTestForm.get('testCategory')?.value === 'Subject'){
-              tempData =<MockTest> {
-                "testName": this.createMockTestForm.get('testName')?.value,
-                "testTakenBy": this.createMockTestForm.get('testTakenBy')?.value,
-                "totalTime": this.createMockTestForm.get('totalTime')?.value,
-                "totalNumberOfQuestions": this.createMockTestForm.get('totalNumberOfQuestions')?.value,
-                "testType": this.createMockTestForm.get('testType')?.value,
-                "testCategory": this.createMockTestForm.get('testCategory')?.value,
-                "subjectName": this.createMockTestForm.get('subjectField')?.value,
-                "topicName": this.createMockTestForm.get('topicField')?.value,
-                "questions": questions,
-                "testPrice": this.createMockTestForm.get('testPrice')?.value,
-                "teacherUserId": this.userId,
-                "testUploadDate": new Date()
-              };
-            }
-            else{
-              tempData =<MockTest> {
-                "testName": this.createMockTestForm.get('testName')?.value,
-                "testTakenBy": this.createMockTestForm.get('testTakenBy')?.value,
-                "totalTime": this.createMockTestForm.get('totalTime')?.value,
-                "totalNumberOfQuestions": this.createMockTestForm.get('totalNumberOfQuestions')?.value,
-                "testType": this.createMockTestForm.get('testType')?.value,
-                "testCategory": this.createMockTestForm.get('testCategory')?.value,
-                "subjectName": this.createMockTestForm.get('subjectField')?.value,
-                "topicName": this.createMockTestForm.get('topicField')?.value,
-                "questions": questions,
-                "testPrice": this.createMockTestForm.get('testPrice')?.value,
-                "teacherUserId": this.userId,
-                "testUploadDate": new Date()
-              };
-            }
+            tempData =<MockTest> {
+              "testName": this.createMockTestForm.get('testName')?.value,
+              "testTakenBy": this.createMockTestForm.get('testTakenBy')?.value,
+              "totalTime": this.createMockTestForm.get('totalTime')?.value,
+              "totalNumberOfQuestions": this.createMockTestForm.get('totalNumberOfQuestions')?.value,
+              "testType": this.createMockTestForm.get('testType')?.value,
+              "testCategory": this.createMockTestForm.get('testCategory')?.value,
+              "subjectName": this.createMockTestForm.get('subjectField')?.value,
+              "topicName": this.createMockTestForm.get('topicField')?.value,
+              "questions": questions,
+              "testPrice": this.createMockTestForm.get('testPrice')?.value,
+              "teacherUserId": this.userId,
+              "testUploadDate": new Date()
+            };
+            
             this.mockTest = tempData;
     
             //create mock test

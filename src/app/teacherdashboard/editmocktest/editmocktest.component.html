@@ -89,6 +89,26 @@
                     </div>
 
                     <div>
+                      <mat-form-field *ngIf="modifyMockTestForm.get('testCategory')?.value === 'Subject'" style="width: 100%;" appearance="outline">
+                          <mat-label>Subject Name</mat-label>
+                          <input formControlName="subjectName" type="text" [required]="modifyMockTestForm.get('testCategory')?.value === 'Subject'" matInput>
+                          <mat-error *ngIf="modifyMockTestForm.get('subjectName')?.dirty && modifyMockTestForm.get('testCategory')?.value === 'Subject' && modifyMockTestForm.get('subjectName')?.errors">
+                            Subject Name is required
+                          </mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div>
+                      <mat-form-field *ngIf="modifyMockTestForm.get('testCategory')?.value === 'Subject'" style="width: 100%;" appearance="outline">
+                          <mat-label>Topic Name</mat-label>
+                          <input formControlName="topicName" type="text" [required]="modifyMockTestForm.get('testCategory')?.value === 'Subject'" matInput>
+                          <mat-error *ngIf="modifyMockTestForm.get('topicName')?.dirty && modifyMockTestForm.get('testCategory')?.value === 'Subject' && modifyMockTestForm.get('topicName')?.errors">
+                            Topic Name is required
+                          </mat-error>
+                      </mat-form-field>
+                    </div>
+
+                    <div>
                         <mat-form-field style="width: 100%;" appearance="outline">
                             <mat-label>Edit Question No</mat-label>
                             <mat-select [disabled]="modifyMockTestForm.invalid" [(value)]="selectedValue" name="question">

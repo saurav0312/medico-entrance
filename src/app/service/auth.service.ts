@@ -214,7 +214,7 @@ export class AuthService {
     return from(setDoc(docRef, testDetail, {merge: true}))
   }
 
-  findSubjectNameList(testCategory: string): Observable<any>{
+  fetchTestsList(testCategory: string): Observable<any>{
     const collectionList = collection(this.firestore, 'MockTests');
     const q = query(collectionList, where("testCategory", "==", testCategory))
     return collectionData(q,{idField: 'id'})

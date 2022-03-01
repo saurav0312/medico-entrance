@@ -8,6 +8,7 @@ import { AuthGuard } from '../authentication/auth.guard';
 import { StudentAuthGuardGuard } from '../authentication/student-auth-guard.guard';
 import { IndividualquestionComponent } from './individualquestion/individualquestion.component';
 import { StudentPerformanceAnalysisDashboardComponent } from './student-performance-analysis-dashboard/student-performance-analysis-dashboard.component';
+import { DetailSubjectTestReportComponent } from './detail-subject-test-report/detail-subject-test-report.component';
 
 const routes: Routes = [
   {
@@ -15,7 +16,8 @@ const routes: Routes = [
     component: StudentprofileComponent,
     children: [
       { path: 'editprofileinfo', component: EditprofileinfoComponent},
-      { path: 'detailTestReport', component: DetailtestreportComponent},
+      { path: 'detailMockTestReport', component: DetailtestreportComponent},
+      { path: 'detailSubjectTestReport', component: DetailSubjectTestReportComponent},
       { path: 'viewMyTests', component: ViewmytestsComponent},
       { path: 'overallAnalysisDashboard', component: StudentPerformanceAnalysisDashboardComponent},
       { path: 'individualQuestion', component: IndividualquestionComponent },

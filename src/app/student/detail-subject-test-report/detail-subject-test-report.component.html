@@ -1,0 +1,122 @@
+<div>
+    <h1 style="text-align: center; margin-top: 2em;">Test Result Analysis
+    </h1>
+    <mat-divider></mat-divider>
+        <ng-container *ngTemplateOutlet="tabularReportTemplate"></ng-container>
+
+    <ng-template #tabularReportTemplate>
+        <div class="row">
+            <div class="col-sm-3" style="border-left: 1px solid #bfc3c2; border-right: 1px solid #bfc3c2; margin-top: 1.2em; margin-bottom: 1.2em;">
+                <div style="margin-top: 3em; margin-bottom:  1.5em;">
+                    <p style="font-size: 21px; font-weight: 500;">All Given Subject Tests</p>
+                </div>
+
+                <p-tree 
+                [value]="allTests" 
+                selectionMode="single" 
+                [(selection)]="defaultSelectedTest" 
+                (onNodeSelect)="nodeSelected($event)"
+                [filter]="true"></p-tree>
+
+            </div>
+            <div class="col-sm-9">
+                <mat-expansion-panel style="margin-top: 0.6em; margin-bottom: 0.6em;" class="mat-card mat-elevation-z8" 
+                                    (opened)="expandTable = true"
+                                    (closed)="expandTable = false"
+                                    [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <div class="col-md-12 text-center" >
+                                <h1 style="margin: 1em; font-weight: 500;">Score Summary</h1>
+                            </div>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+
+                    <div class="float-container">
+                        <div class="mat-card " style="border: 1px solid black;">
+                            <div class ="row" style="margin: 1em;">
+                                <div class ="col-md-4">
+                                    <b>Test Name:</b> {{testToShowInTable.testName}}
+                                </div>
+                                <div class ="col-md-4">
+                                    <b>Test Taken By:</b> {{testToShowInTable.testTakenBy}}
+                                </div>
+                                <div class ="col-md-4">
+                                    <b>Test Type:</b> {{testToShowInTable.testType}}
+                                </div>
+                            </div>
+                            <div class ="row" style="margin: 1em;">
+                                <div class="col-md-4">
+                                    <b>Total Score:</b> {{totalScore}}
+                                </div>
+                                <div class ="col-md-4">
+                                    <b>Date:</b> {{testTakenDate | date:'dd/MM/yyyy' }}
+                                </div>
+                            </div>
+                            <div class="green">
+                                <!-- <div style="float: right; margin-right: 2em; margin-bottom: 1em; margin-top: 1em;">
+                                    <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('xlsx', {fileName:'test', sheet: 'sheet_name', Props: {Author: 'OnlineExam'}})">Excel</button>
+                                    <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('csv')">Csv</button>
+                                    <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('json')">Json</button>
+                                    <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('txt')">Txt</button>
+                                    <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" [useExistingCss]="true" printTitle="Your Test Result" printSectionId="content" ngxPrint>Pdf</button> 
+                                </div> -->
+                                <div style="clear: both;">
+                                </div>
+                                <div class="table-contents" id="content" #content>
+
+                                    <p-table 
+                                            [columns]="displayedColumns" 
+                                            [paginator]="true" 
+                                            [rows]="5" 
+                                            [showCurrentPageReport]="true" 
+                                            responsiveLayout="scroll"
+                                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+                                            [rowsPerPageOptions]="[5,10,20]" 
+                                            [value]="testToShowInTable.testQuestions"
+                                            styleClass="p-datatable-striped">
+                                        <ng-template pTemplate="header" let-columns>
+                                            <tr>
+                                                <th>No</th>
+                                                <th [pSortableColumn]="col.field" *ngFor="let col of columns">
+                                                    {{col.header}}
+                                                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                                                </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-row let-i= "rowIndex" let-columns="columns">
+                                            <tr>
+                                                <td>
+                                                    <div pTooltip="Click to review question" matTooltipPosition='right' 
+                                                        style="cursor: pointer;" (click)="viewIndividualQuestion(row, i)">
+                                                        <a style="text-align: center; color: #0490f4;">{{i + 1}}</a>
+                                                    </div>
+                                                </td>
+                                                <td *ngFor="let col of columns">
+                                                    <div *ngIf="col.field == 'result'; else resultElseBlock">
+                                                        <div> 
+                                                            <mat-icon *ngIf ='row.correctAnswer === row.selectedOption' style="color: green;">done</mat-icon>
+                                                            <mat-icon *ngIf ='row.selectedOption!== null && row.correctAnswer !== row.selectedOption' style="color: red;">close</mat-icon>
+                                                            <mat-icon *ngIf ='row.selectedOption === null' style="color: green;">question_mark</mat-icon> 
+                                                        </div>
+                                                    </div>
+                                                    <ng-template #resultElseBlock>
+                                                        {{row[col.field]}}
+                                                    </ng-template>
+                                                        
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>   
+                    </div> 
+
+                    <mat-divider></mat-divider>                    
+                </mat-expansion-panel>
+            </div>
+        </div>
+    </ng-template>
+</div>
+    
