@@ -165,6 +165,14 @@ export class DetailSubjectTestReportComponent implements OnInit {
         this.testTakenDate = new Date(dateValue['seconds']*1000)
       }
       this.singleTest = this.testToShowInTable
+      this.totalScore =0;
+      this.singleTest.testQuestions.forEach(question =>{
+        if(question.selectedOption !== null){
+          if(question.selectedOption === question.correctAnswer){
+            this.totalScore += 1;
+          }
+        }
+      })
   }
 
   

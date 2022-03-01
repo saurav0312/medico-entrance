@@ -66,7 +66,7 @@
         </div>
     </div>
 
-    <div>
+    <div *ngIf="data.testReportQuestion.subjectTags.length > 0 &&  data.testReportQuestion.topicTags.length > 0">
         <mat-divider></mat-divider>
         <div style="margin-top: 10px; margin-left: 10px;">
             <div class="row" style="display: block;">
