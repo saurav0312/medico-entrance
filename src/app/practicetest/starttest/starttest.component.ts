@@ -199,7 +199,10 @@ export class StarttestComponent implements OnInit, OnDestroy {
       "testTakenDate" : new Date(),
       "testName": this.testData.testName,
       "testTakenBy": this.testData.testTakenBy,
-      'testType': this.testData.testType
+      'testType': this.testData.testType,
+      'testCategory': this.testData.testCategory,
+      'subjectName': this.testData.subjectName,
+      'topicName': this.testData.topicName
     }
 
     this.testToShowInTable = tests;
@@ -262,7 +265,7 @@ export class StarttestComponent implements OnInit, OnDestroy {
   }
 
   viewProfile(){
-    this.router.navigate(['/studentProfile/detailTestReport'])
+    this.router.navigate(['/studentProfile/overallAnalysisDashboard'])
   }
 
 

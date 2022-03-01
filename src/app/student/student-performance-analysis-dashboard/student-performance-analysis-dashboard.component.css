@@ -26,7 +26,9 @@
 .topic-list-class{
     cursor: pointer; 
     border-radius: 7px; 
-    border: 1px solid #cfcdcd; 
+    border: 1px solid #cfcdcd;
+    margin-right:1.2em; 
+    margin-bottom: 1.3em;
     margin-top: 1em; 
     padding: 1.4em;
 }

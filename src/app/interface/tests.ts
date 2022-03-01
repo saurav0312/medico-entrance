@@ -8,4 +8,7 @@ export interface Tests {
     testName: string ;
     testTakenBy: string;
     testType: string;
+    testCategory: string;
+    subjectName: string;
+    topicName: string;
   }
