@@ -219,6 +219,8 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
           })
         })
 
+
+        this.totalScore = 0;
         this.singleTest.testQuestions.forEach(testQuestion =>{
 
           //calculate time spent on the question based on subject
