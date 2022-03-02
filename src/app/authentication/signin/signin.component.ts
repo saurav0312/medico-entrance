@@ -71,7 +71,7 @@ export class SigninComponent implements OnInit {
                   if(response.accountType === 'student'){
                     sub.unsubscribe();
                     this.loading=false;
-                    this.router.navigateByUrl("/studentdashboard")
+                    this.router.navigateByUrl("/studentProfile/overallAnalysisDashboard")
                   }
                   else{
                     sub.unsubscribe();
