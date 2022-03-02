@@ -36,6 +36,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { TooltipModule } from 'primeng/tooltip';
 import { KnobModule } from "primeng/knob";
 import { ProgressBarModule } from 'primeng/progressbar';
+import { InputTextareaModule } from 'primeng/inputtextarea';
 
 import { Ng2GoogleChartsModule } from 'ng2-google-charts'
 
@@ -49,6 +50,7 @@ import { IndividualquestionComponent } from './individualquestion/individualques
 import { StudentPerformanceAnalysisDashboardComponent } from './student-performance-analysis-dashboard/student-performance-analysis-dashboard.component';
 import { TabViewModule } from 'primeng/tabview';
 import { DetailSubjectTestReportComponent } from './detail-subject-test-report/detail-subject-test-report.component';
+import { QuestionAnswerDiscussionComponent } from './question-answer-discussion/question-answer-discussion.component';
 
 
 @NgModule({
@@ -59,7 +61,8 @@ import { DetailSubjectTestReportComponent } from './detail-subject-test-report/d
     EditprofileinfoComponent,
     IndividualquestionComponent,
     StudentPerformanceAnalysisDashboardComponent,
-    DetailSubjectTestReportComponent
+    DetailSubjectTestReportComponent,
+    QuestionAnswerDiscussionComponent
   ],
   imports: [
     CommonModule,
@@ -95,7 +98,8 @@ import { DetailSubjectTestReportComponent } from './detail-subject-test-report/d
     TooltipModule,
     KnobModule,
     ProgressBarModule,
-    TabViewModule
+    TabViewModule,
+    InputTextareaModule
   ],
   exports: [
     StudentprofileComponent,

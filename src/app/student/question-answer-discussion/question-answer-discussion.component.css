@@ -1,0 +1,16 @@
+.raised-block {
+    background-color: #fff;
+    margin-bottom: 10px;
+    margin-left: 0;
+    margin-right: -0.625rem; 
+    padding-left: 0.625rem;
+    padding-right: 0.625rem;
+}
+@media (max-width: 33.9em){ 
+    .raised-block {
+        margin-left: -0.625rem;
+    }
+}
+.row [class^="col-"]:first-child>.raised-block {
+    margin-left: -0.625rem;
+}
