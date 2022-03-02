@@ -94,6 +94,9 @@
     </div>
 
     <div class="row">
+        <div *ngIf="listOfSubjectTests.length > 0">
+            <p>Available Subject Tests</p>
+        </div>
         <!-- Test -->
         <div class="row">
             <ng-container class ="col-sm-6"  *ngFor="let individualTest of listOfSubjectTests; let i = index" style="margin-bottom: 2rem;">
