@@ -9,6 +9,7 @@ import { StudentAuthGuardGuard } from '../authentication/student-auth-guard.guar
 import { IndividualquestionComponent } from './individualquestion/individualquestion.component';
 import { StudentPerformanceAnalysisDashboardComponent } from './student-performance-analysis-dashboard/student-performance-analysis-dashboard.component';
 import { DetailSubjectTestReportComponent } from './detail-subject-test-report/detail-subject-test-report.component';
+import { QuestionAnswerDiscussionComponent } from './question-answer-discussion/question-answer-discussion.component';
 
 const routes: Routes = [
   {
@@ -18,6 +19,7 @@ const routes: Routes = [
       { path: 'editprofileinfo', component: EditprofileinfoComponent},
       { path: 'detailMockTestReport', component: DetailtestreportComponent},
       { path: 'detailSubjectTestReport', component: DetailSubjectTestReportComponent},
+      { path: 'questionAnswerDiscussion', component: QuestionAnswerDiscussionComponent},
       { path: 'viewMyTests', component: ViewmytestsComponent},
       { path: 'overallAnalysisDashboard', component: StudentPerformanceAnalysisDashboardComponent},
       { path: 'individualQuestion', component: IndividualquestionComponent },
