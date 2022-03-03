@@ -35,7 +35,7 @@
                 <div class="card-body" style="text-align: center;">
                     <div>
                         <h3 class="card-title" style="text-align: center; display: inline; ">
-                            <button class="btn btn-primary">Ask A Question</button>
+                            <button class="btn btn-primary" (click)="addDiscussionQuestion()">Ask A Question</button>
                         </h3>
                     </div>
                     
@@ -66,252 +66,119 @@
 
 <ng-template #recentQuestionTemplate>
 
-    <div class="card" style="margin-bottom: 8px;">
-        <div class="row" style="margin-top: 0.6em; margin-left: 0.3em;">
-            <div class="col-sm-1" style="float: left;">
-                <img class="rounded-circle" width="50" src="assets/img/person/person.png">
-                <div style="text-align: center; margin-top: 12px;">
-                    <mat-icon>thumb_up_alt</mat-icon>
-                    <p>5</p>
-                    <mat-icon>thumb_down_alt</mat-icon>
+    <ng-container *ngFor="let discussionQuestion of allDiscussionQuestions; let i = index">
+        <div class="card" style="margin-bottom: 2em;">
+            <div class="row" style="margin-top: 0.6em; margin-left: 0.3em; margin-right: 0.6em;">
+                <div class="col-sm-1" style="float: left;">
+                    <img class="rounded-circle" width="40" src="{{discussionQuestion.questionAskedByImage}}">
+                    <!-- <div style="text-align: center; margin-top: 12px;">
+                        <mat-icon>thumb_up_alt</mat-icon>
+                        <p>{{discussionQuestion.questionUpVotesCount}}</p>
+                        <mat-icon>thumb_down_alt</mat-icon>
+                    </div> -->
                 </div>
-            </div>
-            <div class="col-sm-11">
-                <div class="row">
-                    <div class="col-sm-2" style="font-weight: 600; color: #5d5ded;">
-                        Saurav Kumar
+                <div class="col-sm-11">
+                    <div class="row">
+                        <div class="col-sm-2" style="font-weight: 600; color: #5d5ded;">
+                            {{discussionQuestion.questionAskedByUsername}}
+                        </div>
+                        <!-- <div class="col-sm-10">
+                            asked on: {{discussionQuestion.questionAskedDate | date:'medium'}}
+                        </div> -->
                     </div>
-                    <div class="col-sm-10">
-                        Upload date: today
+                    <div style="margin-top: 0.3em; padding-right: 1em; font-weight: 700;">
+                        {{discussionQuestion.question}}
                     </div>
-                </div>
-                <div style="margin-top: 0.3em; padding-right: 1em; font-weight: 700;">
-                    What is Math? What is Math? 
-                    What is Math? What is Math? 
-                    What is Math? What is Math? What is Math?
-                     What is Math? What is Math? What is Math?
-                </div>
-                <div class="card-title" style="margin-top: 0.5em;">
-                    Description
-                </div>
-                <div class=" card-title" style="display: flex;">
-                    <div style="width: fit-content; height: auto; margin-bottom: 0.3em; 
-                                margin-right: 0.6em; background-color: #e1ecf4; border-radius: 3px; padding: 2px;">
-                        Math
+                    <!-- <div class="card-title" style="margin-top: 0.5em;">
+                        Description
+                    </div> -->
+                    <div class=" card-title" style="display: flex;">
+                        <ng-container *ngFor="let questionTag of discussionQuestion.questionTags">
+                            <div style="width: fit-content; height: auto; margin-bottom: 0.3em; 
+                                        margin-right: 0.6em; background-color: #e1ecf4; border-radius: 3px; padding: 2px;">
+                                {{questionTag}}
+                            </div>
+                        </ng-container>
                     </div>
-                    <div style="width: fit-content; height: auto; margin-bottom: 0.3em; 
-                                margin-right: 0.6em; background-color: #e1ecf4; border-radius: 3px;  padding: 2px">
-                        Geometry
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div style="padding:12px; margin-left: 12px;margin-right: 12px;">
-            <mat-divider ></mat-divider>
-            
-            <div  style="margin-top: 1em;">
-                <textarea pInputTextarea placeholder="Add a comment" style="width: 100%;"></textarea>
-                <div style="display: flex; justify-content: right; margin-top: 0.3em;">
-                    <button class="btn btn-success" style="width: fit-content;">Submit</button>
-                </div>
-            </div>
-            <div style="font-weight: 600; font-size: large;">
-                5 Answers
-             </div>
+                    <!-- <div style="margin-top: 12px;">
+                        <mat-icon>thumb_up_alt</mat-icon>
+                        <p>{{discussionQuestion.questionUpVotesCount}}</p>
+                        <mat-icon>thumb_down_alt</mat-icon>
+                    </div> -->
+                    <div style="display: flex;justify-content: right;">
 
-            <!-- first answer -->
-            <div style="margin-top: 0.4em;">
-                <div class="row">
-                    <div style="display: flex; margin-bottom: 0.3em;">
-                        <p>
-                        This is the first answer This is the first answer This is the first answer This is the first answer This is the first answer 
-                        This is the first answer This is the first answer This is the first answer
-                        </p>
-                    </div>
-                    <div style="display: flex; justify-content: right;">
-                        <div style="display: inline-flex; margin-right: 3px;">
+                        <!-- <div class="col-sm-10">
+                            asked on: {{discussionQuestion.questionAskedDate | date:'medium'}}
+                        </div> -->
+
+                        <div style="display: inline-flex; margin-right: 8px;">
                             <div style=" display: inline-flex; margin-right: 3px;">
-                                <p>answered on: </p>
-                            </div>
-                            <div style="display: inline-flex;">
-                                <p>3 March 2022</p>
+                                asked on: {{discussionQuestion.questionAskedDate | date:'medium'}}
                             </div>
                         </div>
-                        <div style="display: inline-flex; margin-right: 0.3em;">
-                            <mat-icon>thumb_up_alt</mat-icon>
-                            <p>2</p>
+
+
+                        <div style="display: inline-flex; margin-right: 0.3em; ">
+                            <mat-icon (click)="increaseUpVoteCount(i)" style="cursor: pointer;">thumb_up_alt</mat-icon>
+                            <p>{{discussionQuestion.questionUpVotesCount}}</p>
                         </div>
                         <div style="display: inline-flex;">
-                            <mat-icon>thumb_down_alt</mat-icon>
-                            <p>3</p>
+                            <mat-icon (click)="decreaseUpVoteCount(i)" style="cursor: pointer;">thumb_down_alt</mat-icon>
+                            <p>{{discussionQuestion.questionDownVotesCount}}</p>
                         </div>
                     </div>
                 </div>
+            </div>
+            <div style="padding:12px; margin-left: 12px;margin-right: 12px;">
+                <mat-divider ></mat-divider>
                 
-            </div>
-            <mat-divider></mat-divider>
+                <div  style="margin-top: 1em;">
+                    <form (ngSubmit)="submitAnswer(i)" name="answerForm" [formGroup]="answerForm" fxLayoutAlign ="stretch" fxLayout="column">
+                        <textarea formControlName="answer" pInputTextarea placeholder="Add a comment" style="width: 100%;" required></textarea>
+                        <div style="display: flex; justify-content: right; margin-top: 0.3em;">
+                            <button class="btn btn-success" type="submit" style="width: fit-content;">Submit</button>
+                        </div>
+                    </form>
+                </div>
+                <div style="font-weight: 600; font-size: large;">
+                    {{discussionQuestion.allAnswers.length}} Answers
+                </div>
 
-            <!-- second answer -->
-            <div style="margin-top: 0.4em;">
-                <div class="row">
-                    <div style="display: flex; margin-bottom: 0.3em;">
-                        This is the second answer
-                    </div>
-                    <div style="display: flex; justify-content: right;">
-                        <div style="display: inline-flex; margin-right: 0.3em;">
-                            <mat-icon>thumb_up_alt</mat-icon>
-                            <p>6</p>
+                <!-- first answer -->
+                <ng-container *ngFor="let answer of discussionQuestion.allAnswers; let j = index">
+                    <div style="margin-top: 0.4em;">
+                        <div class="row">
+                            <div style="display: flex; margin-bottom: 0.3em;">
+                                <p>
+                                {{answer.answer}}
+                                </p>
+                            </div>
+                            <div style="display: flex; justify-content: right;">
+                                <div style="display: inline-flex;">
+                                    <div style=" display: inline-flex; margin-right: 0.8em;">
+                                        <p>answered on: {{answer.answeredOn | date:'medium'}}</p>
+                                    </div>
+                                    <!-- <div style="display: inline-flex;">
+                                        <p>3 March 2022</p>
+                                    </div> -->
+                                </div>
+                                <div style="display: inline-flex; margin-right: 0.3em;">
+                                    <mat-icon>thumb_up_alt</mat-icon>
+                                    <p>{{answer.answerUpVotesCount}}</p>
+                                </div>
+                                <div style="display: inline-flex;">
+                                    <mat-icon>thumb_down_alt</mat-icon>
+                                    <p>{{answer.answerUpVotesCount}}</p>
+                                </div>
+                            </div>
                         </div>
-                        <div style="display: inline-flex;">
-                            <mat-icon>thumb_down_alt</mat-icon>
-                            <p>9</p>
-                        </div>
+                        
                     </div>
-                </div>
-                
+                    <mat-divider></mat-divider>
+                </ng-container>
             </div>
-            <mat-divider></mat-divider>
-
-            <!-- third answer -->
-            <div style="margin-top: 0.4em;">
-                <div class="row">
-                    <div style="display: flex; margin-bottom: 0.3em;">
-                        This is the third answer
-                    </div>
-                    <div style="display: flex; justify-content: right;">
-                        <div style="display: inline-flex; margin-right: 0.3em;">
-                            <mat-icon>thumb_up_alt</mat-icon>
-                            <p>3</p>
-                        </div>
-                        <div style="display: inline-flex;">
-                            <mat-icon>thumb_down_alt</mat-icon>
-                            <p>9</p>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            <mat-divider></mat-divider>
-        </div>
-    </div> 
-    
-    <div class="card" style="margin-bottom: 8px;">
-        <div class="row" style="margin-top: 0.6em; margin-left: 0.3em;">
-            <div class="col-sm-1" style="float: left;">
-                <img class="rounded-circle" width="50" src="assets/img/person/person.png">
-                <div style="text-align: center; margin-top: 12px;">
-                    <mat-icon>thumb_up_alt</mat-icon>
-                    <p>5</p>
-                    <mat-icon>thumb_down_alt</mat-icon>
-                </div>
-            </div>
-            <div class="col-sm-11">
-                <div class="row">
-                    <div class="col-sm-2" style="font-weight: 600; color: #5d5ded;">
-                        Saurav Kumar
-                    </div>
-                    <div class="col-sm-10">
-                        Upload date: today
-                    </div>
-                </div>
-                <div style="margin-top: 0.3em; padding-right: 1em; font-weight: 700;">
-                    What is Math? What is Math? 
-                    What is Math? What is Math? 
-                    What is Math? What is Math? What is Math?
-                     What is Math? What is Math? What is Math?
-                </div>
-                <div class="card-title" style="margin-top: 0.5em;">
-                    Description
-                </div>
-                <div class=" card-title" style="display: flex;">
-                    <div style="width: fit-content; height: auto; margin-bottom: 0.3em; 
-                                margin-right: 0.6em; background-color: #e1ecf4; border-radius: 3px; padding: 2px;">
-                        Math
-                    </div>
-                    <div style="width: fit-content; height: auto; margin-bottom: 0.3em; 
-                                margin-right: 0.6em; background-color: #e1ecf4; border-radius: 3px;  padding: 2px">
-                        Geometry
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div style="padding:12px; margin-left: 12px;margin-right: 12px;">
-            <mat-divider ></mat-divider>
-            
-            <div class="card" style="margin-top: 1em;">
-                <textarea pInputTextarea placeholder="Add a comment"></textarea>
-            </div>
-
-            <div style="font-weight: 600; font-size: large;">
-                5 Answers
-             </div>
-
-            <!-- first answer -->
-            <div style="margin-top: 0.4em;">
-                <div class="row">
-                    <div style="display: flex; margin-bottom: 0.3em;">
-                        This is the first answer
-                    </div>
-                    <div style="display: flex; justify-content: right;">
-                        <div style="display: inline-flex; margin-right: 0.3em;">
-                            <mat-icon>thumb_up_alt</mat-icon>
-                            <p>2</p>
-                        </div>
-                        <div style="display: inline-flex;">
-                            <mat-icon>thumb_down_alt</mat-icon>
-                            <p>3</p>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            <mat-divider></mat-divider>
-
-            <!-- second answer -->
-            <div style="margin-top: 0.4em;">
-                <div class="row">
-                    <div style="display: flex; margin-bottom: 0.3em;">
-                        This is the second answer
-                    </div>
-                    <div style="display: flex; justify-content: right;">
-                        <div style="display: inline-flex; margin-right: 0.3em;">
-                            <mat-icon>thumb_up_alt</mat-icon>
-                            <p>6</p>
-                        </div>
-                        <div style="display: inline-flex;">
-                            <mat-icon>thumb_down_alt</mat-icon>
-                            <p>9</p>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            <mat-divider></mat-divider>
-
-            <!-- third answer -->
-            <div style="margin-top: 0.4em;">
-                <div class="row">
-                    <div style="display: flex; margin-bottom: 0.3em;">
-                        This is the third answer
-                    </div>
-                    <div style="display: flex; justify-content: right;">
-                        <div style="display: inline-flex; margin-right: 0.3em;">
-                            <mat-icon>thumb_up_alt</mat-icon>
-                            <p>3</p>
-                        </div>
-                        <div style="display: inline-flex;">
-                            <mat-icon>thumb_down_alt</mat-icon>
-                            <p>9</p>
-                        </div>
-                    </div>
-                </div>
-                
-            </div>
-            <mat-divider></mat-divider>
-        </div>
-    </div>
-
-
+        </div> 
+    </ng-container>
 </ng-template>
 
 <ng-template #mostAnsweredTemplate>

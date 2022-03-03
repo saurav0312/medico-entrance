@@ -1,0 +1,34 @@
+.main-body{
+    position: relative;
+width: 1440px;
+height: 4433px;
+
+background: #19191B
+}
+
+.header-label{
+    position: absolute;
+height: 40px;
+left: 8.33%;
+right: 74.65%;
+top: calc(50% - 40px/2 - 2154.5px);
+}
+
+.header-name{
+    position: absolute;
+width: 197px;
+height: 39px;
+left: 168px;
+top: 42px;
+
+/* font-family: Montserrat; */
+font-style: normal;
+font-weight: bold;
+font-size: 28px;
+line-height: 140%;
+font-family: 'Cambay', sans-serif;
+/* or 39px */
+
+
+color: #FFFFFF;
+}

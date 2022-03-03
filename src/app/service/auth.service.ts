@@ -21,6 +21,7 @@ import { TestReportData } from '../interface/testReportData';
 import { arrayRemove, deleteDoc, FieldValue, query, where } from 'firebase/firestore';
 import { ProfileService } from './profile.service';
 import { ContactRequest } from '../interface/contact-request';
+import { DiscussionQuestion } from '../interface/discussion-question';
 
 @Injectable({
   providedIn: 'root'
@@ -45,6 +46,21 @@ export class AuthService {
   createContactRequest(contactFormData: ContactRequest):Observable<any>{
     const docRef = collection(this.firestore, 'ContactRequests'); 
     return from(addDoc(docRef, contactFormData));
+  }
+
+  addDiscussionQuestion(discussionQuestionData: DiscussionQuestion){
+    const docRef = collection(this.firestore, 'DiscussionQuestions'); 
+    return from(addDoc(docRef, discussionQuestionData));
+  }
+
+  readDiscussionQuestions(): Observable<any> {
+    const bookRef = collection(this.firestore, `DiscussionQuestions`);
+    return collectionData(bookRef, {idField: 'id'});
+  }
+
+  updateDiscussionQuestion(questionId: string| undefined ,discussionQuestionData: DiscussionQuestion){
+    const docRef = doc(this.firestore, `DiscussionQuestions/${questionId}`);
+    return from(setDoc(docRef, discussionQuestionData, {merge: true}))
   }
 
   getCurrentUser(): Observable<any>{

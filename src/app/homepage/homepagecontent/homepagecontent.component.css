@@ -1,0 +1,51 @@
+.mock-class{
+    position: absolute;
+width: 719px;
+height: 252px;
+left: 120px;
+top: 230px;
+
+font-family: 'Cambay', sans-serif;
+font-style: normal;
+font-weight: bold;
+font-size: 80px;
+line-height: 84px;
+
+}
+
+.head-class{
+    line-height: 50px;
+    font-family: 'Cambay', sans-serif;
+}
+
+.description-class{
+    font-family: Nunito Sans;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 21px;
+        line-height: 25px;
+        letter-spacing: -0.656526px;
+}
+
+.sign-up-button-class{
+    width: 125px;
+        height: 58px;
+        left: 123px;
+        top: 673px;
+        background: #855afe;
+        border-radius: 5px;
+        color: white !important;
+}
+
+.services-class{
+    font-size: 20px;
+}
+
+.services-description{
+    font-size: 16px;
+    font-family: Nunito Sans;
+}
+
+.services-icon-color{
+    color: #6c55f9;
+}

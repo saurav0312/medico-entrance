@@ -37,6 +37,7 @@ import { TooltipModule } from 'primeng/tooltip';
 import { KnobModule } from "primeng/knob";
 import { ProgressBarModule } from 'primeng/progressbar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
+import { DynamicDialogModule } from 'primeng/dynamicdialog';
 
 import { Ng2GoogleChartsModule } from 'ng2-google-charts'
 
@@ -51,6 +52,8 @@ import { StudentPerformanceAnalysisDashboardComponent } from './student-performa
 import { TabViewModule } from 'primeng/tabview';
 import { DetailSubjectTestReportComponent } from './detail-subject-test-report/detail-subject-test-report.component';
 import { QuestionAnswerDiscussionComponent } from './question-answer-discussion/question-answer-discussion.component';
+import { DiscussionQuestionComponentComponent } from './discussion-question-component/discussion-question-component.component';
+import { InputText, InputTextModule } from 'primeng/inputtext';
 
 
 @NgModule({
@@ -62,7 +65,8 @@ import { QuestionAnswerDiscussionComponent } from './question-answer-discussion/
     IndividualquestionComponent,
     StudentPerformanceAnalysisDashboardComponent,
     DetailSubjectTestReportComponent,
-    QuestionAnswerDiscussionComponent
+    QuestionAnswerDiscussionComponent,
+    DiscussionQuestionComponentComponent
   ],
   imports: [
     CommonModule,
@@ -99,7 +103,9 @@ import { QuestionAnswerDiscussionComponent } from './question-answer-discussion/
     KnobModule,
     ProgressBarModule,
     TabViewModule,
-    InputTextareaModule
+    InputTextareaModule,
+    DynamicDialogModule,
+    InputTextModule
   ],
   exports: [
     StudentprofileComponent,

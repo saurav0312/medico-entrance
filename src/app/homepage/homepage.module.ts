@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
+import { NewPageDesignComponent } from './new-page-design/new-page-design.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
     HomeComponent,
     HomenavigationbarComponent,
     HomepagecontentComponent,
-    ContactComponent
+    ContactComponent,
+    NewPageDesignComponent
   ],
   imports: [
     CommonModule,
