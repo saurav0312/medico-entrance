@@ -1,0 +1,68 @@
+<!-- <textarea pInputTextarea [(ngModel)]="question" placeholder="Add a question" style="width: 100%;"></textarea>
+<button class="btn btn-success" (click)="submitQuestion()" style="width: fit-content; display: flex; float: right;">Submit</button> -->
+
+<!-- Test -->
+
+<div style="margin-top: 2em;">
+    <div class="login-container">
+      <div class="bb-login">
+        <div>
+          <form (ngSubmit)="submitQuestion()" name="discussionQuestionForm" [formGroup]="discussionQuestionForm" fxLayoutAlign ="stretch" fxLayout="column">
+            <div>
+              <ng-container *ngFor="let field of commonFormFieldsName">
+                  <ng-container [ngTemplateOutlet]="commonFormFieldsTemplateList[field]" [ngTemplateOutletContext]= "{$implicit: discussionQuestionForm}">
+                  </ng-container>
+              </ng-container>
+            </div>
+            
+            <ng-container *ngTemplateOutlet="submitCancel">
+            </ng-container>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <ng-template #headerTemplate>
+      <p style="text-align: center; font-size: 20px;">Ask a question</p>
+  </ng-template>
+
+  <ng-template #questionTemplate let-discussionQuestionForm>
+    <mat-form-field style="width: 100%;" appearance="outline">
+      <mat-label>Question</mat-label> 
+      <textarea rows="4" [formControl]="discussionQuestionForm.get('question')" matInput></textarea>
+    </mat-form-field>
+    <mat-error *ngIf="discussionQuestionForm.dirty && discussionQuestionForm.get('question')?.value.length==0">
+        Question is required
+    </mat-error>
+  </ng-template>
+  
+  <ng-template #questionSubjectTemplate let-discussionQuestionForm>
+    <mat-form-field style="width: 100%;" appearance="outline">
+      <mat-label>Subject</mat-label> 
+      <input [formControl]="discussionQuestionForm.get('questionSubject')" type="text" required matInput>
+      <mat-error *ngIf="discussionQuestionForm.dirty && discussionQuestionForm.get('questionSubject')?.value.length==0">
+        Subject name is required
+      </mat-error>
+    </mat-form-field>
+  </ng-template>
+  
+  <ng-template #questionTagTemplate let-discussionQuestionForm>
+    <mat-form-field style="width: 100%;" appearance="outline">
+      <mat-label>Question Tag</mat-label> 
+      <input [formControl]="discussionQuestionForm.get('questionTags')" type="text" required matInput>
+      <mat-error *ngIf="discussionQuestionForm.dirty && discussionQuestionForm.get('questionTags')?.value.length==0">
+          Question tag is required
+      </mat-error>
+    </mat-form-field>
+  </ng-template>
+  
+  <ng-template #submitCancel>
+    <button class="btn btn-danger" type="button" (click)="clearForm()" style="margin-right: 2em;">Cancel</button>
+    <button class="btn btn-success" type="submit" [disabled]="discussionQuestionForm.invalid">Submit</button>
+  </ng-template>
+
+<!-- Test end -->
+
+<app-spinner [loading]="loading" [diameter]="50" [overlay]="true">
+</app-spinner>

@@ -1442,7 +1442,7 @@ a.text-dark:hover, a.text-dark:focus {
 
 @media (min-width: 768px) {
   .page-banner.home-banner {
-    height: 600px;
+    /* height: 600px; */
   }
 }
 
@@ -1470,7 +1470,7 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 .home-banner .row > *:first-child {
-  padding-left: 8%;
+  /* padding-left: 8%; */
 }
 
 .subhead {
@@ -1524,7 +1524,7 @@ a.text-dark:hover, a.text-dark:focus {
 .btn-split {
   display: inline-flex;
   align-items: center;
-  border-radius: 40px;
+  border-radius: 4px;
   padding-top: 6px;
   padding-bottom: 6px;
   padding-right: 6px;
