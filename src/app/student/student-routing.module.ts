@@ -10,12 +10,14 @@ import { IndividualquestionComponent } from './individualquestion/individualques
 import { StudentPerformanceAnalysisDashboardComponent } from './student-performance-analysis-dashboard/student-performance-analysis-dashboard.component';
 import { DetailSubjectTestReportComponent } from './detail-subject-test-report/detail-subject-test-report.component';
 import { QuestionAnswerDiscussionComponent } from './question-answer-discussion/question-answer-discussion.component';
+import { StudentPageHomeComponent } from './student-page-home/student-page-home.component';
 
 const routes: Routes = [
   {
     path:'', 
     component: StudentprofileComponent,
     children: [
+      { path: 'studentPageHome', component: StudentPageHomeComponent},
       { path: 'editprofileinfo', component: EditprofileinfoComponent},
       { path: 'detailMockTestReport', component: DetailtestreportComponent},
       { path: 'detailSubjectTestReport', component: DetailSubjectTestReportComponent},

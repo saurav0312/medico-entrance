@@ -7,60 +7,75 @@
       My Profile     
     </mat-toolbar> -->
 
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light" style="background-color: #cacae2eb !important;">
-      <button mat-icon-button *ngIf="sidenav.mode === 'over' " (click)="sidenav.toggle()">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light" style="background-color: white !important;">
+      <button mat-icon-button *ngIf="sidenav.mode === 'over' || sidenav.mode === 'side'" (click)="sidenav.toggle()">
         <mat-icon *ngIf="!sidenav.opened">menu</mat-icon> 
         <mat-icon *ngIf="sidenav.opened">close</mat-icon>
     </button>
     My Profile
     </nav>
     
-    <mat-sidenav-container class="mat-sidenav-container-class">
-      <mat-sidenav #sidenav="matSidenav" class="mat-sidenav-class" mode='over' opened>
+    <mat-sidenav-container class="mat-sidenav-container-class" style="font-family: ubuntu;">
+      <mat-sidenav #sidenav="matSidenav" class="mat-sidenav-class" mode='side' opened style="width: 20em;">
     
     
           <p></p>
-          <img class="rounded-circle" src="{{profileImageUrl}}" width="100">
-          <h4 class="name">{{username}}</h4>
+          <!-- style="text-align: left; padding-left: 1.8em; font-size: 7px;" -->
+          <!-- <div > -->
+            <div style="text-align: left; display: flex; padding-left: 1.4em;">
+              <img class="rounded-circle" src="{{profileImageUrl}}" style=" height: 5em; width: 5em">
+              <div style="padding-left: 1.2em;">
+              <p class="name" style="font-size: 20px; 
+              font-family: fjalla-one; font-weight: 600; padding-top: 0.6em; margin-bottom: 0px;">{{username}}</p>
+              <p><i>Student</i></p>
+              </div>
+            </div>
+            <!-- <div>
+              
+            </div> -->
+          <!-- </div> -->
     
+          <div>
           <mat-divider class="mat-divider"></mat-divider>
+        </div>
 
-          <button routerLink="/studentdashboard" routerLinkActive="active-link" mat-button class="menu-button">
-            <mat-icon>home</mat-icon>
+          <button routerLink="studentPageHome" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
+            <mat-icon class="icon-class">home</mat-icon>
             <span>Home</span>
           </button>
-          <button routerLink="editprofileinfo" routerLinkActive="active-link" mat-button class="menu-button">
-            <mat-icon>person</mat-icon>
+          <button routerLink="editprofileinfo" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
+            <mat-icon class="icon-class">person</mat-icon>
             <span>Profile</span>
           </button>
-          <button routerLink="overallAnalysisDashboard" routerLinkActive="active-link" mat-button class="menu-button">
-            <mat-icon>dashboard</mat-icon>
+          <button routerLink="overallAnalysisDashboard" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
+            <mat-icon class="icon-class">dashboard</mat-icon>
             <span>Dashboard</span>
           </button>
 
-          <button routerLink="detailSubjectTestReport" routerLinkActive="active-link" mat-button class="menu-button">
+          <!-- <button routerLink="detailSubjectTestReport" routerLinkActive="active-link" mat-button class="menu-button">
             <mat-icon>article</mat-icon>
             <span>Subject Tests History</span>
-          </button>
+          </button> -->
 
-          <button routerLink="detailMockTestReport" routerLinkActive="active-link" mat-button class="menu-button">
+          <!-- <button routerLink="detailMockTestReport" routerLinkActive="active-link" mat-button class="menu-button">
               <mat-icon>article</mat-icon>
               <span>Mock Tests History</span>
-          </button>
-          <button routerLink="/studentdashboard/allTeachers" routerLinkActive="active-link" mat-button class="menu-button">
-            <mat-icon>person</mat-icon>
+          </button> -->
+
+          <button routerLink="/studentdashboard/allTeachers" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
+            <mat-icon class="icon-class">person</mat-icon>
             <span>View All Teachers</span>
           </button>
-          <button routerLink="questionAnswerDiscussion" routerLinkActive="active-link" mat-button class="menu-button">
-            <mat-icon>question_answer</mat-icon>
+          <button routerLink="questionAnswerDiscussion" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
+            <mat-icon class="icon-class">question_answer</mat-icon>
             <span>Ask A Question</span>
           </button>
           <!-- <button routerLink="testsAnalysisDashboard" routerLinkActive="docs-navbar-header-item-selected" mat-button class="menu-button">
             <mat-icon>pie_chart</mat-icon>
             <span>Tests Analysis Dashboard</span>
           </button> -->
-          <button (click)='logout()' mat-button class="menu-button">
-            <mat-icon>logout</mat-icon>
+          <button (click)='logout()' mat-button class="menu-button navbar-buttons">
+            <mat-icon class="icon-class">logout</mat-icon>
             <span>Sign out</span>
           </button>
       </mat-sidenav>
