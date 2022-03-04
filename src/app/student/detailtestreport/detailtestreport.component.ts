@@ -111,7 +111,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         if(response!== undefined){
           this.testReportData = response
           this.testReportData.allTests = this.testReportData.allTests.filter(test => test.testCategory ==='Mock')
-          console.log("Unique tests list before: ", this.uniqueTestsList)
           this.uniqueTestsList = {}
           this.testReportData.allTests.forEach(test =>{
             if(this.uniqueTestsList[test.testId]=== undefined){
@@ -123,7 +122,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
               this.uniqueTestsList[test.testId].push(test)
             }
           })
-          console.log("Unique tests list: ", this.uniqueTestsList)
 
           let count = 0;
           let expanded =true;
@@ -157,14 +155,12 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
               count++;
             }
           })
-          console.log("All testss: ", this.allTests)
 
           if(this.allTests.length > 0 && this.allTests[0].children !== undefined){
             this.defaultSelectedTest = this.allTests[0].children[0]
             let nodeData ={
               'node': this.defaultSelectedTest
             }
-            console.log("Node data: ", nodeData)
             this.nodeSelected(nodeData)
           }
         }
@@ -414,12 +410,10 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
       google.visualization.events.addListener(subjectTimeSpentChart, 'ready', function () {
         subjectTimeSpent_chart_download_button.href = subjectTimeSpentChart.getImageURI();
-        console.log(subjectTimeSpent_chart_download_button.href);
       });
 
       google.visualization.events.addListener(topicTimeSpentChart, 'ready', function () {
         topicTimeSpent_chart_download_button.href = topicTimeSpentChart.getImageURI();
-        console.log(topicTimeSpent_chart_download_button.href);
       });
 
       subjectTimeSpentChart.draw(subjectTimeSpentData, subjectTimeSpentOptions);
@@ -567,12 +561,10 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
     });
   }
 
   nodeSelected(event:any){
-    console.log("Node selected: ", event)
     if(event.node.leaf == true){
       this.testToShowInTable = event.node.data
       this.prepareData()

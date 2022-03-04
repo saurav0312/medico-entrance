@@ -61,7 +61,6 @@ export class ViewmytestsComponent implements OnInit {
 
     // this.sharedService.displayedColumns = this.displayedColumnsForIndividualTest
     // this.sharedService.testData = test
-    console.log("Cell clicked: ", params)
     this.router.navigate(
       ['/studentProfile/detailTestReport'],
       {

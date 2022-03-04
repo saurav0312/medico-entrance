@@ -38,7 +38,6 @@ export class StudentprofileComponent implements OnInit {
       this.profileService.getUserDetails(response.uid).subscribe(userDetails =>{
         this.username = userDetails.firstName
         this.profileImageUrl = userDetails.imageUrl
-        console.log("Image url: ", this.profileImageUrl)
       })
       sub.unsubscribe()
     })

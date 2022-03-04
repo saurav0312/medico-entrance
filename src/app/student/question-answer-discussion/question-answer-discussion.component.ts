@@ -37,7 +37,6 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
     })
 
     this.authService.readDiscussionQuestions().subscribe( (allDiscussionQuestions:DiscussionQuestion[]) =>{
-      console.log("Discussion questions: ", allDiscussionQuestions)
       this.allDiscussionQuestions = allDiscussionQuestions
       this.allDiscussionQuestions.sort((a,b) =>{
         if(a.questionAskedDate < b.questionAskedDate){
@@ -83,7 +82,6 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
 
   ref.onClose.subscribe((question: string) => {
     if (question) {
-        console.log("Question: ", question)
     }
   });
 
@@ -91,7 +89,6 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
 
   increaseUpVoteCount(questionIndex: number){
     this.allDiscussionQuestions[questionIndex].questionUpVotesCount += 1;
-    console.log("Value updated: ",  this.allDiscussionQuestions[questionIndex].questionUpVotesCount)
   }
 
   decreaseUpVoteCount(questionIndex: number){
@@ -99,7 +96,6 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
   }
 
   submitAnswer(questionIndex: number){
-    console.log("Answer form data: ", this.answerForm.value)
     let answerData: DiscussionAnswer={
       'answer': this.answerForm.get('answer')?.value,
       'answeredBy': this.userId,
@@ -109,7 +105,6 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
     }
     this.allDiscussionQuestions[questionIndex].allAnswers.push(answerData);
     this.authService.updateDiscussionQuestion(this.allDiscussionQuestions[questionIndex].id ,this.allDiscussionQuestions[questionIndex]).subscribe(response =>{
-      console.log("Answer uploaded");
     })
     // this.answerForm.get('answer')?.setValue('');
     this.answerForm.reset()

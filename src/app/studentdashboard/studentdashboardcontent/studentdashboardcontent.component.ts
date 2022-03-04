@@ -54,12 +54,10 @@ export class StudentdashboardcontentComponent implements OnInit {
                 teacher.dob = (<Timestamp><unknown>(teacher.dob)).toDate()
               }
             })
-            console.log("All teacher details: ", response)
             
             this.teacherSubscriptionService.getAllSubscribedTeachersByAUser(this.currentUserId).subscribe((response:TeacherSubscription) =>{
               if(response !== undefined && response !== null){
                 this.allSubscribedTeachers = response.allTeacherSubscribed
-                console.log("Subscribed Teachers:", this.allSubscribedTeachers)
                 this.isFirstSubscription = false;
               }
 
@@ -70,11 +68,9 @@ export class StudentdashboardcontentComponent implements OnInit {
               }
 
               if(this.listOfTeachers.length > 0 && this.allSubscribedTeachers.length > 0){
-                console.log("Loop entered")
                 this.listOfTeachers.forEach(teacher =>{
                   if(this.allSubscribedTeachers.findIndex(subscribedTeacher => subscribedTeacher === teacher.id) !== -1){
                     teacher.isSubscribed = true;
-                    console.log(`${teacher.id} subscribed`)
                   }
                   else{
                     teacher.isSubscribed = false;
@@ -123,9 +119,6 @@ export class StudentdashboardcontentComponent implements OnInit {
   }
 
   categorySelected(category: any){
-    console.log("Ev: ",category['value'])
-    console.log("Initial: ", this.initialListOfTeachers)
-    console.log("List: ", this.listOfTeachers)
     this.listOfTeachers = []
     
     if(category['value'] == 'All' || category['value'] === undefined){
@@ -143,7 +136,6 @@ export class StudentdashboardcontentComponent implements OnInit {
       return x.isSubscribed === y.isSubscribed ? 0 : x.isSubscribed ? -1 : 1
     })
 
-    console.log("Search text: ", this.searchText)
     if(this.searchText!==''){
       let event ={
         'target':{
@@ -156,11 +148,9 @@ export class StudentdashboardcontentComponent implements OnInit {
 
   searchByName(event:any){
     let filterValue = (event.target as HTMLInputElement).value;
-    console.log("Filtervalue: ", filterValue)
     filterValue = filterValue.trim().toLowerCase()
     
     if(filterValue ==''){
-      console.log("Current category: ", this.category)
       let data = {
         'value': this.category
       }

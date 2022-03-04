@@ -94,7 +94,6 @@ export class DetailSubjectTestReportComponent implements OnInit {
         if(response!== undefined){
           this.testReportData = response
           this.testReportData.allTests = this.testReportData.allTests.filter(test => test.testCategory ==='Subject')
-          console.log("Unique tests list before: ", this.uniqueTestsList)
           this.uniqueTestsList = {}
           this.testReportData.allTests.forEach(test =>{
             if(this.uniqueTestsList[test.testId]=== undefined){
@@ -106,7 +105,6 @@ export class DetailSubjectTestReportComponent implements OnInit {
               this.uniqueTestsList[test.testId].push(test)
             }
           })
-          console.log("Unique tests list: ", this.uniqueTestsList)
 
           let count = 0;
           let expanded =true;
@@ -140,14 +138,12 @@ export class DetailSubjectTestReportComponent implements OnInit {
               count++;
             }
           })
-          console.log("All testss: ", this.allTests)
 
           if(this.allTests.length > 0 && this.allTests[0].children !== undefined){
             this.defaultSelectedTest = this.allTests[0].children[0]
             let nodeData ={
               'node': this.defaultSelectedTest
             }
-            console.log("Node data: ", nodeData)
             this.nodeSelected(nodeData)
           }
         }
@@ -191,12 +187,10 @@ export class DetailSubjectTestReportComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
     });
   }
 
   nodeSelected(event:any){
-    console.log("Node selected: ", event)
     if(event.node.leaf == true){
       this.testToShowInTable = event.node.data
       this.prepareData()

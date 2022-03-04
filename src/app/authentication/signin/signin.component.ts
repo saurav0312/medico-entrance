@@ -54,7 +54,6 @@ export class SigninComponent implements OnInit {
       ).subscribe(
         () =>{
           const sub = this.authService.getCurrentUser().subscribe((response:User) => {
-            console.log("Current user: ", response)
             if(response != null){
               if(0){
                 // temporarily commenting to use website. later we will enable it

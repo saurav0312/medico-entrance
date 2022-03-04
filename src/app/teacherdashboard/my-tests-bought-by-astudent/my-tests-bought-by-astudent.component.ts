@@ -34,7 +34,6 @@ export class MyTestsBoughtByAStudentComponent implements OnInit {
       this.myStudentId = <string> params.myStudentId
       this.teacherUserId = <string> params.teacherUserId
       this.authService.fetchAllTestsBoughtByThisStudent(this.myStudentId).subscribe((response: TestSubscription) =>{
-        console.log("All tests bought by this student: ", response)
         if(response !== undefined){
           this.studentsTestList = response.allSubscribedTests;
           this.authService.fetchAllMockTestsCreatedByATeacher(this.teacherUserId).subscribe((response:MockTest[]) =>{
@@ -49,7 +48,6 @@ export class MyTestsBoughtByAStudentComponent implements OnInit {
             this.dataSource.data = this.myAllTestsByTheStudent ;
             //this.dataSource.paginator = this.paginator
             this.loading = false
-            console.log("My All tests bought by this student: ", this.myAllTestsByTheStudent)
           })
         }
       })

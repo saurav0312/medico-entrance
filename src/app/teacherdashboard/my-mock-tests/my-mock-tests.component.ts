@@ -26,7 +26,6 @@ export class MyMockTestsComponent implements OnInit {
     let sub = this.authService.getCurrentUser().subscribe(response =>{
       if(response !== null){
         this.authService.fetchAllMockTestsCreatedByATeacher(response.uid).subscribe((response:MockTest[]) =>{
-          console.log("tests by a teacherrr: ", response)
           if(response !== null){
             this.allTestByTheTeacher = response
             this.dataSource.data = this.allTestByTheTeacher ;

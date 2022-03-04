@@ -20,14 +20,14 @@ iframe {
 
 .txt1 {
     font-family: Poppins-Regular;
-    font-size: 13px;
+    font-size: 14px;
     color: #666666;
     line-height: 1.5
 }
 
 .txt2 {
     font-family: Poppins-Regular;
-    font-size: 13px;
+    font-size: 14px;
     color: #333333;
     line-height: 1.5
 }
@@ -82,6 +82,10 @@ iframe {
     line-height: 1.2;
     text-align: center
 }
+
+// ::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+//     color: blue;
+//   }
 
 //  .bb-form-title i {
 //     font-size: 60px

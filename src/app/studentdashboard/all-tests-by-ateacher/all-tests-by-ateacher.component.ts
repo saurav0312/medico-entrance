@@ -36,14 +36,12 @@ export class AllTestsByATeacherComponent implements OnInit {
         this.testsubscriptionService.getAllSubscribedTestsByAUser(this.userId).subscribe((response:TestSubscription) =>{
           if(response !== undefined){
             this.allSubscribedTests = response.allSubscribedTests
-            console.log("Subscribed Tests:", response)
             this.isFirstSubscription = false;
           }
 
           this.route.queryParams.subscribe((params: any) =>{
             this.teacherId = <string>params.teacherId
             this.authService.fetchAllMockTestsCreatedByATeacher(this.teacherId).subscribe(response =>{
-              console.log("ALl test by the teacherr: ", response)
               this.listOfMockTests = response
               if(this.listOfMockTests.length > 0 && this.allSubscribedTests.length > 0){
                 this.listOfMockTests.forEach(test =>{

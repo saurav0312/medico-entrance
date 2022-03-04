@@ -76,7 +76,6 @@ export class TeacherprofileinfoComponent implements OnInit {
             this.loading = false;
           }
           else{
-            console.log("After signout")
             sub.unsubscribe();
             if(response!== undefined){
               if(response.dob === undefined){
@@ -87,7 +86,6 @@ export class TeacherprofileinfoComponent implements OnInit {
               }
 
               this.profileService.getCountryDetails().subscribe(countryDetails =>{
-                console.log("Country details: ", countryDetails)
                 this.countriesWithState = countryDetails[0].countriesWithState
 
                 countryDetails[0].countriesWithState.forEach((countryWithState:any) =>{
@@ -113,14 +111,12 @@ export class TeacherprofileinfoComponent implements OnInit {
         },
         error =>{
           this.loading = false;
-          console.log(error)
         })
       }
       sub.unsubscribe();
     },
     error =>{
       this.loading = false;
-      console.log(error)
     })
   }
 
@@ -129,22 +125,19 @@ export class TeacherprofileinfoComponent implements OnInit {
   }
 
   countryChanged(countryName: string| undefined){
-    console.log("Country Name: ", countryName)
     let selectedCountry: any = this.countriesWithState.find(country => country.countryName === countryName)
     this.states = selectedCountry.statesName
     this.initialStates = this.states
   }
 
   filterState(event: any){
-    console.log("State filter : ", event.target.value)
-    console.log("Initial states: ", this.initialStates)
     if(event.target.value === '')
     {
       this.states = this.initialStates
     }
     else{
       this.states = this.initialStates.filter(state => state.toLocaleLowerCase().includes( (event.target.value).toLocaleLowerCase()))
-      console.log("Filtered states: ", this.states)
+
     }
   }
 
@@ -157,7 +150,6 @@ export class TeacherprofileinfoComponent implements OnInit {
   saveProfile(){
     this.loading = true;
     this.userDetail = this.profileForm.value
-    console.log("User Detail: ", this.userDetail)
     let ti = 1
     this.userDetail.imageUrl = this.imageUrl
     this.profileService.updateUserDetails(this.userId,this.userDetail).pipe(
@@ -174,20 +166,17 @@ export class TeacherprofileinfoComponent implements OnInit {
       })
     )
     .subscribe(response =>{
-      console.log(response)
     })
   }
 
   loadProfileImage(event: any):void{
     this.loading = true;
-    console.log(event)
     const target: DataTransfer = <DataTransfer>(event.target)
     if(target.files.length !== 1){
       throw new Error("Cannot upload multiple files!")
     }
 
     this.selectedProfileImage = target.files[0];
-    console.log(this.selectedProfileImage)
 
     this.profileService.uploadProfileImage(this.selectedProfileImage, this.userId).subscribe(response =>{
       this.imageUrl = response

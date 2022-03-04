@@ -69,14 +69,11 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
       this.userId = currentUser.uid
 
       this.authService.getAllMockTestsGivenByAUser(this.userId).subscribe(allMockTestsGivenByUser =>{
-        console.log("All mock tests given by user: ", allMockTestsGivenByUser)
         let totalNumberOfTestsGiven = allMockTestsGivenByUser.allTests.length
         let allSubjectTestGiven = allMockTestsGivenByUser.allTests.filter(test => test.testCategory ==='Subject')
 
-        console.log("AllTests list: ", allMockTestsGivenByUser )
         let allMockTestGiven = allMockTestsGivenByUser.allTests.filter(test => test.testCategory ==='Mock')
         
-        console.log("AllmoccccTests list: ", allMockTestGiven )
         let unqiueSubjectTestsIdList: string[] = [];
         
         allSubjectTestGiven.forEach(subjectTest =>{
@@ -93,8 +90,6 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
 
 
         let unqiueMockTestsIdList: string[] = [];
-
-        console.log("All mocktestgiven list: ", allMockTestGiven)
         
         allMockTestGiven.forEach(mockTest =>{
           if(unqiueMockTestsIdList.length > 0){
@@ -106,7 +101,6 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
             unqiueMockTestsIdList.push(mockTest.testId);
           }
         })
-        console.log("Unique mock testid list: ", unqiueMockTestsIdList)
         this.noOfMockTestsGivenByTheUser = unqiueMockTestsIdList.length
 
         allMockTestsGivenByUser.allTests.forEach(test =>{
@@ -145,7 +139,6 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
       this.testsubscriptionService.getAllSubscribedTestsByAUser(this.userId).subscribe((response:TestSubscription) =>{
         if(response !== undefined){
           this.allSubscribedTests = response.allSubscribedTests
-          console.log("Subscribed Tests:", response)
           this.isFirstSubscription = false;
         }
 
@@ -161,11 +154,9 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
           }
 
         this.allSubjectTestsList = this.allTestsList.filter(test => test.testCategory === 'Subject');
-        console.log("All subject Test lists: ", this.allSubjectTestsList)
   
         
         this.listOfMockTests = this.allTestsList.filter(test => test.testCategory === 'Mock');
-        console.log("Mock tests list: ", this.listOfMockTests)
         this.listOfMockTests.sort((a,b) =>{
           if(a.testType < b.testType){
             return -1;
@@ -273,7 +264,6 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
       this.listOfSubjectTests = [];
 
       this.subjectTestsIdList = this.subjectToTopicToTestIdList[this.selectedSubjectName][this.selectedTopicName]
-      console.log("Subjetc topic subject list: ", this.subjectTestsIdList)
 
       this.subjectTestsIdList.forEach(testId =>{
         let tempTest: any = this.allSubjectTestsList.find(subjecTest => subjecTest.id === testId.testId);
@@ -295,7 +285,6 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
   }
 
   startTest(test: MockTest){
-    console.log("Selected test: ", test)
     //let test: MockTest| undefined = this.allSubjectTestsList.find(test => test.id === testIdMap.testId)
     if(test !== undefined){
       this.router.navigate(["/practicetest/testInstructions"], {queryParams: {data: test.id, testTime: test.totalTime, testCategory: "Subject"}})
@@ -303,7 +292,6 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
   }
 
   buySubjectTest(testId: string | undefined) : void{
-    console.log("Buy the test: ", testId)
     const data: TestSubscription ={
       allSubscribedTests: [testId]
     }
@@ -319,7 +307,6 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
   }
 
   buyMockTest(testId: string | undefined): void{
-    console.log("Buy the test: ", testId)
     const data: TestSubscription ={
       allSubscribedTests: [testId]
     }

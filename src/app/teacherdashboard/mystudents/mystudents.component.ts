@@ -31,12 +31,10 @@ export class MystudentsComponent implements OnInit {
         this.userId = response.uid;
         sub.unsubscribe();
         this.authService.fetchAllMockTestsCreatedByATeacher(this.userId).subscribe((response:MockTest[]) =>{
-          console.log("Teacher all tests: ", response)
           response.forEach(test =>{
             if(this.allTestsCreatedByATeacher.findIndex(ele => ele === test.id) ===-1){
               this.allTestsCreatedByATeacher.push(test.id)
             } 
-            console.log("Teacher all tests id: ", this.allTestsCreatedByATeacher)
           })
 
           if(this.allTestsCreatedByATeacher.length !== 0){
@@ -55,8 +53,6 @@ export class MystudentsComponent implements OnInit {
                       }
                     })
                   })
-                  console.log("My students id list ", this.myStudents)
-                  console.log("My students details: ", response)
                 }
                 
               })

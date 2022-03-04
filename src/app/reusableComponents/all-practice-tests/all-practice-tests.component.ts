@@ -62,7 +62,6 @@ export class AllPracticeTestsComponent implements OnInit {
   }
 
   search(event: any){
-    console.log("Search text: ", event.length)
     if(event.length == 0){
       this.listOfMockTests = this.initialListOfMockTests
     }

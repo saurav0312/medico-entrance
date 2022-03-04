@@ -35,7 +35,6 @@ export class TeacherdashboardnavigationbarComponent implements OnInit {
 
   logout(): void{
     this.authService.logout().subscribe(response =>{
-      console.log(response)
       this.toastrService.success("Logged Out Successfully")
       this.router.navigateByUrl("/home/homepagecontent")
     })
