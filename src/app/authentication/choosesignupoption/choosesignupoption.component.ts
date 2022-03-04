@@ -110,7 +110,6 @@ export class ChoosesignupoptionComponent implements OnInit {
           this.userDetail = tempUserDetail
 
           this.profileService.updateUserDetails(response?.uid, this.userDetail).subscribe(response =>{
-            console.log("User Details updated");
           })
 
           this.authService.sendVerificationEmail(response).subscribe(() =>{
@@ -137,7 +136,6 @@ export class ChoosesignupoptionComponent implements OnInit {
   }
 
   sendTeacherCode(): void{
-    console.log("Send a teacher code")
     this.toastrService.success("Teacher code has been sent to the provided email")
   }
 
@@ -146,8 +144,6 @@ export class ChoosesignupoptionComponent implements OnInit {
   }
 
   tabChanged(event?:any){
-    console.log("sign up tab change event: ", event)
-    console.log("Defaultselected Index: ", this.selectedIndex)
     this.signUpForm.reset();
     this.ngOnInit();
   }

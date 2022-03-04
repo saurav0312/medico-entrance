@@ -64,8 +64,6 @@ export class DiscussionQuestionComponentComponent implements OnInit {
 
     this.loading= true;
 
-    console.log("Question Data: ", this.discussionQuestionForm.value)
-
     let questionTags: string[] = [];
     questionTags.push(this.discussionQuestionForm.get('questionTags')?.value)
 

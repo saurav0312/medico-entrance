@@ -125,15 +125,12 @@ export class AddmocktestComponent implements OnInit{
     const reader: FileReader = new FileReader();
 
     reader.onload = (event) =>{
-      console.log(event)
       let binaryData = event.target?.result
       let workBook = XLSX.read(binaryData,{type:'binary'})
-      console.log(workBook)
 
       workBook.SheetNames.forEach(sheet =>{
         const data = XLSX.utils.sheet_to_json(workBook.Sheets[sheet]);
         let questions: Question[] = [];
-        console.log(data)
 
         if(data.length == 0){
           this.loading = false;
@@ -220,7 +217,6 @@ export class AddmocktestComponent implements OnInit{
                         }
                       })
 
-                      console.log("All image files: ", allImageList)
                       let questionNumberToImageMap : {[key: string]: Array<string>} ={};
 
                       allImageList.forEach((filename,i) =>{
@@ -237,29 +233,21 @@ export class AddmocktestComponent implements OnInit{
                         }
                       })
 
-                      console.log("Question number to ImageList: ", questionNumberToImageMap)
                       let imagesUploadedCount= 0;
 
                       let totalNoOfQuestions = Object.keys(questionNumberToImageMap).length
 
                       Object.keys(questionNumberToImageMap).forEach((questionNumber,i) =>{
                         imagesUploadedCount+=1
-                        console.log("Question Number: ", questionNumber)
-                        console.log("Imagesuploaded count: ", imagesUploadedCount)
                         questionNumberToImageMap[questionNumber].forEach(questionImage =>{
                           this.zipFileContent.files['QuestionImages/'+(parseInt(questionNumber)+1).toString() +'/'+questionImage].async('arraybuffer').then((fileData:Uint8Array) =>{
   
                             let subs = this.profileService.uploadQuestionImage(fileData,questionImage,userDetail.uid,ref.id, questionNumber).subscribe(imageUrl =>{
-                              console.log("Image uploaded: ", imageUrl)
                               subs.unsubscribe()
                               
                               createdMockTest.questions[parseInt(questionNumber)].questionImageUrl?.push(imageUrl)
-                              console.log("Updated mocktest with image url: ", createdMockTest)
                               if(imagesUploadedCount == totalNoOfQuestions){
-                                console.log("entered")
-                                console.log("Final Updated mocktest with image url: ", createdMockTest)
                                 this.authService.updateMockTestDetails(ref.id, createdMockTest).subscribe(response =>{
-                                  console.log("test updated in db: ", response)
                                 })
                               }
                               
@@ -267,8 +255,6 @@ export class AddmocktestComponent implements OnInit{
                           })
                         })
                       })
-
-                      console.log("Updated Mock Test: ", createdMockTest)
                     }
                   })
                 }
@@ -278,7 +264,6 @@ export class AddmocktestComponent implements OnInit{
               this.toastrService.success("Test created successfully");
               this.createMockTestForm.reset('')
               this.ngOnInit();
-              console.log(ref)
             }) 
           }
         }

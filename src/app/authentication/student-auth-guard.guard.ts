@@ -22,7 +22,6 @@ export class StudentAuthGuardGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     
       let userId = localStorage.getItem('userId');
-      console.log("Logged in user id iss: ", userId)
 
       if(userId === null || userId === undefined || userId === ''){
         return this.router.createUrlTree(['authentication/signin']);
@@ -33,7 +32,6 @@ export class StudentAuthGuardGuard implements CanActivate {
               if(userDetails.accountType == 'student'){
                 return true;
               }
-          console.log("User data from guard: ", userDetails.accountType)
           // return false;
           return this.router.createUrlTree(['authentication/signin'])
         })

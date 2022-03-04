@@ -2,6 +2,8 @@
 <div class="login-container">
     <div class="bb-login">
         <div>
+            <ng-container *ngTemplateOutlet="signUpHeaderTemplate">
+            </ng-container>
             <p-tabView [(activeIndex)]="selectedIndex" (onChange)="tabChanged($event)">
                 <p-tabPanel [selected]="true">
                     <ng-template pTemplate="header">
@@ -35,10 +37,10 @@
 <ng-template #teacherSignupFormTemplate>
     <!-- Sign up for teacher -->
     <form (ngSubmit)="signUp()" name="signUpForm" [formGroup]="signUpForm" fxLayoutAlign ="stretch" fxLayout="column">
-        <ng-container *ngTemplateOutlet="signUpHeaderTemplate">
-        </ng-container>
+        <!-- <ng-container *ngTemplateOutlet="signUpHeaderTemplate">
+        </ng-container> -->
 
-        <div>
+        <div class="row">
             <ng-container *ngFor="let field of nameFormFieldsName">
                 <ng-container [ngTemplateOutlet]="nameFormFieldsTemplateList[field]" [ngTemplateOutletContext]= "{$implicit: signUpForm}">
                 </ng-container>
@@ -54,8 +56,8 @@
             <ng-container *ngTemplateOutlet="teacherCodeTemplate; context:{$implicit: signUpForm}">
             </ng-container>
         </div>
-        <a class="forgetPassword" style="color: #1414e9;" (click)="sendTeacherCode()">Send me code</a>
-        <p>Not a teacher?<a class="forgetPassword" style="color: #1414e9;" (click) = "changeAccountType(1)"> Click here for student</a></p>
+        <a class="forgetPassword" style="color: #715bf9;" (click)="sendTeacherCode()">Send me code</a>
+        <p>Not a teacher?<a class="forgetPassword" style="color: #715bf9;" (click) = "changeAccountType(1)"> Click here for student</a></p>
         
         <ng-container *ngTemplateOutlet="submitCancel">
         </ng-container>
@@ -66,10 +68,10 @@
 <ng-template #studentSignupFormTemplate>
     <!-- Sign up for student -->
     <form (ngSubmit)="signUp()" name="signUpForm" [formGroup]="signUpForm" fxLayoutAlign ="stretch" fxLayout="column">
-        <ng-container *ngTemplateOutlet="signUpHeaderTemplate">
-        </ng-container>
+        <!-- <ng-container *ngTemplateOutlet="signUpHeaderTemplate">
+        </ng-container> -->
 
-        <div>
+        <div class="row">
             <ng-container *ngFor="let field of nameFormFieldsName">
                 <ng-container [ngTemplateOutlet]="nameFormFieldsTemplateList[field]" [ngTemplateOutletContext]= "{$implicit: signUpForm}">
                 </ng-container>
@@ -102,7 +104,7 @@
 </ng-template>
 
 <ng-template  #firstNameTemplate let-signUpForm>
-    <mat-form-field style="margin-right: 0.5em" appearance="outline">
+    <mat-form-field class="col-sm-6" style="width:100%" appearance="outline">
         <mat-label>Firstname</mat-label> 
         <input [formControl]="signUpForm.get('firstName')" type="text" required matInput>
         <mat-error *ngIf="signUpForm.dirty && signUpForm.get('firstName')?.value.length==0">
@@ -112,7 +114,7 @@
 </ng-template>
 
 <ng-template #lastNameTemplate let-signUpForm >
-    <mat-form-field appearance="outline">
+    <mat-form-field class="col-sm-6" appearance="outline">
         <mat-label>Lastname</mat-label>
         <input [formControl]="signUpForm.get('lastName')" type="text" required matInput>
         <mat-error *ngIf="signUpForm.dirty && signUpForm.get('lastName')?.value.length==0">

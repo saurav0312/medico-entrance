@@ -4,6 +4,7 @@
         <div class="bb-login">
             <form (ngSubmit)="login()" name="loginForm" [formGroup]="loginForm" > 
                 <span class="bb-form-title p-b-26"> Sign in </span>
+                <h4 style="font-size:18px; font-weight: 400; margin-top: 0.4em;">Hello! let's get started</h4>
                 <div>  
                     <ng-container *ngTemplateOutlet="emailTemplate; context:{$implicit:loginForm}">
 
@@ -17,7 +18,7 @@
                  <ng-template [ngIf] ="loginError">
                      <p style="color: red;">Invalid credentials</p>
                  </ng-template>
-                 <div style="color: #1414e9;" class="forgetPassword cursor-icon" routerLink="/authentication/forgetpassword">Forgot Password?</div>
+                 <div style="color: #715bf9;" class="forgetPassword cursor-icon" routerLink="/authentication/forgetpassword">Forgot Password?</div>
                 <div class="login-container-form-btn">
                     <div class="bb-login-form-btn">
                         <div class="bb-form-bgbtn"></div> <button class="bb-form-btn" [disabled]="loginForm.invalid"> Login </button>

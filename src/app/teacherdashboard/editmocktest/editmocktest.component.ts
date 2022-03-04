@@ -58,7 +58,6 @@ export class EditmocktestComponent implements OnInit {
     this.route.queryParams.subscribe( (response:any) =>{
       this.testId = <string>response.testId
       this.authService.getMockTestByID(this.testId).subscribe((response:MockTest) =>{
-        console.log("Edit test: ", response)
         this.testQuestions = response.questions
         this.testType = response['testType']
         this.testCategory = response['testCategory']
@@ -92,7 +91,6 @@ export class EditmocktestComponent implements OnInit {
 
   modifyMockTest():void{
     this.loading = true;
-    console.log("Modified test data: ", this.modifyMockTestForm.getRawValue())
     let checkPassed = true;
 
     this.testQuestions.forEach(question =>{
@@ -138,7 +136,6 @@ export class EditmocktestComponent implements OnInit {
 
   testTypeChanged(event: any){
     if(event['value']=='Free'){
-      console.log("Test type free")
       this.modifyMockTestForm.get('testPrice')?.setValue(0);
     }
   }

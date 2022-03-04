@@ -85,7 +85,6 @@ export class AuthService {
   loginUser(loginForm: any) : Observable<any>{
     return from(signInWithEmailAndPassword(this.auth, loginForm.get('email')?.value, loginForm.get('password')?.value)).pipe(
       map((userCredentials) =>{
-        console.log("Logged in user: ", userCredentials.user.uid)
         localStorage.setItem('userId',userCredentials.user.uid)
       })
     )

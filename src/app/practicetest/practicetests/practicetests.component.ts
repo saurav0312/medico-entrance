@@ -45,7 +45,6 @@ export class PracticetestsComponent implements OnInit {
           this.testsubscriptionService.getAllSubscribedTestsByAUser(this.userId).subscribe((response:TestSubscription) =>{
             if(response !== undefined){
               this.allSubscribedTests = response.allSubscribedTests
-              console.log("Subscribed Tests:", response)
               this.isFirstSubscription = false;
             }
             this.route.queryParams.subscribe((params: any) =>{
@@ -53,7 +52,6 @@ export class PracticetestsComponent implements OnInit {
               this.authService.readMockTest(this.testCategory).subscribe((response: MockTest[]) =>{
                 this.loading = false;
                 this.listOfMockTests = response
-                console.log("Collection of MockTests: ", response)
                 if(this.listOfMockTests.length > 0 && this.allSubscribedTests.length > 0){
                   this.listOfMockTests.forEach(test =>{
                     if(this.allSubscribedTests.findIndex(subscribedTest => subscribedTest === test.id) !== -1){
