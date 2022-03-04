@@ -14,7 +14,7 @@
     /* margin: 4px; */
     width: 15em;
     border-right: none;
-    background: #cacae2eb;
+    background: white;
     /* color: white; */
     /* border-radius: 2px; */
     /* padding: 4px; */
@@ -40,12 +40,25 @@
     align-items: center;
     justify-content: flex-start;
     font-size: 1rem;
+    height: 3em;
   }
   
   .mat-divider{
     margin-top: 16px;
     margin-bottom: 16px;
     background-color: rgba(20, 19, 19, 0.5);
+  }
+
+  .icon-class{
+    margin-right:0.5em;
+    font-size: 25px;
+  }
+
+  .navbar-buttons{
+    padding: 1.6em;
+    font-family: 'Roboto';
+    font-weight: 100;
+    font-size: 20px;
   }
   
   
