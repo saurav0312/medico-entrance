@@ -6,7 +6,10 @@
       </button>
       My Profile     
     </mat-toolbar> -->
-    <div>
+
+    
+
+    <div class="grad1">
 
     <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light" style="background-color: white !important;">
       <button mat-icon-button *ngIf="sidenav.mode === 'over' || sidenav.mode === 'side'" (click)="sidenav.toggle()">
@@ -16,8 +19,8 @@
     My Profile
     </nav>
 
-    <mat-sidenav-container class="mat-sidenav-container-class" style="font-family: ubuntu;">
-      <mat-sidenav #sidenav="matSidenav" class="mat-sidenav-class" mode='side' opened  style="width: 20em;">
+    <mat-sidenav-container class="mat-sidenav-container-class" style="font-family: ubuntu; background-image: linear-gradient(45deg, #0000008f, transparent);">
+      <mat-sidenav #sidenav="matSidenav" class="mat-sidenav-class" mode='side' opened  style="width: 20em; background-image: linear-gradient(45deg, #0000008f, transparent);">
     
     
           <p></p>
@@ -57,7 +60,7 @@
               <span>Mock Tests History</span>
           </button> -->
 
-          <button routerLink="/studentdashboard/allTeachers" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
+          <button routerLink="viewAllTeachers" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
             <mat-icon class="icon-class">person</mat-icon>
             <span>View All Teachers</span>
           </button>

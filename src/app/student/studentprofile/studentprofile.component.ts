@@ -1,4 +1,4 @@
-import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { TestReportData } from '../../interface/testReportData';
 import { Tests } from '../../interface/tests';
 import { AuthService } from '../../service/auth.service';
@@ -9,6 +9,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { TestReportQuestion } from '../../interface/testReportQuestion';
 import { ProfileService } from 'src/app/service/profile.service';
 import { MatSidenav } from '@angular/material/sidenav';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Component({
@@ -16,7 +17,7 @@ import { MatSidenav } from '@angular/material/sidenav';
   templateUrl: './studentprofile.component.html',
   styleUrls: ['./studentprofile.component.css']
 })
-export class StudentprofileComponent implements OnInit {
+export class StudentprofileComponent implements OnInit, AfterViewInit {
 
   // testReportData! : TestReportData;
   // testToShowInTable! : Tests;
@@ -28,6 +29,10 @@ export class StudentprofileComponent implements OnInit {
   @ViewChild(MatPaginator) paginator! : MatPaginator;
 
   @ViewChild('sidenav') sidenav! : MatSidenav;
+
+  screenWidth!: number;
+
+  private screenWidth$ = new BehaviorSubject<number>(window.innerWidth);
 
 
   @HostListener('window:resize', ['$event'])
@@ -52,6 +57,19 @@ export class StudentprofileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+
+    // this.screenWidth$.subscribe(width => {
+    //   console.log("Scree width: ", width)
+    //   if (width < 510) {
+    //     this.sidenav.close();
+    //     this.sidenav.mode ='over'
+    //   }
+    //   else{
+    //     this.sidenav.open()
+    //     this.sidenav.mode = 'side'
+    //   }
+    // });
+
     let sub = this.authService.getCurrentUser().subscribe(response =>{
       this.profileService.getUserDetails(response.uid).subscribe(userDetails =>{
         this.username = userDetails.firstName
@@ -60,6 +78,21 @@ export class StudentprofileComponent implements OnInit {
       sub.unsubscribe()
     })
   }
+
+  ngAfterViewInit(): void {
+    this.screenWidth$.subscribe(width => {
+      console.log("Scree width: ", width)
+      if (width < 510) {
+        this.sidenav.close();
+        this.sidenav.mode ='over'
+      }
+      else{
+        this.sidenav.open()
+        this.sidenav.mode = 'side'
+      }
+    });
+  }
+
 
   logout(): void{
     this.authService.logout().subscribe(response =>{

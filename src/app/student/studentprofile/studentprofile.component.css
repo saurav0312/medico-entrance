@@ -108,3 +108,18 @@
     /* background-color: gainsboro; */
     background-color: rgb(248, 239, 239);
 }
+
+
+.grad1{
+  background-image: linear-gradient(red, yellow);
+}
+
+/* .mat-sidenav-content-class{
+  margin-left: 20.3em !important;
+}
+
+@media (max-width: 510px){
+  .mat-sidenav-content-class{
+    margin-left: 0.2em !important;
+  }
+} */

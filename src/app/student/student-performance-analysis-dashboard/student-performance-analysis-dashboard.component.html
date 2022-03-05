@@ -1,77 +1,86 @@
-<div class="col-sm-12" style="font-size: 20px; font-weight: 600; margin-top: 1em;">
-    <div style="margin-bottom: 0.5em; margin-top: 0.5em;">
-        Dashboard
-    </div>
-    <!-- Left side of dashboard -->
-    <div class="col-sm-4 card" style="float: left; width: -webkit-fill-available; border-color: azure;">
-        
-        <div style="margin-top: 0.3em;">
-            <div style="margin-top: 0.5em; margin-bottom: 0.5em;">
-                Overall Performance
-            </div>
-            <div id="donutchart" class="chart" style="height:180px; width: 320px;" >
-            </div>
-            <div>
-                <div style="margin-bottom: 0.5em; margin-top: 0.5em;">
-                    Your Progress
-                </div>
-                <div class="card" style="padding: 5px; margin-bottom: 20px; background-color: #f7f7f7; border: slategrey;">
-                    <div style="margin-left:0.3em; margin-bottom: 0.5em;">
-                        <p class="card-title" style="font-size: 15px; font-weight: 500;">Subject Tests</p>
-                        <div style="display: grid; margin-right: 0.3em;">
-                            <div style="display: inline;">
-                                <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: left;">{{noOfSubjectTestsGivenByTheUser}} done out of {{allSubjectTestsList.length}}</h6>
-                                <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: right;">{{((noOfSubjectTestsGivenByTheUser*100)/allSubjectTestsList.length)}}%</h6>
+<div class="row" style="font-size: 20px; font-weight: 600; margin-top: 1em; padding: 15px;">
+    <div class="row">
+        <!-- <div style="margin-bottom: 0.5em; margin-top: 0.5em;">
+            Dashboard
+        </div> -->
+
+        <div class="row" style="margin: 2px;">
+            <!-- Left side of dashboard -->
+            <div class="col-sm-4" style="float: left; width: -webkit-fill-available; border-color: azure;">
+                <div class="card mb-4 box-shadow">
+                
+                    <div style="margin-top: 0.3em;">
+                        <div style="margin-top: 0.5em; margin-bottom: 0.5em;">
+                            Overall Performance
+                        </div>
+                        <div id="donutchart" class="chart" style="height:160px; width: 300px;" >
+                        </div>
+                        <div>
+                            <div style="margin-bottom: 0.5em; margin-top: 0.5em;">
+                                Your Progress
                             </div>
-                            <div>
-                                <p-progressBar [value]="((noOfSubjectTestsGivenByTheUser*100)/allSubjectTestsList.length)" [showValue]="false" [style]="{'height': '6px'}"></p-progressBar>
+                            <div class="card" style="padding: 5px; margin-bottom: 20px; background-color: #f7f7f7; border: slategrey;">
+                                <div style="margin-left:0.3em; margin-bottom: 0.5em;">
+                                    <p class="card-title" style="font-size: 15px; font-weight: 500;">Subject Tests</p>
+                                    <div style="display: grid; margin-right: 0.3em;">
+                                        <div style="display: inline;">
+                                            <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: left;">{{noOfSubjectTestsGivenByTheUser}} done out of {{allSubjectTestsList.length}}</h6>
+                                            <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: right;">{{((noOfSubjectTestsGivenByTheUser*100)/allSubjectTestsList.length)}}%</h6>
+                                        </div>
+                                        <div>
+                                            <p-progressBar [value]="((noOfSubjectTestsGivenByTheUser*100)/allSubjectTestsList.length)" [showValue]="false" [style]="{'height': '6px'}"></p-progressBar>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="card" style="padding: 5px; margin-bottom: 20px; background-color: #f7f7f7; border: slategrey;">
+                                <div style="margin-left:0.3em; margin-bottom: 0.5em;">
+                                    <p class="card-title" style="font-size: 15px; font-weight: 500;">Mock Tests</p>
+                                    <div style="display: grid; margin-right: 0.3em;">
+                                        <div style="display: inline;">
+                                            <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: left;">{{noOfMockTestsGivenByTheUser}} done out of {{listOfMockTests.length}}</h6>
+                                            <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: right;">{{((noOfMockTestsGivenByTheUser*100)/listOfMockTests.length)}}%</h6>
+                                        </div>
+                                        <div>
+                                            <p-progressBar [value]="((noOfMockTestsGivenByTheUser*100)/listOfMockTests.length)" [showValue]="false" [style]="{'height': '6px'}"></p-progressBar>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="card" style="padding: 5px; margin-bottom: 20px; background-color: #f7f7f7; border: slategrey;">
-                    <div style="margin-left:0.3em; margin-bottom: 0.5em;">
-                        <p class="card-title" style="font-size: 15px; font-weight: 500;">Mock Tests</p>
-                        <div style="display: grid; margin-right: 0.3em;">
-                            <div style="display: inline;">
-                                <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: left;">{{noOfMockTestsGivenByTheUser}} done out of {{listOfMockTests.length}}</h6>
-                                <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: right;">{{((noOfMockTestsGivenByTheUser*100)/listOfMockTests.length)}}%</h6>
-                            </div>
-                            <div>
-                                <p-progressBar [value]="((noOfMockTestsGivenByTheUser*100)/listOfMockTests.length)" [showValue]="false" [style]="{'height': '6px'}"></p-progressBar>
-                            </div>
-                        </div>
+            <!-- Right side of dashboard -->
+            <div class="col-sm-8" style="float: right;">
+                <div class="card mb-4 box-shadow">
+                    Let's start a quick test 
+                    <div style="margin-top: 1em;">
+                        <p-tabView>
+                            <p-tabPanel header="Subject Tests">
+                            <ng-container *ngTemplateOutlet="subjectTestsTemplate">
+                
+                            </ng-container>
+                            </p-tabPanel>
+                            <p-tabPanel header="Mock Tests">
+                                <ng-container *ngTemplateOutlet="mockTestsTemplate">
+                
+                                </ng-container>
+                            </p-tabPanel>
+                        </p-tabView>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div>   
+        </div>  
     </div>
-
-    <!-- Right side of dashboard -->
-    <div class="col-sm-8" style="float: right;">
-        Let's start a quick test 
-        <div style="margin-top: 1em;">
-            <p-tabView>
-                <p-tabPanel header="Subject Tests">
-                   <ng-container *ngTemplateOutlet="subjectTestsTemplate">
-    
-                   </ng-container>
-                </p-tabPanel>
-                <p-tabPanel header="Mock Tests">
-                    <ng-container *ngTemplateOutlet="mockTestsTemplate">
-    
-                    </ng-container>
-                </p-tabPanel>
-            </p-tabView>
-        </div>
-    </div>     
 </div>
 
 <ng-template #subjectTestsTemplate>
     <div *ngIf="subjectNameList.length > 0; else noSubjectTestsAvailable">
         <p>Choose the Subject</p>
-        <div class="row" style="margin-bottom: 1.3em;">
+        <div class="row" style="margin-bottom: 1.3em; margin-left: 0.3em; margin-right: 0.3em;">
             <ng-container *ngFor="let subjectName of subjectNameList; let i = index">
                 <div (click)="onSelectingSubject(i)" class="col-sm-2 questions-list-class" [ngClass]="selectedSubjectIndex === i? 'questions-list-class-selected':''">
                     <p style="text-align: center;">{{subjectName}}</p>
@@ -83,7 +92,7 @@
     <div class="row">
         <div>
             <p *ngIf="selectedSubjectIndex !== -1"> Choose the Topic</p>
-            <div class="row" style="margin-bottom: 1.3em;">
+            <div class="row" style="margin-bottom: 1.3em; margin-left: 0.3em; margin-right: 0.3em;">
                 <ng-container *ngFor="let topicName of subjectToTopicList; let i = index">
                     <div (click)="onSelectingTopic(i)" class="col-sm-2 topic-list-class" [ngClass]="selectedTopicIndex === i? 'questions-list-class-selected':''">
                         <p style="text-align: center;">{{topicName}}</p>
