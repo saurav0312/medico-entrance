@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { TestReportData } from '../../interface/testReportData';
 import { Tests } from '../../interface/tests';
 import { AuthService } from '../../service/auth.service';
@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { NavigationExtras, Router } from '@angular/router';
 import { TestReportQuestion } from '../../interface/testReportQuestion';
 import { ProfileService } from 'src/app/service/profile.service';
+import { MatSidenav } from '@angular/material/sidenav';
 
 
 @Component({
@@ -25,6 +26,23 @@ export class StudentprofileComponent implements OnInit {
 
   dataSource: MatTableDataSource<Tests> = new MatTableDataSource();
   @ViewChild(MatPaginator) paginator! : MatPaginator;
+
+  @ViewChild('sidenav') sidenav! : MatSidenav;
+
+
+  @HostListener('window:resize', ['$event'])
+    onResize(event: any) {
+      console.log("Window resize: ", event)
+        if (event.target.innerWidth < 510) {
+          
+            this.sidenav.close();
+            this.sidenav.mode ='over'
+        }
+        else{
+          this.sidenav.open()
+          this.sidenav.mode = 'side'
+        }
+    }
 
   constructor(
     private authService: AuthService,
