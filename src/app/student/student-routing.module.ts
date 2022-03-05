@@ -11,6 +11,7 @@ import { StudentPerformanceAnalysisDashboardComponent } from './student-performa
 import { DetailSubjectTestReportComponent } from './detail-subject-test-report/detail-subject-test-report.component';
 import { QuestionAnswerDiscussionComponent } from './question-answer-discussion/question-answer-discussion.component';
 import { StudentPageHomeComponent } from './student-page-home/student-page-home.component';
+import { StudentdashboardcontentComponent } from '../studentdashboard/studentdashboardcontent/studentdashboardcontent.component';
 
 const routes: Routes = [
   {
@@ -19,6 +20,7 @@ const routes: Routes = [
     children: [
       { path: 'studentPageHome', component: StudentPageHomeComponent},
       { path: 'editprofileinfo', component: EditprofileinfoComponent},
+      { path: 'viewAllTeachers', component: StudentdashboardcontentComponent},
       { path: 'detailMockTestReport', component: DetailtestreportComponent},
       { path: 'detailSubjectTestReport', component: DetailSubjectTestReportComponent},
       { path: 'questionAnswerDiscussion', component: QuestionAnswerDiscussionComponent},
