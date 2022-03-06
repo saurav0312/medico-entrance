@@ -7,14 +7,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { HttpClientModule } from '@angular/common/http';
 
-import { AngularFireAuthGuard } from '@angular/fire/compat/auth-guard';
-import { provideAuth,getAuth } from '@angular/fire/auth';
-import { initializeApp,provideFirebaseApp, getApp,  } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getStorage, provideStorage } from '@angular/fire/storage'
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 import { environment } from '../environments/environment';
-import { ToastrModule } from 'ngx-toastr';
 import { StudentModule } from './student/student.module';
 import { HomepageModule } from './homepage/homepage.module';
 import { AuthenticationModule } from './authentication/authentication.module';
@@ -24,6 +22,9 @@ import { TeacherdashboardModule } from './teacherdashboard/teacherdashboard.modu
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { StudentdashboardhomeComponent } from './studentdashboard/studentdashboardhome/studentdashboardhome.component';
 
+
+import { ToastModule } from 'primeng/toast';
+import { MessageService } from 'primeng/api';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,17 +40,15 @@ import { StudentdashboardhomeComponent } from './studentdashboard/studentdashboa
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideFirestore(() => getFirestore()),
     provideStorage(() => getStorage()),
-    ToastrModule.forRoot({
-      timeOut: 2000
-    }),
     StudentModule,
     HomepageModule,
     AuthenticationModule,
     StudentdashboardModule,
     PracticetestModule,
-    TeacherdashboardModule
+    TeacherdashboardModule,
+    ToastModule
   ],
-  providers: [],
+  providers: [MessageService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

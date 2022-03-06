@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Userr } from 'src/app/interface/user';
 import * as XLSX from 'xlsx';
 import { MockTest } from '../../interface/mockTest';
-import { Question } from '../../interface/question';
 import { AuthService } from '../../service/auth.service';
 import { User } from 'firebase/auth';
 import { TeacherSubscription } from 'src/app/interface/teacher-subscription';

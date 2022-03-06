@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TestsubscriptionService } from 'src/app/service/testsubscription.service';
 import { MockTest } from '../../interface/mockTest';

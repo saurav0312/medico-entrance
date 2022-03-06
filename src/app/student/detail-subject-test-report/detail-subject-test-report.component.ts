@@ -1,13 +1,10 @@
-import { Component, OnInit, ViewChild, AfterViewInit, Input, ElementRef } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit, ViewChild, Input, ElementRef } from '@angular/core';
 import { TestReportQuestion } from '../../interface/testReportQuestion';
 import { Tests } from '../../interface/tests'; 
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from 'src/app/service/shared.service';
 import { Timestamp } from 'firebase/firestore';
 import { AuthService } from 'src/app/service/auth.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import screenfull from 'screenfull';
 import { MatDialog } from '@angular/material/dialog';
 import { IndividualquestionComponent } from '../individualquestion/individualquestion.component';
 import { IPerformance } from 'src/app/interface/performance';

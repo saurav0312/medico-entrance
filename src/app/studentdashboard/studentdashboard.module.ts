@@ -21,7 +21,7 @@ import { PerformancereportComponent } from './performancereport/performancerepor
 import { StudentModule } from '../student/student.module';
 
 import { SidebarModule } from 'primeng/sidebar';
-import { MatSidenav, MatSidenavContainer, MatSidenavModule } from '@angular/material/sidenav';
+import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 
 

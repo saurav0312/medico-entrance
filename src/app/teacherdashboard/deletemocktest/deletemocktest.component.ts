@@ -3,7 +3,7 @@ import { AuthService } from 'src/app/service/auth.service';
 import { MockTest } from 'src/app/interface/mockTest';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, Sort } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationdialogComponent } from 'src/app/reusableComponents/confirmationdialog/confirmationdialog.component';
 import { Router } from '@angular/router';

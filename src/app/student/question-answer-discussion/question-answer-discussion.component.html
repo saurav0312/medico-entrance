@@ -70,7 +70,7 @@
         <div class="card" style="margin-bottom: 2em;">
             <div class="row" style="margin-top: 0.6em; margin-left: 0.3em; margin-right: 0.6em;">
                 <div class="col-sm-1" style="float: left;">
-                    <img class="rounded-circle" width="40" src="{{discussionQuestion.questionAskedByImage}}">
+                    <img class="rounded-circle" src="{{discussionQuestion.questionAskedByImage}}" style=" height: 3em; width: 3em">
                     <!-- <div style="text-align: center; margin-top: 12px;">
                         <mat-icon>thumb_up_alt</mat-icon>
                         <p>{{discussionQuestion.questionUpVotesCount}}</p>
@@ -119,11 +119,11 @@
 
 
                         <div style="display: inline-flex; margin-right: 0.3em; ">
-                            <mat-icon (click)="increaseUpVoteCount(i)" style="cursor: pointer;">thumb_up_alt</mat-icon>
+                            <mat-icon (click)="increaseUpVoteCount(i)" style="cursor: pointer;" [ngStyle]="{'color': discussionQuestion.isUpVotedByCurrentLoggedInUser? '#0000ff9c' :''}">thumb_up_alt</mat-icon>
                             <p>{{discussionQuestion.questionUpVotesCount}}</p>
                         </div>
                         <div style="display: inline-flex;">
-                            <mat-icon (click)="decreaseUpVoteCount(i)" style="cursor: pointer;">thumb_down_alt</mat-icon>
+                            <mat-icon (click)="increaseDownVoteCount(i)" style="cursor: pointer;" [ngStyle]="{'color': discussionQuestion.isDownVotedByCurrentLoggedInUser? '#0000ff9c' :''}">thumb_down_alt</mat-icon>
                             <p>{{discussionQuestion.questionDownVotesCount}}</p>
                         </div>
                     </div>
@@ -187,3 +187,4 @@ Most Answered Questions list
 
 <app-spinner [loading]="loading" [diameter]="50" [overlay]="true">
 </app-spinner>
+

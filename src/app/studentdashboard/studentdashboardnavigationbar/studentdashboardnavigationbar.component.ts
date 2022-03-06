@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AuthService } from '../../service/auth.service';
-import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/service/profile.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-studentdashboardnavigationbar',
@@ -19,9 +19,9 @@ export class StudentdashboardnavigationbarComponent implements OnInit {
 
   constructor(
     private authService :  AuthService,
-    private toastrService: ToastrService,
     private router : Router,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -38,7 +38,7 @@ export class StudentdashboardnavigationbarComponent implements OnInit {
 
   logout(): void{
     this.authService.logout().subscribe(response =>{
-      this.toastrService.success("Logged Out Successfully")
+      this.messageService.add({severity:'success', summary: 'Logged Out Successfully'});
       this.router.navigateByUrl("/home/homepagecontent")
     })
   }

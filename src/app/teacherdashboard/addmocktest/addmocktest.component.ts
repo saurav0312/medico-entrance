@@ -1,14 +1,13 @@
-import { AfterViewInit, Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import * as XLSX from 'xlsx';
 import { MockTest } from '../../interface/mockTest';
 import { Question } from '../../interface/question';
 import { AuthService } from '../../service/auth.service';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
-import { ToastrService } from 'ngx-toastr';
 import { ProfileService } from 'src/app/service/profile.service';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { from, switchMap, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-addmocktest',
@@ -54,9 +53,9 @@ export class AddmocktestComponent implements OnInit{
 
   constructor(
     private authService: AuthService,
-    private toastrService: ToastrService,
     private profileService: ProfileService,
-    private http: HttpClient
+    private http: HttpClient,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -135,7 +134,7 @@ export class AddmocktestComponent implements OnInit{
         if(data.length == 0){
           this.loading = false;
           this.createMockTestForm.get('testSourceFile')?.setErrors({notEmpty: false})
-          this.toastrService.error("Can not upload empty question list!")
+          this.messageService.add({severity:'error', summary: 'Can not upload empty question list!'});
         }
         else{
           let checkPassed = true;
@@ -173,7 +172,7 @@ export class AddmocktestComponent implements OnInit{
 
           questions.forEach(question =>{
             if(question.options.findIndex(ele => ele === question.correctAnswer) === -1){
-              this.toastrService.error("Correct answer should match one of the options.")
+              this.messageService.add({severity:'error', summary: 'Correct answer should match one of the options.'});
               checkPassed = false;
               this.loading = false;
             }
@@ -261,7 +260,7 @@ export class AddmocktestComponent implements OnInit{
               })
               
               this.loading = false;
-              this.toastrService.success("Test created successfully");
+              this.messageService.add({severity:'success', summary: 'Test created successfully'});
               this.createMockTestForm.reset('')
               this.ngOnInit();
             }) 
