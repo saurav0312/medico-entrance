@@ -1,12 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Userr } from '../../interface/user';
 import { ProfileService } from '../../service/profile.service'
 import { AuthService } from '../../service/auth.service'
-import { ToastrService } from 'ngx-toastr';
 import { Timestamp } from 'firebase/firestore';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { finalize } from 'rxjs';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-teacherprofileinfo',
@@ -41,7 +41,7 @@ export class TeacherprofileinfoComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
     private authService: AuthService,
-    private toastrService: ToastrService
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -65,7 +65,6 @@ export class TeacherprofileinfoComponent implements OnInit {
 
     const sub = this.authService.getCurrentUser() .subscribe(response =>{
       if(response === null || response === undefined){
-        //this.toastrService.error("User is not authenticated. Please login first.")
         this.loading = false;
       }
       else{
@@ -159,7 +158,7 @@ export class TeacherprofileinfoComponent implements OnInit {
           if(ti <= 0){
             this.loading = false;
             clearInterval(intervalId);
-            this.toastrService.success("Profile Updated Successfully")
+            this.messageService.add({severity:'success', summary: 'Profile Updated successfully'});
             this.ngOnInit()
           }
         },1000)

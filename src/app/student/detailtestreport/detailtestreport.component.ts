@@ -7,7 +7,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SharedService } from 'src/app/service/shared.service';
 import { Timestamp } from 'firebase/firestore';
 import { AuthService } from 'src/app/service/auth.service';
-import { animate, state, style, transition, trigger } from '@angular/animations';
 import screenfull from 'screenfull';
 import { MatDialog } from '@angular/material/dialog';
 import { IndividualquestionComponent } from '../individualquestion/individualquestion.component';

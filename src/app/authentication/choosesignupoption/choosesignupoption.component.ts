@@ -3,13 +3,11 @@ import { Component, ElementRef, Input, OnDestroy, OnInit, TemplateRef, ViewChild
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
-import { ToastrService } from 'ngx-toastr';
-import { environment } from 'src/environments/environment';
-import { map, Subscription } from 'rxjs'
 import { Userr } from '../../interface/user';
 import { ProfileService } from '../../service/profile.service';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { finalize } from 'rxjs';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-choosesignupoption',
@@ -51,9 +49,9 @@ export class ChoosesignupoptionComponent implements OnInit {
     private httpClient : HttpClient,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
-    private toastrService: ToastrService,
     private fb: FormBuilder,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private messageService : MessageService
     ) { }
 
   ngOnInit(): void {
@@ -113,7 +111,7 @@ export class ChoosesignupoptionComponent implements OnInit {
           })
 
           this.authService.sendVerificationEmail(response).subscribe(() =>{
-            this.toastrService.success("Verification mail has been sent", "User Registered")
+            this.messageService.add({severity:'success', summary: 'Verification mail has been sent'});
             this.router.navigateByUrl("/home")
             sub.unsubscribe()
           })
@@ -136,7 +134,7 @@ export class ChoosesignupoptionComponent implements OnInit {
   }
 
   sendTeacherCode(): void{
-    this.toastrService.success("Teacher code has been sent to the provided email")
+    this.messageService.add({severity:'success', summary: 'Teacher code has been sent to the provided email'});
   }
 
   signIn(): void{

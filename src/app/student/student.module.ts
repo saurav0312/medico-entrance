@@ -53,7 +53,7 @@ import { TabViewModule } from 'primeng/tabview';
 import { DetailSubjectTestReportComponent } from './detail-subject-test-report/detail-subject-test-report.component';
 import { QuestionAnswerDiscussionComponent } from './question-answer-discussion/question-answer-discussion.component';
 import { DiscussionQuestionComponentComponent } from './discussion-question-component/discussion-question-component.component';
-import { InputText, InputTextModule } from 'primeng/inputtext';
+import { InputTextModule } from 'primeng/inputtext';
 import { StudentPageHomeComponent } from './student-page-home/student-page-home.component';
 
 

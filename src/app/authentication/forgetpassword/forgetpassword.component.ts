@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../service/auth.service';
-import { ToastrService } from 'ngx-toastr';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-forgetpassword',
@@ -17,7 +17,7 @@ export class ForgetpasswordComponent implements OnInit {
   constructor(
     private router : Router, 
     private authService: AuthService,
-    private toastrService: ToastrService
+    private messageService: MessageService
     ) { }
 
   ngOnInit(): void {
@@ -33,7 +33,7 @@ export class ForgetpasswordComponent implements OnInit {
     this.authService.changePassword(this.changePasswordForm).subscribe(
       response =>{
         this.loading = false;
-        this.toastrService.success("Password reset mail sent successfully")
+        this.messageService.add({severity:'success', summary: 'Password reset mail sent successfully'});
         this.router.navigateByUrl("/")
       },
       error =>{

@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from '../authentication/auth.guard';
 import { TeacherAuthGuardGuard } from '../authentication/teacher-auth-guard.guard';
 import { AddmocktestComponent } from './addmocktest/addmocktest.component';
-import { DeletemocktestComponent } from './deletemocktest/deletemocktest.component';
 import { EditmocktestComponent } from './editmocktest/editmocktest.component';
 import { MyMockTestsComponent } from './my-mock-tests/my-mock-tests.component';
 import { MyTestsBoughtByAStudentComponent } from './my-tests-bought-by-astudent/my-tests-bought-by-astudent.component';

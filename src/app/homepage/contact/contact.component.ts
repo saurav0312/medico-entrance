@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
-import { ToastrService } from 'ngx-toastr';
+import { MessageService } from 'primeng/api';
 import { ContactRequest } from 'src/app/interface/contact-request';
 import { AuthService } from 'src/app/service/auth.service';
 
@@ -26,7 +26,7 @@ export class ContactComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private toastrService: ToastrService
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -53,7 +53,7 @@ export class ContactComponent implements OnInit {
     }
     this.authService.createContactRequest(contactRequestData).subscribe(response =>{
       this.loading = false;
-      this.toastrService.success("Contact request sent successfully.")
+      this.messageService.add({severity:'success', summary: 'Contact request sent successfully.'});
       this.ngOnInit()
     },
     error =>{

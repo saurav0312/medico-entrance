@@ -1,15 +1,13 @@
 import { AfterViewInit, Component, HostListener, Input, OnInit, ViewChild } from '@angular/core';
-import { TestReportData } from '../../interface/testReportData';
 import { Tests } from '../../interface/tests';
 import { AuthService } from '../../service/auth.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { ToastrService } from 'ngx-toastr';
-import { NavigationExtras, Router } from '@angular/router';
-import { TestReportQuestion } from '../../interface/testReportQuestion';
+import { Router } from '@angular/router';
 import { ProfileService } from 'src/app/service/profile.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { BehaviorSubject } from 'rxjs';
+import { MessageService } from 'primeng/api';
 
 
 @Component({
@@ -52,8 +50,8 @@ export class StudentprofileComponent implements OnInit, AfterViewInit {
   constructor(
     private authService: AuthService,
     private router : Router,
-    private toastrService: ToastrService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -96,7 +94,7 @@ export class StudentprofileComponent implements OnInit, AfterViewInit {
 
   logout(): void{
     this.authService.logout().subscribe(response =>{
-      this.toastrService.success("Logged Out Successfully")
+      this.messageService.add({severity:'success', summary: 'Logged Out Successfully'});
       this.router.navigateByUrl("/")
     })
   }

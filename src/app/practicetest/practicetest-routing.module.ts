@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuard } from '../authentication/auth.guard';
 import { StudentAuthGuardGuard } from '../authentication/student-auth-guard.guard';
 import { PracticetestsComponent } from './practicetests/practicetests.component';
 import { StarttestComponent } from './starttest/starttest.component';

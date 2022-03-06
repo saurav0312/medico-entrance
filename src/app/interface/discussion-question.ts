@@ -12,4 +12,8 @@ export interface DiscussionQuestion {
     questionUpVotesCount: number;
     questionDownVotesCount: number;
     allAnswers: Array<DiscussionAnswer>;
+    upVotedBy: string[];
+    downVotedBy: string[];
+    isUpVotedByCurrentLoggedInUser: boolean;
+    isDownVotedByCurrentLoggedInUser: boolean;
 }

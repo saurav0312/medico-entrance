@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ToastrService } from 'ngx-toastr';
+import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DiscussionQuestion } from 'src/app/interface/discussion-question';
 import { AuthService } from 'src/app/service/auth.service';
@@ -31,7 +31,8 @@ export class DiscussionQuestionComponentComponent implements OnInit {
   @ViewChild('questionTagTemplate', {static:true} ) questionTagTemplate! : TemplateRef<ElementRef>;
 
   constructor(private profileService: ProfileService, public ref: DynamicDialogRef, public config: DynamicDialogConfig, 
-            private authService: AuthService, private toastrService : ToastrService
+            private authService: AuthService,
+            private messageService: MessageService
             ) 
   { }
 
@@ -77,11 +78,15 @@ export class DiscussionQuestionComponentComponent implements OnInit {
       'questionAskedDate': new Date(),
       'questionUpVotesCount': 0,
       'questionDownVotesCount': 0,
-      allAnswers: []
+      'allAnswers': [],
+      'upVotedBy':[],
+      'downVotedBy':[],
+      'isUpVotedByCurrentLoggedInUser': false,
+      'isDownVotedByCurrentLoggedInUser': false
     }
     this.authService.addDiscussionQuestion(discussionQuestionData).subscribe(response =>{
       this.loading = false;
-      this.toastrService.success("Your question has been added successfully.")
+      this.messageService.add({severity:'success', summary: 'Your question has been added successfully.'});
       this.ngOnInit()
       this.ref.close("Success");
     },

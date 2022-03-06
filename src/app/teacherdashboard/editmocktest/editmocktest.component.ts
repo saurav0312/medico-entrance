@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Route } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import { ActivatedRoute } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { MockTest } from 'src/app/interface/mockTest';
 import { Question } from 'src/app/interface/question';
 import { AuthService } from 'src/app/service/auth.service';
@@ -28,7 +28,7 @@ export class EditmocktestComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private authService: AuthService,
-    private toastrService: ToastrService
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -84,7 +84,7 @@ export class EditmocktestComponent implements OnInit {
       },
       error =>{
         this.loading =false;
-        this.toastrService.error(error.error)
+        this.messageService.add({severity:'error', summary: error.error});
       })
     })
   }
@@ -95,7 +95,7 @@ export class EditmocktestComponent implements OnInit {
 
     this.testQuestions.forEach(question =>{
       if(question.options.findIndex(ele => ele == question.correctAnswer) === -1){
-        this.toastrService.error("Correct answer should match one of the options.")
+        this.messageService.add({severity:'error', summary: 'Correct answer should match one of the options.'});
         checkPassed = false;
         this.loading = false;
       }
@@ -118,13 +118,13 @@ export class EditmocktestComponent implements OnInit {
         "testUploadDate": new Date()
       }
       this.authService.updateMockTestDetails(this.testId, testDetail).subscribe(response =>{
-        this.toastrService.success("Test modified successfully")
+        this.messageService.add({severity:'success', summary: 'Test modified successfully'});
         this.loading = false;
         this.selectedValue = 0;
       },
       error=>{
         this.loading = false
-        this.toastrService.error(error.error)
+        this.messageService.add({severity:'error', summary: error.error});
       })
     }
 

@@ -1,11 +1,10 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { TestReportData } from '../../interface/testReportData';
 import { Tests } from '../../interface/tests';
 import { AuthService } from '../../service/auth.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { NavigationExtras, Router } from '@angular/router';
-import { TestReportQuestion } from '../../interface/testReportQuestion';
+import { Router } from '@angular/router';
 import { SharedService } from 'src/app/service/shared.service';
 import { MatSort } from '@angular/material/sort';
 

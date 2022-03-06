@@ -3,11 +3,11 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
-import { ToastrService } from 'ngx-toastr';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { finalize } from 'rxjs';
 import { ProfileService } from 'src/app/service/profile.service';
 import { User } from 'firebase/auth';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-signin',
@@ -30,8 +30,8 @@ export class SigninComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private profileService: ProfileService,
-    private toastrService: ToastrService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
@@ -61,7 +61,6 @@ export class SigninComponent implements OnInit {
                 // this.loading = false
                 // this.authService.logout().subscribe(res =>{
                 //   console.log("User logged out as email is not veriifed: ", res)
-                //   this.toastrService.error("Please verify email first.")
                 // })
               }
               else{
@@ -78,7 +77,7 @@ export class SigninComponent implements OnInit {
                     this.router.navigateByUrl("/teacherdashboard")
                   }
                 })
-                this.toastrService.success("User Logged In")
+                this.messageService.add({severity:'success', summary: 'user logged in '});
               }
             }
             else{
