@@ -70,7 +70,7 @@
                   <div class="table-responsive">
                     <table class="table">
                       <thead>
-                        <tr>
+                        <tr style="height:2px;">
                           <th>S.No.</th>
                           <ng-container *ngFor="let col of displayedColumns">
                             <th>{{col.header}}</th>
@@ -118,17 +118,63 @@
     </div>
 
     <div class="row" style="margin: 2px;">
-      <div class="col-sm-12" style="border: 1px solid;">
+      <!-- <div class="col-sm-12" style="border: 1px solid;">
         Performance Summary
-      </div> 
-      <div class="col-sm-6" style="border: 1px solid;">
-        <p>Total No of Questions: {{totalNoOfQuestions}}</p>
-        <p>No of Correct Answer: {{noOfCorrectAnswers}}</p>
-        <p>No of Incorrect Answer: {{noOfIncorrectAnswers}}</p>
-        <p>No of Questions Not Answered: {{noOfQuestionsNotAnswered}}</p>
+      </div>  -->
+      <div class="card col-sm-6" style="border: none;">
+        <div style="margin-right:10px; border: 2px solid #e4ebe5;">
+
+          <div class="row" style="height: 50%;">
+            <div class="col-sm-6" style="width: 50%; text-align: center; margin-top: 30px;">
+              <div style="float: left; margin-top: 20px;">
+                <mat-icon [inline]="true" style="font-size: 50px;">question_mark</mat-icon>
+              </div>
+              <div>
+                <p style="font-size: 15px; margin-bottom: 30px;">Total No of Questions:</p>
+                <p style="font-size: 50px; font-family: Oswald;">{{totalNoOfQuestions}}</p>
+              </div>
+            </div>
+
+            <div class="col-sm-6" style="width: 50%; text-align: center; margin-top: 30px">
+              <div style="float: left; margin-top: 20px;">
+                <mat-icon [inline]="true" style="font-size: 50px;">task_alt</mat-icon>
+              </div>
+              <div>
+                <p style="font-size: 15px; margin-bottom: 30px;">No of Correct Answer:</p>
+                <p style="font-size: 50px; font-family: Oswald;"> {{noOfCorrectAnswers}}</p>
+              </div>
+            </div>
+
+          </div>
+        <!-- </div>
+        
+        <div style="margin-right:10px; border: 2px solid #e4ebe5;"> -->
+          <div class="row" style="height: 50%;">
+            <div class="col-sm-6" style="width: 50%; text-align: center; margin-top: 30px">
+              <div style="float: left; margin-top: 20px;">
+                <mat-icon [inline]="true" style="font-size: 50px;">dangerous</mat-icon>
+              </div>
+              <div >
+                <p style="font-size: 15px; margin-bottom: 30px;">No of Incorrect Answer:</p>
+                <p style="font-size: 50px; font-family: Oswald;">{{noOfIncorrectAnswers}}</p>
+              </div>
+            </div>
+
+            <div class="col-sm-6" style="width: 50%; text-align: center; margin-top: 30px">
+              <div style="float: left; margin-top: 20px;">
+                <mat-icon [inline]="true" style="font-size: 50px;">do_not_disturb_on</mat-icon>
+              </div>
+              <div>
+                <p style="font-size: 15px; margin-bottom: 30px;">No of Questions Not Answered:</p>
+                <p style="font-size: 50px; font-family: Oswald;">{{noOfQuestionsNotAnswered}}</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
 
       </div>
-      <div class="col-sm-6" style="border: 1px solid;">
+      <div class=" card col-sm-6" style="border: 2px solid #e4ebe5; border-radius: 20px;">
         
         <div class="row">
 

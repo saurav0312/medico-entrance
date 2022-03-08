@@ -36,3 +36,7 @@
     background-color: antiquewhite;
     cursor: pointer;
 }
+
+th {
+    height: 20px;
+  }
