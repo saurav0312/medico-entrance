@@ -370,4 +370,12 @@ export class StudentPageHomeComponent implements OnInit {
     this.allSubjectTestsForTable = this.allSubjectTests.slice(0, this.initialSubjectTestListFilterLength);
     this.sortTestList(this.allSubjectTestsForTable)
   }
+
+  viewMockTestReport(test: MockTestWithAlreadyGiven){
+    this.router.navigate(["/studentProfile/detailMockTestReport"], {queryParams: {testId: test.test.id}})
+  }
+
+  viewSubjectTestReport(test: MockTestWithAlreadyGiven){
+    this.router.navigate(["/studentProfile/detailSubjectTestReport"], {queryParams: {testId: test.test.id}})
+  }
 }

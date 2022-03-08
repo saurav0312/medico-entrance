@@ -31,7 +31,7 @@
                             <td>{{row.test.testTakenBy}}</td>
                             <td>
                               <div *ngIf ="row.isAlreadyGiven; else notAlreadyGivenMocktest">
-                                <label  class="badge badge-success badge-class" style="margin-right: 5px;">
+                                <label (click)="viewMockTestReport(row)" class="badge badge-success badge-class" style="margin-right: 5px;">
                                   View
                                 </label>
                                 <label (click)="startTest(row)" class="badge badge-success badge-class">
@@ -85,7 +85,7 @@
                             <td>{{row.test.testTakenBy}}</td>
                             <td>
                               <div *ngIf ="row.isAlreadyGiven; else notAlreadyGivenSubjectTest">
-                                <label  class="badge badge-success badge-class" style="margin-right: 5px;">
+                                <label (click)="viewSubjectTestReport(row)" class="badge badge-success badge-class" style="margin-right: 5px;">
                                   View
                                 </label>
                                 <label (click)="startTest(row)"  class="badge badge-success badge-class">

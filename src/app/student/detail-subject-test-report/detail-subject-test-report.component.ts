@@ -90,7 +90,20 @@ export class DetailSubjectTestReportComponent implements OnInit {
         sub.unsubscribe()
         if(response!== undefined){
           this.testReportData = response
-          this.testReportData.allTests = this.testReportData.allTests.filter(test => test.testCategory ==='Subject')
+
+          this.activatedRoute.queryParams.subscribe((params: any) =>{
+          let testIdFromParams = <string>params.testId
+
+          console.log(" Subject Testid from param: ", testIdFromParams)
+          if(testIdFromParams === undefined){
+            this.testReportData.allTests = this.testReportData.allTests.filter(test => test.testCategory ==='Subject')
+          }
+          else{
+            this.testReportData.allTests = this.testReportData.allTests.filter(test => test.testId === testIdFromParams)
+          }
+         
+
+          
           this.uniqueTestsList = {}
           this.testReportData.allTests.forEach(test =>{
             if(this.uniqueTestsList[test.testId]=== undefined){
@@ -143,6 +156,7 @@ export class DetailSubjectTestReportComponent implements OnInit {
             }
             this.nodeSelected(nodeData)
           }
+        })
         }
       })
     })
