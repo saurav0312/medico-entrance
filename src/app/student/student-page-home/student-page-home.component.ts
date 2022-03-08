@@ -44,7 +44,7 @@ export class StudentPageHomeComponent implements OnInit {
   allMockTestsForTable: MockTestWithAlreadyGiven[] = [];
 
   initialMockTestListFilterLength: number = 2;
-  initialSubjectTestListFilterLength: number = 4;
+  initialSubjectTestListFilterLength: number = 2;
 
   userId!: string | undefined;
 
@@ -280,8 +280,30 @@ export class StudentPageHomeComponent implements OnInit {
 
 
   generateRandomColor(data: any){
-    for(let i=0;i<data.length;i++){
-      this.colors.push('#'+Math.floor(Math.random()*16777215).toString(16));
+    var letters = '0123456789ABCDEF'.split('');
+    let totalColorCount = 0;
+    while(1){
+      var newColor = '#';
+      for (var j = 0; j < 6; j++ ) {
+        newColor += letters[Math.floor(Math.random() * 16)];
+      }
+      console.log("Here")
+      if(this.colors.length > 0 && this.colors.find(existingColor => existingColor == newColor) === undefined){
+        this.colors.push(newColor)
+        totalColorCount++;
+        console.log("Total color count: ", totalColorCount)
+        if(totalColorCount == data.length){
+          break;
+        }
+      }
+      else if(this.colors.length === 0){
+        this.colors.push(newColor)
+        totalColorCount++;
+        console.log("Total color count else: ", totalColorCount)
+        if(totalColorCount == data.length){
+          break;
+        }
+      }
     }
   }
 
