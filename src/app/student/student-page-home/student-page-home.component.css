@@ -1,0 +1,38 @@
+@media screen and (max-width: 510px){
+    .banner-class{
+        width: 100% !important;
+        height: 5em !important;
+    }
+
+    .mockTestClass{
+        padding-right: 0px;
+        margin-bottom: 8px;
+    }
+
+}
+
+.convertingColorsRadialGradient{ 
+    background-image: radial-gradient(circle farthest-corner at center, 
+    rgba(255, 249, 222, 1) 35%, rgba(254, 254, 223, 1) 65%, rgba(236, 255, 232, 1) 100%); 
+}
+
+.badge-class{
+    font-size: 16px; 
+    cursor: pointer;
+}
+
+.table-responsive {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+
+.view-more-class{
+    float: right; 
+    padding: 5px; 
+    margin: 5px; 
+    font-size: 12px; 
+    border-radius: 3em; 
+    background-color: antiquewhite;
+    cursor: pointer;
+}

@@ -1,1 +1,167 @@
-<p>student-page-home works!</p>
+
+
+<div class="row" style="margin: 2px;">
+  <div class="col-sm-12" style=" float: left;">
+    <div class="row mb-2 box-shadow" >
+      <img class="banner-class" src="../../assets/img/student_home_page_banner.png" alt="banner" style="width: 100%; height: 16.25em;">
+    </div>
+
+    <div class="row" style="margin: 2px;">
+      <div class="mockTestClass col-sm-6" style="width: 32.5em; height: auto; padding-left: 0px;">
+          <div class="card convertingColorsRadialGradient" style="height: auto; border: none; background-color: #FEFEDF; border-radius: 0.7em;">
+              <div>
+                <p style="font-size: 20px; font-weight: 700; text-align: center;">
+                  Available Mock Tests
+                </p>
+                <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>S.No.</th>
+                          <ng-container *ngFor="let col of displayedColumns">
+                            <th>{{col.header}}</th>
+                          </ng-container>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let row of allMockTestsForTable; let i =index;">
+                          <tr>
+                            <td>{{i + 1}}</td>
+                            <td>{{row.test.testName}}</td>
+                            <td>{{row.test.testTakenBy}}</td>
+                            <td>
+                              <div *ngIf ="row.isAlreadyGiven; else notAlreadyGivenMocktest">
+                                <label  class="badge badge-success badge-class" style="margin-right: 5px;">
+                                  View
+                                </label>
+                                <label (click)="startTest(row)" class="badge badge-success badge-class">
+                                  Retake
+                                </label>
+                              </div>
+                              <ng-template #notAlreadyGivenMocktest>
+                                <label (click)="startTest(row)"  class="badge badge-success badge-class">
+                                  Start
+                                </label>
+                              </ng-template>
+                            </td>
+                          </tr>
+                        </ng-container>
+                        <ng-container *ngIf="allMockTestsForTable.length === 0">
+                          No tests available
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div>
+                  
+              </div>
+          </div>
+          <ng-container *ngIf="allMockTests.length > 2">
+            <div>
+              <p *ngIf="allMockTestsForTable.length !== allMockTests.length" (click)="viewMoreMockTest()" class="view-more-class">View More</p>
+            </div>
+          </ng-container>
+      </div>
+      <div class="col-sm-6" style="width: 32.5em; height: auto; padding-left: 0px; padding-right: 0px;">
+          <div class="card convertingColorsRadialGradient" style="height: auto; border: none; background-color: #FEFEDF; border-radius: 0.7em"> 
+              <div>
+                  <p style="font-size: 20px; font-weight: 700; text-align: center;">
+                    Available Subject Tests
+                  </p>
+                  <div class="table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th>S.No.</th>
+                          <ng-container *ngFor="let col of displayedColumns">
+                            <th>{{col.header}}</th>
+                          </ng-container>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let row of allSubjectTestsForTable; let i =index;">
+                          <tr>
+                            <td>{{i + 1}}</td>
+                            <td>{{row.test.testName}}</td>
+                            <td>{{row.test.testTakenBy}}</td>
+                            <td>
+                              <div *ngIf ="row.isAlreadyGiven; else notAlreadyGivenSubjectTest">
+                                <label  class="badge badge-success badge-class" style="margin-right: 5px;">
+                                  View
+                                </label>
+                                <label (click)="startTest(row)"  class="badge badge-success badge-class">
+                                  Retake
+                                </label>
+                              </div>
+                              <ng-template #notAlreadyGivenSubjectTest>
+                                <label (click)="startTest(row)"  class="badge badge-success badge-class">
+                                  Start
+                                </label>
+                              </ng-template>
+                            </td>
+                          </tr>
+                        </ng-container>
+                        <ng-container *ngIf="allSubjectTestsForTable.length === 0">
+                          <p>No tests available</p>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                  </div>
+              </div>
+          </div>
+          <ng-container *ngIf="allSubjectTests.length > 4">
+            <div>
+              <p *ngIf="allSubjectTestsForTable.length !== allSubjectTests.length" class="view-more-class" (click)="viewMoreSubjectTest()">View More</p>
+            </div>
+          </ng-container>
+
+      </div>
+    </div>
+
+    <div class="row" style="margin: 2px;">
+      <div class="col-sm-12" style="border: 1px solid;">
+        Performance Summary
+      </div> 
+      <div class="col-sm-6" style="border: 1px solid;">
+        <p>Total No of Questions: {{totalNoOfQuestions}}</p>
+        <p>No of Correct Answer: {{noOfCorrectAnswers}}</p>
+        <p>No of Incorrect Answer: {{noOfIncorrectAnswers}}</p>
+        <p>No of Questions Not Answered: {{noOfQuestionsNotAnswered}}</p>
+
+      </div>
+      <div class="col-sm-6" style="border: 1px solid;">
+        
+        <div class="row">
+
+          <div class="col-sm-6">
+
+            <div style="height:250px; width:250px; display: flex; align-items: center; justify-content: center;">
+              <canvas id="overallCorrectAnswersChart"></canvas>
+            </div>
+
+          </div>
+
+          <div class="col-sm-6">
+
+            <div style="height:250px; width:250px; display: flex; align-items: center; justify-content: center;">
+              <canvas id="overallIncorrectAnswersChart"></canvas>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- <div class="col-sm-3" style="float: right; width: 20em; height: 45em;" >
+      <div style="margin-left: 0.5em; margin-top:0.5em;">
+          <h2 style=" font-weight: 550; font-family: sans-serif; height: 20px; font-size: 17px;">Start a test with test key</h2>
+          <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input type="text" style="border-radius: 1.2em;" pInputText placeholder="Enter key" />
+          </span>
+      </div>
+  </div> -->
+</div>
+

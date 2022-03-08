@@ -69,7 +69,7 @@ export class SigninComponent implements OnInit {
                   if(response.accountType === 'student'){
                     sub.unsubscribe();
                     this.loading=false;
-                    this.router.navigateByUrl("/studentProfile/overallAnalysisDashboard")
+                    this.router.navigateByUrl("/studentProfile/studentPageHome")
                   }
                   else{
                     sub.unsubscribe();
@@ -77,7 +77,7 @@ export class SigninComponent implements OnInit {
                     this.router.navigateByUrl("/teacherdashboard")
                   }
                 })
-                this.messageService.add({severity:'success', summary: 'user logged in '});
+                this.messageService.add({severity:'success', summary: 'User logged in '});
               }
             }
             else{
