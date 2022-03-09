@@ -280,31 +280,38 @@ export class StudentPageHomeComponent implements OnInit {
 
 
   generateRandomColor(data: any){
-    var letters = '0123456789ABCDEF'.split('');
-    let totalColorCount = 0;
-    while(1){
-      var newColor = '#';
-      for (var j = 0; j < 6; j++ ) {
-        newColor += letters[Math.floor(Math.random() * 16)];
-      }
-      console.log("Here")
-      if(this.colors.length > 0 && this.colors.find(existingColor => existingColor == newColor) === undefined){
-        this.colors.push(newColor)
-        totalColorCount++;
-        console.log("Total color count: ", totalColorCount)
-        if(totalColorCount == data.length){
-          break;
-        }
-      }
-      else if(this.colors.length === 0){
-        this.colors.push(newColor)
-        totalColorCount++;
-        console.log("Total color count else: ", totalColorCount)
-        if(totalColorCount == data.length){
-          break;
-        }
-      }
-    }
+
+    let tempColorList = ["#77e651", "#f44242", "#2a42dd", "#8e8f92", "#665999", "#808000", "#FFA500", "#FFFF00"]
+
+    this.colors = tempColorList.slice(0, data.length)
+
+
+    //temporarily commenting -> will uncomment when dynamic color is required
+    // var letters = '0123456789ABCDEF'.split('');
+    // let totalColorCount = 0;
+    // while(1){
+    //   var newColor = '#';
+    //   for (var j = 0; j < 6; j++ ) {
+    //     newColor += letters[Math.floor(Math.random() * 16)];
+    //   }
+    //   console.log("Here")
+    //   if(this.colors.length > 0 && this.colors.find(existingColor => existingColor == newColor) === undefined){
+    //     this.colors.push(newColor)
+    //     totalColorCount++;
+    //     console.log("Total color count: ", totalColorCount)
+    //     if(totalColorCount == data.length){
+    //       break;
+    //     }
+    //   }
+    //   else if(this.colors.length === 0){
+    //     this.colors.push(newColor)
+    //     totalColorCount++;
+    //     console.log("Total color count else: ", totalColorCount)
+    //     if(totalColorCount == data.length){
+    //       break;
+    //     }
+    //   }
+    // }
   }
 
   prepareSubjectWisePerformanceChart(chartLabels: string[], chartData: number[], elementId: string, chartTitle: string){
