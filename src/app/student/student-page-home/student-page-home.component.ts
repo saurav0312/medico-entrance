@@ -58,7 +58,8 @@ export class StudentPageHomeComponent implements OnInit {
 
   subjectTagMap: {[key:string]:{[key:string]:number}} ={};
 
-  colors: string[] = []
+  colors: string[] = [];
+  loading = false;
 
   // @HostListener('window:resize', ['$event'])
   //   onResize(event: any) {
@@ -73,6 +74,7 @@ export class StudentPageHomeComponent implements OnInit {
   //   }
 
   ngOnInit(): void {
+    this.loading = true;
 
     this.authService.getCurrentUser().subscribe(currentUser =>{
       this.userId = currentUser.uid
@@ -257,6 +259,16 @@ export class StudentPageHomeComponent implements OnInit {
               Object.keys(this.subjectTagMap).forEach((key) =>{
                 labels.push(key)
                 data.push(this.subjectTagMap[key]['incorrect'])
+                // labels.push("Test" +key)
+                // data.push(30)
+                // labels.push("Test1" +key)
+                // data.push(30)
+                // labels.push("Test2" +key)
+                // data.push(30)
+                // labels.push("Test3" +key)
+                // data.push(30)
+                // labels.push("Test4" +key)
+                // data.push(30)
               })
 
               // this.colors = []
@@ -273,6 +285,8 @@ export class StudentPageHomeComponent implements OnInit {
           //if length > 4 then remove extra elements and show remaining tests in table
           this.allSubjectTestsForTable = this.allSubjectTests.slice(0, this.initialSubjectTestListFilterLength);
           this.allMockTestsForTable = this.allMockTests.slice(0, this.initialMockTestListFilterLength);
+
+          this.loading = false;
         })      
       })
     })

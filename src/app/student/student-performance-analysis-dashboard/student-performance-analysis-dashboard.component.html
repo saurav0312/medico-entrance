@@ -1,12 +1,8 @@
 <div class="row" style="font-size: 20px; font-weight: 600; margin-top: 1em; padding: 15px;">
     <div class="row">
-        <!-- <div style="margin-bottom: 0.5em; margin-top: 0.5em;">
-            Dashboard
-        </div> -->
-
         <div class="row" style="margin: 2px;">
             <!-- Left side of dashboard -->
-            <div class="col-sm-4" style="float: left; width: -webkit-fill-available; border-color: azure;">
+            <!-- <div class="col-sm-4" style="float: left; width: -webkit-fill-available; border-color: azure;">
                 <div class="card mb-4 box-shadow">
                 
                     <div style="margin-top: 0.3em;">
@@ -51,12 +47,12 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <!-- Right side of dashboard -->
-            <div class="col-sm-8" style="float: right;">
+            <div class="col-sm-12" style="float: right;">
                 <div class="card mb-4 box-shadow">
-                    Let's start a quick test 
+                    <p style="margin-top: 5px; text-align: center;">Let's start a quick test</p> 
                     <div style="margin-top: 1em;">
                         <p-tabView>
                             <p-tabPanel header="Subject Tests">
@@ -77,12 +73,34 @@
     </div>
 </div>
 
+
+<!-- Test -->
+
+<!-- <div class="container rounded bg-blue mt-5 mb-5">
+    <div style="max-width: 500px; margin-left: auto; margin-right: auto;" >
+        
+        <div class="border card" style="border-color: #e0e0e0  !important;">
+            <div class="p-3">
+                
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<!-- Test end -->
+
+
+
 <ng-template #subjectTestsTemplate>
     <div *ngIf="subjectNameList.length > 0; else noSubjectTestsAvailable">
         <p>Choose the Subject</p>
         <div class="row" style="margin-bottom: 1.3em; margin-left: 0.3em; margin-right: 0.3em;">
             <ng-container *ngFor="let subjectName of subjectNameList; let i = index">
-                <div (click)="onSelectingSubject(i)" class="col-sm-2 questions-list-class" [ngClass]="selectedSubjectIndex === i? 'questions-list-class-selected':''">
+                <div (click)="onSelectingSubject(i)" class="col-sm-3 questions-list-class" [ngClass]="selectedSubjectIndex === i? 'questions-list-class-selected':''">
+                    <p style="text-align: center;">{{subjectName}}</p>
+                </div>
+
+                <div (click)="onSelectingSubject(i)" class="col-sm-3 questions-list-class" [ngClass]="selectedSubjectIndex === i? 'questions-list-class-selected':''">
                     <p style="text-align: center;">{{subjectName}}</p>
                 </div>
             </ng-container>
@@ -149,7 +167,7 @@
 <!-- Test -->
 <div class="row">
     <ng-container class ="col-sm-6"  *ngFor="let individualTest of listOfMockTests; let i = index" style="margin-bottom: 2rem;">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card mb-4 box-shadow">
                 <div class="card-body">
                     <div>
