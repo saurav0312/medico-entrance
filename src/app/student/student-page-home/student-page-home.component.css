@@ -9,6 +9,11 @@
         margin-bottom: 8px;
     }
 
+    .chart-class{
+        width: 300px !important;
+        height: 300px !important;
+    }
+
 }
 
 .convertingColorsRadialGradient{ 
@@ -37,6 +42,18 @@
     cursor: pointer;
 }
 
-th {
+/* th {
     height: 20px;
+  } */
+
+  .overallCorrectAnswersChart{
+      margin: 0 auto;
+  }
+
+  .chart-class{
+    height:250px; 
+    width:250px; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
   }
