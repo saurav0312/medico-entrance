@@ -38,6 +38,7 @@ import { KnobModule } from "primeng/knob";
 import { ProgressBarModule } from 'primeng/progressbar';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { DynamicDialogModule } from 'primeng/dynamicdialog';
+import { DropdownModule } from 'primeng/dropdown';
 
 import { Ng2GoogleChartsModule } from 'ng2-google-charts'
 
@@ -55,6 +56,7 @@ import { QuestionAnswerDiscussionComponent } from './question-answer-discussion/
 import { DiscussionQuestionComponentComponent } from './discussion-question-component/discussion-question-component.component';
 import { InputTextModule } from 'primeng/inputtext';
 import { StudentPageHomeComponent } from './student-page-home/student-page-home.component';
+import { MyDashboardComponent } from './my-dashboard/my-dashboard.component';
 
 
 @NgModule({
@@ -68,7 +70,8 @@ import { StudentPageHomeComponent } from './student-page-home/student-page-home.
     DetailSubjectTestReportComponent,
     QuestionAnswerDiscussionComponent,
     DiscussionQuestionComponentComponent,
-    StudentPageHomeComponent
+    StudentPageHomeComponent,
+    MyDashboardComponent
   ],
   imports: [
     CommonModule,
@@ -107,7 +110,8 @@ import { StudentPageHomeComponent } from './student-page-home/student-page-home.
     TabViewModule,
     InputTextareaModule,
     DynamicDialogModule,
-    InputTextModule
+    InputTextModule,
+    DropdownModule
   ],
   exports: [
     StudentprofileComponent,

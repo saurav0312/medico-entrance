@@ -104,8 +104,8 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
 
 
-    let sub = this.authService.getCurrentUser().subscribe(response =>{
-      this.authService.getAllMockTestsGivenByAUser(response?.uid).subscribe(response =>{
+    let sub = this.authService.getCurrentUser().subscribe(UserDataResponse =>{
+      this.authService.getAllMockTestsGivenByAUser(UserDataResponse?.uid).subscribe(response =>{
         sub.unsubscribe()
         if(response!== undefined){
           this.testReportData = response
