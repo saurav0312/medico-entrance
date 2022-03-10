@@ -11,6 +11,7 @@ import { DetailSubjectTestReportComponent } from './detail-subject-test-report/d
 import { QuestionAnswerDiscussionComponent } from './question-answer-discussion/question-answer-discussion.component';
 import { StudentPageHomeComponent } from './student-page-home/student-page-home.component';
 import { StudentdashboardcontentComponent } from '../studentdashboard/studentdashboardcontent/studentdashboardcontent.component';
+import { MyDashboardComponent } from './my-dashboard/my-dashboard.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,7 @@ const routes: Routes = [
       { path: 'questionAnswerDiscussion', component: QuestionAnswerDiscussionComponent},
       { path: 'viewMyTests', component: ViewmytestsComponent},
       { path: 'overallAnalysisDashboard', component: StudentPerformanceAnalysisDashboardComponent},
+      { path: 'myDashboard', component: MyDashboardComponent},
       { path: 'individualQuestion', component: IndividualquestionComponent },
       { path: '', redirectTo: '/studentProfile/editprofileinfo', pathMatch: 'full' },
     ],
