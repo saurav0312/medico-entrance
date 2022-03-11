@@ -96,9 +96,9 @@
                                         <ng-template pTemplate="body" let-row let-i= "rowIndex" let-columns="columns">
                                             <tr>
                                                 <td>
-                                                    <div pTooltip="Click to review question" matTooltipPosition='right' 
-                                                        style="cursor: pointer;" (click)="viewIndividualQuestion(row, i)">
-                                                        <a style="text-align: center; color: #0490f4;">{{i + 1}}</a>
+                                                    <div >
+                                                        <a style="text-align: center; color: #0490f4; cursor: pointer;" pTooltip="Click to review question" matTooltipPosition='right' 
+                                                        (click)="viewIndividualQuestion(row, i)">{{i + 1}}</a>
                                                     </div>
                                                 </td>
                                                 <td *ngFor="let col of columns">
@@ -208,7 +208,7 @@
     </ng-template>
 
     <ng-template #chartReportTemplate>
-        <mat-expansion-panel style="margin: 1.6em;" class="mat-card mat-elevation-z8" 
+        <mat-expansion-panel style="margin: 1.6em;" class="mat-card" 
                             (opened)="expandCharts = true"
                             (closed)="expandCharts = false"
                             [expanded]="true">
@@ -219,7 +219,7 @@
                     </div>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="row">
+            <div class="row" style="margin-bottom: 10px;">
                 <div class="col-md-6 ">
                     <div class="card mat-elevation-z2" style="margin-bottom: 0.7em;">
                         <div style="display: flex; flex-flow: row-reverse;">

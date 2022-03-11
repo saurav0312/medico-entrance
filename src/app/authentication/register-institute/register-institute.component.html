@@ -1,0 +1,112 @@
+<app-homenavigationbar></app-homenavigationbar>
+<div >
+    <div class="login-container">
+        <div class="bb-login">
+            <form (ngSubmit)="register()" name="loginForm" [formGroup]="registerInstitueForm" > 
+                <span class="mb-3 bb-form-title p-b-26" style="font-family: 'Cambay', sans-serif;"> Register as Institute </span>
+                <div style="height: 5em;">  
+                    <ng-container *ngTemplateOutlet="emailTemplate; context:{$implicit:registerInstitueForm}">
+
+                    </ng-container>
+                </div>
+
+                <div style="height: 5em;">  
+                    <ng-container *ngTemplateOutlet="instituteNameTemplate; context:{$implicit:registerInstitueForm}">
+
+                    </ng-container>
+                </div>
+
+                <div class="row" style="height: 5em;">  
+                    <ng-container *ngTemplateOutlet="institutePhoneNumberTemplate; context:{$implicit:registerInstitueForm}">
+
+                    </ng-container>
+                  
+                    <ng-container *ngTemplateOutlet="instituteContactPersonNameTemplate; context:{$implicit:registerInstitueForm}">
+
+                    </ng-container>
+                </div>
+
+                <div style="height: 5em;">  
+                    <ng-container *ngTemplateOutlet="instituteAddressTemplate; context:{$implicit:registerInstitueForm}">
+
+                    </ng-container>
+                </div>
+
+                <div>  
+                    <ng-container *ngTemplateOutlet="messageTemplate; context:{$implicit:registerInstitueForm}">
+
+                    </ng-container>
+                </div>
+
+                <div class="login-container-form-btn">
+                    <div class="bb-login-form-btn">
+                        <div class="bb-form-bgbtn"></div> <button style="font-family: 'Cambay', sans-serif; font-size: 20px;" class="bb-form-btn" [disabled]="registerInstitueForm.invalid"> Register </button>
+                    </div>
+                </div>
+            </form>
+
+            <app-spinner [loading]="loading" [mode]="mode" [diameter]="50" [overlay]="true">
+            </app-spinner>
+        </div>
+    </div>
+</div>
+
+<ng-template #emailTemplate let-registerInstitueForm>
+    <mat-form-field style="width: 100%;" appearance="outline">
+        <mat-label>Email</mat-label>
+        <input [formControl]="registerInstitueForm.get('instituteEmail')" type="email" required matInput>
+        <mat-error *ngIf="registerInstitueForm.dirty && registerInstitueForm.get('instituteEmail')?.value.length==0">
+            Email is required
+        </mat-error>
+    </mat-form-field>
+</ng-template>
+
+<ng-template #instituteNameTemplate let-registerInstitueForm>
+    <mat-form-field style="width: 100%;" appearance="outline">
+        <mat-label>Institute Name</mat-label>
+        <input [formControl]="registerInstitueForm.get('instituteName')" type="text" required matInput>
+        <mat-error *ngIf="registerInstitueForm.dirty && registerInstitueForm.get('instituteName')?.value.length==0">
+            Institute name is required
+        </mat-error>
+    </mat-form-field>
+</ng-template>
+
+<ng-template #institutePhoneNumberTemplate let-registerInstitueForm>
+    <mat-form-field  class="col-sm-6"style="width: 100%;" appearance="outline">
+        <mat-label>Institute Number</mat-label>
+        <input [formControl]="registerInstitueForm.get('institutePhoneNumber')" type="text" required matInput>
+        <mat-error *ngIf="registerInstitueForm.dirty && registerInstitueForm.get('institutePhoneNumber')?.value.length==0">
+            Institute number is required
+        </mat-error>
+    </mat-form-field>
+</ng-template>
+
+<ng-template #instituteContactPersonNameTemplate let-registerInstitueForm>
+    <mat-form-field  class="col-sm-6" style="width: 100%;" appearance="outline">
+        <mat-label>Contact Person Name</mat-label>
+        <input [formControl]="registerInstitueForm.get('instituteContactPersonName')" type="text" required matInput>
+        <mat-error *ngIf="registerInstitueForm.dirty && registerInstitueForm.get('instituteContactPersonName')?.value.length==0">
+            Contact person name is required
+        </mat-error>
+    </mat-form-field>
+</ng-template>
+
+<ng-template #instituteAddressTemplate let-registerInstitueForm>
+    <mat-form-field style="width: 100%;" appearance="outline">
+        <mat-label>Address</mat-label>
+        <input [formControl]="registerInstitueForm.get('instituteAddress')" type="text" required matInput>
+        <mat-error *ngIf="registerInstitueForm.dirty && registerInstitueForm.get('instituteAddress')?.value.length==0">
+            Address is required
+        </mat-error>
+    </mat-form-field>
+</ng-template>
+
+<ng-template #messageTemplate let-registerInstitueForm>
+    <mat-form-field style="width: 100%;" appearance="outline">
+        <mat-label>Message</mat-label>
+        <textarea rows="5" [formControl]="registerInstitueForm.get('message')" matInput></textarea>
+        <mat-error *ngIf="registerInstitueForm.dirty && registerInstitueForm.get('message')?.value.length==0">
+            Message is required
+        </mat-error>
+    </mat-form-field>
+</ng-template>

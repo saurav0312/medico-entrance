@@ -20,13 +20,15 @@ import { ForgetpasswordComponent } from './forgetpassword/forgetpassword.compone
 import { StudentModule } from '../student/student.module';
 import { HomepageModule } from '../homepage/homepage.module';
 import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
+import { RegisterInstituteComponent } from './register-institute/register-institute.component';
 
 
 @NgModule({
   declarations: [
     SigninComponent,
     ChoosesignupoptionComponent,
-    ForgetpasswordComponent
+    ForgetpasswordComponent,
+    RegisterInstituteComponent
   ],
   imports: [
     CommonModule,

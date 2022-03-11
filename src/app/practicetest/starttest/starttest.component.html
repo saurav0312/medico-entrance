@@ -2,27 +2,45 @@
 <!-- Bootstrap test -->
 <!-- <ng-container *ngIf='!viewResult; else detailedResultBlock'> -->
     <ng-container *ngIf="!testFinished; else testFinsihedBlock">
-        <div>
-            <h1 style="text-align: center; margin-top: 1em;">
-                Time Left:
-                {{hour == 0 ? '00': hour <=9 ? '0' + hour : hour}}:{{minutes == 0 ? '00' : minutes <=9 ? '0' + minutes : minutes}}:{{seconds == 0 ? '00' : seconds <= 9 ? '0' + seconds : seconds}}
-                <mat-icon aria-label="home icom">
-                    timer
-                </mat-icon>
-            </h1>
+        <div style="text-align: center;">
+            <div style="display: inline-flex;">
+                <h1 style="text-align: center; margin-top: 1em;">
+                    Time Left:
+                    {{hour == 0 ? '00': hour <=9 ? '0' + hour : hour}}:{{minutes == 0 ? '00' : minutes <=9 ? '0' + minutes : minutes}}:{{seconds == 0 ? '00' : seconds <= 9 ? '0' + seconds : seconds}}
+                    <mat-icon aria-label="home icom">
+                        timer
+                    </mat-icon>
+                </h1>
+            </div>
+            <div style="margin-left: 2em; float: right; padding-right: 6em; padding-top: 2.1em; font-size: 12px;">
+                <div style="display: inline-flex; margin: 0.5em;">
+                    <span class="answered-dot"></span>
+                    <p style="margin-left: 1em;">Answered</p>
+                </div>
+
+                <div style="display: inline-flex; margin: 0.5em;">
+                    <span class="not-answered-dot"></span>
+                    <p style="margin-left: 1em;">Not Answered</p>
+                </div>
+                <div style="display: inline-flex; margin: 0.5em;">
+                    <span class="active-dot"></span>
+                    <p style="margin-left: 1em;">Currently Active</p>
+                </div>
+            </div>
+            
             
         </div>    
-        <div class="float-container" style="width: fit-content; float: left;">
+        <div class="float-container" style="width: fit-content; margin-left: auto; margin-right: auto;">
             <div style="float: left;">
-                <div class="float-child mat-card" style="width: auto; border: 1px solid black;">
-                    <div class="card" style="float: left; width: 70em; min-width: 20em; max-width: 70em; border: black;">
-                        <div class="card-body">
+                <div class="mat-card" style="width: auto; border: 1px solid black; height: auto; padding: 4px;">
+                    <div class="card" style="float: left; width: 70em; min-width: 20em; max-width: 70em; border: black; height: auto;">
+                        <div class="card-body" style="padding: 7px;">
                             <div style="display: inline; float: right;">
-                                <button disabled class="btn" style="margin-right: 1em; background-color: green; color: white;" *ngFor="let subjectTag of testData.questions[counter]?.subjectTags">{{subjectTag}}</button>
-                                <button disabled class="btn" style="margin-right: 1em; background-color: red; color: white;" *ngFor="let topicTag of testData.questions[counter]?.topicTags">{{topicTag}}</button>
+                                <button disabled class="btn" style="margin-right: 1em; background-color: black; color: white;" *ngFor="let subjectTag of testData.questions[counter]?.subjectTags">{{subjectTag}}</button>
+                                <button disabled class="btn" style="margin-right: 1em; background-color: black; color: white;" *ngFor="let topicTag of testData.questions[counter]?.topicTags">{{topicTag}}</button>
                             </div>
                             <div style="display: inline-block; margin-top: 1em ">
-                            <h1 class="card-title">Q{{counter + 1}}. {{testData.questions[counter]?.question}}</h1>
+                            <h1 class="card-title" style="font-size: 15px; word-break: break-all;">Q{{counter + 1}}. {{testData.questions[counter]?.question}}</h1>
                             </div>
                             <div>
                             <div style="display: flex;">
@@ -55,6 +73,9 @@
             </div>
 
             <div style="float: right;">
+
+                
+
                 <div class="float-child mat-card" style="width: 25em; margin-left: 2em; float: right; border: 1px solid black;" >
                     <div style="font-size: 20px; text-align:center; margin-bottom:0.5em; height: 1.5em; border-bottom: 1px solid;">
                         Question Status
@@ -65,7 +86,7 @@
                         </div>
                     </div>
                 </div>
-                <div style="width: 25em; margin-left: 2em; float: right;">
+                <!-- <div style="width: 25em; margin-left: 2em; float: right;">
                     <div style="display: inline-flex; margin: 0.5em;">
                         <span class="answered-dot"></span>
                         <p style="margin-left: 1em;">Answered</p>
@@ -79,7 +100,7 @@
                         <span class="active-dot"></span>
                         <p style="margin-left: 1em;">Currently Active</p>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
 
@@ -105,7 +126,7 @@
         </div>
         <!-- <button class="btn btn-primary" (click)="viewDetailReport()">View Detail Result</button> -->
         <p>Visit your profile to see detail result</p>
-        <button class="btn btn-primary" (click)="viewProfile()">View Profile</button>
+        <button class="btn btn-primary" (click)="viewProfile()">View Dashboard</button>
     </div>
 </ng-template>
 

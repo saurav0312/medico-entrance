@@ -15,8 +15,8 @@ background-color:darkslateblue;
 }
 
 .bb-login {
-    margin-top: 100px;
-    margin-bottom: 300px
+    // margin-top: 100px;
+    margin-bottom: 10px
 }
 
 .bb-login {
@@ -68,11 +68,15 @@ background-color:darkslateblue;
     .bb-login {
         padding: 77px 15px 33px 15px
     }
+
+    .img-class{
+        display: none;
+    }
 }
 
 .login-container {
     width: 100%;
-    min-height: 100vh;
+    // min-height: 100vh;
     display: -webkit-box;
     display: -webkit-flex;
     display: -moz-box;
@@ -80,8 +84,8 @@ background-color:darkslateblue;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    padding: 15px;
+    // align-items: center;
+    // padding: 15px;
     background: #f2f2f2
 }
 

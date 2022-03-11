@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore, addDoc, collectionData, collection, doc, docData, setDoc, updateDoc, arrayUnion } from '@angular/fire/firestore';
 import { Storage, uploadBytes, ref, UploadResult, getDownloadURL } from '@angular/fire/storage';
 import { from, switchMap, Observable } from 'rxjs';
+import { InstituteDetail } from '../interface/institute-detail';
 import { Userr } from '../interface/user';
 
 @Injectable({
@@ -17,6 +18,11 @@ export class ProfileService {
   updateUserDetails(id: string | undefined, userDetail: Userr): Observable<any>{
     const docRef = doc(this.firestore, `UserDetails/${id}`);
     return from(setDoc(docRef, userDetail, {merge: true}))
+  }
+
+  addInstituteDetails(instituteDetails: InstituteDetail): Observable<any>{
+    const booksRef = collection(this.firestore, 'Institutes'); 
+    return from(addDoc(booksRef, instituteDetails));
   }
 
   getUserDetails(id: string | undefined): Observable<Userr>{
