@@ -87,9 +87,9 @@
                                         <ng-template pTemplate="body" let-row let-i= "rowIndex" let-columns="columns">
                                             <tr>
                                                 <td>
-                                                    <div pTooltip="Click to review question" matTooltipPosition='right' 
-                                                        style="cursor: pointer;" (click)="viewIndividualQuestion(row, i)">
-                                                        <a style="text-align: center; color: #0490f4;">{{i + 1}}</a>
+                                                    <div >
+                                                        <a style="text-align: center; color: #0490f4; cursor: pointer;" pTooltip="Click to review question" matTooltipPosition='right' 
+                                                        (click)="viewIndividualQuestion(row, i)">{{i + 1}}</a>
                                                     </div>
                                                 </td>
                                                 <td *ngFor="let col of columns">

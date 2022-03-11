@@ -1,4 +1,4 @@
-<div class="row" style="margin-top: 6rem; margin-left: 2rem; margin-right: 2rem; margin-bottom: 2rem;">
+<div class="row" style="margin: 0.6em;">
 <!-- <div style="text-align: center;">
     <div style="display: block; margin-left: auto;">
         <h1>Search By Test Type</h1>
@@ -34,11 +34,12 @@
 </div> -->
 
 <ng-template [ngIf]="listOfMockTests.length != 0">
-<h2>Filter Tests
-</h2>
-<p>Type something in the input field to filter tests by test name, test taken by or test type:</p>  
-<input style="margin-bottom: 0.4em;" class="form-control" id="myInput" type="text" [(ngModel)]="searchText" (ngModelChange)="search($event)" placeholder="Search..">
-<br>
+    <div style="padding: 0;" class="row">
+        <p style="font-size: 20px; font-family: sans-serif;">Filter Tests</p>
+        <p style="font-size: 17px; font-family: sans-serif;">Type something in the input field to filter tests by test name, test taken by or test type:</p>  
+    </div>
+    <input style="margin-bottom: 0.4em;" class="form-control" id="myInput" type="text" [(ngModel)]="searchText" (ngModelChange)="search($event)" placeholder="Search...">
+    <br>
 </ng-template>
 
 <ng-template [ngIf]="listOfMockTests.length != 0">
@@ -47,7 +48,7 @@
         <div class="row">
             <ng-container class ="col-sm-3"  *ngFor="let individualTest of listOfMockTests; let i = index" style="margin-bottom: 2rem;">
                 <div class="col-md-4">
-                    <div class="card mb-4 box-shadow">
+                    <div class="card mb-4 box-shadow" style="border: 1px solid darkgrey; border-radius: 10px;">
                         <div class="card-body">
                             <div>
                                 <h2 class="card-title" style="text-align: center; ">

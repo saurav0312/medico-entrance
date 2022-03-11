@@ -256,7 +256,7 @@ export class StarttestComponent implements OnInit, OnDestroy {
   }
 
   viewProfile(){
-    this.router.navigate(['/studentProfile/overallAnalysisDashboard'])
+    this.router.navigate(['/studentProfile/studentPageHome'])
   }
 
 

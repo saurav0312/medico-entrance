@@ -295,7 +295,7 @@ export class StudentPageHomeComponent implements OnInit {
 
   generateRandomColor(data: any){
 
-    let tempColorList = ["#77e651", "#f44242", "#2a42dd", "#8e8f92", "#665999", "#808000", "#FFA500", "#FFFF00"]
+    let tempColorList = ["#fd7f6f", "#7eb0d5", "#b2e061", "#bd7ebe", "#ffb55a", "#ffee65", "#beb9db", "#fdcce5", "#8bd3c7"]
 
     this.colors = tempColorList.slice(0, data.length)
 

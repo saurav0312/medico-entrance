@@ -1,19 +1,14 @@
 <app-homenavigationbar></app-homenavigationbar>
-<div class="login-container">
-    <div class="bb-login">
+<div class="login-container row" style="background-color: white; margin-top: 6em;">
+    <div class="col-sm-4 img-class">
+        <img  src="../../assets/img/register_left_side.jpeg" style="height: 400px; margin-bottom: 2em;" alt="study">
+    </div>
+    <div class="bb-login col-sm-4">
         <div>
             <ng-container *ngTemplateOutlet="signUpHeaderTemplate">
             </ng-container>
             <p-tabView [(activeIndex)]="selectedIndex" (onChange)="tabChanged($event)">
                 <p-tabPanel [selected]="true">
-                    <ng-template pTemplate="header">
-                        <div>Teacher</div>
-                    </ng-template>
-                   <ng-container *ngTemplateOutlet="teacherSignupFormTemplate">
-
-                   </ng-container>
-                </p-tabPanel>
-                <p-tabPanel>
                     <ng-template pTemplate="header">
                         Student
                     </ng-template>
@@ -21,6 +16,15 @@
 
                     </ng-container>
                 </p-tabPanel>
+                <p-tabPanel >
+                    <ng-template pTemplate="header">
+                        <div>Teacher</div>
+                    </ng-template>
+                   <ng-container *ngTemplateOutlet="teacherSignupFormTemplate">
+
+                   </ng-container>
+                </p-tabPanel>
+                
             </p-tabView>
         </div>
 
@@ -31,6 +35,9 @@
             <ng-container *ngTemplateOutlet="goToSignIn">
             </ng-container> 
         </div>
+    </div>
+    <div class="col-sm-4 img-class">
+        <img src="../../assets/img/register_right_side.jpeg" style="height: 400px; margin-bottom: 2em;" alt="study">
     </div>
 </div>
 
@@ -56,8 +63,8 @@
             <ng-container *ngTemplateOutlet="teacherCodeTemplate; context:{$implicit: signUpForm}">
             </ng-container>
         </div>
-        <a class="forgetPassword" style="color: #715bf9;" (click)="sendTeacherCode()">Send me code</a>
-        <p>Not a teacher?<a class="forgetPassword" style="color: #715bf9;" (click) = "changeAccountType(1)"> Click here for student</a></p>
+        <a class="forgetPassword" style="color: #715bf9; font-family: 'Cambay';" (click)="sendTeacherCode()">Send me code</a>
+        <p style="font-family: 'Cambay';">Not a teacher?<a class="forgetPassword" style="color: #715bf9;" (click) = "changeAccountType(1)"> Click here for student</a></p>
         
         <ng-container *ngTemplateOutlet="submitCancel">
         </ng-container>
@@ -93,13 +100,13 @@
 
 
 <ng-template #signUpHeaderTemplate>
-    <span class="bb-form-title p-b-26"> Sign up </span>
+    <span class="bb-form-title p-b-26" style="font-family: 'Cambay';"> Sign up </span>
 </ng-template>
 
 <ng-template #goToSignIn>
     <div class="text-center" routerLink="/authentication/signin" style="cursor: pointer"> 
-        <span class="txt1"> Already have an account? </span> 
-        <a class="txt2" > Sign in </a> 
+        <span class="txt1" style="font-family: 'Cambay';"> Already have an account? </span> 
+        <a class="txt2" style="font-family: 'Cambay';"> Sign in </a> 
     </div>  
 </ng-template>
 

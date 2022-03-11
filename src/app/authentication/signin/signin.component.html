@@ -3,8 +3,8 @@
     <div class="login-container">
         <div class="bb-login">
             <form (ngSubmit)="login()" name="loginForm" [formGroup]="loginForm" > 
-                <span class="bb-form-title p-b-26"> Sign in </span>
-                <h4 style="font-size:18px; font-weight: 400; margin-top: 0.4em;">Hello! let's get started</h4>
+                <span class="bb-form-title p-b-26" style="font-family: 'Cambay';"> Sign in </span>
+                <h4 style="font-size:18px; font-weight: 400; margin-top: 0.4em; text-align: center; font-family: 'Cambay';">Hello! let's get started</h4>
                 <div>  
                     <ng-container *ngTemplateOutlet="emailTemplate; context:{$implicit:loginForm}">
 
@@ -20,14 +20,14 @@
                  </ng-template>
                  <div style="color: #715bf9;" class="forgetPassword cursor-icon" routerLink="/authentication/forgetpassword">Forgot Password?</div>
                 <div class="login-container-form-btn">
-                    <div class="bb-login-form-btn">
-                        <div class="bb-form-bgbtn"></div> <button class="bb-form-btn" [disabled]="loginForm.invalid"> Login </button>
+                    <div class="bb-login-form-btn" style="width: auto">
+                        <div class="bb-form-bgbtn"></div> <button class="bb-form-btn" [disabled]="loginForm.invalid" style="font-family: 'Cambay'; font-size: 20px;"> Login </button>
                     </div>
                 </div>
             </form>
             <div class="text-center p-t-115" routerLink="/authentication/chooseSignUpOption" style="cursor: pointer;"> 
-                <span class="txt1"> Don’t have an account? </span> 
-                <a class="txt2" > Sign up </a> 
+                <span class="txt1" style="font-family: 'Cambay';"> Don’t have an account? </span> 
+                <a class="txt2" style="font-family: 'Cambay';"> Sign up </a> 
             </div>
 
             <app-spinner [loading]="loading" [mode]="mode" [diameter]="50" [overlay]="true">

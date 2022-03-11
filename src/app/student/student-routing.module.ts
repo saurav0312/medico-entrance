@@ -12,6 +12,7 @@ import { QuestionAnswerDiscussionComponent } from './question-answer-discussion/
 import { StudentPageHomeComponent } from './student-page-home/student-page-home.component';
 import { StudentdashboardcontentComponent } from '../studentdashboard/studentdashboardcontent/studentdashboardcontent.component';
 import { MyDashboardComponent } from './my-dashboard/my-dashboard.component';
+import { AllTestsByATeacherComponent } from '../studentdashboard/all-tests-by-ateacher/all-tests-by-ateacher.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,7 @@ const routes: Routes = [
       { path: 'studentPageHome', component: StudentPageHomeComponent},
       { path: 'editprofileinfo', component: EditprofileinfoComponent},
       { path: 'viewAllTeachers', component: StudentdashboardcontentComponent},
+      { path: 'testsByATeacher', component: AllTestsByATeacherComponent},
       { path: 'detailMockTestReport', component: DetailtestreportComponent},
       { path: 'detailSubjectTestReport', component: DetailSubjectTestReportComponent},
       { path: 'questionAnswerDiscussion', component: QuestionAnswerDiscussionComponent},

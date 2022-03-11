@@ -38,4 +38,8 @@ export class HomepagecontentComponent implements OnInit {
     this.router.navigateByUrl("/authentication/chooseSignUpOption")
   }
 
+  registerAsInstitute(): void{
+    this.router.navigateByUrl("/authentication/registerInstitute")
+  }
+
 }
