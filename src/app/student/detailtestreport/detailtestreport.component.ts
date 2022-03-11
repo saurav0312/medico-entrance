@@ -306,7 +306,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
           let tempSuccessValue: any ={
             'name': key,
             'successValue': this.success,
-            'successPercent': successPercent
+            'successPercent': Math.round(successPercent)
           }
 
           if(this.subjectTagMap[key]['correct'] >= this.subjectThresholdValue){
@@ -338,7 +338,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
           let tempSuccessValue: any ={
             'name': key,
             'successValue': this.success,
-            'successPercent': successPercent
+            'successPercent': Math.round(successPercent)
           }
 
           if(this.topicTagMap[key]['correct'] >= this.topicThresholdValue){
