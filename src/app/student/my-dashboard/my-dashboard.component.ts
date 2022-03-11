@@ -62,7 +62,10 @@ export class MyDashboardComponent implements OnInit {
   subjectWiseTimeSpentChart: any;
   topicWiseTimeSpentChart: any;
 
-  selectedSubjectInTopicWiseBargraph: string ='';
+  selectedSubjectInTopicWiseBargraph: string = '';
+  selectedSubjectInTopicWisePiechart: string = '';
+  previouslySelectedSubjectInTopicWiseBargraph: string = '';
+  previouslySelectedSubjectInTopicWisePiechart: string = ''
   subjectListDropdownOptions: SubjectList[] = [];
 
   subjectNameWithTopicsMap: {[key:string]:string[]} ={};
@@ -279,80 +282,74 @@ export class MyDashboardComponent implements OnInit {
 
 
       //prepare data for subject bar graph
-      // Object.keys(this.subjectTagMap).forEach(key =>{
-      //   let temppiechartData = [];
+      Object.keys(this.subjectTagMap).forEach(key =>{
+        let temppiechartData = [];
 
-      //   let totalNoOfSubjectQuestion = this.subjectTagMap[key]['correct'] + this.subjectTagMap[key]['incorrect'] +
-      //                                     this.subjectTagMap[key]['not_answered']
+        let totalNoOfSubjectQuestion = this.subjectTagMap[key]['correct'] + this.subjectTagMap[key]['incorrect'] +
+                                          this.subjectTagMap[key]['not_answered']
 
-      //   temppiechartData.push(key)
+        temppiechartData.push(key)
 
-      //   let successPercent = (this.subjectTagMap[key]['correct']/totalNoOfSubjectQuestion)*100;
-      //   this.success =((100 * 6) - ((100 * 6) * ((21*successPercent)/100)) / 100)
-      //   let tempSuccessValue: any ={
-      //     'name': key,
-      //     'successValue': this.success,
-      //     'successPercent': successPercent
-      //   }
+        let successPercent = (this.subjectTagMap[key]['correct']/totalNoOfSubjectQuestion)*100;
+        this.success =((100 * 6) - ((100 * 6) * ((21*successPercent)/100)) / 100)
+        let tempSuccessValue: any ={
+          'name': key,
+          'successValue': this.success,
+          'successPercent': Math.round(successPercent)
+        }
 
-      //   if(this.subjectTagMap[key]['correct'] >= this.subjectThresholdValue){
+        if(this.subjectTagMap[key]['correct'] >= this.subjectThresholdValue){
 
-      //     this.strongSubjectList['strongSubject'].push(tempSuccessValue)
-      //   }
-      //   else{
-      //     this.weakSubjectList['weakSubject'].push(tempSuccessValue)
-      //   }
+          this.strongSubjectList['strongSubject'].push(tempSuccessValue)
+        }
+        else{
+          this.weakSubjectList['weakSubject'].push(tempSuccessValue)
+        }
 
-      //   temppiechartData.push(this.subjectTagMap[key]['correct'])
-      //   temppiechartData.push(this.subjectTagMap[key]['incorrect'])
-      //   temppiechartData.push(this.subjectTagMap[key]['not_answered'])
-      //   this.subjectTagBarGraphData.push(temppiechartData)
-      // })
+        temppiechartData.push(this.subjectTagMap[key]['correct'])
+        temppiechartData.push(this.subjectTagMap[key]['incorrect'])
+        temppiechartData.push(this.subjectTagMap[key]['not_answered'])
+        this.subjectTagBarGraphData.push(temppiechartData)
+      })
 
-      // //prepare data for topic bar graph
-      // Object.keys(this.topicTagMap).forEach(key =>{
-      //   let temppiechartData = [];
+      //prepare data for topic bar graph
+      Object.keys(this.topicTagMap).forEach(key =>{
+        let temppiechartData = [];
 
-      //   let totalNoOfTopicQuestion = this.topicTagMap[key]['correct'] + this.topicTagMap[key]['incorrect'] +
-      //                                     this.topicTagMap[key]['not_answered']
-      //   temppiechartData.push(key)
+        let totalNoOfTopicQuestion = this.topicTagMap[key]['correct'] + this.topicTagMap[key]['incorrect'] +
+                                          this.topicTagMap[key]['not_answered']
+        temppiechartData.push(key)
 
-      //   let successPercent = (this.topicTagMap[key]['correct']/totalNoOfTopicQuestion)*100;
+        let successPercent = (this.topicTagMap[key]['correct']/totalNoOfTopicQuestion)*100;
 
-      //   this.success =((100 * 6) - ((100 * 6) * ((21*successPercent)/100)) / 100)
+        this.success =((100 * 6) - ((100 * 6) * ((21*successPercent)/100)) / 100)
 
-      //   let tempSuccessValue: any ={
-      //     'name': key,
-      //     'successValue': this.success,
-      //     'successPercent': successPercent
-      //   }
+        let tempSuccessValue: any ={
+          'name': key,
+          'successValue': this.success,
+          'successPercent': Math.round(successPercent)
+        }
 
-      //   if(this.topicTagMap[key]['correct'] >= this.topicThresholdValue){
-      //     this.strongTopicList['strongTopic'].push(tempSuccessValue)
-      //   }
-      //   else{
-      //     this.weakTopicList['weakTopic'].push(tempSuccessValue)
-      //   }
+        if(this.topicTagMap[key]['correct'] >= this.topicThresholdValue){
+          this.strongTopicList['strongTopic'].push(tempSuccessValue)
+        }
+        else{
+          this.weakTopicList['weakTopic'].push(tempSuccessValue)
+        }
+      })
 
-      //   temppiechartData.push(this.topicTagMap[key]['correct'])
-      //   temppiechartData.push(this.topicTagMap[key]['incorrect'])
-      //   temppiechartData.push(this.topicTagMap[key]['not_answered'])
-      //   this.topicTagBarGraphData.push(temppiechartData)
-      // })
+      this.strongSubjectList.strongSubject = this.strongSubjectList.strongSubject.slice(0,3)
+      this.weakSubjectList.weakSubject = this.weakSubjectList.weakSubject.slice(0,3)
+      this.strongTopicList.strongTopic = this.strongTopicList.strongTopic.slice(0,3)
+      this.weakTopicList.weakTopic = this.weakTopicList.weakTopic.slice(0,3)
 
-      // for (let entry of this.subjectWiseTimeSpent.entries()) {
-      //   let temppiechartData = [];
-      //   temppiechartData.push(entry[0]);
-      //   temppiechartData.push(entry[1]);
-      //   this.subjectWiseTimeSpentPiechartData.push(temppiechartData)
-      // }
 
-      // for (let entry of this.topicWiseTimeSpent.entries()) {
-      //   let temppiechartData = [];
-      //   temppiechartData.push(entry[0]);
-      //   temppiechartData.push(entry[1]);
-      //   this.topicWiseTimeSpentPiechartData.push(temppiechartData)
-      // }
+      console.log("Strong subject: ", this.strongSubjectList)
+      console.log("weak subject list: ", this.weakSubjectList)
+      console.log("Strong topics: ", this.strongTopicList)
+      console.log("weak topic list: ", this.weakTopicList)
+
+      
 
       console.log("Subject Lists: ", this.subjectTagMap)
       console.log("Topics Lists: ", this.topicTagMap)
@@ -398,14 +395,26 @@ export class MyDashboardComponent implements OnInit {
       this.generateRandomColor(data)
       this.prepareTopicWiseTimeSpentChart(labels, data, 'topicWiseTimeSpentChart' , 'Topicwise Time Spent Chart')
 
+      //This is for default value of chart dropdown. will use it later
+      // let event :any ={
+      //   'target':{
+      //     'textContent': this.subjectListDropdownOptions[0].name 
+      //   }
+      // }
+
+      // this.selectedSubjectInTopicWisePiechart = this.subjectListDropdownOptions[0].name
+      // this.subjectSelectedForTopicWiseTimeSpentChart(event)
+
       const subjectwise_chart : any = document.getElementById('subjectWiseChart');
       const topicwise_chart : any = document.getElementById('topicWiseChart');
+      const subjectwisetimespent_piechart : any = document.getElementById('subjectWiseTimeSpentChart');
+      const topicwisetimespent_piechart : any = document.getElementById('topicWiseTimeSpentChart');
 
       const buttonElement1 :any = document.getElementById('fullScreen1')
       buttonElement1.addEventListener('click', () => {
         if (screenfull.isEnabled) {
           screenfull.request(subjectwise_chart);
-          this.prepareSubjectWiseBarGraph()
+          //this.prepareSubjectWiseBarGraph()
         }
       });
 
@@ -413,7 +422,23 @@ export class MyDashboardComponent implements OnInit {
       buttonElement2.addEventListener('click', () => {
         if (screenfull.isEnabled) {
           screenfull.request(topicwise_chart);
-          this.prepareTopicWiseBarGraph()
+          //this.prepareTopicWiseBarGraph()
+        }
+      });
+
+      const buttonElement3 :any = document.getElementById('fullScreen3')
+      buttonElement3.addEventListener('click', () => {
+        if (screenfull.isEnabled) {
+          screenfull.request(subjectwisetimespent_piechart);
+          //this.prepareTopicWiseBarGraph()
+        }
+      });
+
+      const buttonElement4 :any = document.getElementById('fullScreen4')
+      buttonElement4.addEventListener('click', () => {
+        if (screenfull.isEnabled) {
+          screenfull.request(topicwisetimespent_piechart);
+          //this.prepareTopicWiseBarGraph()
         }
       });
     }
@@ -424,7 +449,7 @@ export class MyDashboardComponent implements OnInit {
     console.log("SUbject seel: ", event.target.textContent)
     let subjectName = event.target.textContent
     console.log("Suu: ", this.subjectNameWithTopicsMap[subjectName])
-    if(subjectName !== undefined){
+    if(subjectName !== undefined && subjectName !== this.previouslySelectedSubjectInTopicWiseBargraph){
       let topicList: string[] = this.subjectNameWithTopicsMap[subjectName]
 
       this.topicNameList = []
@@ -471,6 +496,7 @@ export class MyDashboardComponent implements OnInit {
       };
 
       this.addData(this.topicWiseChart, data )
+      this.previouslySelectedSubjectInTopicWiseBargraph = subjectName
     }
     
 
@@ -482,7 +508,7 @@ export class MyDashboardComponent implements OnInit {
     console.log("SUbject seel for timespent: ", event.target.textContent)
     let subjectName = event.target.textContent
     console.log("Suu timespent: ", this.subjectNameWithTopicsMap[subjectName])
-    if(subjectName !== undefined){
+    if(subjectName !== undefined && subjectName !== this.previouslySelectedSubjectInTopicWisePiechart){
       let topicList: string[] = this.subjectNameWithTopicsMap[subjectName]
 
       //this.topicWiseChart.update()
@@ -514,6 +540,7 @@ export class MyDashboardComponent implements OnInit {
         }]
       };
       this.addData(this.topicWiseTimeSpentChart, data )
+      this.previouslySelectedSubjectInTopicWisePiechart = subjectName
       //this.prepareTopicWiseTimeSpentChart(labels, pieChartData, 'topicWiseTimeSpentChart' , 'Topicwise Time Spent Chart')
     }
   }
