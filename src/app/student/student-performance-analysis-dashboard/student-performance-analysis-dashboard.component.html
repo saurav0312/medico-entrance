@@ -92,28 +92,13 @@
 
 
 <ng-template #subjectTestsTemplate>
-    <div *ngIf="subjectNameList.length > 0; else noSubjectTestsAvailable">
-        <p>Choose the Subject</p>
-        <div class="row" style="margin-bottom: 1.3em; margin-left: 0.3em; margin-right: 0.3em;">
-            <ng-container *ngFor="let subjectName of subjectNameList; let i = index">
-                <div (click)="onSelectingSubject(i)" class="col-sm-3 questions-list-class" [ngClass]="selectedSubjectIndex === i? 'questions-list-class-selected':''">
-                    <p style="text-align: center;">{{subjectName}}</p>
-                </div>
-
-                <div (click)="onSelectingSubject(i)" class="col-sm-3 questions-list-class" [ngClass]="selectedSubjectIndex === i? 'questions-list-class-selected':''">
-                    <p style="text-align: center;">{{subjectName}}</p>
-                </div>
-            </ng-container>
-        </div>
-    </div>
-
     <div class="row">
-        <div>
-            <p *ngIf="selectedSubjectIndex !== -1"> Choose the Topic</p>
+        <div *ngIf="subjectNameList.length > 0; else noSubjectTestsAvailable">
+            <p style="padding-left: 1.2em;">Choose the Subject</p>
             <div class="row" style="margin-bottom: 1.3em; margin-left: 0.3em; margin-right: 0.3em;">
-                <ng-container *ngFor="let topicName of subjectToTopicList; let i = index">
-                    <div (click)="onSelectingTopic(i)" class="col-sm-2 topic-list-class" [ngClass]="selectedTopicIndex === i? 'questions-list-class-selected':''">
-                        <p style="text-align: center;">{{topicName}}</p>
+                <ng-container *ngFor="let subjectName of subjectNameList; let i = index">
+                    <div (click)="onSelectingSubject(i)" class="col-md-3" style="word-break: break-word;">
+                        <p style="padding: 20px;" class="questions-options-list-class" [ngClass]="selectedSubjectIndex === i? 'questions-options-list-class-selected':''">{{subjectName}}</p>
                     </div>
                 </ng-container>
             </div>
@@ -121,6 +106,19 @@
     </div>
 
     <div class="row">
+        <div>
+            <p *ngIf="selectedSubjectIndex !== -1" style="padding-left: 1.2em;"> Choose the Topic</p>
+            <div class="row" style="margin-bottom: 1.3em; margin-left: 0.3em; margin-right: 0.3em;">
+                <ng-container *ngFor="let topicName of subjectToTopicList; let i = index">
+                    <div (click)="onSelectingTopic(i)" class="col-md-3" style="word-break: break-word;">
+                        <p style="padding: 20px;" class="questions-options-list-class" [ngClass]="selectedTopicIndex === i? 'questions-options-list-class-selected':''">{{topicName}}</p>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="padding-left: 1.2em;">
         <div *ngIf="listOfSubjectTests.length > 0">
             <p>Available Subject Tests</p>
         </div>
@@ -202,7 +200,7 @@
 </ng-template>
 
 <ng-template #noSubjectTestsAvailable>
-    No subject tests available at the moment.
+    <p style="padding-left: 1.2em;">No subject tests available at the moment.</p>
 </ng-template>
 
 <app-spinner [loading]="loading" [overlay]="true">
