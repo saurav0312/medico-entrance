@@ -174,13 +174,13 @@
         <div class="card" style="height: auto; border: none; border-radius: 0.7em"> 
           <div>
             <div class="row">
-              <div class="col-sm-6">
+              <div class="col-sm-6" *ngIf="isCorrectAnswerChartDataAvailable; else noTestDataAvailable">
                 <div style="height:250px; width:250px; display: flex; align-items: center; justify-content: center;">
                   <canvas id="overallCorrectAnswersChart"></canvas>
                 </div>
               </div>
     
-              <div class="col-sm-6">
+              <div class="col-sm-6" *ngIf="isIncorrectAnswerChartDataAvailable; else noTestDataAvailable">
                 <div style="height:250px; width:250px; display: flex; align-items: center; justify-content: center;">
                   <canvas id="overallIncorrectAnswersChart"></canvas>
                 </div>
@@ -203,4 +203,10 @@
       </div>
   </div> -->
 </div>
+
+<ng-template #noTestDataAvailable>
+  <div style="display: flex; justify-content: center;">
+    No test data available
+  </div>
+</ng-template>
 

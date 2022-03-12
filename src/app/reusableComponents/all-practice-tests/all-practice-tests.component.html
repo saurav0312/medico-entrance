@@ -49,7 +49,7 @@
             <ng-container class ="col-sm-3"  *ngFor="let individualTest of listOfMockTests; let i = index" style="margin-bottom: 2rem;">
                 <div class="col-md-4">
                     <div class="card mb-4 box-shadow" style="border: 1px solid darkgrey; border-radius: 10px;">
-                        <div class="card-body">
+                        <div class="card-body" style="font-family: 'Cambay';">
                             <div>
                                 <h2 class="card-title" style="text-align: center; ">
                                     <b>Test {{i+1}}</b>
@@ -59,12 +59,12 @@
                                 </h2>
                                 <h4 [hidden]="individualTest.testType==='Free' || individualTest.isBought" class="card-title" style="float: right;"><mat-icon>currency_rupee</mat-icon>{{individualTest.testPrice}}</h4>
                             </div>
-                            <p class="card-text"><b>Test Name:</b> {{individualTest.testName}}</p>
-                            <p class="card-text"><b>Test Taken By:</b> {{individualTest.testTakenBy}}</p>
-                            <p class="card-text"><b>Test Type:</b> {{individualTest.testType}}</p>
-                            <p class="card-text"><b>Test Category:</b> {{individualTest.testCategory}}</p>
-                            <p class="card-text"><b>Total Time:</b> {{individualTest.totalTime}} mins</p>
-                            <p class="card-text"><b>Total Number Of Questions:</b> {{individualTest.questions.length}}</p>
+                            <p class="card-text"><b style="font-size: 18px;">Test Name: </b> <span style="font-size: 14px;">{{individualTest.testName}}</span></p>
+                            <p class="card-text"><b style="font-size: 18px;">Test Taken By: </b><span style="font-size: 14px;">{{individualTest.testTakenBy}}</span></p>
+                            <p class="card-text"><b style="font-size: 18px;">Test Type: </b><span style="font-size: 14px;"> {{individualTest.testType}}</span></p>
+                            <p class="card-text"><b style="font-size: 18px;">Test Category: </b><span style="font-size: 14px;"> {{individualTest.testCategory}}</span></p>
+                            <p class="card-text"><b style="font-size: 18px;">Total Time: </b> <span style="font-size: 14px;">{{individualTest.totalTime}} mins</span></p>
+                            <p class="card-text"><b style="font-size: 18px;">Total Number Of Questions: </b> <span style="font-size: 14px;">{{individualTest.questions.length}}</span></p>
                             <mat-divider></mat-divider>
                             <p></p>
                             <p class="card-text">

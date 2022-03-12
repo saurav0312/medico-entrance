@@ -1,16 +1,16 @@
 <div class="row" style="margin-top: 3em; margin-left: 2rem; margin-right: 2rem; margin-bottom: 2rem; ">
-<div style="margin-top: 10em;">
+<div style="margin-top: 5em; display: grid; justify-content: center; font-family: 'Cambay';">
     <h1>Welcome to Practice Test {{testNumber}}</h1>   
     <h2>These are some instructions before you start the test.</h2>
-    <div>
-    <ol>
+    <!-- <div> -->
+    <ol style="padding-left: 1rem;">
         <li>The test will be of {{testTime}} minutes.</li>
         <li>You can switch to any questions at anytime</li>
         <li>Your test will be automatically submitted after the timeout</li>
     </ol>
-    </div>
+    <!-- </div> -->
     <div>
-        <button style="display: inline-flex; margin-right: 3em;" class="btn btn-danger" [routerLink]="['/practicetest']" [queryParams]="{testCategory: testCategory}">Cancel</button>
+        <button style="display: inline-flex; margin-right: 3em;" class="btn btn-danger" [routerLink]="['/studentProfile/overallAnalysisDashboard']">Cancel</button>
         <button style="display: inline-flex;" class="btn btn-primary" (click)="startTest()">Continue</button>
     </div>
 </div>

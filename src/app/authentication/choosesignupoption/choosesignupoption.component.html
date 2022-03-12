@@ -1,5 +1,5 @@
 <app-homenavigationbar></app-homenavigationbar>
-<div class="login-container row" style="background-color: white; margin-top: 6em;">
+<div class="login-container row" style="background-color: white; margin-top: 7em;">
     <div class="col-sm-4 img-class">
         <img  src="../../assets/img/register_left_side.jpeg" style="height: 400px; margin-bottom: 2em;" alt="study">
     </div>
@@ -64,7 +64,7 @@
             </ng-container>
         </div>
         <a class="forgetPassword" style="color: #715bf9; font-family: 'Cambay';" (click)="sendTeacherCode()">Send me code</a>
-        <p style="font-family: 'Cambay';">Not a teacher?<a class="forgetPassword" style="color: #715bf9;" (click) = "changeAccountType(1)"> Click here for student</a></p>
+        <p style="font-family: 'Cambay';">Not a teacher?<a class="forgetPassword" style="color: #715bf9;" (click)="changeAccountType(0)"> Click here for student</a></p>
         
         <ng-container *ngTemplateOutlet="submitCancel">
         </ng-container>
@@ -90,7 +90,7 @@
             </ng-container>
         </ng-container>
 
-        <p>Not a student?<a class="forgetPassword" style="color: #1414e9;" (click) = "changeAccountType(0)"> Click here for teacher</a></p>
+        <p style="font-family: 'Cambay';">Not a student?<a class="forgetPassword" style="color: #715bf9;" (click)="changeAccountType(1)"> Click here for teacher</a></p>
         
         <ng-container *ngTemplateOutlet="submitCancel">
         </ng-container>

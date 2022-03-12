@@ -1,6 +1,6 @@
-<div class="row" style="font-size: 20px; font-weight: 600; margin-top: 1em; padding: 15px;">
-    <div class="row">
-        <div class="row" style="margin: 2px;">
+<div class="row" style="font-size: 20px; font-weight: 600; margin-top: 1em; width: 100%;">
+    <div>
+        <div style="margin: 2px; padding: 8px;">
             <!-- Left side of dashboard -->
             <!-- <div class="col-sm-4" style="float: left; width: -webkit-fill-available; border-color: azure;">
                 <div class="card mb-4 box-shadow">
@@ -50,19 +50,18 @@
             </div> -->
 
             <!-- Right side of dashboard -->
-            <div class="col-sm-12" style="float: right;">
+            <div class="col-sm-12">
                 <div class="card mb-4 box-shadow">
                     <p style="margin-top: 5px; text-align: center;">Let's start a quick test</p> 
                     <div style="margin-top: 1em;">
                         <p-tabView>
-                            <p-tabPanel header="Subject Tests">
-                            <ng-container *ngTemplateOutlet="subjectTestsTemplate">
-                
-                            </ng-container>
-                            </p-tabPanel>
                             <p-tabPanel header="Mock Tests">
                                 <ng-container *ngTemplateOutlet="mockTestsTemplate">
-                
+                                </ng-container>
+                            </p-tabPanel>
+
+                            <p-tabPanel header="Subject Tests">
+                                <ng-container *ngTemplateOutlet="subjectTestsTemplate">
                                 </ng-container>
                             </p-tabPanel>
                         </p-tabView>
