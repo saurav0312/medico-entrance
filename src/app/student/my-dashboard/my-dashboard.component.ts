@@ -69,6 +69,7 @@ export class MyDashboardComponent implements OnInit {
   subjectListDropdownOptions: SubjectList[] = [];
 
   subjectNameWithTopicsMap: {[key:string]:string[]} ={};
+  isNewUser: boolean = false;
 
   constructor(
     private authService: AuthService
@@ -79,9 +80,13 @@ export class MyDashboardComponent implements OnInit {
     let sub = this.authService.getCurrentUser().subscribe((userResponse:any) =>{
       this.authService.getAllMockTestsGivenByAUser(userResponse?.uid).subscribe( (allGivenTestsData:any) =>{
         sub.unsubscribe()
+        console.log("All tetststs: ", allGivenTestsData)
         if(allGivenTestsData!== undefined){
           this.testReportData = allGivenTestsData
           this.prepareData()
+        }
+        else{
+          this.isNewUser = true;
         }
       })
     })
