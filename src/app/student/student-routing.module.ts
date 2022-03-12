@@ -30,7 +30,7 @@ const routes: Routes = [
       { path: 'overallAnalysisDashboard', component: StudentPerformanceAnalysisDashboardComponent},
       { path: 'myDashboard', component: MyDashboardComponent},
       { path: 'individualQuestion', component: IndividualquestionComponent },
-      { path: '', redirectTo: '/studentProfile/editprofileinfo', pathMatch: 'full' },
+      { path: '', redirectTo: '/studentProfile/studentPageHome', pathMatch: 'full' },
     ],
     canActivate: [StudentAuthGuardGuard]
   }
