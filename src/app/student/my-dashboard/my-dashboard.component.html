@@ -93,10 +93,10 @@
             <div style="padding: 6px;">
                 <div class="row">
                     <b class="areas-header-class" style="margin-top: 0.4em; margin-bottom: 0.6em; font-size: 15px; font-family: 'Cambay';">Areas of Strength</b>
-                    <div>
-                        <div style="display : inline; margin-top: 2em">
+                    <div class="row" style="display: contents;">
+                        <div>
                             <ng-container  *ngFor="let subject of strongSubjectList['strongSubject']">
-                                <div class="col-sm-12" style="display: flex; width: 180px; height: auto; float: left; margin-bottom: 0.7em;">
+                                <div class="col-sm-6" style="display: flex; width: 155px; height: auto; float: left; margin-bottom: 0.7em;">
                                     <div class="circle_box" style="display: contents;">
                                         <div>
                                             <svg>
@@ -113,7 +113,7 @@
                                 </div>
                             </ng-container>
                             <ng-container  *ngFor="let topic of strongTopicList['strongTopic']">
-                                <div class="col-sm-12" style="display: flex; width: 180px; height: auto; float: left; margin-bottom: 0.7em;">
+                                <div class="col-sm-6" style="display: flex; width: 155px; height: auto; float: left; margin-bottom: 0.7em;">
                                     <div class="circle_box" style="display: contents;">
                                         <div>
                                             <svg>
@@ -135,10 +135,10 @@
 
                 <div class="row">
                     <b class="areas-header-class" style="margin-bottom: 0.6em; font-size: 15px; font-family: 'Cambay';">Areas of Focus</b>
-                    <div>
-                        <div class="row" style=" display : inline;">
+                    <div class="row" style="display: contents;">
+                        <div>
                             <ng-container  *ngFor="let subject of weakSubjectList['weakSubject']">
-                                <div class="col-sm-6" style="display: flex; width: 180px; height: auto; float: left; margin-bottom: 0.7em;">
+                                <div class="col-sm-6" style="display: flex; width: 155px; height: auto; float: left; margin-bottom: 0.7em;">
                                     <div class="circle_box" style="display: contents;">
                                         <div>
                                             <svg>
@@ -156,7 +156,7 @@
                             </ng-container>
     
                             <ng-container  *ngFor="let topic of weakTopicList['weakTopic']">
-                                <div class="col-sm-6" style="display: flex; width: 180px; height: auto; float: left; margin-bottom: 0.7em;">
+                                <div class="col-sm-6" style="display: flex; width: 155px; height: auto; float: left; margin-bottom: 0.7em;">
                                     <div class="circle_box" style="display: contents;">
                                         <div>
                                             <svg>
