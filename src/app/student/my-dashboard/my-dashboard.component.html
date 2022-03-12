@@ -2,176 +2,178 @@
     <canvas id="subjectWiseChart"></canvas>
 </div> -->
 
+<div *ngIf="!isNewUser; else noDataAvailable">
 
-<div class="row" style="margin: 2px;">
-    <div class="col-md-6 ">
-        <div  style="margin-bottom: 0.7em; padding-bottom: 0.7em;" class="card mat-elevation-z2">
-            <div style="padding: 3px;">
-                <div style="display: flex; flex-flow: row-reverse; background-color: white;">
-                    <mat-icon id="fullScreen1" style="width: auto; cursor: pointer;">zoom_out_map
-                    </mat-icon>
-                    <a download="subjectWiseBarGraph.png" id="download1" (click)="downloadSubjectWiseChartImage()">
-                        <mat-icon  style="width: auto; cursor: pointer;">file_download
+    <div class="row" style="margin: 2px;" >
+        <div class="col-md-6 ">
+            <div  style="margin-bottom: 0.7em; padding-bottom: 0.7em;" class="card mat-elevation-z2">
+                <div style="padding: 3px;">
+                    <div style="display: flex; flex-flow: row-reverse; background-color: white;">
+                        <mat-icon id="fullScreen1" style="width: auto; cursor: pointer;">zoom_out_map
                         </mat-icon>
-                    </a>
+                        <a download="subjectWiseBarGraph.png" id="download1" (click)="downloadSubjectWiseChartImage()">
+                            <mat-icon  style="width: auto; cursor: pointer;">file_download
+                            </mat-icon>
+                        </a>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <canvas id="subjectWiseChart"></canvas>
+                    </div>
                 </div>
-                <div style="display: flex; align-items: center; justify-content: center;">
-                    <canvas id="subjectWiseChart"></canvas>
+            </div>
+        </div>
+        <div class="col-md-6 ">
+            <div style="margin-bottom: 0.7em;" class="card mat-elevation-z2">
+                <div style="padding: 3px;">
+                    <div style="display: flex; flex-flow: row-reverse; background-color: white;">
+                        <mat-icon id="fullScreen2" style="width: auto; cursor: pointer;">zoom_out_map
+                        </mat-icon>
+                        <a download="topicWiseBarGraph.png" id="download2" (click)="downloadTopicWiseChartImage()">
+                            <mat-icon style="width: auto; cursor: pointer;">file_download
+                            </mat-icon>
+                        </a>
+                        <p-dropdown [options]="subjectListDropdownOptions" 
+                                    [(ngModel)]="selectedSubjectInTopicWiseBargraph" 
+                                    optionLabel="name"
+                                    placeholder="Select a subject"
+                                    (onClick)="subjectSelectedForTopicWiseChart($event)"></p-dropdown>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <canvas id="topicWiseChart"></canvas>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="col-md-6 ">
-        <div style="margin-bottom: 0.7em;" class="card mat-elevation-z2">
-            <div style="padding: 3px;">
-                <div style="display: flex; flex-flow: row-reverse; background-color: white;">
-                    <mat-icon id="fullScreen2" style="width: auto; cursor: pointer;">zoom_out_map
-                    </mat-icon>
-                    <a download="topicWiseBarGraph.png" id="download2" (click)="downloadTopicWiseChartImage()">
-                        <mat-icon style="width: auto; cursor: pointer;">file_download
-                        </mat-icon>
-                    </a>
-                    <p-dropdown [options]="subjectListDropdownOptions" 
-                                [(ngModel)]="selectedSubjectInTopicWiseBargraph" 
-                                optionLabel="name"
-                                placeholder="Select a subject"
-                                (onClick)="subjectSelectedForTopicWiseChart($event)"></p-dropdown>
-                </div>
-                <div style="display: flex; align-items: center; justify-content: center;">
-                    <canvas id="topicWiseChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="row"  style="margin: 2px;">
-    <div class="col-md-4 ">
-        <div style="margin-bottom: 0.7em; padding-bottom: 0.7em;" class="card mat-elevation-z2">
-            <div style="padding: 3px;">
-                <div style="display: flex; flex-flow: row-reverse; background-color: white;">
-                    <mat-icon id="fullScreen3" style="width: auto; cursor: pointer;">zoom_out_map
-                    </mat-icon>
-                    <a download="subjectWiseTimeSpentPieChart.png" id="download3" (click)="downloadSubjectWiseTimeSpentChartImage()">
-                        <mat-icon style="width: auto; cursor: pointer;">file_download
+    <div class="row"  style="margin: 2px;">
+        <div class="col-md-4 ">
+            <div style="margin-bottom: 0.7em; padding-bottom: 0.7em;" class="card mat-elevation-z2">
+                <div style="padding: 3px;">
+                    <div style="display: flex; flex-flow: row-reverse; background-color: white;">
+                        <mat-icon id="fullScreen3" style="width: auto; cursor: pointer;">zoom_out_map
                         </mat-icon>
-                    </a>
+                        <a download="subjectWiseTimeSpentPieChart.png" id="download3" (click)="downloadSubjectWiseTimeSpentChartImage()">
+                            <mat-icon style="width: auto; cursor: pointer;">file_download
+                            </mat-icon>
+                        </a>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <canvas id="subjectWiseTimeSpentChart"></canvas>
+                    </div>
                 </div>
-                <div style="display: flex; align-items: center; justify-content: center;">
+                <!-- <div style="height:250px; width:250px; display: flex; align-items: center; justify-content: center;">
                     <canvas id="subjectWiseTimeSpentChart"></canvas>
-                </div>
+                </div> -->
             </div>
-            <!-- <div style="height:250px; width:250px; display: flex; align-items: center; justify-content: center;">
-                <canvas id="subjectWiseTimeSpentChart"></canvas>
-              </div> -->
         </div>
-    </div>
-    <div class="col-md-4 ">
-        <div style="margin-bottom: 0.7em;" class="card mat-elevation-z2">
-            <div style="padding: 3px;">
-                <div style="display: flex; flex-flow: row-reverse; background-color: white;">
-                    <mat-icon id="fullScreen4" style="width: auto; cursor: pointer;">zoom_out_map
-                    </mat-icon>
-                    <a download="topicWiseTimeSpentPieChart.png" id="download4" (click)="downloadTopicWiseTimeSpentChartImage()">
-                        <mat-icon style="width: auto; cursor: pointer;">file_download
+        <div class="col-md-4 ">
+            <div style="margin-bottom: 0.7em;" class="card mat-elevation-z2">
+                <div style="padding: 3px;">
+                    <div style="display: flex; flex-flow: row-reverse; background-color: white;">
+                        <mat-icon id="fullScreen4" style="width: auto; cursor: pointer;">zoom_out_map
                         </mat-icon>
-                    </a>
-                    <p-dropdown [options]="subjectListDropdownOptions" 
-                                [(ngModel)]="selectedSubjectInTopicWisePiechart" 
-                                optionLabel="name"
-                                placeholder="Select a subject"
-                                (onClick)="subjectSelectedForTopicWiseTimeSpentChart($event)"></p-dropdown>
-                </div>
-                <div style="display: flex; align-items: center; justify-content: center;">
-                    <canvas id="topicWiseTimeSpentChart"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4 ">
-        <div style="margin-bottom: 0.7em;" class="card mat-elevation-z2">
-            <div style="padding: 6px;">
-                <div class="row">
-                    <b class="areas-header-class" style="margin-top: 0.4em; margin-bottom: 0.6em; font-size: 15px; font-family: 'Cambay';">Areas of Strength</b>
-                    <div class="row" style="display: contents;">
-                        <div>
-                            <ng-container  *ngFor="let subject of strongSubjectList['strongSubject']">
-                                <div class="col-sm-6" style="display: flex; width: 155px; height: auto; float: left; margin-bottom: 0.7em;">
-                                    <div class="circle_box" style="display: contents;">
-                                        <div>
-                                            <svg>
-                                                <circle [matTooltip]="(100 - subject.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
-                                                <circle [matTooltip]="subject.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="subject.successValue" cx="20" cy="20" r="20" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div style="font-family: 'Cambay'; margin-left: 7px;">
-                                        <div style="font-size: 13px;">{{subject.name}}</div>
-                                        <div style="font-size: 11px;">Correct: {{subject.successPercent.toString() + '%'}}</div>
-                                        <div style="font-size: 11px;">Incorrect: {{(100 - subject.successPercent).toString() + '%'}}</div>
-                                    </div>
-                                </div>
-                            </ng-container>
-                            <ng-container  *ngFor="let topic of strongTopicList['strongTopic']">
-                                <div class="col-sm-6" style="display: flex; width: 155px; height: auto; float: left; margin-bottom: 0.7em;">
-                                    <div class="circle_box" style="display: contents;">
-                                        <div>
-                                            <svg>
-                                                <circle [matTooltip]="(100 - topic.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
-                                                <circle [matTooltip]="topic.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="topic.successValue" cx="20" cy="20" r="20" />
-                                            </svg>
-                                        </div>
-                                    </div>
-                                    <div style="font-family: 'Cambay'; margin-left: 7px;">
-                                        <div style="font-size: 13px;">{{topic.name}}</div>
-                                        <div style="font-size: 11px;">Correct: {{topic.successPercent.toString() + '%'}}</div>
-                                        <div style="font-size: 11px;">Incorrect: {{(100 - topic.successPercent).toString() + '%'}}</div>
-                                    </div>
-                                </div>
-                            </ng-container>
-                        </div>
+                        <a download="topicWiseTimeSpentPieChart.png" id="download4" (click)="downloadTopicWiseTimeSpentChartImage()">
+                            <mat-icon style="width: auto; cursor: pointer;">file_download
+                            </mat-icon>
+                        </a>
+                        <p-dropdown [options]="subjectListDropdownOptions" 
+                                    [(ngModel)]="selectedSubjectInTopicWisePiechart" 
+                                    optionLabel="name"
+                                    placeholder="Select a subject"
+                                    (onClick)="subjectSelectedForTopicWiseTimeSpentChart($event)"></p-dropdown>
+                    </div>
+                    <div style="display: flex; align-items: center; justify-content: center;">
+                        <canvas id="topicWiseTimeSpentChart"></canvas>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="col-md-4 ">
+            <div style="margin-bottom: 0.7em;" class="card mat-elevation-z2">
+                <div style="padding: 6px;">
+                    <div class="row">
+                        <b class="areas-header-class" style="margin-top: 0.4em; margin-bottom: 0.6em; font-size: 15px; font-family: 'Cambay';">Areas of Strength</b>
+                        <div class="row" style="display: contents;">
+                            <div>
+                                <ng-container  *ngFor="let subject of strongSubjectList['strongSubject']">
+                                    <div class="col-sm-6" style="display: flex; width: 155px; height: auto; float: left; margin-bottom: 0.7em;">
+                                        <div class="circle_box" style="display: contents;">
+                                            <div>
+                                                <svg>
+                                                    <circle [matTooltip]="(100 - subject.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
+                                                    <circle [matTooltip]="subject.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="subject.successValue" cx="20" cy="20" r="20" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div style="font-family: 'Cambay'; margin-left: 7px;">
+                                            <div style="font-size: 13px;">{{subject.name}}</div>
+                                            <div style="font-size: 11px;">Correct: {{subject.successPercent.toString() + '%'}}</div>
+                                            <div style="font-size: 11px;">Incorrect: {{(100 - subject.successPercent).toString() + '%'}}</div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                                <ng-container  *ngFor="let topic of strongTopicList['strongTopic']">
+                                    <div class="col-sm-6" style="display: flex; width: 155px; height: auto; float: left; margin-bottom: 0.7em;">
+                                        <div class="circle_box" style="display: contents;">
+                                            <div>
+                                                <svg>
+                                                    <circle [matTooltip]="(100 - topic.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
+                                                    <circle [matTooltip]="topic.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="topic.successValue" cx="20" cy="20" r="20" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div style="font-family: 'Cambay'; margin-left: 7px;">
+                                            <div style="font-size: 13px;">{{topic.name}}</div>
+                                            <div style="font-size: 11px;">Correct: {{topic.successPercent.toString() + '%'}}</div>
+                                            <div style="font-size: 11px;">Incorrect: {{(100 - topic.successPercent).toString() + '%'}}</div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="row">
-                    <b class="areas-header-class" style="margin-bottom: 0.6em; font-size: 15px; font-family: 'Cambay';">Areas of Focus</b>
-                    <div class="row" style="display: contents;">
-                        <div>
-                            <ng-container  *ngFor="let subject of weakSubjectList['weakSubject']">
-                                <div class="col-sm-6" style="display: flex; width: 155px; height: auto; float: left; margin-bottom: 0.7em;">
-                                    <div class="circle_box" style="display: contents;">
-                                        <div>
-                                            <svg>
-                                                <circle [matTooltip]="(100 - subject.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
-                                                <circle [matTooltip]="subject.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="subject.successValue" cx="20" cy="20" r="20" />
-                                            </svg>
+                    <div class="row">
+                        <b class="areas-header-class" style="margin-bottom: 0.6em; font-size: 15px; font-family: 'Cambay';">Areas of Focus</b>
+                        <div class="row" style="display: contents;">
+                            <div>
+                                <ng-container  *ngFor="let subject of weakSubjectList['weakSubject']">
+                                    <div class="col-sm-6" style="display: flex; width: 155px; height: auto; float: left; margin-bottom: 0.7em;">
+                                        <div class="circle_box" style="display: contents;">
+                                            <div>
+                                                <svg>
+                                                    <circle [matTooltip]="(100 - subject.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
+                                                    <circle [matTooltip]="subject.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="subject.successValue" cx="20" cy="20" r="20" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div style="font-family: 'Cambay'; margin-left: 7px;">
+                                            <div style="font-size: 13px;">{{subject.name}}</div>
+                                            <div style="font-size: 11px;">Correct: {{subject.successPercent.toString() + '%'}}</div>
+                                            <div style="font-size: 11px;">Incorrect: {{(100 - subject.successPercent).toString() + '%'}}</div>
                                         </div>
                                     </div>
-                                    <div style="font-family: 'Cambay'; margin-left: 7px;">
-                                        <div style="font-size: 13px;">{{subject.name}}</div>
-                                        <div style="font-size: 11px;">Correct: {{subject.successPercent.toString() + '%'}}</div>
-                                        <div style="font-size: 11px;">Incorrect: {{(100 - subject.successPercent).toString() + '%'}}</div>
-                                    </div>
-                                </div>
-                            </ng-container>
-    
-                            <ng-container  *ngFor="let topic of weakTopicList['weakTopic']">
-                                <div class="col-sm-6" style="display: flex; width: 155px; height: auto; float: left; margin-bottom: 0.7em;">
-                                    <div class="circle_box" style="display: contents;">
-                                        <div>
-                                            <svg>
-                                                <circle [matTooltip]="(100 - topic.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
-                                                <circle [matTooltip]="topic.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="topic.successValue" cx="20" cy="20" r="20" />
-                                            </svg>
+                                </ng-container>
+        
+                                <ng-container  *ngFor="let topic of weakTopicList['weakTopic']">
+                                    <div class="col-sm-6" style="display: flex; width: 155px; height: auto; float: left; margin-bottom: 0.7em;">
+                                        <div class="circle_box" style="display: contents;">
+                                            <div>
+                                                <svg>
+                                                    <circle [matTooltip]="(100 - topic.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
+                                                    <circle [matTooltip]="topic.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="topic.successValue" cx="20" cy="20" r="20" />
+                                                </svg>
+                                            </div>
+                                        </div>
+                                        <div style="font-family: 'Cambay'; margin-left: 7px;">
+                                            <div style="font-size: 13px;">{{topic.name}}</div>
+                                            <div style="font-size: 11px;">Correct: {{topic.successPercent.toString() + '%'}}</div>
+                                            <div style="font-size: 11px;">Incorrect: {{(100 - topic.successPercent).toString() + '%'}}</div>
                                         </div>
                                     </div>
-                                    <div style="font-family: 'Cambay'; margin-left: 7px;">
-                                        <div style="font-size: 13px;">{{topic.name}}</div>
-                                        <div style="font-size: 11px;">Correct: {{topic.successPercent.toString() + '%'}}</div>
-                                        <div style="font-size: 11px;">Incorrect: {{(100 - topic.successPercent).toString() + '%'}}</div>
-                                    </div>
-                                </div>
-                            </ng-container>
+                                </ng-container>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -179,3 +181,6 @@
         </div>
     </div>
 </div>
+<ng-template #noDataAvailable>
+    Please give a test
+</ng-template>
