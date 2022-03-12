@@ -46,23 +46,34 @@ export class RegisterInstituteComponent implements OnInit {
 
     this.tempSignUpForm = this.registerInstitueForm
 
-    const tempUserDetail: InstituteDetail = {
-      'instituteEmail': this.registerInstitueForm.get('instituteEmail')?.value,
-      'instituteName': this.registerInstitueForm.get('instituteName')?.value,
-      'institutePhoneNumber': this.registerInstitueForm.get('institutePhoneNumber')?.value,
-      'instituteContactPersonName': this.registerInstitueForm.get('instituteContactPersonName')?.value,
-      'instituteAddress': this.registerInstitueForm.get('instituteAddress')?.value,
-      'message': this.registerInstitueForm.get('message')?.value,
-    }
+    let sub = this.profileService.fetchInstituteDetailByEmail(this.registerInstitueForm.get('instituteEmail')?.value).subscribe(instituteDetails =>{
+      console.log("Ins: ", instituteDetails.length)
+      sub.unsubscribe()
+      if(instituteDetails.length === 0){
+        const tempUserDetail: InstituteDetail = {
+          'instituteEmail': this.registerInstitueForm.get('instituteEmail')?.value,
+          'instituteName': this.registerInstitueForm.get('instituteName')?.value,
+          'institutePhoneNumber': this.registerInstitueForm.get('institutePhoneNumber')?.value,
+          'instituteContactPersonName': this.registerInstitueForm.get('instituteContactPersonName')?.value,
+          'instituteAddress': this.registerInstitueForm.get('instituteAddress')?.value,
+          'message': this.registerInstitueForm.get('message')?.value,
+        }
 
-    this.profileService.addInstituteDetails(tempUserDetail).subscribe(response =>{
-      this.messageService.add({severity:'success', summary: 'Insitute details added.'});
-      this.loading = false
-    },
-    error =>{
-      this.loading = false;
-      window.alert(error.error)
-    })
+        this.profileService.addInstituteDetails(tempUserDetail).subscribe(response =>{
+          this.messageService.add({severity:'success', summary: 'Insitute details added.'});
+          this.loading = false
+          this.ngOnInit()
+        },
+        error =>{
+          this.loading = false;
+          window.alert(error.error)
+        })
+      }
+      else{
+        this.loading = false
+        this.messageService.add({severity: 'error', summary: 'Institute details is already added.'})
+      }
+    }) 
   }
 
 }

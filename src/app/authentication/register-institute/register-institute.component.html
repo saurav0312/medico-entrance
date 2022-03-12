@@ -74,7 +74,7 @@
 <ng-template #institutePhoneNumberTemplate let-registerInstitueForm>
     <mat-form-field  class="col-sm-6"style="width: 100%;" appearance="outline">
         <mat-label>Institute Number</mat-label>
-        <input [formControl]="registerInstitueForm.get('institutePhoneNumber')" type="text" required matInput>
+        <input [formControl]="registerInstitueForm.get('institutePhoneNumber')" type="number" maxlength="10" pattern="[1-9]{1}[0-9]{9}" required matInput>
         <mat-error *ngIf="registerInstitueForm.dirty && registerInstitueForm.get('institutePhoneNumber')?.value.length==0">
             Institute number is required
         </mat-error>

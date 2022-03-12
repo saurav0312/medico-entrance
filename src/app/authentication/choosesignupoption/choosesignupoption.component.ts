@@ -98,10 +98,10 @@ export class ChoosesignupoptionComponent implements OnInit {
             'country': '',
             'state': '',
             'imageUrl': 'assets/img/person/person.png',
-            'accountType': this.selectedIndex == 0 ? 'teacher' : 'student'
+            'accountType': this.selectedIndex == 1 ? 'teacher' : 'student'
           }
 
-          if(this.selectedIndex == 0){
+          if(this.selectedIndex == 1){
             tempUserDetail.teacherCode = this.signUpForm.get('teacherCode')?.value
           }
 
@@ -134,7 +134,13 @@ export class ChoosesignupoptionComponent implements OnInit {
   }
 
   sendTeacherCode(): void{
-    this.messageService.add({severity:'success', summary: 'Teacher code has been sent to the provided email'});
+    let email = this.signUpForm.get('email')?.value
+    if(email !== ''){
+      this.messageService.add({severity:'success', summary: 'Teacher code has been sent to the provided email'});
+    }
+    else{
+      this.messageService.add({severity:'error', summary: 'Please enter email id.'});
+    }
   }
 
   signIn(): void{

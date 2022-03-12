@@ -25,8 +25,8 @@ export class MyDashboardComponent implements OnInit {
   subjectWiseTimeSpentPiechartData: any = []
   topicWiseTimeSpentPiechartData: any = []
 
-  subjectThresholdValue: number = 1;
-  topicThresholdValue: number = 1;
+  subjectThresholdValue: number = 20;
+  topicThresholdValue: number = 20;
 
   strongSubjectList: {'strongSubject':Array<IPerformance>} = {
     'strongSubject': []
@@ -298,13 +298,20 @@ export class MyDashboardComponent implements OnInit {
           'successPercent': Math.round(successPercent)
         }
 
-        if(this.subjectTagMap[key]['correct'] >= this.subjectThresholdValue){
-
+        if(Math.round(successPercent) > this.subjectThresholdValue){
           this.strongSubjectList['strongSubject'].push(tempSuccessValue)
         }
         else{
           this.weakSubjectList['weakSubject'].push(tempSuccessValue)
         }
+
+        // if(this.subjectTagMap[key]['correct'] >= this.subjectThresholdValue){
+
+        //   this.strongSubjectList['strongSubject'].push(tempSuccessValue)
+        // }
+        // else{
+        //   this.weakSubjectList['weakSubject'].push(tempSuccessValue)
+        // }
 
         temppiechartData.push(this.subjectTagMap[key]['correct'])
         temppiechartData.push(this.subjectTagMap[key]['incorrect'])
@@ -330,12 +337,19 @@ export class MyDashboardComponent implements OnInit {
           'successPercent': Math.round(successPercent)
         }
 
-        if(this.topicTagMap[key]['correct'] >= this.topicThresholdValue){
+        if(Math.round(successPercent) > this.topicThresholdValue){
           this.strongTopicList['strongTopic'].push(tempSuccessValue)
         }
         else{
           this.weakTopicList['weakTopic'].push(tempSuccessValue)
         }
+
+        // if(this.topicTagMap[key]['correct'] >= this.topicThresholdValue){
+        //   this.strongTopicList['strongTopic'].push(tempSuccessValue)
+        // }
+        // else{
+        //   this.weakTopicList['weakTopic'].push(tempSuccessValue)
+        // }
       })
 
       this.strongSubjectList.strongSubject = this.strongSubjectList.strongSubject.slice(0,3)
@@ -554,15 +568,15 @@ export class MyDashboardComponent implements OnInit {
 
     chart.data = data
     chart.update();
-}
+  }
 
-removeData(chart:any) {
-    chart.data.labels.pop();
-    chart.data.datasets.forEach((dataset:any) => {
-        dataset.data.pop();
-    });
-    chart.update();
-}
+  removeData(chart:any) {
+      chart.data.labels.pop();
+      chart.data.datasets.forEach((dataset:any) => {
+          dataset.data.pop();
+      });
+      chart.update();
+  }
 
   downloadSubjectWiseChartImage(){
     var a = document.createElement('a');

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Firestore, addDoc, collectionData, collection, doc, docData, setDoc, updateDoc, arrayUnion } from '@angular/fire/firestore';
 import { Storage, uploadBytes, ref, UploadResult, getDownloadURL } from '@angular/fire/storage';
+import { query, where } from 'firebase/firestore';
 import { from, switchMap, Observable } from 'rxjs';
 import { InstituteDetail } from '../interface/institute-detail';
 import { Userr } from '../interface/user';
@@ -23,6 +24,13 @@ export class ProfileService {
   addInstituteDetails(instituteDetails: InstituteDetail): Observable<any>{
     const booksRef = collection(this.firestore, 'Institutes'); 
     return from(addDoc(booksRef, instituteDetails));
+  }
+
+  fetchInstituteDetailByEmail(emailId: string): Observable<any>{
+    const collectionList = collection(this.firestore, 'Institutes');
+    
+    const q = query(collectionList, where("instituteEmail","==", emailId))
+    return collectionData(q, {idField: 'id'})
   }
 
   getUserDetails(id: string | undefined): Observable<Userr>{
