@@ -1,35 +1,35 @@
 <!-- <app-studentdashboardnavigationbar></app-studentdashboardnavigationbar> -->
-<div style="text-align: center;">
-    <h2 style="text-align: center;">Welcome {{username}}</h2>
+<div style="text-align: center; margin-top: 1em;">
+    <h2 style="text-align: center; font-family: 'Cambay';">Welcome {{username}}</h2>
 </div>
 
 
-<div class="row" style="margin-top: 2rem; margin-left: 2rem; margin-right: 2rem; margin-bottom: 2rem;">
+<div class="row" style="margin-top: 1.3rem; margin-left: 0.3rem; margin-right: 0.3rem; margin-bottom: 0.3rem;">
     <div style="text-align: center;">
-        <h1>List of all teachers available</h1>
+        <h1 style="font-family: 'Cambay'">List of all teachers available</h1>
     </div>
-    <h2 style="padding: 0;">Search for teacher</h2> 
+    <h2 style="padding: 0; font-family: 'Cambay'">Search for teacher</h2> 
     <input style="margin-bottom: 0.4em;" class="form-control" id="myInput" type="text" [(ngModel)]="searchText" (keyup)="searchByName($event)" placeholder="Search by name">
     <br>
     <div style="padding: 0; margin-top: 0.8em;">
-        <mat-label style="text-align: left;">Select: </mat-label>
-    </div>
-    <div style="padding: 0; margin-top: 0.8em;">
+        <mat-label style="text-align: left; font-family: 'Cambay'; font-size: 20px;">Select: </mat-label>
+    <!-- </div>
+    <div style="padding: 0; margin-top: 0.8em;"> -->
         <mat-radio-group [(ngModel)]="category" aria-label="Select">
-            <mat-radio-button (change)="categorySelected($event)" *ngFor="let categoryitem of categoryList" [value]="categoryitem">{{categoryitem}}</mat-radio-button>
+            <mat-radio-button style="font-family: 'Cambay'; padding-right: 10px;" (change)="categorySelected($event)" *ngFor="let categoryitem of categoryList" [value]="categoryitem">{{categoryitem}}</mat-radio-button>
         </mat-radio-group>
     </div>
     
 
     <!-- Test start -->
     <ng-template [ngIf]="listOfTeachers.length != 0">
-    <div class="album py-5 background-css" style="margin-bottom: 1.4em;">
+    <div class="album py-2 background-css">
         <div class="container">
             <div class="row">
                 <ng-container class ="col-sm-6"  *ngFor="let teacher of listOfTeachers; let i = index" style="margin-bottom: 2rem;">
                     <div class="col-md-6">
                         <div class="card mb-4 box-shadow" style="border: 1px solid darkgrey; border-radius: 10px;">
-                            <div class="card-body">
+                            <div class="card-body" style="word-break: break-word;">
                                 <div>
                                     <h3 class="card-title" style="text-align: center; display: inline; ">
                                         <b>Teacher {{i+1}}</b>
@@ -47,14 +47,18 @@
                                     <img class="rounded-circle" style="width: 5em; height: 5em;" src="{{teacher.imageUrl}}" >
                                 </div>
                             </div>
-                            <div style="display: block;  margin-left: auto;">
-                                <button [routerLink]="['/studentProfile/testsByATeacher']" [queryParams]="{ teacherId: teacher.id }" style=" margin-left: auto; margin-right: 0.8em; text-align: center; width: fit-content; margin-bottom: 0.8em;" mat-raised-button color="primary">
-                                View All Tests
-                                </button>
-                                <button (click) ="subscribeToTeacher(teacher)" [ngClass]="{'subscribed': teacher.isSubscribed, 'unsubscribed': !teacher.isSubscribed}" style=" margin-left: auto; margin-right: 0.8em; text-align: center; width: fit-content; margin-bottom: 0.8em;"
-                                    mat-button [class.mat-flat-button]="teacher.isSubscribed" >
-                                {{teacher.isSubscribed ? 'Subscribed' : 'Subscribe'}}
-                                </button>
+                            <div style="display: flex; margin-left: auto; margin-right: auto;">
+                                <div>
+                                    <button [routerLink]="['/studentProfile/testsByATeacher']" [queryParams]="{ teacherId: teacher.id }" style=" margin-left: auto; margin-right: 0.8em; text-align: center; width: fit-content; margin-bottom: 0.8em;" mat-raised-button color="primary">
+                                    View All Tests
+                                    </button>
+                                </div>
+                                <div>
+                                    <button (click) ="subscribeToTeacher(teacher)" [ngClass]="{'subscribed': teacher.isSubscribed, 'unsubscribed': !teacher.isSubscribed}" style=" margin-left: auto; margin-right: 0.8em; text-align: center; width: fit-content; margin-bottom: 0.8em;"
+                                        mat-button [class.mat-flat-button]="teacher.isSubscribed" >
+                                    {{teacher.isSubscribed ? 'Subscribed' : 'Subscribe'}}
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MockTestWithAlreadyGiven } from 'src/app/interface/mock-test-with-already-given';
 import { MockTest } from 'src/app/interface/mockTest';
@@ -62,6 +62,15 @@ export class StudentPageHomeComponent implements OnInit {
   loading = false;
   isCorrectAnswerChartDataAvailable: boolean = false;
   isIncorrectAnswerChartDataAvailable: boolean = false;
+
+  correctAnswerChart: any;
+  incorrectAnswerChart: any;
+
+  correctAnswerChartLabels: string[] = []
+  correctAnswerChartData: number[] = []
+
+  incorrectAnswerChartLabels: string[] = []
+  incorrectAnswerChartData: number[] = []
 
   // @HostListener('window:resize', ['$event'])
   //   onResize(event: any) {
@@ -248,26 +257,33 @@ export class StudentPageHomeComponent implements OnInit {
                 // chartData.push(['Unanswered',  this.noOfQuestionsNotAnswered])
                 // this.buildOverallPerformanceChart(chartData);
 
-                let labels: string[] = []
-                let data: number[] = [];
+                // let labels: string[] = []
+                // let data: number[] = [];
+
+                this.correctAnswerChartLabels = [];
+                this.correctAnswerChartData = [];
+
                 Object.keys(this.subjectTagMap).forEach((key) =>{
-                  labels.push(key)
-                  data.push(this.subjectTagMap[key]['correct'])
+                  this.correctAnswerChartLabels.push(key)
+                  this.correctAnswerChartData.push(this.subjectTagMap[key]['correct'])
                 })
                 
-                this.generateRandomColor(data)
-                console.log("correct answer chart data: ", data)
-                if(data.length > 0){
+                this.generateRandomColor(this.correctAnswerChartData)
+                console.log("correct answer chart data: ", this.correctAnswerChartData)
+                if(this.correctAnswerChartData.length > 0){
                   this.isCorrectAnswerChartDataAvailable = true;
+                  this.prepareCorrectAnswerPerformanceChart(this.correctAnswerChartLabels, this.correctAnswerChartData, 'overallCorrectAnswersChart', 'Correct Answers')
                 }
-                this.prepareSubjectWisePerformanceChart(labels, data, 'overallCorrectAnswersChart', 'Correct Answers')
 
-                labels = [];
-                data = [];
+                // labels = [];
+                // data = [];
+
+                this.incorrectAnswerChartLabels = [];
+                this.incorrectAnswerChartData = [];
 
                 Object.keys(this.subjectTagMap).forEach((key) =>{
-                  labels.push(key)
-                  data.push(this.subjectTagMap[key]['incorrect'])
+                  this.incorrectAnswerChartLabels.push(key)
+                  this.incorrectAnswerChartData.push(this.subjectTagMap[key]['incorrect'])
                   // labels.push("Test" +key)
                   // data.push(30)
                   // labels.push("Test1" +key)
@@ -282,15 +298,18 @@ export class StudentPageHomeComponent implements OnInit {
 
                 // this.colors = []
                 // this.generateRandomColor(data)
-                console.log("incorrect answer chart data: ", data)
-                if(data.length > 0){
+                console.log("incorrect answer chart data: ", this.incorrectAnswerChartData)
+                if(this.incorrectAnswerChartData.length > 0){
                   this.isIncorrectAnswerChartDataAvailable = true;
+                  this.prepareIncorrectAnswerPerformanceChart(this.incorrectAnswerChartLabels, this.incorrectAnswerChartData, 'overallIncorrectAnswersChart','Incorrect Answers')
                 }
-                this.prepareSubjectWisePerformanceChart(labels, data, 'overallIncorrectAnswersChart','Incorrect Answers')
+                
         
             }
           }
-          console.log("All avai testss: ", this.allAvailableTests)
+          this.loading = false;
+        })
+        console.log("All avai testss: ", this.allAvailableTests)
           this.allSubjectTests = this.allAvailableTests.filter(individualTest => individualTest.test.testCategory === 'Subject');
           this.allMockTests = this.allAvailableTests.filter(individualTest => individualTest.test.testCategory ===  'Mock');
           
@@ -299,13 +318,24 @@ export class StudentPageHomeComponent implements OnInit {
           
           //if length > 4 then remove extra elements and show remaining tests in table
           this.allSubjectTestsForTable = this.allSubjectTests.slice(0, this.initialSubjectTestListFilterLength);
-          this.allMockTestsForTable = this.allMockTests.slice(0, this.initialMockTestListFilterLength);
-
-          this.loading = false;
-        })      
+          this.allMockTestsForTable = this.allMockTests.slice(0, this.initialMockTestListFilterLength);      
       })
     })
   }
+
+  // ngAfterViewInit(): void {
+  //   console.log("corr ans: ", this.correctAnswerChartData)
+  //   if(this.correctAnswerChartData.length > 0){
+  //     this.isCorrectAnswerChartDataAvailable = true;
+  //     this.prepareCorrectAnswerPerformanceChart(this.correctAnswerChartLabels, this.correctAnswerChartData, 'overallCorrectAnswersChart', 'Correct Answers')
+  //   }
+
+  //   console.log("incorr ans: ", this.incorrectAnswerChartData)
+  //   if(this.incorrectAnswerChartData.length > 0){
+  //     this.isIncorrectAnswerChartDataAvailable = true;
+  //     this.prepareIncorrectAnswerPerformanceChart(this.incorrectAnswerChartLabels, this.incorrectAnswerChartData, 'overallIncorrectAnswersChart','Incorrect Answers')
+  //   }
+  // }
 
 
   generateRandomColor(data: any){
@@ -343,20 +373,53 @@ export class StudentPageHomeComponent implements OnInit {
     // }
   }
 
-  prepareSubjectWisePerformanceChart(chartLabels: string[], chartData: number[], elementId: string, chartTitle: string){
+  prepareCorrectAnswerPerformanceChart(chartLabels: string[], chartData: number[], elementId: string, chartTitle: string){
 
-    const data = {
-      labels: chartLabels,
+    var data = {
+      labels: this.correctAnswerChartLabels,
       datasets: [{
         label: 'Overall Performance',
-        data: chartData,
+        data: this.correctAnswerChartData,
         hoverOffset: 4,
         backgroundColor: this.colors
       }]
     };
 
     var overallPerformanceChartEle: any = document.getElementById(elementId)
-    const myChart = new Chart(
+    this.correctAnswerChart = new Chart(
+      overallPerformanceChartEle,
+      {
+        type: 'doughnut',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            title: {
+                display: true,
+                text: chartTitle
+            }
+        }
+        }
+      }
+    );
+  }
+
+  prepareIncorrectAnswerPerformanceChart(chartLabels: string[], chartData: number[], elementId: string, chartTitle: string){
+
+    var data = {
+      labels: this.incorrectAnswerChartLabels,
+      datasets: [{
+        label: 'Overall Performance 2',
+        data: this.incorrectAnswerChartData,
+        hoverOffset: 4,
+        backgroundColor: this.colors
+      }]
+    };
+
+    var overallPerformanceChartEle: any = document.getElementById(elementId)
+    console.log("incorrect ans chart id got")
+    this.incorrectAnswerChart = new Chart(
       overallPerformanceChartEle,
       {
         type: 'doughnut',
