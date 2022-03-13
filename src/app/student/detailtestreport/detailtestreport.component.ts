@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit, Input, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, Input, ElementRef, TemplateRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { TestReportQuestion } from '../../interface/testReportQuestion';
@@ -14,9 +14,8 @@ import { IPerformance } from 'src/app/interface/performance';
 import { TreeNode } from 'primeng/api';
 import { TestReportData } from 'src/app/interface/testReportData';
 import { formatDate } from '@angular/common';
-
-
-declare var google: any;
+import { SubjectList } from 'src/app/interface/subject-list';
+import Chart from 'chart.js/auto';
 
 @Component({
   selector: 'app-detailtestreport',
@@ -62,6 +61,39 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   weakTopicList: {'weakTopic':Array<IPerformance>} = {
     'weakTopic': []
   };
+
+  subjectNameList: string[] = [];
+  topicNameList: string[] = [];
+
+  subjectWiseCorrectAnswersData: number[] = [];
+  subjectWiseIncorrectAnswersData: number[] = [];
+  subjectWiseNotAnsweredData: number[] = [];
+
+  topicWiseCorrectAnswersData: number[] = [];
+  topicWiseIncorrectAnswersData: number[] = []
+  topicWiseNotAnsweredData: number[] = []
+
+  selectedSubjectInTopicWiseBargraph: string = '';
+  selectedSubjectInTopicWisePiechart: string = '';
+  previouslySelectedSubjectInTopicWiseBargraph: string = '';
+  previouslySelectedSubjectInTopicWisePiechart: string = ''
+  subjectListDropdownOptions: SubjectList[] = [];
+
+  subjectWiseChart: any;
+  topicWiseChart: any;
+
+  colors: string[] = [];
+
+  subjectWiseTimeSpentChart: any;
+  topicWiseTimeSpentChart: any;
+
+  subjectWiseTimeSpentPieChartLabels: string[] = []
+  subjectWiseTimeSpentPieChartData: number[] = []
+
+  topicWiseTimeSpentPieChartLabels: string[] = []
+  topicWiseTimeSpentPieChartData: number[] = []
+
+  @ViewChild('hello', {static: true}) private chartRef!: ElementRef;
 
   // @Input() displayedColumns!: string[];
   @Input() testToShowInTable! : Tests;
@@ -179,8 +211,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         }
       })
     })
-
-    google.charts.load('current', {packages: ['corechart']}); 
   }
 
 
@@ -292,7 +322,90 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
           }
         })
 
-        //prepare data for subject bar graph
+        //prepare data for subject bar graph for chart js
+        this.subjectNameList = []
+        this.subjectWiseCorrectAnswersData = []
+        this.subjectWiseIncorrectAnswersData = []
+        this.subjectWiseNotAnsweredData = []
+        this.subjectListDropdownOptions = []
+
+        Object.keys(this.subjectTagMap).forEach(key =>{
+          this.subjectNameList.push(key)
+
+          let temp : SubjectList = {
+            name: key
+          }
+
+          this.subjectListDropdownOptions.push(temp)
+
+          this.subjectWiseCorrectAnswersData.push(this.subjectTagMap[key]['correct'])
+          this.subjectWiseIncorrectAnswersData.push(this.subjectTagMap[key]['incorrect'])
+          this.subjectWiseNotAnsweredData.push(this.subjectTagMap[key]['not_answered'])
+        })
+
+        console.log("Correct aa: ", this.subjectWiseCorrectAnswersData)
+        console.log("Incorrect aa: ", this.subjectWiseIncorrectAnswersData)
+        console.log("Not answered aa: ", this.subjectWiseNotAnsweredData)
+        
+
+        //prepare data for topic wise bar graph for chart js
+
+        this.topicNameList = []
+        this.topicWiseCorrectAnswersData = []
+        this.topicWiseIncorrectAnswersData = []
+        this.topicWiseNotAnsweredData = []
+
+        Object.keys(this.topicTagMap).forEach(key =>{
+          this.topicNameList.push(key)
+          this.topicWiseCorrectAnswersData.push(this.topicTagMap[key]['correct'])
+          this.topicWiseIncorrectAnswersData.push(this.topicTagMap[key]['incorrect'])
+          this.topicWiseNotAnsweredData.push(this.topicTagMap[key]['not_answered'])
+        })
+
+        console.log("Correct aa: ", this.topicWiseCorrectAnswersData)
+        console.log("Incorrect aa: ", this.topicWiseIncorrectAnswersData)
+        console.log("Not answered aa: ", this.topicWiseNotAnsweredData)
+
+
+        //prepare data for subject wise time spent pie chart
+        
+        console.log("SUbject wise time after: ", this.subjectWiseTimeSpent)
+        this.subjectWiseTimeSpentPieChartLabels = []
+        this.subjectWiseTimeSpentPieChartData = []
+        
+        for (let entry of this.subjectWiseTimeSpent.entries()){
+          if(entry[1] > 0){
+            this.subjectWiseTimeSpentPieChartLabels.push(entry[0])
+            this.subjectWiseTimeSpentPieChartData.push(entry[1])
+          }
+        }
+
+        console.log("Piechart albel: ", this.subjectWiseTimeSpentPieChartLabels)
+        console.log("SUbjectwise pie chart time: ", this.subjectWiseTimeSpentPieChartData)
+        console.log("SUbject wise time after: ", this.topicWiseTimeSpent)
+        
+        this.topicWiseTimeSpentPieChartLabels = []
+        this.topicWiseTimeSpentPieChartData = []
+        for (let entry of this.topicWiseTimeSpent.entries()){
+          if(entry[1] > 0){
+            this.topicWiseTimeSpentPieChartLabels.push(entry[0])
+            this.topicWiseTimeSpentPieChartData.push(entry[1])
+          }
+        }        
+
+        //This is for default value of chart dropdown. will use it later
+        // let event :any ={
+        //   'target':{
+        //     'textContent': this.subjectListDropdownOptions[0].name 
+        //   }
+        // }
+
+        // this.selectedSubjectInTopicWisePiechart = this.subjectListDropdownOptions[0].name
+        // this.subjectSelectedForTopicWiseTimeSpentChart(event)
+
+
+
+        //prepare data for strong subject and topic
         Object.keys(this.subjectTagMap).forEach(key =>{
           let temppiechartData = [];
 
@@ -316,14 +429,9 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
           else{
             this.weakSubjectList['weakSubject'].push(tempSuccessValue)
           }
-
-          temppiechartData.push(this.subjectTagMap[key]['correct'])
-          temppiechartData.push(this.subjectTagMap[key]['incorrect'])
-          temppiechartData.push(this.subjectTagMap[key]['not_answered'])
-          this.subjectTagBarGraphData.push(temppiechartData)
         })
 
-        //prepare data for topic bar graph
+        //prepare data for weak subject and topic
         Object.keys(this.topicTagMap).forEach(key =>{
           let temppiechartData = [];
 
@@ -347,221 +455,368 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
           else{
             this.weakTopicList['weakTopic'].push(tempSuccessValue)
           }
-
-          temppiechartData.push(this.topicTagMap[key]['correct'])
-          temppiechartData.push(this.topicTagMap[key]['incorrect'])
-          temppiechartData.push(this.topicTagMap[key]['not_answered'])
-          this.topicTagBarGraphData.push(temppiechartData)
         })
 
-        for (let entry of this.subjectWiseTimeSpent.entries()) {
-          let temppiechartData = [];
-          temppiechartData.push(entry[0]);
-          temppiechartData.push(entry[1]);
-          this.subjectWiseTimeSpentPiechartData.push(temppiechartData)
-        }
+      const subjectwise_chart : any = document.getElementById('subjectWiseBarGraph');
+      const topicwise_chart : any = document.getElementById('topicWiseBarGraph');
+      const subjectwisetimespent_piechart : any = document.getElementById('subjectWiseTimeSpentPieChart');
+      const topicwisetimespent_piechart : any = document.getElementById('topicWiseTimeSpentPieChart');
 
-        for (let entry of this.topicWiseTimeSpent.entries()) {
-          let temppiechartData = [];
-          temppiechartData.push(entry[0]);
-          temppiechartData.push(entry[1]);
-          this.topicWiseTimeSpentPiechartData.push(temppiechartData)
+      const buttonElement1 :any = document.getElementById('fullScreen1')
+      buttonElement1.addEventListener('click', () => {
+        if (screenfull.isEnabled) {
+          screenfull.request(subjectwise_chart);
         }
+      });
 
-        // this.buildChart(this.subjectTagBarGraphData, this.topicTagBarGraphData, this.subjectWiseTimeSpentPiechartData, this.topicWiseTimeSpentPiechartData )
+      const buttonElement2 :any = document.getElementById('fullScreen2')
+      buttonElement2.addEventListener('click', () => {
+        if (screenfull.isEnabled) {
+          screenfull.request(topicwise_chart);
+        }
+      });
+
+      const buttonElement3 :any = document.getElementById('fullScreen3')
+      buttonElement3.addEventListener('click', () => {
+        if (screenfull.isEnabled) {
+          screenfull.request(subjectwisetimespent_piechart);
+        }
+      });
+
+      const buttonElement4 :any = document.getElementById('fullScreen4')
+      buttonElement4.addEventListener('click', () => {
+        if (screenfull.isEnabled) {
+          screenfull.request(topicwisetimespent_piechart);
+        }
+      });
       }
   }
 
-  buildChart(subjectTagBarGraphData : any, topicTagBarGraphData: any, subjectWiseTimeSpentPiechartData:any ,topicWiseTimeSpentPiechartData:any){
-    var renderChart = ()=>{
-
-      // Create the data table for subjectwise time spent piechart.
-      let subjectTimeSpentData = new google.visualization.DataTable();
-      subjectTimeSpentData.addColumn('string', 'Subject');
-      subjectTimeSpentData.addColumn('number', 'Total Time Spent');
-      subjectTimeSpentData.addRows(subjectWiseTimeSpentPiechartData);
-
-      let subjectTimeSpentOptions = {
-        title: 'Time Spent on Subject',
-        is3D: true,
-        pieSliceText:'value',
-        tooltip:{
-          text:'value'
+  fullScreen1(){
+    const subjectwise_chart : any = document.getElementById('subjectWiseBarGraph');
+    const buttonElement1 :any = document.getElementById('fullScreen1')
+      buttonElement1.addEventListener('click', () => {
+        if (screenfull.isEnabled) {
+          screenfull.request(subjectwise_chart);
         }
-      }
-
-      //Create the data table for topicwise time spent piechart
-      var topicTimeSpentData = new google.visualization.DataTable();
-      topicTimeSpentData.addColumn('string', 'Topic');
-      topicTimeSpentData.addColumn('number', 'Total Time Spent');
-      topicTimeSpentData.addRows(topicWiseTimeSpentPiechartData);
-
-      let topicTimeSpentOptions = {
-        title: 'Time Spent on Topic',
-        is3D: true,
-        pieSliceText:'value',
-        tooltip:{
-          text:'value'
-        }
-      }
-
-
-      var formatter = new google.visualization.NumberFormat({
-        fractionDigits: 0,
-        suffix: ' s'
       });
+  }
 
-      formatter.format(subjectTimeSpentData, 1)
-      formatter.format(topicTimeSpentData, 1)
+  downloadSubjectWiseChartImage(){
+    var a = document.createElement('a');
+    a.href = this.subjectWiseChart.toBase64Image();
+    a.download = 'my_file_name.png';
 
-      // Instantiate and draw pie chart, passing in some options.
-      var subjectTimeSpent_chart_download_button: any=  document.getElementById('download3');
-      var topicTimeSpent_chart_download_button: any = document.getElementById('download4')
-      
-      var subjectTimeSpentChart = new google.visualization.PieChart(document.getElementById('subjectTimeSpent_chart_div'));
-      var topicTimeSpentChart = new google.visualization.PieChart(document.getElementById('topicTimeSpent_chart_div'));
+    // Trigger the download
+    a.click();
+  }
 
-      google.visualization.events.addListener(subjectTimeSpentChart, 'ready', function () {
-        subjectTimeSpent_chart_download_button.href = subjectTimeSpentChart.getImageURI();
-      });
+  downloadTopicWiseChartImage(){
+    var a = document.createElement('a');
+    a.href = this.topicWiseChart.toBase64Image();
+    a.download = 'my_file_name.png';
 
-      google.visualization.events.addListener(topicTimeSpentChart, 'ready', function () {
-        topicTimeSpent_chart_download_button.href = topicTimeSpentChart.getImageURI();
-      });
+    // Trigger the download
+    a.click();
+  }
 
-      subjectTimeSpentChart.draw(subjectTimeSpentData, subjectTimeSpentOptions);
-      topicTimeSpentChart.draw(topicTimeSpentData, topicTimeSpentOptions);
+  downloadSubjectWiseTimeSpentChartImage(){
+    var a = document.createElement('a');
+    a.href = this.subjectWiseTimeSpentChart.toBase64Image();
+    a.download = 'my_file_name.png';
 
+    // Trigger the download
+    a.click();
+  }
 
+  downloadTopicWiseTimeSpentChartImage(){
+    var a = document.createElement('a');
+    a.href = this.topicWiseTimeSpentChart.toBase64Image();
+    a.download = 'my_file_name.png';
 
-
-      //Bar chart Subjectwise
-      let subjectWiseBarGraphData = new google.visualization.DataTable();
-      subjectWiseBarGraphData.addColumn('string', 'Subject');
-      subjectWiseBarGraphData.addColumn('number', 'Correct');
-      subjectWiseBarGraphData.addColumn('number', 'Incorrect');
-      subjectWiseBarGraphData.addColumn('number', 'Not Answered');
-      subjectWiseBarGraphData.addRows(subjectTagBarGraphData);
-
-      var options = {
-        title : 'Test Analysis By Subject',
-        vAxis: {title: 'No of questions',titleTextStyle: { color: 'black',
-        fontSize: 15,
-        bold: true,
-        italic: false }},
-        hAxis: {title: 'Subjects',titleTextStyle: { color: 'black',
-        fontSize: 15,
-        bold: true,
-        italic: false }},
-        seriesType: 'bars',
-        fontSize: 13,
-        bold: true,
-        italic: true,
-        series: {5: {type: 'line'}},
-        isStacked: true
-      };
-     
-      var subjectwise_bar_graph_download_button: any = document.getElementById('download1')
-      var subjectChart = new google.visualization.ComboChart(document.getElementById('subjectwise_chart_div'));
-       
-      // Wait for the chart to finish drawing before calling the getImageURI() method.
-       google.visualization.events.addListener(subjectChart, 'ready', function () {
-        subjectwise_bar_graph_download_button.href = subjectChart.getImageURI();
-      });
-
-      subjectChart.draw(subjectWiseBarGraphData, options);
+    // Trigger the download
+    a.click();
+  }
 
 
-      //Bar chart Topic Wise
-      let topicWiseBarGraphData = new google.visualization.DataTable();
-      topicWiseBarGraphData.addColumn('string', 'Subject');
-      topicWiseBarGraphData.addColumn('number', 'Correct');
-      topicWiseBarGraphData.addColumn('number', 'Incorrect');
-      topicWiseBarGraphData.addColumn('number', 'Not Answered');
-      topicWiseBarGraphData.addRows(topicTagBarGraphData);
+  prepareSubjectWiseBarGraph(){
 
-      var options1 = {
-        title : 'Test Analysis By Topic',
-        vAxis: {title: 'No of questions',titleTextStyle: { color: 'black',
-        fontSize: 15,
-        bold: true,
-        italic: false }},
-        hAxis: {title: 'Topics',titleTextStyle: { color: 'black',
-        fontSize: 15,
-        bold: true,
-        italic: false }},
-        seriesType: 'bars',
-        fontSize: 13,
-        bold: true,
-        italic: true,
-        series: {5: {type: 'line'}},
-        
-        isStacked: true
-      };
+    console.log("Correct: ", this.subjectWiseCorrectAnswersData)
+    console.log("Incorrect: ", this.subjectWiseIncorrectAnswersData)
+    console.log("Not answered: ", this.subjectWiseNotAnsweredData)
+    console.log("subjectnammes : ", this.subjectNameList)
 
-      var topicChart = new google.visualization.ComboChart(document.getElementById('topicwise_chart_div'));
-
-      var topicwise_bar_graph_download_button: any = document.getElementById('download2')
-      google.visualization.events.addListener(topicChart, 'ready', function () {
-        topicwise_bar_graph_download_button.href = topicChart.getImageURI();
-      });
-
-      topicChart.draw(topicWiseBarGraphData, options1);
-    }
-    // var subject_chart_div =  document.getElementById('subject_chart_div');
-    // var subjectTagChart = () => new google.visualization.PieChart(subject_chart_div);
-    // var topicTagChart = () => new google.visualization.PieChart(document.getElementById('topic_chart_div'));
-
-    var callback = () =>renderChart()
-    google.charts.setOnLoadCallback( callback);
-    window.onresize = ()=>{
-        callback()
+    const labels = this.subjectNameList
+    const data = {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Correct',
+          data: this.subjectWiseCorrectAnswersData,
+          backgroundColor: '#fd7f6f',
+        },
+        {
+          label: 'Incorrect',
+          data: this.subjectWiseIncorrectAnswersData,
+          backgroundColor: '#7eb0d5',
+        },
+        {
+          label: 'Not Answered',
+          data: this.subjectWiseNotAnsweredData,
+          backgroundColor: '#b2e061',
+        },
+      ]
     };
 
-    const subjectwise_chart : any = document.getElementById('subjectwise_chart_div');
-    const topicwise_chart: any = document.getElementById('topicwise_chart_div');
-    const subjectTimeSpent_chart : any = document.getElementById('subjectTimeSpent_chart_div');
-    const topicTimeSpent_chart: any = document.getElementById('topicTimeSpent_chart_div');
-
-    const buttonElement1 :any = document.getElementById('fullScreen1')
-    buttonElement1.addEventListener('click', () => {
-      if (screenfull.isEnabled) {
-        screenfull.request(subjectwise_chart);
-        
+    const plugin = {
+      id: 'custom_canvas_background_color',
+      beforeDraw: (chart:any) => {
+        const ctx = chart.canvas.getContext('2d');
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-over';
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, chart.width, chart.height);
+        ctx.restore();
       }
-    });
+    };
 
-    const buttonElement2 :any = document.getElementById('fullScreen2')
-    buttonElement2.addEventListener('click', () => {
-      if (screenfull.isEnabled) {
-        screenfull.request(topicwise_chart);
-        
-      }
-    });
+    const config: any = {
+      type: 'bar',
+      data: data,
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'Subjectwise Analysis'
+          },
+        },
+        responsive: true,
+        scales: {
+          x: {
+            stacked: true,
+          },
+          y: {
+            stacked: true
+          }
+        }
+      },
+      plugins: [plugin]
+    };
 
-    const buttonElement3 :any = document.getElementById('fullScreen3')
-    buttonElement3.addEventListener('click', () => {
-      if (screenfull.isEnabled) {
-        screenfull.request(subjectTimeSpent_chart);
-        
-      }
-    });
-
-    const buttonElement4 :any = document.getElementById('fullScreen4')
-    buttonElement4.addEventListener('click', () => {
-      if (screenfull.isEnabled) {
-        screenfull.request(topicTimeSpent_chart);
-        
-      }
-    });
+    var subjectWiseChartEle: any = document.getElementById('subjectWiseBarGraph')
+    console.log("context: ", subjectWiseChartEle)
+    this.subjectWiseChart = new Chart(
+      subjectWiseChartEle,
+      config
+    )
   }
+
+  prepareTopicWiseBarGraph(){
+    const labels = this.topicNameList
+    const data = {
+      labels: labels,
+      datasets: [
+        {
+          label: 'Correct',
+          data: this.topicWiseCorrectAnswersData,
+          backgroundColor: "#fd7f6f",
+        },
+        {
+          label: 'Incorrect',
+          data: this.topicWiseIncorrectAnswersData,
+          backgroundColor: "#7eb0d5",
+        },
+        {
+          label: 'Not Answered',
+          data: this.topicWiseNotAnsweredData,
+          backgroundColor: '#b2e061',
+        },
+      ]
+    };
+
+    const plugin = {
+      id: 'custom_canvas_background_color',
+      beforeDraw: (chart:any) => {
+        const ctx = chart.canvas.getContext('2d');
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-over';
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, chart.width, chart.height);
+        ctx.restore();
+      }
+    };
+
+    const config: any = {
+      type: 'bar',
+      data: data,
+      options: {
+        plugins: {
+          title: {
+            display: true,
+            text: 'Topicwise Analysis'
+          },
+        },
+        responsive: true,
+        scales: {
+          x: {
+            stacked: true,
+          },
+          y: {
+            stacked: true
+          }
+        }
+      },
+      plugins: [plugin]
+    };
+
+    var topicWiseChartEle: any = document.getElementById('topicWiseBarGraph')
+    this.topicWiseChart = new Chart(
+      topicWiseChartEle,
+      config
+    )
+  }
+
+
+  prepareSubjectWiseTimeSpentChart(chartLabels: string[], chartData: number[], elementId: string, chartTitle: string){
+
+    console.log("subject time labelss: ", chartLabels)
+    console.log("subject time sdata: ", chartData)
+    const data = {
+      labels: chartLabels,
+      datasets: [{
+        label: 'Overall Performance',
+        data: chartData,
+        hoverOffset: 4,
+        backgroundColor: this.colors
+      }]
+    };
+
+    const plugin = {
+      id: 'custom_canvas_background_color',
+      beforeDraw: (chart:any) => {
+        const ctx = chart.canvas.getContext('2d');
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-over';
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, chart.width, chart.height);
+        ctx.restore();
+      }
+    };
+
+    var pieChartEle: any = document.getElementById(elementId)
+    this.subjectWiseTimeSpentChart = new Chart(
+      pieChartEle,
+      {
+        type: 'doughnut',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            title: {
+                display: true,
+                text: chartTitle
+            }
+          }
+        },
+        plugins:[plugin]
+      }
+    );
+  }
+
+  prepareTopicWiseTimeSpentChart(chartLabels: string[], chartData: number[], elementId: string, chartTitle: string){
+
+    const data = {
+      labels: chartLabels,
+      datasets: [{
+        label: 'Overall Performance',
+        data: chartData,
+        hoverOffset: 4,
+        backgroundColor: this.colors
+      }]
+    };
+
+    const plugin = {
+      id: 'custom_canvas_background_color',
+      beforeDraw: (chart:any) => {
+        const ctx = chart.canvas.getContext('2d');
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-over';
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, chart.width, chart.height);
+        ctx.restore();
+      }
+    };
+
+    var pieChartEle: any = document.getElementById(elementId)
+    this.topicWiseTimeSpentChart = new Chart(
+      pieChartEle,
+      {
+        type: 'doughnut',
+        data: data,
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            title: {
+                display: true,
+                text: chartTitle
+            }
+          }
+        },
+        plugins:[plugin]
+      }
+    );
+  }
+
+  generateRandomColor(data: any){
+
+    let tempColorList = ["#fd7f6f", "#7eb0d5", "#b2e061", "#bd7ebe", "#ffb55a", "#ffee65", "#beb9db", "#fdcce5", "#8bd3c7"]
+
+    this.colors = tempColorList.slice(0, data.length)
+
+
+    //temporarily commenting -> will uncomment when dynamic color is required
+    // var letters = '0123456789ABCDEF'.split('');
+    // let totalColorCount = 0;
+    // while(1){
+    //   var newColor = '#';
+    //   for (var j = 0; j < 6; j++ ) {
+    //     newColor += letters[Math.floor(Math.random() * 16)];
+    //   }
+    //   console.log("Here")
+    //   if(this.colors.length > 0 && this.colors.find(existingColor => existingColor == newColor) === undefined){
+    //     this.colors.push(newColor)
+    //     totalColorCount++;
+    //     console.log("Total color count: ", totalColorCount)
+    //     if(totalColorCount == data.length){
+    //       break;
+    //     }
+    //   }
+    //   else if(this.colors.length === 0){
+    //     this.colors.push(newColor)
+    //     totalColorCount++;
+    //     console.log("Total color count else: ", totalColorCount)
+    //     if(totalColorCount == data.length){
+    //       break;
+    //     }
+    //   }
+    // }
+  }
+
 
   ngAfterViewInit(): void {
     
   } 
 
   tabChanged(event:any):void{
-    this.buildChart(this.subjectTagBarGraphData, this.topicTagBarGraphData, this.subjectWiseTimeSpentPiechartData, this.topicWiseTimeSpentPiechartData )
+    this.prepareSubjectWiseBarGraph()
+    this.prepareTopicWiseBarGraph()
+    this.generateRandomColor(this.subjectWiseTimeSpentPieChartData)
+    this.prepareSubjectWiseTimeSpentChart(this.subjectWiseTimeSpentPieChartLabels, this.subjectWiseTimeSpentPieChartData, 'subjectWiseTimeSpentPieChart' , 'Subjectwise Time Spent Chart')
+
+    this.generateRandomColor(this.topicWiseTimeSpentPieChartData)
+    this.prepareTopicWiseTimeSpentChart(this.topicWiseTimeSpentPieChartLabels, this.topicWiseTimeSpentPieChartData, 'topicWiseTimeSpentPieChart' , 'Topicwise Time Spent Chart')
   }
 
   viewIndividualQuestion(element: TestReportQuestion, questionNumber: number):void{
