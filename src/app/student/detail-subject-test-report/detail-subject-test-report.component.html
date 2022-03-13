@@ -1,4 +1,4 @@
-<div>
+<div *ngIf="!isNewUser; else noDataAvailable" style="margin: 0;" class="row">
     <h1 style="text-align: center; margin-top: 2em;">Test Result Analysis
     </h1>
     <mat-divider></mat-divider>
@@ -6,9 +6,9 @@
 
     <ng-template #tabularReportTemplate>
         <div class="row">
-            <div class="col-sm-3" style="border-left: 1px solid #bfc3c2; border-right: 1px solid #bfc3c2; margin-top: 1.2em; margin-bottom: 1.2em;">
+            <div class="col-sm-3" style="margin-top: 1.2em; margin-bottom: 1.2em;">
                 <div style="margin-top: 3em; margin-bottom:  1.5em;">
-                    <p style="font-size: 21px; font-weight: 500;">All Given Subject Tests</p>
+                    <p style="font-size: 21px; font-weight: 500; font-family: 'Cambay';">All Given Subject Tests</p>
                 </div>
 
                 <p-tree 
@@ -19,18 +19,18 @@
                 [filter]="true"></p-tree>
 
             </div>
-            <div class="col-sm-9">
-                <mat-expansion-panel style="margin-top: 0.6em; margin-bottom: 0.6em;" class="mat-card mat-elevation-z8" 
+            <div class="col-sm-9" style="padding:0; padding-left:10px">
+                <!-- <mat-expansion-panel style="margin-top: 0.6em; margin-bottom: 0.6em;" class="mat-card mat-elevation-z8" 
                                     (opened)="expandTable = true"
                                     (closed)="expandTable = false"
-                                    [expanded]="true">
-                    <mat-expansion-panel-header>
-                        <mat-panel-title>
+                                    [expanded]="true"> -->
+                    <!-- <mat-expansion-panel-header>
+                        <mat-panel-title> -->
                             <div class="col-md-12 text-center" >
                                 <h1 style="margin: 1em; font-weight: 500;">Score Summary</h1>
                             </div>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header>
+                        <!-- </mat-panel-title>
+                    </mat-expansion-panel-header> -->
 
                     <div class="float-container">
                         <div class="mat-card " style="border: 1px solid black;">
@@ -101,7 +101,7 @@
                                                         </div>
                                                     </div>
                                                     <ng-template #resultElseBlock>
-                                                        {{row[col.field]}}
+                                                        {{row[col.field]}} s
                                                     </ng-template>
                                                         
                                                 </td>
@@ -114,9 +114,19 @@
                     </div> 
 
                     <mat-divider></mat-divider>                    
-                </mat-expansion-panel>
+                <!-- </mat-expansion-panel> -->
             </div>
         </div>
     </ng-template>
 </div>
+
+<ng-template #noDataAvailable>
+    <div style="display: flex; justify-content: center;">
+        <div style="display: grid; font-family: 'Cambay'; padding-top: 2em;">
+            <img  src="../../assets/img/register_left_side.jpeg" style="height: 400px; margin-bottom: 2em; padding-top: 2em;" alt="study">
+            <span style="text-align: center;">This is your subject tests history</span>
+            <span style="text-align: center;">Lets give a test to evaluate your performance level</span>
+        </div>
+    </div>
+</ng-template>
     
