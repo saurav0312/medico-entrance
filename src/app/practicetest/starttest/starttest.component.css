@@ -9,7 +9,7 @@
 .question-number-btn-class{
     color:black;
     border-radius: .4em; 
-    border-color: black; 
+    /* border-color: black;  */
     margin-left: 1em; 
     margin-top: 0.5em; 
     margin-right: 0.5em;
@@ -93,4 +93,22 @@
     background-color: #727272a1;
     border-radius: 50%;
     display: inherit;
+}
+
+@media (max-width: 576px) {
+    .hide-question-status{
+        display: none;
+    }
+
+    .question-mobile-view{
+        padding-left: 3.2em !important;
+    }
+
+    .question-buttons-mobile-view{
+        padding-left: 3.2em !important;
+    }
+
+    .individual-question-navigation-button{
+        height: auto !important;
+    }
 }
