@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MockTestWithAlreadyGiven } from 'src/app/interface/mock-test-with-already-given';
 import { MockTest } from 'src/app/interface/mockTest';
@@ -10,11 +10,12 @@ import  Chart from 'chart.js/auto'
   templateUrl: './student-page-home.component.html',
   styleUrls: ['./student-page-home.component.css']
 })
-export class StudentPageHomeComponent implements OnInit {
+export class StudentPageHomeComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private elementRef: ElementRef
   ) { }
 
   @ViewChild('banner') banner! : HTMLElement;
@@ -60,8 +61,8 @@ export class StudentPageHomeComponent implements OnInit {
 
   colors: string[] = [];
   loading = false;
-  isCorrectAnswerChartDataAvailable: boolean = false;
-  isIncorrectAnswerChartDataAvailable: boolean = false;
+  isCorrectAnswerChartDataAvailable: boolean = true;
+  isIncorrectAnswerChartDataAvailable: boolean = true;
 
   correctAnswerChart: any;
   incorrectAnswerChart: any;
@@ -85,14 +86,13 @@ export class StudentPageHomeComponent implements OnInit {
   //   }
 
   ngOnInit(): void {
-    this.loading = true;
-    this.isCorrectAnswerChartDataAvailable = false;
-    this.isIncorrectAnswerChartDataAvailable = false;
+    this.loading = false;
+    // this.isCorrectAnswerChartDataAvailable = false;
+    // this.isIncorrectAnswerChartDataAvailable = false;
 
     this.authService.getCurrentUser().subscribe(currentUser =>{
       this.userId = currentUser.uid
       this.authService.fetchTestsList().subscribe((allTests: MockTest[]) =>{
-        console.log("All tests available: ", allTests)
         this.allAvailableTests = [];
         allTests.forEach(test =>{
           let temp: MockTestWithAlreadyGiven ={
@@ -102,7 +102,6 @@ export class StudentPageHomeComponent implements OnInit {
           this.allAvailableTests.push(temp);
         })
 
-        console.log("All tests final: ", this.allAvailableTests)
   
         this.authService.getAllMockTestsGivenByAUser(this.userId).subscribe(allTestsGivenByTheUser =>{
           if(allTestsGivenByTheUser!== undefined){
@@ -219,46 +218,9 @@ export class StudentPageHomeComponent implements OnInit {
                     }
                   })
                 })
-
-                console.log("Total correct: ", this.noOfCorrectAnswers)
-                console.log("Total incorrect: ", this.noOfIncorrectAnswers)
-                console.log("Total not answered: ", this.noOfQuestionsNotAnswered)
-
-                console.log("SubjectTagMap: ", this.subjectTagMap)
         
-                // this.noOfCorrectAnswers = 0;
-                // this.noOfIncorrectAnswers = 0;
-                // this.noOfQuestionsNotAnswered = 0;
-                // allTestsGivenByTheUser.allTests.forEach(test =>{
-                //   test.testQuestions.forEach(question =>{
-                //     //option selected
-                //     if(question.selectedOption!== null){
-                //       if(question.selectedOption === question.correctAnswer)
-                //       {
-                //         this.noOfCorrectAnswers += 1;               
-                //       }
-                //       else{
-                //         this.noOfIncorrectAnswers +=1;
-                //       }
-                //     }
-                //     //option not selected
-                //     else{
-                //       this.noOfQuestionsNotAnswered +=1;
-                //     }
-                //   })
-                // })
 
                 this.totalNoOfQuestions = this.noOfCorrectAnswers + this.noOfIncorrectAnswers + this.noOfQuestionsNotAnswered
-        
-                //prepare overall performance chart
-                // let chartData:any = [];
-                // chartData.push(['Correct Answer',  this.noOfCorrectAnswers])
-                // chartData.push(['Incorrect Answer',  this.noOfIncorrectAnswers])
-                // chartData.push(['Unanswered',  this.noOfQuestionsNotAnswered])
-                // this.buildOverallPerformanceChart(chartData);
-
-                // let labels: string[] = []
-                // let data: number[] = [];
 
                 this.correctAnswerChartLabels = [];
                 this.correctAnswerChartData = [];
@@ -269,10 +231,24 @@ export class StudentPageHomeComponent implements OnInit {
                 })
                 
                 this.generateRandomColor(this.correctAnswerChartData)
-                console.log("correct answer chart data: ", this.correctAnswerChartData)
-                if(this.correctAnswerChartData.length > 0){
+
+                let isAllDataZero: boolean = true;
+
+                this.correctAnswerChartData.forEach(data =>{
+                  if(data > 0){
+                    isAllDataZero = false;
+                  }
+                })
+                if(!isAllDataZero){
                   this.isCorrectAnswerChartDataAvailable = true;
+                  // if(this.correctAnswerChart !== undefined){
+                  //   this.correctAnswerChart.destroy()
+                  //   console.log("corr destroyed")
+                  // }
                   this.prepareCorrectAnswerPerformanceChart(this.correctAnswerChartLabels, this.correctAnswerChartData, 'overallCorrectAnswersChart', 'Correct Answers')
+                }
+                else{
+                  this.isCorrectAnswerChartDataAvailable = false;
                 }
 
                 // labels = [];
@@ -284,24 +260,28 @@ export class StudentPageHomeComponent implements OnInit {
                 Object.keys(this.subjectTagMap).forEach((key) =>{
                   this.incorrectAnswerChartLabels.push(key)
                   this.incorrectAnswerChartData.push(this.subjectTagMap[key]['incorrect'])
-                  // labels.push("Test" +key)
-                  // data.push(30)
-                  // labels.push("Test1" +key)
-                  // data.push(30)
-                  // labels.push("Test2" +key)
-                  // data.push(30)
-                  // labels.push("Test3" +key)
-                  // data.push(30)
-                  // labels.push("Test4" +key)
-                  // data.push(30)
                 })
 
                 // this.colors = []
                 // this.generateRandomColor(data)
-                console.log("incorrect answer chart data: ", this.incorrectAnswerChartData)
-                if(this.incorrectAnswerChartData.length > 0){
+                isAllDataZero = true;
+                this.incorrectAnswerChartData.forEach(data =>{
+                  if(data > 0){
+                    isAllDataZero = false;
+                  }
+                })
+
+                if(!isAllDataZero){
                   this.isIncorrectAnswerChartDataAvailable = true;
+                  // if(this.incorrectAnswerChart !== undefined){
+                  //   this.incorrectAnswerChart.destroy()
+                  //   console.log("inc destroyed")
+                  // }
+
                   this.prepareIncorrectAnswerPerformanceChart(this.incorrectAnswerChartLabels, this.incorrectAnswerChartData, 'overallIncorrectAnswersChart','Incorrect Answers')
+                }
+                else{
+                  this.isIncorrectAnswerChartDataAvailable = false;
                 }
                 
         
@@ -309,7 +289,6 @@ export class StudentPageHomeComponent implements OnInit {
           }
           this.loading = false;
         })
-        console.log("All avai testss: ", this.allAvailableTests)
           this.allSubjectTests = this.allAvailableTests.filter(individualTest => individualTest.test.testCategory === 'Subject');
           this.allMockTests = this.allAvailableTests.filter(individualTest => individualTest.test.testCategory ===  'Mock');
           
@@ -385,7 +364,12 @@ export class StudentPageHomeComponent implements OnInit {
       }]
     };
 
-    var overallPerformanceChartEle: any = document.getElementById(elementId)
+    //let htmlRef = this.elementRef.nativeElement.querySelector(`#overallCorrectAnswersChart`);
+    var overallPerformanceChartEle: any = document.getElementById('overallCorrectAnswersChart')
+    if(this.correctAnswerChart){
+      this.correctAnswerChart.destroy()
+      console.log("correct destroyed")
+    }
     this.correctAnswerChart = new Chart(
       overallPerformanceChartEle,
       {
@@ -417,10 +401,25 @@ export class StudentPageHomeComponent implements OnInit {
       }]
     };
 
-    var overallPerformanceChartEle: any = document.getElementById(elementId)
-    console.log("incorrect ans chart id got")
+    var overallInCorrectPerformanceChartEle: any = document.getElementById('overallIncorrectAnswersChart')
+    if(this.incorrectAnswerChart){
+      this.incorrectAnswerChart.destroy()
+      console.log("inc destroyed")
+    }
+
+    const plugin = {
+      id: 'custom_canvas_background_color',
+      beforeDraw: (chart:any) => {
+        const ctx = chart.canvas.getContext('2d');
+        ctx.save();
+        ctx.globalCompositeOperation = 'destination-over';
+        ctx.fillStyle = 'white';
+        ctx.fillRect(0, 0, chart.width, chart.height);
+        ctx.restore();
+      }
+    };
     this.incorrectAnswerChart = new Chart(
-      overallPerformanceChartEle,
+      overallInCorrectPerformanceChartEle,
       {
         type: 'doughnut',
         data: data,
@@ -432,10 +431,21 @@ export class StudentPageHomeComponent implements OnInit {
                 display: true,
                 text: chartTitle
             }
-        }
-        }
+          }
+        },
+        plugins: [plugin]
       }
     );
+  }
+
+  ngOnDestroy(): void {
+    if(this.correctAnswerChart !== undefined){
+      this.correctAnswerChart.destroy()
+    }
+
+    if(this.incorrectAnswerChart !== undefined){
+      this.incorrectAnswerChart.destroy()
+    }
   }
 
   sortTestList(tests: MockTestWithAlreadyGiven[]){
