@@ -479,39 +479,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
           this.weakTopicList['weakTopic'].push(tempSuccessValue)
         }
       })
-
-    const subjectwise_chart : any = document.getElementById('subjectWiseBarGraph');
-    const topicwise_chart : any = document.getElementById('topicWiseBarGraph');
-    const subjectwisetimespent_piechart : any = document.getElementById('subjectWiseTimeSpentPieChart');
-    const topicwisetimespent_piechart : any = document.getElementById('topicWiseTimeSpentPieChart');
-
-    // const buttonElement1 :any = document.getElementById('fullScreen1')
-    // buttonElement1.addEventListener('click', () => {
-    //   if (screenfull.isEnabled) {
-    //     screenfull.request(subjectwise_chart);
-    //   }
-    // });
-
-    // const buttonElement2 :any = document.getElementById('fullScreen2')
-    // buttonElement2.addEventListener('click', () => {
-    //   if (screenfull.isEnabled) {
-    //     screenfull.request(topicwise_chart);
-    //   }
-    // });
-
-    // const buttonElement3 :any = document.getElementById('fullScreen3')
-    // buttonElement3.addEventListener('click', () => {
-    //   if (screenfull.isEnabled) {
-    //     screenfull.request(subjectwisetimespent_piechart);
-    //   }
-    // });
-
-    // const buttonElement4 :any = document.getElementById('fullScreen4')
-    // buttonElement4.addEventListener('click', () => {
-    //   if (screenfull.isEnabled) {
-    //     screenfull.request(topicwisetimespent_piechart);
-    //   }
-    // });
     }
 
     this.tabChanged('sample')
@@ -526,18 +493,28 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
   fullScreen1(){
     const subjectwise_chart : any = document.getElementById('subjectWiseBarGraph');
-    const buttonElement1 :any = document.getElementById('fullScreen1')
-      buttonElement1.addEventListener('click', () => {
-        if (screenfull.isEnabled) {
-          screenfull.request(subjectwise_chart);
-        }
-      });
+    screenfull.request(subjectwise_chart);
+  }
+
+  fullScreen2(){
+    const topicwise_chart : any = document.getElementById('topicWiseBarGraph');
+    screenfull.request(topicwise_chart);
+  }
+
+  fullScreen3(){
+    const subjectwisetimespent_piechart : any = document.getElementById('subjectWiseTimeSpentPieChart');
+    screenfull.request(subjectwisetimespent_piechart);
+  }
+
+  fullScreen4(){
+    const topicwisetimespent_piechart : any = document.getElementById('topicWiseTimeSpentPieChart');
+    screenfull.request(topicwisetimespent_piechart);
   }
 
   downloadSubjectWiseChartImage(){
     var a = document.createElement('a');
     a.href = this.subjectWiseChart.toBase64Image();
-    a.download = 'my_file_name.png';
+    a.download = 'subjectWiseBarGraph.png';
 
     // Trigger the download
     a.click();
@@ -546,7 +523,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   downloadTopicWiseChartImage(){
     var a = document.createElement('a');
     a.href = this.topicWiseChart.toBase64Image();
-    a.download = 'my_file_name.png';
+    a.download = 'topicWiseBarGraph.png';
 
     // Trigger the download
     a.click();
@@ -555,7 +532,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   downloadSubjectWiseTimeSpentChartImage(){
     var a = document.createElement('a');
     a.href = this.subjectWiseTimeSpentChart.toBase64Image();
-    a.download = 'my_file_name.png';
+    a.download = 'subjectWiseTimeSpentPieChart.png';
 
     // Trigger the download
     a.click();
@@ -564,7 +541,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   downloadTopicWiseTimeSpentChartImage(){
     var a = document.createElement('a');
     a.href = this.topicWiseTimeSpentChart.toBase64Image();
-    a.download = 'my_file_name.png';
+    a.download = 'topicWiseTimeSpentPieChart.png';
 
     // Trigger the download
     a.click();

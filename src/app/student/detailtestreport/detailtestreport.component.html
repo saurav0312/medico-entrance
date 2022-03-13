@@ -45,17 +45,21 @@
 
             </div> -->
             <div class="col-sm-12">
-                <mat-expansion-panel style="margin-right: 1.2em; margin-top: 1.2em; margin-bottom: 1.2em;" class="mat-card mat-elevation-z8" 
+                <!-- <mat-expansion-panel style="margin-right: 1.2em; margin-top: 1.2em; margin-bottom: 1.2em;" class="mat-card mat-elevation-z8" 
                                     (opened)="expandTable = true"
                                     (closed)="expandTable = false"
-                                    [expanded]="true">
-                    <mat-expansion-panel-header>
+                                    [expanded]="true"> -->
+                    <!-- <mat-expansion-panel-header>
                         <mat-panel-title>
                             <div class="col-md-12 text-center" >
                                 <h1 style="margin: 1em; font-weight: 500; font-family: 'Cambay';">Score Summary</h1>
                             </div>
                         </mat-panel-title>
-                    </mat-expansion-panel-header>
+                    </mat-expansion-panel-header> -->
+
+                    <div class="col-md-12 text-center" >
+                        <h1 style="margin: 1em; font-weight: 500; font-family: 'Cambay';">Score Summary</h1>
+                    </div>
 
                     <div class="float-container">
                         <div class="mat-card " style="border: 1px solid black;">
@@ -169,23 +173,28 @@
                         </div>
                     </div>
                         
-                </mat-expansion-panel>
+                <!-- </mat-expansion-panel> -->
             </div>
         </div>
     </ng-template>
 
     <ng-template #chartReportTemplate>
-        <mat-expansion-panel style="margin: 1.6em;" class="mat-card" 
+        <!-- <mat-expansion-panel class="mat-card" 
                             (opened)="expandCharts = true"
                             (closed)="expandCharts = false"
-                            [expanded]="true">
-            <mat-expansion-panel-header>
+                            [expanded]="true"> -->
+            <!-- <mat-expansion-panel-header>
                 <mat-panel-title>
                     <div class="col-md-12 text-center" >
                         <h1 style="margin: 1em;">Chart Based Analysis</h1>
                     </div>
                 </mat-panel-title>
-            </mat-expansion-panel-header>
+            </mat-expansion-panel-header> -->
+
+            <div class="col-md-12 text-center" >
+                <h1 style="margin-top: 0.4em;">Chart Based Analysis</h1>
+            </div>
+
             <div class="row"  style="margin: 2px;">
                 <div class="col-md-6 ">
                     <div style="margin-bottom: 0.7em; padding-bottom: 0.7em;" class="card mat-elevation-z2">
@@ -212,7 +221,7 @@
                     <div style="margin-bottom: 0.7em; padding-bottom: 0.7em;" class="card mat-elevation-z2">
                         <div style="padding: 3px;">
                             <div style="display: flex; flex-flow: row-reverse; background-color: white;">
-                                <mat-icon id="fullScreen2" style="width: auto; cursor: pointer;">zoom_out_map
+                                <mat-icon id="fullScreen2" style="width: auto; cursor: pointer;" (click)="fullScreen2()">zoom_out_map
                                 </mat-icon>
                                 <a download="topicWiseBarGraph.png" id="download2" (click)="downloadTopicWiseChartImage()">
                                     <mat-icon style="width: auto; cursor: pointer;">file_download
@@ -240,7 +249,7 @@
                     <div style="margin-bottom: 0.7em; padding-bottom: 0.7em;" class="card mat-elevation-z2">
                         <div style="padding: 3px;">
                             <div style="display: flex; flex-flow: row-reverse; background-color: white;">
-                                <mat-icon id="fullScreen3" style="width: auto; cursor: pointer;">zoom_out_map
+                                <mat-icon id="fullScreen3" style="width: auto; cursor: pointer;" (click)="fullScreen3()">zoom_out_map
                                 </mat-icon>
                                 <a download="subjectWiseTimeSpentPieChart.png" id="download3" (click)="downloadSubjectWiseTimeSpentChartImage()">
                                     <mat-icon style="width: auto; cursor: pointer;">file_download
@@ -260,7 +269,7 @@
                     <div style="margin-bottom: 0.7em;" class="card mat-elevation-z2">
                         <div style="padding: 3px;">
                             <div style="display: flex; flex-flow: row-reverse; background-color: white;">
-                                <mat-icon id="fullScreen4" style="width: auto; cursor: pointer;">zoom_out_map
+                                <mat-icon id="fullScreen4" style="width: auto; cursor: pointer;" (click)="fullScreen4()">zoom_out_map
                                 </mat-icon>
                                 <a download="topicWiseTimeSpentPieChart.png" id="download4" (click)="downloadTopicWiseTimeSpentChartImage()">
                                     <mat-icon style="width: auto; cursor: pointer;">file_download
@@ -279,7 +288,7 @@
                     </div>
                 </div>
             </div>
-        </mat-expansion-panel>
+        <!-- </mat-expansion-panel> -->
     </ng-template>
 </div>
 
