@@ -74,6 +74,8 @@ export class DetailSubjectTestReportComponent implements OnInit {
   testReportData! : TestReportData;
   defaultSelectedTest!: TreeNode;
 
+  isNewUser: boolean = false;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private sharedService: SharedService,
@@ -92,71 +94,74 @@ export class DetailSubjectTestReportComponent implements OnInit {
           this.testReportData = response
 
           this.activatedRoute.queryParams.subscribe((params: any) =>{
-          let testIdFromParams = <string>params.testId
+            let testIdFromParams = <string>params.testId
 
-          console.log(" Subject Testid from param: ", testIdFromParams)
-          if(testIdFromParams === undefined){
-            this.testReportData.allTests = this.testReportData.allTests.filter(test => test.testCategory ==='Subject')
-          }
-          else{
-            this.testReportData.allTests = this.testReportData.allTests.filter(test => test.testId === testIdFromParams)
-          }
-         
-
-          
-          this.uniqueTestsList = {}
-          this.testReportData.allTests.forEach(test =>{
-            if(this.uniqueTestsList[test.testId]=== undefined){
-              this.uniqueTestsList[test.testId] = [];
-              this.uniqueTestsList[test.testId].push(test)
+            console.log(" Subject Testid from param: ", testIdFromParams)
+            if(testIdFromParams === undefined){
+              this.testReportData.allTests = this.testReportData.allTests.filter(test => test.testCategory ==='Subject')
             }
             else{
-              if(!this.uniqueTestsList[test.testId].find(ele => ele.testTakenDate === test.testTakenDate))
-              this.uniqueTestsList[test.testId].push(test)
+              this.testReportData.allTests = this.testReportData.allTests.filter(test => test.testId === testIdFromParams)
             }
-          })
+          
 
-          let count = 0;
-          let expanded =true;
+            
+            this.uniqueTestsList = {}
+            this.testReportData.allTests.forEach(test =>{
+              if(this.uniqueTestsList[test.testId]=== undefined){
+                this.uniqueTestsList[test.testId] = [];
+                this.uniqueTestsList[test.testId].push(test)
+              }
+              else{
+                if(!this.uniqueTestsList[test.testId].find(ele => ele.testTakenDate === test.testTakenDate))
+                this.uniqueTestsList[test.testId].push(test)
+              }
+            })
 
-          Object.keys(this.uniqueTestsList).forEach(key =>{
-            if(count > 0){
-              expanded = false;
-            }
+            let count = 0;
+            let expanded =true;
 
-            if(this.allTests.length == 0 || !this.allTests.find(node => node.data === key))
-            {
-
-              let tempTreeData: TreeNode = {
-                "label": this.uniqueTestsList[key][0].testName,
-                "data": key,
-                "children":[],
-                "leaf":false,
-                "expanded": expanded
+            Object.keys(this.uniqueTestsList).forEach(key =>{
+              if(count > 0){
+                expanded = false;
               }
 
-              this.uniqueTestsList[key].forEach(individualTest =>{
-                let childrenTempData: TreeNode ={
-                  "label": formatDate((<Timestamp><unknown>(individualTest.testTakenDate)).toDate(), 'medium','en-US'),
-                  "data": individualTest,
-                  "leaf": true
-                }
-                tempTreeData.children?.push(childrenTempData)
-              })
+              if(this.allTests.length == 0 || !this.allTests.find(node => node.data === key))
+              {
 
-              this.allTests.push(tempTreeData);
-              count++;
+                let tempTreeData: TreeNode = {
+                  "label": this.uniqueTestsList[key][0].testName,
+                  "data": key,
+                  "children":[],
+                  "leaf":false,
+                  "expanded": expanded
+                }
+
+                this.uniqueTestsList[key].forEach(individualTest =>{
+                  let childrenTempData: TreeNode ={
+                    "label": formatDate((<Timestamp><unknown>(individualTest.testTakenDate)).toDate(), 'medium','en-US'),
+                    "data": individualTest,
+                    "leaf": true
+                  }
+                  tempTreeData.children?.push(childrenTempData)
+                })
+
+                this.allTests.push(tempTreeData);
+                count++;
+              }
+            })
+
+            if(this.allTests.length > 0 && this.allTests[0].children !== undefined){
+              this.defaultSelectedTest = this.allTests[0].children[0]
+              let nodeData ={
+                'node': this.defaultSelectedTest
+              }
+              this.nodeSelected(nodeData)
             }
           })
-
-          if(this.allTests.length > 0 && this.allTests[0].children !== undefined){
-            this.defaultSelectedTest = this.allTests[0].children[0]
-            let nodeData ={
-              'node': this.defaultSelectedTest
-            }
-            this.nodeSelected(nodeData)
-          }
-        })
+        }
+        else{
+          this.isNewUser = true;
         }
       })
     })

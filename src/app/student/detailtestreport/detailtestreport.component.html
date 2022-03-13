@@ -1,32 +1,39 @@
-<div>
+<div *ngIf="!isNewUser; else noDataAvailable"> 
 
-    <div class="col-sm-12" style="margin-top: 1.2em; margin-bottom: 1.2em;">
-        <div style="margin-top: 3em; margin-bottom:  1.5em;">
-            <p style="font-size: 21px; font-weight: 500; font-family: 'Cambay';">All Given Mock Tests</p>
+    <div class="row">
+
+        <div class="col-sm-3" style="margin-top: 1.2em; margin-bottom: 1.2em;">
+            <div style="margin-top: 3em; margin-bottom:  1.5em;">
+                <p style="font-size: 21px; font-weight: 500; font-family: 'Cambay';">All Given Mock Tests</p>
+            </div>
+
+            <p-tree 
+            [value]="allTests" 
+            selectionMode="single" 
+            [(selection)]="defaultSelectedTest" 
+            (onNodeSelect)="nodeSelected($event)"
+            [filter]="true"></p-tree>
+
         </div>
 
-        <p-tree 
-        [value]="allTests" 
-        selectionMode="single" 
-        [(selection)]="defaultSelectedTest" 
-        (onNodeSelect)="nodeSelected($event)"
-        [filter]="true"></p-tree>
+        <div class="col-sm-9" style="padding: 0; padding-left: 3px;">
+        
+            <h1 style="text-align: center; margin-top: 2em; font-family: 'Cambay';">Test Result Analysis
+            </h1>
+
+            <mat-tab-group mat-align-tabs="center" (selectedTabChange)="tabChanged($event)">
+                <mat-tab label="Tabular Report">
+                    <ng-container *ngTemplateOutlet="tabularReportTemplate"></ng-container>
+                </mat-tab>
+                
+                <mat-tab label="Chart Report">
+                    <ng-container *ngTemplateOutlet="chartReportTemplate"></ng-container>
+                </mat-tab>
+            </mat-tab-group>
+
+        </div>
 
     </div>
-
-    
-    <h1 style="text-align: center; margin-top: 2em; font-family: 'Cambay';">Test Result Analysis
-    </h1>
-
-    <mat-tab-group mat-align-tabs="center" (selectedTabChange)="tabChanged($event)">
-        <mat-tab label="Tabular Report">
-            <ng-container *ngTemplateOutlet="tabularReportTemplate"></ng-container>
-        </mat-tab>
-        
-        <mat-tab label="Chart Report">
-            <ng-container *ngTemplateOutlet="chartReportTemplate"></ng-container>
-        </mat-tab>
-    </mat-tab-group>
 
 
     <ng-template #tabularReportTemplate>
@@ -129,8 +136,10 @@
                                                             <mat-icon *ngIf ='row.selectedOption === null' style="color: green;">question_mark</mat-icon> 
                                                         </div>
                                                     </div>
+                                                    
                                                     <ng-template #resultElseBlock>
-                                                        {{row[col.field]}}
+                                                         <p *ngIf="col.field ==='totalTimeSpent'"> {{row[col.field]}} s</p>
+                                                         <p *ngIf="col.field !=='totalTimeSpent'"> {{row[col.field]}}</p>
                                                     </ng-template>
                                                         
                                                 </td>
@@ -369,5 +378,15 @@
 
 <ng-template #noWeakSubjects>
     Looks like you are performing well in this test.
+</ng-template>
+
+<ng-template #noDataAvailable>
+    <div style="display: flex; justify-content: center;">
+        <div style="display: grid; font-family: 'Cambay'; padding-top: 2em;">
+            <img  src="../../assets/img/register_left_side.jpeg" style="height: 400px; margin-bottom: 2em; padding-top: 2em;" alt="study">
+            <span style="text-align: center;">This is your mock tests history</span>
+            <span style="text-align: center;">Lets give a test to evaluate your performance level</span>
+        </div>
+    </div>
 </ng-template>
     
