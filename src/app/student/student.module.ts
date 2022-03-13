@@ -45,7 +45,6 @@ import { Ng2GoogleChartsModule } from 'ng2-google-charts'
 
 
 import { DetailtestreportComponent } from './detailtestreport/detailtestreport.component';
-import { ViewmytestsComponent } from './viewmytests/viewmytests.component';
 import { EditprofileinfoComponent } from './editprofileinfo/editprofileinfo.component';
 import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
 import { MatSortModule } from '@angular/material/sort';
@@ -64,7 +63,6 @@ import { MyDashboardComponent } from './my-dashboard/my-dashboard.component';
   declarations: [
     StudentprofileComponent,
     DetailtestreportComponent,
-    ViewmytestsComponent,
     EditprofileinfoComponent,
     IndividualquestionComponent,
     StudentPerformanceAnalysisDashboardComponent,
@@ -117,8 +115,7 @@ import { MyDashboardComponent } from './my-dashboard/my-dashboard.component';
   ],
   exports: [
     StudentprofileComponent,
-    DetailtestreportComponent,
-    ViewmytestsComponent
+    DetailtestreportComponent
   ]
 })
 export class StudentModule { }
