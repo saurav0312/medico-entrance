@@ -16,9 +16,9 @@
                                 </p-tabPanel>
                                 <p-tabPanel>
                                     <ng-template pTemplate="header">
-                                        Most Answered
+                                        My Questions
                                     </ng-template>
-                                    <ng-container *ngTemplateOutlet="mostAnsweredTemplate">
+                                    <ng-container *ngTemplateOutlet="myQuestionsTemplate">
                 
                                     </ng-container>
                                 </p-tabPanel>
@@ -181,8 +181,8 @@
     </ng-container>
 </ng-template>
 
-<ng-template #mostAnsweredTemplate>
-Most Answered Questions list
+<ng-template #myQuestionsTemplate>
+My Questions list
 </ng-template>
 
 <app-spinner [loading]="loading" [diameter]="50" [overlay]="true">

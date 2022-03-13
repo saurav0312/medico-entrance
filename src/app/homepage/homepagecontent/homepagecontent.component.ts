@@ -10,6 +10,8 @@ import { ProfileService } from 'src/app/service/profile.service';
 })
 export class HomepagecontentComponent implements OnInit {
 
+  loading : boolean = false;
+
   constructor(
     private router : Router,
     private authService: AuthService,
@@ -17,19 +19,28 @@ export class HomepagecontentComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.loading = true;
     this.authService.getCurrentUser().subscribe(response =>{
       if(response !== null){
         const sub = this.profileService.getUserDetails(response.uid).subscribe(response =>{
           if(response !== undefined){
             sub.unsubscribe()
             if(response.accountType === 'teacher'){
+              this.loading = false;
               this.router.navigateByUrl('/teacherdashboard')
             }
             else{
+              this.loading = false;
               this.router.navigateByUrl('/studentProfile')
             }
           }
+          else{
+            this.loading = false;
+          }
         })
+      }
+      else{
+        this.loading = false;
       }
     })
   }
