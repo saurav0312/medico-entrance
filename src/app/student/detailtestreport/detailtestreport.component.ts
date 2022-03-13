@@ -46,8 +46,8 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   totalScore : number = 0;
   success: number = 0;
 
-  subjectThresholdValue: number = 1;
-  topicThresholdValue: number = 1;
+  subjectThresholdValue: number = 10;
+  topicThresholdValue: number = 10;
 
   strongSubjectList: {'strongSubject':Array<IPerformance>} = {
     'strongSubject': []
@@ -92,6 +92,8 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
   topicWiseTimeSpentPieChartLabels: string[] = []
   topicWiseTimeSpentPieChartData: number[] = []
+
+  subjectNameWithTopicsMap: {[key:string]:string[]} ={};
 
   @ViewChild('hello', {static: true}) private chartRef!: ElementRef;
 
@@ -215,281 +217,311 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
 
   prepareData(){
-      this.testId = this.testToShowInTable.testId;
-      if(this.testToShowInTable.testTakenDate !== undefined){
-        const dateValue = <Timestamp><unknown>this.testToShowInTable.testTakenDate
-        this.testTakenDate = new Date(dateValue['seconds']*1000)
-      }
+    this.testId = this.testToShowInTable.testId;
+    if(this.testToShowInTable.testTakenDate !== undefined){
+      const dateValue = <Timestamp><unknown>this.testToShowInTable.testTakenDate
+      this.testTakenDate = new Date(dateValue['seconds']*1000)
+    }
 
-      this.singleTest = this.testToShowInTable
-      if(this.singleTest !== undefined){
+    this.singleTest = this.testToShowInTable
+    if(this.singleTest !== undefined){
+      
+      //reseting all values to initial state
+      this.subjectTagMap ={};
+      this.topicTagMap ={};
+      this.subjectTagBarGraphData = []
+      this.topicTagBarGraphData = []
+
+      this.subjectWiseTimeSpent = new Map();
+      this.topicWiseTimeSpent = new Map();
+      this.subjectWiseTimeSpentPiechartData = []
+      this.topicWiseTimeSpentPiechartData = []
+
+      this.strongSubjectList= {
+        'strongSubject': []
+      };
+      this.weakSubjectList = {
+        'weakSubject': []
+      };
+      this.strongTopicList = {
+        'strongTopic': []
+      };
+      this.weakTopicList = {
+        'weakTopic': []
+      };
+
+      this.singleTest.testQuestions.forEach(testQuestion =>{
+        testQuestion.subjectTags?.forEach(subjectTag =>{
+          this.subjectTagMap[subjectTag] ={'correct':0, 'incorrect':0,'not_answered':0}
+          if(this.subjectNameWithTopicsMap[subjectTag] === undefined){
+            this.subjectNameWithTopicsMap[subjectTag] = <string[]>testQuestion.topicTags
+          }
+          else{
+            testQuestion.topicTags?.forEach(topic =>{
+              if(!this.subjectNameWithTopicsMap[subjectTag].includes(topic)){
+                this.subjectNameWithTopicsMap[subjectTag].push(topic)
+              }
+            })
+            //this.subjectNameWithTopicsMap[subjectTag] = this.subjectNameWithTopicsMap[subjectTag].concat(<string[]>testQuestion.topicTags)
+          }
+        })
         
-        //reseting all values to initial state
-        this.subjectTagMap ={};
-        this.topicTagMap ={};
-        this.subjectTagBarGraphData = []
-        this.topicTagBarGraphData = []
 
-        this.subjectWiseTimeSpent = new Map();
-        this.topicWiseTimeSpent = new Map();
-        this.subjectWiseTimeSpentPiechartData = []
-        this.topicWiseTimeSpentPiechartData = []
+        testQuestion.topicTags?.forEach(topicTag =>{
+          this.topicTagMap[topicTag] ={'correct':0, 'incorrect':0,'not_answered':0}
+        })
+      })
 
-        this.strongSubjectList= {
-          'strongSubject': []
-        };
-        this.weakSubjectList = {
-          'weakSubject': []
-        };
-        this.strongTopicList = {
-          'strongTopic': []
-        };
-        this.weakTopicList = {
-          'weakTopic': []
-        };
+      console.log("Subject with topic list: ", this.subjectNameWithTopicsMap)
 
-        this.singleTest.testQuestions.forEach(testQuestion =>{
-          testQuestion.subjectTags?.forEach(subjectTag =>{
-            this.subjectTagMap[subjectTag] ={'correct':0, 'incorrect':0,'not_answered':0}
-          })
 
-          testQuestion.topicTags?.forEach(topicTag =>{
-            this.topicTagMap[topicTag] ={'correct':0, 'incorrect':0,'not_answered':0}
-          })
+      this.totalScore = 0;
+      this.singleTest.testQuestions.forEach(testQuestion =>{
+
+        //calculate time spent on the question based on subject
+        testQuestion.subjectTags?.forEach(subjectTag =>{
+          if(this.subjectWiseTimeSpent.has(subjectTag) == false){
+            this.subjectWiseTimeSpent.set(subjectTag,testQuestion.totalTimeSpent)
+          }
+          else{
+            this.subjectWiseTimeSpent.set(subjectTag, this.subjectWiseTimeSpent.get(subjectTag)+testQuestion.totalTimeSpent)
+          }
+        })
+
+        //calculate time spent on the question based on topic
+        testQuestion.topicTags?.forEach(topicTag =>{
+          if(this.topicWiseTimeSpent.has(topicTag) == false){
+            this.topicWiseTimeSpent.set(topicTag,testQuestion.totalTimeSpent)
+          }
+          else{
+            this.topicWiseTimeSpent.set(topicTag, this.topicWiseTimeSpent.get(topicTag)+testQuestion.totalTimeSpent)
+          }
         })
 
 
-        this.totalScore = 0;
-        this.singleTest.testQuestions.forEach(testQuestion =>{
+        if(testQuestion.selectedOption !== null){
+          if(testQuestion.selectedOption === testQuestion.correctAnswer){
+            this.totalScore += 1;
 
-          //calculate time spent on the question based on subject
-          testQuestion.subjectTags?.forEach(subjectTag =>{
-            if(this.subjectWiseTimeSpent.has(subjectTag) == false){
-              this.subjectWiseTimeSpent.set(subjectTag,testQuestion.totalTimeSpent)
-            }
-            else{
-              this.subjectWiseTimeSpent.set(subjectTag, this.subjectWiseTimeSpent.get(subjectTag)+testQuestion.totalTimeSpent)
-            }
-          })
-
-          //calculate time spent on the question based on topic
-          testQuestion.topicTags?.forEach(topicTag =>{
-            if(this.topicWiseTimeSpent.has(topicTag) == false){
-              this.topicWiseTimeSpent.set(topicTag,testQuestion.totalTimeSpent)
-            }
-            else{
-              this.topicWiseTimeSpent.set(topicTag, this.topicWiseTimeSpent.get(topicTag)+testQuestion.totalTimeSpent)
-            }
-          })
-
-
-          if(testQuestion.selectedOption !== null){
-            if(testQuestion.selectedOption === testQuestion.correctAnswer){
-              this.totalScore += 1;
-
-              //increase correct count for each subject type
-              testQuestion.subjectTags?.forEach(subjectTag =>{
-                this.subjectTagMap[subjectTag]['correct'] = this.subjectTagMap[subjectTag]['correct'] === undefined ? 1 : this.subjectTagMap[subjectTag]['correct']+1
-              })
-
-              //increase correct count for each topic type
-              testQuestion.topicTags?.forEach(topicTag =>{
-                this.topicTagMap[topicTag]['correct'] = this.topicTagMap[topicTag]['correct'] === undefined ? 1 : this.topicTagMap[topicTag]['correct']+1
-              })
-            }
-            else{
-              //increase incorrect count for each subject type
-              testQuestion.subjectTags?.forEach(subjectTag =>{
-                this.subjectTagMap[subjectTag]['incorrect'] = this.subjectTagMap[subjectTag]['incorrect'] === undefined ? 1 : this.subjectTagMap[subjectTag]['incorrect']+1
-              })
-
-              //increase incorrect count for each topic type
-              testQuestion.topicTags?.forEach(topicTag =>{
-                this.topicTagMap[topicTag]['incorrect'] = this.topicTagMap[topicTag]['incorrect'] === undefined ? 1 : this.topicTagMap[topicTag]['incorrect']+1
-              })
-            }
-          }
-          else{
-            //increase not answered count for each topic type
+            //increase correct count for each subject type
             testQuestion.subjectTags?.forEach(subjectTag =>{
-              this.subjectTagMap[subjectTag]['not_answered'] = this.subjectTagMap[subjectTag]['not_answered'] === undefined ? 1 : this.subjectTagMap[subjectTag]['not_answered']+1
+              this.subjectTagMap[subjectTag]['correct'] = this.subjectTagMap[subjectTag]['correct'] === undefined ? 1 : this.subjectTagMap[subjectTag]['correct']+1
             })
 
-            //increase not answered count for each topic type
+            //increase correct count for each topic type
             testQuestion.topicTags?.forEach(topicTag =>{
-              this.topicTagMap[topicTag]['not_answered'] = this.topicTagMap[topicTag]['not_answered'] === undefined ? 1 : this.topicTagMap[topicTag]['not_answered']+1
+              this.topicTagMap[topicTag]['correct'] = this.topicTagMap[topicTag]['correct'] === undefined ? 1 : this.topicTagMap[topicTag]['correct']+1
             })
           }
-        })
-
-        //prepare data for subject bar graph for chart js
-        this.subjectNameList = []
-        this.subjectWiseCorrectAnswersData = []
-        this.subjectWiseIncorrectAnswersData = []
-        this.subjectWiseNotAnsweredData = []
-        this.subjectListDropdownOptions = []
-
-        Object.keys(this.subjectTagMap).forEach(key =>{
-          this.subjectNameList.push(key)
-
-          let temp : SubjectList = {
-            name: key
-          }
-
-          this.subjectListDropdownOptions.push(temp)
-
-          this.subjectWiseCorrectAnswersData.push(this.subjectTagMap[key]['correct'])
-          this.subjectWiseIncorrectAnswersData.push(this.subjectTagMap[key]['incorrect'])
-          this.subjectWiseNotAnsweredData.push(this.subjectTagMap[key]['not_answered'])
-        })
-
-        console.log("Correct aa: ", this.subjectWiseCorrectAnswersData)
-        console.log("Incorrect aa: ", this.subjectWiseIncorrectAnswersData)
-        console.log("Not answered aa: ", this.subjectWiseNotAnsweredData)
-        
-
-        //prepare data for topic wise bar graph for chart js
-
-        this.topicNameList = []
-        this.topicWiseCorrectAnswersData = []
-        this.topicWiseIncorrectAnswersData = []
-        this.topicWiseNotAnsweredData = []
-
-        Object.keys(this.topicTagMap).forEach(key =>{
-          this.topicNameList.push(key)
-          this.topicWiseCorrectAnswersData.push(this.topicTagMap[key]['correct'])
-          this.topicWiseIncorrectAnswersData.push(this.topicTagMap[key]['incorrect'])
-          this.topicWiseNotAnsweredData.push(this.topicTagMap[key]['not_answered'])
-        })
-
-        console.log("Correct aa: ", this.topicWiseCorrectAnswersData)
-        console.log("Incorrect aa: ", this.topicWiseIncorrectAnswersData)
-        console.log("Not answered aa: ", this.topicWiseNotAnsweredData)
-
-
-        //prepare data for subject wise time spent pie chart
-        
-        console.log("SUbject wise time after: ", this.subjectWiseTimeSpent)
-        this.subjectWiseTimeSpentPieChartLabels = []
-        this.subjectWiseTimeSpentPieChartData = []
-        
-        for (let entry of this.subjectWiseTimeSpent.entries()){
-          if(entry[1] > 0){
-            this.subjectWiseTimeSpentPieChartLabels.push(entry[0])
-            this.subjectWiseTimeSpentPieChartData.push(entry[1])
-          }
-        }
-
-        console.log("Piechart albel: ", this.subjectWiseTimeSpentPieChartLabels)
-        console.log("SUbjectwise pie chart time: ", this.subjectWiseTimeSpentPieChartData)
-        console.log("SUbject wise time after: ", this.topicWiseTimeSpent)
-        
-        this.topicWiseTimeSpentPieChartLabels = []
-        this.topicWiseTimeSpentPieChartData = []
-        for (let entry of this.topicWiseTimeSpent.entries()){
-          if(entry[1] > 0){
-            this.topicWiseTimeSpentPieChartLabels.push(entry[0])
-            this.topicWiseTimeSpentPieChartData.push(entry[1])
-          }
-        }        
-
-        //This is for default value of chart dropdown. will use it later
-        // let event :any ={
-        //   'target':{
-        //     'textContent': this.subjectListDropdownOptions[0].name 
-        //   }
-        // }
-
-        // this.selectedSubjectInTopicWisePiechart = this.subjectListDropdownOptions[0].name
-        // this.subjectSelectedForTopicWiseTimeSpentChart(event)
-
-
-
-        //prepare data for strong subject and topic
-        Object.keys(this.subjectTagMap).forEach(key =>{
-          let temppiechartData = [];
-
-          let totalNoOfSubjectQuestion = this.subjectTagMap[key]['correct'] + this.subjectTagMap[key]['incorrect'] +
-                                            this.subjectTagMap[key]['not_answered']
-
-          temppiechartData.push(key)
-
-          let successPercent = (this.subjectTagMap[key]['correct']/totalNoOfSubjectQuestion)*100;
-          this.success =((100 * 6) - ((100 * 6) * ((21*successPercent)/100)) / 100)
-          let tempSuccessValue: any ={
-            'name': key,
-            'successValue': this.success,
-            'successPercent': Math.round(successPercent)
-          }
-
-          if(this.subjectTagMap[key]['correct'] >= this.subjectThresholdValue){
-
-            this.strongSubjectList['strongSubject'].push(tempSuccessValue)
-          }
           else{
-            this.weakSubjectList['weakSubject'].push(tempSuccessValue)
+            //increase incorrect count for each subject type
+            testQuestion.subjectTags?.forEach(subjectTag =>{
+              this.subjectTagMap[subjectTag]['incorrect'] = this.subjectTagMap[subjectTag]['incorrect'] === undefined ? 1 : this.subjectTagMap[subjectTag]['incorrect']+1
+            })
+
+            //increase incorrect count for each topic type
+            testQuestion.topicTags?.forEach(topicTag =>{
+              this.topicTagMap[topicTag]['incorrect'] = this.topicTagMap[topicTag]['incorrect'] === undefined ? 1 : this.topicTagMap[topicTag]['incorrect']+1
+            })
           }
-        })
-
-        //prepare data for weak subject and topic
-        Object.keys(this.topicTagMap).forEach(key =>{
-          let temppiechartData = [];
-
-          let totalNoOfTopicQuestion = this.topicTagMap[key]['correct'] + this.topicTagMap[key]['incorrect'] +
-                                            this.topicTagMap[key]['not_answered']
-          temppiechartData.push(key)
-
-          let successPercent = (this.topicTagMap[key]['correct']/totalNoOfTopicQuestion)*100;
-
-          this.success =((100 * 6) - ((100 * 6) * ((21*successPercent)/100)) / 100)
-
-          let tempSuccessValue: any ={
-            'name': key,
-            'successValue': this.success,
-            'successPercent': Math.round(successPercent)
-          }
-
-          if(this.topicTagMap[key]['correct'] >= this.topicThresholdValue){
-            this.strongTopicList['strongTopic'].push(tempSuccessValue)
-          }
-          else{
-            this.weakTopicList['weakTopic'].push(tempSuccessValue)
-          }
-        })
-
-      const subjectwise_chart : any = document.getElementById('subjectWiseBarGraph');
-      const topicwise_chart : any = document.getElementById('topicWiseBarGraph');
-      const subjectwisetimespent_piechart : any = document.getElementById('subjectWiseTimeSpentPieChart');
-      const topicwisetimespent_piechart : any = document.getElementById('topicWiseTimeSpentPieChart');
-
-      const buttonElement1 :any = document.getElementById('fullScreen1')
-      buttonElement1.addEventListener('click', () => {
-        if (screenfull.isEnabled) {
-          screenfull.request(subjectwise_chart);
         }
-      });
+        else{
+          //increase not answered count for each topic type
+          testQuestion.subjectTags?.forEach(subjectTag =>{
+            this.subjectTagMap[subjectTag]['not_answered'] = this.subjectTagMap[subjectTag]['not_answered'] === undefined ? 1 : this.subjectTagMap[subjectTag]['not_answered']+1
+          })
 
-      const buttonElement2 :any = document.getElementById('fullScreen2')
-      buttonElement2.addEventListener('click', () => {
-        if (screenfull.isEnabled) {
-          screenfull.request(topicwise_chart);
+          //increase not answered count for each topic type
+          testQuestion.topicTags?.forEach(topicTag =>{
+            this.topicTagMap[topicTag]['not_answered'] = this.topicTagMap[topicTag]['not_answered'] === undefined ? 1 : this.topicTagMap[topicTag]['not_answered']+1
+          })
         }
-      });
+      })
 
-      const buttonElement3 :any = document.getElementById('fullScreen3')
-      buttonElement3.addEventListener('click', () => {
-        if (screenfull.isEnabled) {
-          screenfull.request(subjectwisetimespent_piechart);
-        }
-      });
+      //prepare data for subject bar graph for chart js
+      this.subjectNameList = []
+      this.subjectWiseCorrectAnswersData = []
+      this.subjectWiseIncorrectAnswersData = []
+      this.subjectWiseNotAnsweredData = []
+      this.subjectListDropdownOptions = []
 
-      const buttonElement4 :any = document.getElementById('fullScreen4')
-      buttonElement4.addEventListener('click', () => {
-        if (screenfull.isEnabled) {
-          screenfull.request(topicwisetimespent_piechart);
+      Object.keys(this.subjectTagMap).forEach(key =>{
+        this.subjectNameList.push(key)
+
+        let temp : SubjectList = {
+          name: key
         }
-      });
+
+        this.subjectListDropdownOptions.push(temp)
+
+        this.subjectWiseCorrectAnswersData.push(this.subjectTagMap[key]['correct'])
+        this.subjectWiseIncorrectAnswersData.push(this.subjectTagMap[key]['incorrect'])
+        this.subjectWiseNotAnsweredData.push(this.subjectTagMap[key]['not_answered'])
+      })
+
+      console.log("Correct aa: ", this.subjectWiseCorrectAnswersData)
+      console.log("Incorrect aa: ", this.subjectWiseIncorrectAnswersData)
+      console.log("Not answered aa: ", this.subjectWiseNotAnsweredData)
+      
+
+      //prepare data for topic wise bar graph for chart js
+
+      this.topicNameList = []
+      this.topicWiseCorrectAnswersData = []
+      this.topicWiseIncorrectAnswersData = []
+      this.topicWiseNotAnsweredData = []
+
+      Object.keys(this.topicTagMap).forEach(key =>{
+        this.topicNameList.push(key)
+        this.topicWiseCorrectAnswersData.push(this.topicTagMap[key]['correct'])
+        this.topicWiseIncorrectAnswersData.push(this.topicTagMap[key]['incorrect'])
+        this.topicWiseNotAnsweredData.push(this.topicTagMap[key]['not_answered'])
+      })
+
+      console.log("Correct aa: ", this.topicWiseCorrectAnswersData)
+      console.log("Incorrect aa: ", this.topicWiseIncorrectAnswersData)
+      console.log("Not answered aa: ", this.topicWiseNotAnsweredData)
+
+
+      //prepare data for subject wise time spent pie chart
+      
+      console.log("SUbject wise time after: ", this.subjectWiseTimeSpent)
+      this.subjectWiseTimeSpentPieChartLabels = []
+      this.subjectWiseTimeSpentPieChartData = []
+      
+      for (let entry of this.subjectWiseTimeSpent.entries()){
+        if(entry[1] > 0){
+          this.subjectWiseTimeSpentPieChartLabels.push(entry[0])
+          this.subjectWiseTimeSpentPieChartData.push(entry[1])
+        }
       }
+
+      console.log("Piechart albel: ", this.subjectWiseTimeSpentPieChartLabels)
+      console.log("SUbjectwise pie chart time: ", this.subjectWiseTimeSpentPieChartData)
+      console.log("SUbject wise time after: ", this.topicWiseTimeSpent)
+      
+      this.topicWiseTimeSpentPieChartLabels = []
+      this.topicWiseTimeSpentPieChartData = []
+      for (let entry of this.topicWiseTimeSpent.entries()){
+        if(entry[1] > 0){
+          this.topicWiseTimeSpentPieChartLabels.push(entry[0])
+          this.topicWiseTimeSpentPieChartData.push(entry[1])
+        }
+      }        
+
+      //This is for default value of chart dropdown. will use it later
+      // let event :any ={
+      //   'target':{
+      //     'textContent': this.subjectListDropdownOptions[0].name 
+      //   }
+      // }
+
+      // this.selectedSubjectInTopicWisePiechart = this.subjectListDropdownOptions[0].name
+      // this.subjectSelectedForTopicWiseTimeSpentChart(event)
+
+
+
+      //prepare data for strong subject and topic
+      Object.keys(this.subjectTagMap).forEach(key =>{
+        let temppiechartData = [];
+
+        let totalNoOfSubjectQuestion = this.subjectTagMap[key]['correct'] + this.subjectTagMap[key]['incorrect'] +
+                                          this.subjectTagMap[key]['not_answered']
+
+        temppiechartData.push(key)
+
+        let successPercent = (this.subjectTagMap[key]['correct']/totalNoOfSubjectQuestion)*100;
+        this.success =((100 * 6) - ((100 * 6) * ((21*successPercent)/100)) / 100)
+        let tempSuccessValue: any ={
+          'name': key,
+          'successValue': this.success,
+          'successPercent': Math.round(successPercent)
+        }
+
+        if(Math.round(successPercent) > this.subjectThresholdValue){
+          this.strongSubjectList['strongSubject'].push(tempSuccessValue)
+        }
+        else{
+          this.weakSubjectList['weakSubject'].push(tempSuccessValue)
+        }
+
+        // if(this.subjectTagMap[key]['correct'] >= this.subjectThresholdValue){
+
+        //   this.strongSubjectList['strongSubject'].push(tempSuccessValue)
+        // }
+        // else{
+        //   this.weakSubjectList['weakSubject'].push(tempSuccessValue)
+        // }
+      })
+
+      //prepare data for weak subject and topic
+      Object.keys(this.topicTagMap).forEach(key =>{
+        let temppiechartData = [];
+
+        let totalNoOfTopicQuestion = this.topicTagMap[key]['correct'] + this.topicTagMap[key]['incorrect'] +
+                                          this.topicTagMap[key]['not_answered']
+        temppiechartData.push(key)
+
+        let successPercent = (this.topicTagMap[key]['correct']/totalNoOfTopicQuestion)*100;
+
+        this.success =((100 * 6) - ((100 * 6) * ((21*successPercent)/100)) / 100)
+
+        let tempSuccessValue: any ={
+          'name': key,
+          'successValue': this.success,
+          'successPercent': Math.round(successPercent)
+        }
+
+        if(this.topicTagMap[key]['correct'] >= this.topicThresholdValue){
+          this.strongTopicList['strongTopic'].push(tempSuccessValue)
+        }
+        else{
+          this.weakTopicList['weakTopic'].push(tempSuccessValue)
+        }
+      })
+
+    const subjectwise_chart : any = document.getElementById('subjectWiseBarGraph');
+    const topicwise_chart : any = document.getElementById('topicWiseBarGraph');
+    const subjectwisetimespent_piechart : any = document.getElementById('subjectWiseTimeSpentPieChart');
+    const topicwisetimespent_piechart : any = document.getElementById('topicWiseTimeSpentPieChart');
+
+    // const buttonElement1 :any = document.getElementById('fullScreen1')
+    // buttonElement1.addEventListener('click', () => {
+    //   if (screenfull.isEnabled) {
+    //     screenfull.request(subjectwise_chart);
+    //   }
+    // });
+
+    // const buttonElement2 :any = document.getElementById('fullScreen2')
+    // buttonElement2.addEventListener('click', () => {
+    //   if (screenfull.isEnabled) {
+    //     screenfull.request(topicwise_chart);
+    //   }
+    // });
+
+    // const buttonElement3 :any = document.getElementById('fullScreen3')
+    // buttonElement3.addEventListener('click', () => {
+    //   if (screenfull.isEnabled) {
+    //     screenfull.request(subjectwisetimespent_piechart);
+    //   }
+    // });
+
+    // const buttonElement4 :any = document.getElementById('fullScreen4')
+    // buttonElement4.addEventListener('click', () => {
+    //   if (screenfull.isEnabled) {
+    //     screenfull.request(topicwisetimespent_piechart);
+    //   }
+    // });
+    }
+
+    this.tabChanged('sample')
+    // this.prepareSubjectWiseBarGraph()
+    // this.prepareTopicWiseBarGraph()
+    // this.generateRandomColor(this.subjectWiseTimeSpentPieChartData)
+    // this.prepareSubjectWiseTimeSpentChart(this.subjectWiseTimeSpentPieChartLabels, this.subjectWiseTimeSpentPieChartData, 'subjectWiseTimeSpentPieChart' , 'Subjectwise Time Spent Chart')
+
+    // this.generateRandomColor(this.topicWiseTimeSpentPieChartData)
+    // this.prepareTopicWiseTimeSpentChart(this.topicWiseTimeSpentPieChartLabels, this.topicWiseTimeSpentPieChartData, 'topicWiseTimeSpentPieChart' , 'Topicwise Time Spent Chart')
   }
 
   fullScreen1(){
@@ -810,6 +842,23 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   } 
 
   tabChanged(event:any):void{
+
+    if(this.subjectWiseChart !== undefined){
+      this.subjectWiseChart.destroy()
+    }
+
+    if(this.topicWiseChart !== undefined){
+      this.topicWiseChart.destroy()
+    }
+
+    if(this.subjectWiseTimeSpentChart !== undefined){
+      this.subjectWiseTimeSpentChart.destroy()
+    }
+
+    if(this.topicWiseTimeSpentChart !== undefined){
+      this.topicWiseTimeSpentChart.destroy()
+    }
+
     this.prepareSubjectWiseBarGraph()
     this.prepareTopicWiseBarGraph()
     this.generateRandomColor(this.subjectWiseTimeSpentPieChartData)
@@ -817,6 +866,125 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
     this.generateRandomColor(this.topicWiseTimeSpentPieChartData)
     this.prepareTopicWiseTimeSpentChart(this.topicWiseTimeSpentPieChartLabels, this.topicWiseTimeSpentPieChartData, 'topicWiseTimeSpentPieChart' , 'Topicwise Time Spent Chart')
+  }
+
+  subjectSelectedForTopicWiseChart(event: any){
+    console.log("SUbject seel: ", event.target.textContent)
+    let subjectName = event.target.textContent
+    console.log("Suu: ", this.subjectNameWithTopicsMap[subjectName])
+    if(subjectName !== undefined && subjectName !== this.previouslySelectedSubjectInTopicWiseBargraph){
+      let topicList: string[] = this.subjectNameWithTopicsMap[subjectName]
+
+      this.topicNameList = []
+      this.topicWiseCorrectAnswersData = []
+      this.topicWiseIncorrectAnswersData = []
+      this.topicWiseNotAnsweredData = []
+      Object.keys(this.topicTagMap).forEach(key =>{
+
+        //if topic list contains key then insert that key for the topic graph
+        if(topicList.includes(key)){
+          this.topicNameList.push(key)
+          this.topicWiseCorrectAnswersData.push(this.topicTagMap[key]['correct'])
+          this.topicWiseIncorrectAnswersData.push(this.topicTagMap[key]['incorrect'])
+          this.topicWiseNotAnsweredData.push(this.topicTagMap[key]['not_answered'])
+        }
+      })
+
+      // this.prepareTopicWiseBarGraph()
+      console.log("Topic wiwiwi corr: ", this.topicWiseCorrectAnswersData)
+      console.log("Topic wiwiwi incorr: ", this.topicWiseIncorrectAnswersData)
+      console.log("Topic wiwiwi not: ", this.topicWiseNotAnsweredData)
+      //this.topicWiseChart.update()
+      this.removeData(this.topicWiseChart)
+
+      const data = {
+        labels: this.topicNameList,
+        datasets: [
+          {
+            label: 'Correct',
+            data: this.topicWiseCorrectAnswersData,
+            backgroundColor: '#fd7f6f',
+          },
+          {
+            label: 'Incorrect',
+            data: this.topicWiseIncorrectAnswersData,
+            backgroundColor: '#7eb0d5',
+          },
+          {
+            label: 'Not Answered',
+            data: this.topicWiseNotAnsweredData,
+            backgroundColor: '#b2e061',
+          },
+        ]
+      };
+
+      this.addData(this.topicWiseChart, data )
+      this.previouslySelectedSubjectInTopicWiseBargraph = subjectName
+    }
+    
+
+  }
+
+
+  subjectSelectedForTopicWiseTimeSpentChart(event: any){
+
+    console.log("SUbject seel for timespent: ", event.target.textContent)
+    let subjectName = event.target.textContent
+    console.log("Suu timespent: ", this.subjectNameWithTopicsMap[subjectName])
+    if(subjectName !== undefined && subjectName !== this.previouslySelectedSubjectInTopicWisePiechart){
+      let topicList: string[] = this.subjectNameWithTopicsMap[subjectName]
+
+      //this.topicWiseChart.update()
+      this.removeData(this.topicWiseTimeSpentChart)
+
+      
+
+      //check
+
+      let labels = [];
+      let pieChartData = [];
+      console.log("SUbject wise time after: ", this.topicWiseTimeSpent)
+      
+      for (let entry of this.topicWiseTimeSpent.entries()){
+        if(topicList.includes(entry[0])){
+          labels.push(entry[0])
+          pieChartData.push(entry[1])
+        }
+      }
+
+      this.generateRandomColor(pieChartData)
+      const data = {
+        labels: labels,
+        datasets: [{
+          label: 'Overall Performance',
+          data: pieChartData,
+          hoverOffset: 4,
+          backgroundColor: this.colors
+        }]
+      };
+      this.addData(this.topicWiseTimeSpentChart, data )
+      this.previouslySelectedSubjectInTopicWisePiechart = subjectName
+      //this.prepareTopicWiseTimeSpentChart(labels, pieChartData, 'topicWiseTimeSpentChart' , 'Topicwise Time Spent Chart')
+    }
+  }
+
+
+  addData(chart:any, data: any) {
+    // chart.data.labels.push(label);
+    // chart.data.datasets.forEach((dataset:any) => {
+    //     dataset.data.push(data);
+    // });
+
+    chart.data = data
+    chart.update();
+  }
+
+  removeData(chart:any) {
+      chart.data.labels.pop();
+      chart.data.datasets.forEach((dataset:any) => {
+          dataset.data.pop();
+      });
+      chart.update();
   }
 
   viewIndividualQuestion(element: TestReportQuestion, questionNumber: number):void{

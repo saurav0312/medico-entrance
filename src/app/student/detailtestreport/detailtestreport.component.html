@@ -1,5 +1,21 @@
 <div>
-    <h1 style="text-align: center; margin-top: 2em;">Test Result Analysis
+
+    <div class="col-sm-12" style="margin-top: 1.2em; margin-bottom: 1.2em;">
+        <div style="margin-top: 3em; margin-bottom:  1.5em;">
+            <p style="font-size: 21px; font-weight: 500; font-family: 'Cambay';">All Given Mock Tests</p>
+        </div>
+
+        <p-tree 
+        [value]="allTests" 
+        selectionMode="single" 
+        [(selection)]="defaultSelectedTest" 
+        (onNodeSelect)="nodeSelected($event)"
+        [filter]="true"></p-tree>
+
+    </div>
+
+    
+    <h1 style="text-align: center; margin-top: 2em; font-family: 'Cambay';">Test Result Analysis
     </h1>
 
     <mat-tab-group mat-align-tabs="center" (selectedTabChange)="tabChanged($event)">
@@ -15,7 +31,7 @@
 
     <ng-template #tabularReportTemplate>
         <div class="row">
-            <div class="col-sm-3" style="border-left: 1px solid #bfc3c2; border-right: 1px solid #bfc3c2; margin-top: 1.2em; margin-bottom: 1.2em;">
+            <!-- <div class="col-sm-3" style="border-left: 1px solid #bfc3c2; border-right: 1px solid #bfc3c2; margin-top: 1.2em; margin-bottom: 1.2em;">
                 <div style="margin-top: 3em; margin-bottom:  1.5em;">
                     <p style="font-size: 21px; font-weight: 500;">All Given Mock Tests</p>
                 </div>
@@ -27,8 +43,8 @@
                 (onNodeSelect)="nodeSelected($event)"
                 [filter]="true"></p-tree>
 
-            </div>
-            <div class="col-sm-9">
+            </div> -->
+            <div class="col-sm-12">
                 <mat-expansion-panel style="margin-right: 1.2em; margin-top: 1.2em; margin-bottom: 1.2em;" class="mat-card mat-elevation-z8" 
                                     (opened)="expandTable = true"
                                     (closed)="expandTable = false"
@@ -36,7 +52,7 @@
                     <mat-expansion-panel-header>
                         <mat-panel-title>
                             <div class="col-md-12 text-center" >
-                                <h1 style="margin: 1em; font-weight: 500;">Score Summary</h1>
+                                <h1 style="margin: 1em; font-weight: 500; font-family: 'Cambay';">Score Summary</h1>
                             </div>
                         </mat-panel-title>
                     </mat-expansion-panel-header>
@@ -128,74 +144,25 @@
                             <p style="font-size: 21px; font-weight: 500;">Now let's look at what to do next:</p>
                         </div>
                         <div class="row">
-                            <div class="col-sm-6" style="font-size: 18px; font-weight: 300; margin-bottom: 1em; display: inline; float: left; border-right: 1px solid #bfc3c2;">
-                                <b>Areas of Strength</b>
-                                <!-- <div> -->
-                                <p style="margin-top: 1.2em;">Based on this test, these are your strengths</p>
+                            <div class="col-sm-6" style="font-size: 18px; font-weight: 300; margin-bottom: 1em; display: inline; float: left;" [ngStyle]="
+                                            {
+                                                'border-right': weakSubjectList['weakSubject'].length > 0 ? '1px solid #bfc3c2' : 'none',
+                                                'display': strongSubjectList['strongSubject'].length > 0 ? 'inline':'none'
+                                            }">
+                                <div *ngIf="strongSubjectList['strongSubject'].length > 0 ; else noStrongSubjects">
+                                    <ng-container *ngTemplateOutlet="areasOfStrength">
 
-                                <div class="row" style="display : inline; margin-top: 2em">
-                                    <ng-container  *ngFor="let subject of strongSubjectList['strongSubject']">
-                                        <div class="col-sm-6" style="display: flex; align-items: baseline; width: 161px; height: 49px; float: left; margin-bottom: 2em;">
-                                            <div class="circle_box" style="display: contents;">
-                                                <div>
-                                                    <svg>
-                                                        <circle [matTooltip]="(100 - subject.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
-                                                        <circle [matTooltip]="subject.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="subject.successValue" cx="20" cy="20" r="20" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div style="margin-left: 1.3em;">{{subject.name}}</div>
-                                        </div>
-                                    </ng-container>
-                                    <ng-container  *ngFor="let topic of strongTopicList['strongTopic']">
-                                        <div class="col-sm-6" style="display: flex; align-items: baseline; width: 161px; height: 49px; float: left; margin-bottom: 2em;">
-                                            <div class="circle_box" style="display: contents;">
-                                                <div>
-                                                    <svg>
-                                                        <circle [matTooltip]="(100 - topic.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
-                                                        <circle [matTooltip]="topic.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="topic.successValue" cx="20" cy="20" r="20" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div style="margin-left: 1.3em;">{{topic.name}}</div>
-                                        </div>
                                     </ng-container>
                                 </div>
-
                             </div>
 
-                            <div class="col-sm-6" style="font-size: 18px; font-weight: 300;">
-                                <b>Areas of Focus</b>
-                                <!-- <div> -->
-                                <p style="margin-top: 1.2em;">Based on this test, these are your weakness</p>
+                            <div class="col-sm-6" style="font-size: 18px; font-weight: 300;" [ngStyle]="
+                                            {
+                                                'display': weakSubjectList['weakSubject'].length > 0 ? 'inline':'none'
+                                            }">
+                                <div *ngIf="weakSubjectList['weakSubject'].length > 0 ; else noWeakSubjects">
+                                    <ng-container *ngTemplateOutlet="areasOfFocus">
 
-                                <div class="row" style=" display : inline; margin-top: 2em">
-                                    <ng-container  *ngFor="let subject of weakSubjectList['weakSubject']">
-                                        <div class="col-sm-6" style="display: flex; align-items: baseline; width: 161px; height: 49px; float: left; margin-bottom: 2em;">
-                                            <div class="circle_box" style="display: contents;">
-                                                <div>
-                                                    <svg>
-                                                        <circle [matTooltip]="(100 - subject.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
-                                                        <circle [matTooltip]="subject.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="subject.successValue" cx="20" cy="20" r="20" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div style="margin-left: 1.3em;">{{subject.name}}</div>
-                                        </div>
-                                    </ng-container>
-            
-                                    <ng-container  *ngFor="let topic of weakTopicList['weakTopic']">
-                                        <div class="col-sm-6" style="display: flex; align-items: baseline; width: 161px; height: 49px; float: left; margin-bottom: 2em;">
-                                            <div class="circle_box" style="display: contents;">
-                                                <div>
-                                                    <svg>
-                                                        <circle [matTooltip]="(100 - topic.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
-                                                        <circle [matTooltip]="topic.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="topic.successValue" cx="20" cy="20" r="20" />
-                                                    </svg>
-                                                </div>
-                                            </div>
-                                            <div style="margin-left: 1.3em;">{{topic.name}}</div>
-                                        </div>
                                     </ng-container>
                                 </div>
                             </div>
@@ -255,7 +222,7 @@
                                     [(ngModel)]="selectedSubjectInTopicWiseBargraph" 
                                     optionLabel="name"
                                     placeholder="Select a subject"
-                                    ></p-dropdown>
+                                    (onClick)="subjectSelectedForTopicWiseChart($event)"></p-dropdown>
                             </div>
                             <div style="display: flex; align-items: center; justify-content: center;">
                                 <canvas id="topicWiseBarGraph"></canvas>
@@ -303,7 +270,7 @@
                                             [(ngModel)]="selectedSubjectInTopicWisePiechart" 
                                             optionLabel="name"
                                             placeholder="Select a subject"
-                                            ></p-dropdown>
+                                            (onClick)="subjectSelectedForTopicWiseTimeSpentChart($event)"></p-dropdown>
                             </div>
                             <div style="display: flex; align-items: center; justify-content: center;">
                                 <canvas id="topicWiseTimeSpentPieChart"></canvas>
@@ -315,4 +282,83 @@
         </mat-expansion-panel>
     </ng-template>
 </div>
+
+<ng-template #areasOfStrength>
+    <b>Areas of Strength</b>
+    <!-- <div> -->
+    <p style="margin-top: 1.2em;">Based on this test, these are your strengths</p>
+
+    <div class="row" style="display : inline; margin-top: 2em">
+        <ng-container  *ngFor="let subject of strongSubjectList['strongSubject']">
+            <div class="col-sm-6" style="display: flex; align-items: baseline; width: 161px; height: 49px; float: left; margin-bottom: 2em;">
+                <div class="circle_box" style="display: contents;">
+                    <div>
+                        <svg>
+                            <circle [matTooltip]="(100 - subject.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
+                            <circle [matTooltip]="subject.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="subject.successValue" cx="20" cy="20" r="20" />
+                        </svg>
+                    </div>
+                </div>
+                <div style="margin-left: 1.3em;">{{subject.name}}</div>
+            </div>
+        </ng-container>
+        <!-- <ng-container  *ngFor="let topic of strongTopicList['strongTopic']">
+            <div class="col-sm-6" style="display: flex; align-items: baseline; width: 161px; height: 49px; float: left; margin-bottom: 2em;">
+                <div class="circle_box" style="display: contents;">
+                    <div>
+                        <svg>
+                            <circle [matTooltip]="(100 - topic.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
+                            <circle [matTooltip]="topic.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="topic.successValue" cx="20" cy="20" r="20" />
+                        </svg>
+                    </div>
+                </div>
+                <div style="margin-left: 1.3em;">{{topic.name}}</div>
+            </div>
+        </ng-container> -->
+    </div>
+</ng-template>
+
+<ng-template #areasOfFocus>
+    <b>Areas of Focus</b>
+    <!-- <div> -->
+    <p style="margin-top: 1.2em;">Based on this test, these are your weakness</p>
+
+    <div class="row" style=" display : inline; margin-top: 2em">
+        <ng-container  *ngFor="let subject of weakSubjectList['weakSubject']">
+            <div class="col-sm-6" style="display: flex; align-items: baseline; width: 161px; height: 49px; float: left; margin-bottom: 2em;">
+                <div class="circle_box" style="display: contents;">
+                    <div>
+                        <svg>
+                            <circle [matTooltip]="(100 - subject.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
+                            <circle [matTooltip]="subject.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="subject.successValue" cx="20" cy="20" r="20" />
+                        </svg>
+                    </div>
+                </div>
+                <div style="margin-left: 1.3em;">{{subject.name}}</div>
+            </div>
+        </ng-container>
+
+        <!-- <ng-container  *ngFor="let topic of weakTopicList['weakTopic']">
+            <div class="col-sm-6" style="display: flex; align-items: baseline; width: 161px; height: 49px; float: left; margin-bottom: 2em;">
+                <div class="circle_box" style="display: contents;">
+                    <div>
+                        <svg>
+                            <circle [matTooltip]="(100 - topic.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
+                            <circle [matTooltip]="topic.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="topic.successValue" cx="20" cy="20" r="20" />
+                        </svg>
+                    </div>
+                </div>
+                <div style="margin-left: 1.3em;">{{topic.name}}</div>
+            </div>
+        </ng-container> -->
+    </div>
+</ng-template>
+
+<ng-template #noStrongSubjects>
+    Looks like you are performing weak in this test.
+</ng-template>
+
+<ng-template #noWeakSubjects>
+    Looks like you are performing well in this test.
+</ng-template>
     
