@@ -219,60 +219,96 @@
                     </div>
                 </mat-panel-title>
             </mat-expansion-panel-header>
-            <div class="row" style="margin-bottom: 10px;">
+            <div class="row"  style="margin: 2px;">
                 <div class="col-md-6 ">
-                    <div class="card mat-elevation-z2" style="margin-bottom: 0.7em;">
-                        <div style="display: flex; flex-flow: row-reverse;">
-                            <mat-icon id="fullScreen1" style="width: auto; cursor: pointer;">zoom_out_map
-                            </mat-icon>
-                            <a download="subjectWiseBarGraph.png" id="download1">
-                                <mat-icon  style="width: auto; cursor: pointer;" >file_download
+                    <div style="margin-bottom: 0.7em; padding-bottom: 0.7em;" class="card mat-elevation-z2">
+                        <div style="padding: 3px;">
+                            <div style="display: flex; flex-flow: row-reverse; background-color: white;">
+                                <mat-icon id="fullScreen1" style="width: auto; cursor: pointer;" (click)="fullScreen1()" >zoom_out_map
                                 </mat-icon>
-                            </a>
+                                <a download="subjectWiseBarGraph.png" id="download1" (click)="downloadSubjectWiseChartImage()">
+                                    <mat-icon style="width: auto; cursor: pointer;">file_download
+                                    </mat-icon>
+                                </a>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: center;">
+                                <canvas id="subjectWiseBarGraph"></canvas>
+                            </div>
                         </div>
-                        <div id="subjectwise_chart_div" class="chart" style="height:400px; margin-bottom: 1em; margin-top: 1em;" ></div>
+                        <!-- <div style="height:250px; width:250px; display: flex; align-items: center; justify-content: center;">
+                            <canvas id="subjectWiseTimeSpentChart"></canvas>
+                        </div> -->
                     </div>
                 </div>
+
                 <div class="col-md-6 ">
-                    <div class="card mat-elevation-z2" style="margin-bottom: 0.7em;">
-                        <div style="display: flex; flex-flow: row-reverse;">
-                            <mat-icon id="fullScreen2" style="width: auto; cursor: pointer;">zoom_out_map
-                            </mat-icon>
-                            <a download="topicWiseBarGraph.png" id="download2">
-                                <mat-icon style="width: auto; cursor: pointer;">file_download
+                    <div style="margin-bottom: 0.7em; padding-bottom: 0.7em;" class="card mat-elevation-z2">
+                        <div style="padding: 3px;">
+                            <div style="display: flex; flex-flow: row-reverse; background-color: white;">
+                                <mat-icon id="fullScreen2" style="width: auto; cursor: pointer;">zoom_out_map
                                 </mat-icon>
-                            </a>
+                                <a download="topicWiseBarGraph.png" id="download2" (click)="downloadTopicWiseChartImage()">
+                                    <mat-icon style="width: auto; cursor: pointer;">file_download
+                                    </mat-icon>
+                                </a>
+                                <p-dropdown [options]="subjectListDropdownOptions" 
+                                    [(ngModel)]="selectedSubjectInTopicWiseBargraph" 
+                                    optionLabel="name"
+                                    placeholder="Select a subject"
+                                    ></p-dropdown>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: center;">
+                                <canvas id="topicWiseBarGraph"></canvas>
+                            </div>
                         </div>
-                        <div id="topicwise_chart_div" class="chart" style="height:400px; margin-bottom: 1em; margin-top: 1em;"></div>
+                        <!-- <div style="height:250px; width:250px; display: flex; align-items: center; justify-content: center;">
+                            <canvas id="subjectWiseTimeSpentChart"></canvas>
+                        </div> -->
                     </div>
                 </div>
             </div>
 
-            <div class="row">
+            <div class="row"  style="margin: 2px;">
                 <div class="col-md-6 ">
-                    <div class="card mat-elevation-z2" style="margin-bottom: 0.7em;">
-                        <div style="display: flex; flex-flow: row-reverse; ">
-                            <mat-icon id="fullScreen3" style="width: auto; cursor: pointer;">zoom_out_map
-                            </mat-icon>
-                            <a href="" download="subjectWiseTimeSpentPieChart.png" id="download3">
-                                <mat-icon style="width: auto; cursor: pointer;">file_download
+                    <div style="margin-bottom: 0.7em; padding-bottom: 0.7em;" class="card mat-elevation-z2">
+                        <div style="padding: 3px;">
+                            <div style="display: flex; flex-flow: row-reverse; background-color: white;">
+                                <mat-icon id="fullScreen3" style="width: auto; cursor: pointer;">zoom_out_map
                                 </mat-icon>
-                            </a>
+                                <a download="subjectWiseTimeSpentPieChart.png" id="download3" (click)="downloadSubjectWiseTimeSpentChartImage()">
+                                    <mat-icon style="width: auto; cursor: pointer;">file_download
+                                    </mat-icon>
+                                </a>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: center;">
+                                <canvas id="subjectWiseTimeSpentPieChart"></canvas>
+                            </div>
                         </div>
-                        <div id="subjectTimeSpent_chart_div" class="chart" style="height: 400px; margin-bottom: 1em; margin-top: 1em;"></div>
+                        <!-- <div style="height:250px; width:250px; display: flex; align-items: center; justify-content: center;">
+                            <canvas id="subjectWiseTimeSpentChart"></canvas>
+                        </div> -->
                     </div>
                 </div>
                 <div class="col-md-6 ">
-                    <div class="card mat-elevation-z2" style="margin-bottom: 0.7em;">
-                        <div style="display: flex; flex-flow: row-reverse; ">
-                            <mat-icon id="fullScreen4" style="width: auto; cursor: pointer;">zoom_out_map
-                            </mat-icon>
-                            <a href ="" download="topicWiseTimeSpentPieChart.png" id="download4">
-                                <mat-icon style="width: auto; cursor: pointer;">file_download
+                    <div style="margin-bottom: 0.7em;" class="card mat-elevation-z2">
+                        <div style="padding: 3px;">
+                            <div style="display: flex; flex-flow: row-reverse; background-color: white;">
+                                <mat-icon id="fullScreen4" style="width: auto; cursor: pointer;">zoom_out_map
                                 </mat-icon>
-                            </a>
+                                <a download="topicWiseTimeSpentPieChart.png" id="download4" (click)="downloadTopicWiseTimeSpentChartImage()">
+                                    <mat-icon style="width: auto; cursor: pointer;">file_download
+                                    </mat-icon>
+                                </a>
+                                <p-dropdown [options]="subjectListDropdownOptions" 
+                                            [(ngModel)]="selectedSubjectInTopicWisePiechart" 
+                                            optionLabel="name"
+                                            placeholder="Select a subject"
+                                            ></p-dropdown>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: center;">
+                                <canvas id="topicWiseTimeSpentPieChart"></canvas>
+                            </div>
                         </div>
-                        <div id="topicTimeSpent_chart_div" class="chart" style="height: 400px; margin-bottom: 1em; margin-top: 1em;"></div>
                     </div>
                 </div>
             </div>
