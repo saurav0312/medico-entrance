@@ -1,8 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { AuthService } from '../../service/auth.service';
-import { Router } from '@angular/router';
-import { ProfileService } from 'src/app/service/profile.service';
-import { MessageService } from 'primeng/api';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-studentdashboardnavigationbar',
@@ -11,44 +7,10 @@ import { MessageService } from 'primeng/api';
 })
 export class StudentdashboardnavigationbarComponent implements OnInit {
 
-  @Input() noOfAllMockTest : number = 0;
-
-  profileImageUrl!: string | undefined;
-  navOpen: boolean = false;
-  dropdownOpen: boolean = false;
-
-  constructor(
-    private authService :  AuthService,
-    private router : Router,
-    private profileService: ProfileService,
-    private messageService: MessageService
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
-    // this.authService.readMockTest().subscribe((response: any) =>{
-    //   this.noOfAllMockTest = response.length
-    // })
-    let sub = this.authService.getCurrentUser().subscribe(response =>{
-      this.profileService.getUserDetails(response?.uid).subscribe(response =>{
-        sub.unsubscribe()
-        this.profileImageUrl = response.imageUrl
-      })
-    })
-  }
-
-  logout(): void{
-    this.authService.logout().subscribe(response =>{
-      this.messageService.add({severity:'success', summary: 'Logged Out Successfully'});
-      this.router.navigateByUrl("/home/homepagecontent")
-    })
-  }
-
-  toggleNavBar(){
-    this.navOpen = !this.navOpen;
-  }
-
-  toggleDropdown(){
-    this.dropdownOpen = !this.dropdownOpen;
+    
   }
 
 }

@@ -16,7 +16,6 @@ import { StudentdashboardnavigationbarComponent } from './studentdashboardnaviga
 import { StudentdashboardcontentComponent } from './studentdashboardcontent/studentdashboardcontent.component';
 import { AllTestsByATeacherComponent } from './all-tests-by-ateacher/all-tests-by-ateacher.component';
 import { MatDividerModule } from '@angular/material/divider';
-import { PerformancereportComponent } from './performancereport/performancereport.component';
 import { StudentModule } from '../student/student.module';
 
 import { SidebarModule } from 'primeng/sidebar';
@@ -28,8 +27,7 @@ import { MatIconModule } from '@angular/material/icon';
   declarations: [
     StudentdashboardnavigationbarComponent,
     StudentdashboardcontentComponent,
-    AllTestsByATeacherComponent,
-    PerformancereportComponent
+    AllTestsByATeacherComponent
   ],
   imports: [
     CommonModule,

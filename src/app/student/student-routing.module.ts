@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { StudentprofileComponent } from './studentprofile/studentprofile.component'
 import { DetailtestreportComponent } from './detailtestreport/detailtestreport.component';
-import { ViewmytestsComponent } from './viewmytests/viewmytests.component';
 import { EditprofileinfoComponent } from './editprofileinfo/editprofileinfo.component';
 import { StudentAuthGuardGuard } from '../authentication/student-auth-guard.guard';
 import { IndividualquestionComponent } from './individualquestion/individualquestion.component';
@@ -26,7 +25,6 @@ const routes: Routes = [
       { path: 'detailMockTestReport', component: DetailtestreportComponent},
       { path: 'detailSubjectTestReport', component: DetailSubjectTestReportComponent},
       { path: 'questionAnswerDiscussion', component: QuestionAnswerDiscussionComponent},
-      { path: 'viewMyTests', component: ViewmytestsComponent},
       { path: 'overallAnalysisDashboard', component: StudentPerformanceAnalysisDashboardComponent},
       { path: 'myDashboard', component: MyDashboardComponent},
       { path: 'individualQuestion', component: IndividualquestionComponent },
