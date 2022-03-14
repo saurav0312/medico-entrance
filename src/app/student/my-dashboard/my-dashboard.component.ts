@@ -67,6 +67,8 @@ export class MyDashboardComponent implements OnInit {
   previouslySelectedSubjectInTopicWiseBargraph: string = '';
   previouslySelectedSubjectInTopicWisePiechart: string = ''
   subjectListDropdownOptions: SubjectList[] = [];
+  defaultSelectedSubjectInTopicWiseBarGraph: any;
+  defaultSelectedSubjectInTopicWisePieChart: any;
 
   subjectNameWithTopicsMap: {[key:string]:string[]} ={};
   isNewUser: boolean = false;
@@ -80,7 +82,6 @@ export class MyDashboardComponent implements OnInit {
     let sub = this.authService.getCurrentUser().subscribe((userResponse:any) =>{
       this.authService.getAllMockTestsGivenByAUser(userResponse?.uid).subscribe( (allGivenTestsData:any) =>{
         sub.unsubscribe()
-        console.log("All tetststs: ", allGivenTestsData)
         if(allGivenTestsData!== undefined){
           this.testReportData = allGivenTestsData
           this.prepareData()
@@ -148,7 +149,7 @@ export class MyDashboardComponent implements OnInit {
             }
           })
 
-          console.log("Subject with topic list: ", this.subjectNameWithTopicsMap)
+          // console.log("Subject with topic list: ", this.subjectNameWithTopicsMap)
   
           testQuestion.topicTags?.forEach(topicTag =>{
             this.topicTagMap[topicTag] ={'correct':0, 'incorrect':0,'not_answered':0}
@@ -310,14 +311,6 @@ export class MyDashboardComponent implements OnInit {
           this.weakSubjectList['weakSubject'].push(tempSuccessValue)
         }
 
-        // if(this.subjectTagMap[key]['correct'] >= this.subjectThresholdValue){
-
-        //   this.strongSubjectList['strongSubject'].push(tempSuccessValue)
-        // }
-        // else{
-        //   this.weakSubjectList['weakSubject'].push(tempSuccessValue)
-        // }
-
         temppiechartData.push(this.subjectTagMap[key]['correct'])
         temppiechartData.push(this.subjectTagMap[key]['incorrect'])
         temppiechartData.push(this.subjectTagMap[key]['not_answered'])
@@ -348,13 +341,6 @@ export class MyDashboardComponent implements OnInit {
         else{
           this.weakTopicList['weakTopic'].push(tempSuccessValue)
         }
-
-        // if(this.topicTagMap[key]['correct'] >= this.topicThresholdValue){
-        //   this.strongTopicList['strongTopic'].push(tempSuccessValue)
-        // }
-        // else{
-        //   this.weakTopicList['weakTopic'].push(tempSuccessValue)
-        // }
       })
 
       this.strongSubjectList.strongSubject = this.strongSubjectList.strongSubject.slice(0,3)
@@ -362,49 +348,23 @@ export class MyDashboardComponent implements OnInit {
       this.strongTopicList.strongTopic = this.strongTopicList.strongTopic.slice(0,3)
       this.weakTopicList.weakTopic = this.weakTopicList.weakTopic.slice(0,3)
 
-
-      console.log("Strong subject: ", this.strongSubjectList)
-      console.log("weak subject list: ", this.weakSubjectList)
-      console.log("Strong topics: ", this.strongTopicList)
-      console.log("weak topic list: ", this.weakTopicList)
-
-      
-
-      console.log("Subject Lists: ", this.subjectTagMap)
-      console.log("Topics Lists: ", this.topicTagMap)
-      console.log("Subjectwise time spent: ", this.subjectWiseTimeSpent)
-      console.log("Topicwise time spent: ", this.topicWiseTimeSpent)
-      console.log("SubjectWise chart correctanswer data: ", this.subjectWiseCorrectAnswersData)
-
       this.prepareSubjectWiseBarGraph()
       this.prepareTopicWiseBarGraph()
 
       let labels: string[] = [];
       let data: number[] = [];
-      console.log("SUbject wise time after: ", this.subjectWiseTimeSpent)
       
       for (let entry of this.subjectWiseTimeSpent.entries()){
         labels.push(entry[0])
         data.push(entry[1])
       }
       
-      // console.log("Timespwnet keys: ",Object.keys(this.subjectWiseTimeSpent))
-      // Object.keys(this.subjectWiseTimeSpent).forEach((key) =>{
-      //   console.log("curr key: ", key)
-      //   labels.push(key)
-      //   data.push(this.subjectWiseTimeSpent.get(key))
-      // })
-
-      console.log("Piechart albel: ", labels)
-      console.log("SUbjectwise pie chart time: ", data)
-
       this.generateRandomColor(data)
       this.prepareSubjectWiseTimeSpentChart(labels, data, 'subjectWiseTimeSpentChart' , 'Subjectwise Time Spent Chart')
 
 
       labels = [];
       data = [];
-      console.log("SUbject wise time after: ", this.topicWiseTimeSpent)
       
       for (let entry of this.topicWiseTimeSpent.entries()){
         labels.push(entry[0])
@@ -414,15 +374,18 @@ export class MyDashboardComponent implements OnInit {
       this.generateRandomColor(data)
       this.prepareTopicWiseTimeSpentChart(labels, data, 'topicWiseTimeSpentChart' , 'Topicwise Time Spent Chart')
 
-      //This is for default value of chart dropdown. will use it later
-      // let event :any ={
-      //   'target':{
-      //     'textContent': this.subjectListDropdownOptions[0].name 
-      //   }
-      // }
+      // This is for default value of chart dropdown. will use it later
+      let event :any ={
+        'value':{
+          'name': this.subjectListDropdownOptions[0].name 
+        }
+      }
 
-      // this.selectedSubjectInTopicWisePiechart = this.subjectListDropdownOptions[0].name
-      // this.subjectSelectedForTopicWiseTimeSpentChart(event)
+      this.defaultSelectedSubjectInTopicWiseBarGraph = this.subjectListDropdownOptions[0]
+      this.subjectSelectedForTopicWiseChart(event)
+
+      this.defaultSelectedSubjectInTopicWisePieChart = this.subjectListDropdownOptions[0]
+      this.subjectSelectedForTopicWiseTimeSpentChart(event);
 
       const subjectwise_chart : any = document.getElementById('subjectWiseChart');
       const topicwise_chart : any = document.getElementById('topicWiseChart');
@@ -433,7 +396,6 @@ export class MyDashboardComponent implements OnInit {
       buttonElement1.addEventListener('click', () => {
         if (screenfull.isEnabled) {
           screenfull.request(subjectwise_chart);
-          //this.prepareSubjectWiseBarGraph()
         }
       });
 
@@ -441,7 +403,6 @@ export class MyDashboardComponent implements OnInit {
       buttonElement2.addEventListener('click', () => {
         if (screenfull.isEnabled) {
           screenfull.request(topicwise_chart);
-          //this.prepareTopicWiseBarGraph()
         }
       });
 
@@ -449,7 +410,6 @@ export class MyDashboardComponent implements OnInit {
       buttonElement3.addEventListener('click', () => {
         if (screenfull.isEnabled) {
           screenfull.request(subjectwisetimespent_piechart);
-          //this.prepareTopicWiseBarGraph()
         }
       });
 
@@ -457,7 +417,6 @@ export class MyDashboardComponent implements OnInit {
       buttonElement4.addEventListener('click', () => {
         if (screenfull.isEnabled) {
           screenfull.request(topicwisetimespent_piechart);
-          //this.prepareTopicWiseBarGraph()
         }
       });
     }
@@ -465,9 +424,7 @@ export class MyDashboardComponent implements OnInit {
 
 
   subjectSelectedForTopicWiseChart(event: any){
-    console.log("SUbject seel: ", event.target.textContent)
-    let subjectName = event.target.textContent
-    console.log("Suu: ", this.subjectNameWithTopicsMap[subjectName])
+    let subjectName = event.value.name
     if(subjectName !== undefined && subjectName !== this.previouslySelectedSubjectInTopicWiseBargraph){
       let topicList: string[] = this.subjectNameWithTopicsMap[subjectName]
 
@@ -486,11 +443,6 @@ export class MyDashboardComponent implements OnInit {
         }
       })
 
-      // this.prepareTopicWiseBarGraph()
-      console.log("Topic wiwiwi corr: ", this.topicWiseCorrectAnswersData)
-      console.log("Topic wiwiwi incorr: ", this.topicWiseIncorrectAnswersData)
-      console.log("Topic wiwiwi not: ", this.topicWiseNotAnsweredData)
-      //this.topicWiseChart.update()
       this.removeData(this.topicWiseChart)
 
       const data = {
@@ -524,22 +476,14 @@ export class MyDashboardComponent implements OnInit {
 
   subjectSelectedForTopicWiseTimeSpentChart(event: any){
 
-    console.log("SUbject seel for timespent: ", event.target.textContent)
-    let subjectName = event.target.textContent
-    console.log("Suu timespent: ", this.subjectNameWithTopicsMap[subjectName])
+    let subjectName = event.value.name
     if(subjectName !== undefined && subjectName !== this.previouslySelectedSubjectInTopicWisePiechart){
       let topicList: string[] = this.subjectNameWithTopicsMap[subjectName]
 
-      //this.topicWiseChart.update()
       this.removeData(this.topicWiseTimeSpentChart)
-
-      
-
-      //check
 
       let labels = [];
       let pieChartData = [];
-      console.log("SUbject wise time after: ", this.topicWiseTimeSpent)
       
       for (let entry of this.topicWiseTimeSpent.entries()){
         if(topicList.includes(entry[0])){
@@ -560,17 +504,11 @@ export class MyDashboardComponent implements OnInit {
       };
       this.addData(this.topicWiseTimeSpentChart, data )
       this.previouslySelectedSubjectInTopicWisePiechart = subjectName
-      //this.prepareTopicWiseTimeSpentChart(labels, pieChartData, 'topicWiseTimeSpentChart' , 'Topicwise Time Spent Chart')
     }
   }
 
 
   addData(chart:any, data: any) {
-    // chart.data.labels.push(label);
-    // chart.data.datasets.forEach((dataset:any) => {
-    //     dataset.data.push(data);
-    // });
-
     chart.data = data
     chart.update();
   }
@@ -587,8 +525,6 @@ export class MyDashboardComponent implements OnInit {
     var a = document.createElement('a');
     a.href = this.subjectWiseChart.toBase64Image();
     a.download = 'my_file_name.png';
-
-    // Trigger the download
     a.click();
   }
 
@@ -596,8 +532,6 @@ export class MyDashboardComponent implements OnInit {
     var a = document.createElement('a');
     a.href = this.topicWiseChart.toBase64Image();
     a.download = 'my_file_name.png';
-
-    // Trigger the download
     a.click();
   }
 
@@ -605,8 +539,6 @@ export class MyDashboardComponent implements OnInit {
     var a = document.createElement('a');
     a.href = this.subjectWiseTimeSpentChart.toBase64Image();
     a.download = 'my_file_name.png';
-
-    // Trigger the download
     a.click();
   }
 
@@ -614,8 +546,6 @@ export class MyDashboardComponent implements OnInit {
     var a = document.createElement('a');
     a.href = this.topicWiseTimeSpentChart.toBase64Image();
     a.download = 'my_file_name.png';
-
-    // Trigger the download
     a.click();
   }
 

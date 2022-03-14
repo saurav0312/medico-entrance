@@ -33,10 +33,10 @@
                             </mat-icon>
                         </a>
                         <p-dropdown [options]="subjectListDropdownOptions" 
-                                    [(ngModel)]="selectedSubjectInTopicWiseBargraph" 
+                                    [(ngModel)]="defaultSelectedSubjectInTopicWiseBarGraph" 
                                     optionLabel="name"
                                     placeholder="Select a subject"
-                                    (onClick)="subjectSelectedForTopicWiseChart($event)"></p-dropdown>
+                                    (onChange)="subjectSelectedForTopicWiseChart($event)"></p-dropdown>
                     </div>
                     <div style="display: flex; align-items: center; justify-content: center;">
                         <canvas id="topicWiseChart"></canvas>
@@ -78,10 +78,10 @@
                             </mat-icon>
                         </a>
                         <p-dropdown [options]="subjectListDropdownOptions" 
-                                    [(ngModel)]="selectedSubjectInTopicWisePiechart" 
+                                    [(ngModel)]="defaultSelectedSubjectInTopicWisePieChart" 
                                     optionLabel="name"
                                     placeholder="Select a subject"
-                                    (onClick)="subjectSelectedForTopicWiseTimeSpentChart($event)"></p-dropdown>
+                                    (onChange)="subjectSelectedForTopicWiseTimeSpentChart($event)"></p-dropdown>
                     </div>
                     <div style="display: flex; align-items: center; justify-content: center;">
                         <canvas id="topicWiseTimeSpentChart"></canvas>

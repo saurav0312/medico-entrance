@@ -1,7 +1,7 @@
 <!-- <app-studentdashboardnavigationbar></app-studentdashboardnavigationbar> -->
-<div style="text-align: center; margin-top: 1em;">
+<!-- <div style="text-align: center; margin-top: 1em;">
     <h2 style="text-align: center; font-family: 'Cambay';">Welcome {{username}}</h2>
-</div>
+</div> -->
 
 
 <div class="row" style="margin-top: 1.3rem; margin-left: 0.3rem; margin-right: 0.3rem; margin-bottom: 0.3rem;">
@@ -11,6 +11,11 @@
     <h2 style="padding: 0; font-family: 'Cambay'">Search for teacher</h2> 
     <input style="margin-bottom: 0.4em;" class="form-control" id="myInput" type="text" [(ngModel)]="searchText" (keyup)="searchByName($event)" placeholder="Search by name">
     <br>
+    <p-dropdown [options]="categoryListTemp" 
+                                    [(ngModel)]="categoryItemTemp" 
+                                    optionLabel="name"
+                                    placeholder="Select"
+                                    (onClick)="categorySelectedTemp($event)"></p-dropdown>
     <div style="padding: 0; margin-top: 0.8em;">
         <mat-label style="text-align: left; font-family: 'Cambay'; font-size: 20px;">Select: </mat-label>
     <!-- </div>

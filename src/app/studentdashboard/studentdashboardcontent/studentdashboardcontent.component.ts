@@ -7,6 +7,7 @@ import { User } from 'firebase/auth';
 import { TeacherSubscription } from 'src/app/interface/teacher-subscription';
 import { TeacherSubscriptionService } from 'src/app/service/teacher-subscription.service';
 import { Timestamp } from 'firebase/firestore';
+import { SubjectList } from 'src/app/interface/subject-list';
 
 @Component({
   selector: 'app-studentdashboardcontent',
@@ -31,6 +32,19 @@ export class StudentdashboardcontentComponent implements OnInit {
   searchText: string ='';
 
   categoryList: string[] =["All","Subscribed","Unsubscribed"];
+  categoryListTemp: SubjectList[] = [
+    {
+      name: 'All'
+    },
+    {
+      name: 'Subscribed'
+    },
+    {
+      name: 'Unsubscribed'
+    }
+  ];
+
+  categoryItemTemp: string = 'All';
 
   username: string | null = '';
 
@@ -143,6 +157,10 @@ export class StudentdashboardcontentComponent implements OnInit {
       }
       this.searchByName(event)
     }
+  }
+
+  categorySelectedTemp(event: any){
+    console.log("Evveennt: ", event)
   }
 
   searchByName(event:any){

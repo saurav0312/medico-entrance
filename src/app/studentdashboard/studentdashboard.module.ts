@@ -7,6 +7,8 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 
+import { DropdownModule } from 'primeng/dropdown';
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
@@ -44,7 +46,8 @@ import { MatIconModule } from '@angular/material/icon';
     StudentModule,
     SidebarModule,
     MatSidenavModule,
-    MatIconModule
+    MatIconModule,
+    DropdownModule
   ],
   exports:[
     StudentdashboardnavigationbarComponent
