@@ -34,12 +34,13 @@ export class ChoosesignupoptionComponent implements OnInit {
   @ViewChild('firstNameTemplate', {static:true} ) firstNameTemplate! : TemplateRef<ElementRef>;
   @ViewChild('lastNameTemplate', {static:true} ) lastNameTemplate! : TemplateRef<ElementRef>;
   @ViewChild('emailTemplate', {static:true} ) emailTemplate! : TemplateRef<ElementRef>;
+  @ViewChild('phoneNumberTemplate', {static:true} ) phoneNumberTemplate! : TemplateRef<ElementRef>;
   @ViewChild('passwordTemplate', {static:true} ) passwordTemplate! : TemplateRef<ElementRef>;
 
   nameFormFieldsTemplateList: any;
-  nameFormFieldsName : string[] = ['firstNameTemplate','lastNameTemplate']
+  nameFormFieldsName : string[] = ['firstNameTemplate', 'lastNameTemplate']
 
-  commonFormFieldsName : string[] =['emailTemplate', 'passwordTemplate'];
+  commonFormFieldsName : string[] =['phoneNumberTemplate', 'emailTemplate', 'passwordTemplate'];
   commonFormFieldsTemplateList: any;
 
   selectedIndex: number = 0;
@@ -60,6 +61,7 @@ export class ChoosesignupoptionComponent implements OnInit {
       {
         firstName: new FormControl('',[Validators.required]),
         lastName: new FormControl('',[Validators.required]),
+        phoneNumber: new FormControl('',[Validators.maxLength(10)]),
         email : new FormControl('', [Validators.required, Validators.email]),
         password: new FormControl('', [Validators.required, Validators.minLength(5)]),
         teacherCode: new FormControl('')
@@ -67,7 +69,7 @@ export class ChoosesignupoptionComponent implements OnInit {
     );
 
     this.nameFormFieldsTemplateList = {'firstNameTemplate':this.firstNameTemplate , 'lastNameTemplate': this.lastNameTemplate };
-    this.commonFormFieldsTemplateList = {'emailTemplate':this.emailTemplate , 'passwordTemplate': this.passwordTemplate };
+    this.commonFormFieldsTemplateList = {'phoneNumberTemplate':this.phoneNumberTemplate, 'emailTemplate':this.emailTemplate , 'passwordTemplate': this.passwordTemplate };
 
   }
 
@@ -92,7 +94,7 @@ export class ChoosesignupoptionComponent implements OnInit {
             'firstName': this.signUpForm.get('firstName')?.value,
             'lastName': this.signUpForm.get('lastName')?.value,
             'email': this.signUpForm.get('email')?.value,
-            'phoneNumber': 0,
+            'phoneNumber': this.signUpForm.get('phoneNumber')?.value,
             'address': '',
             'education': '',
             'country': '',

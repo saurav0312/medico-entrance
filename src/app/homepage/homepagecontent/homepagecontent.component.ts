@@ -26,11 +26,11 @@ export class HomepagecontentComponent implements OnInit {
           if(response !== undefined){
             sub.unsubscribe()
             if(response.accountType === 'teacher'){
-              this.loading = false;
+              //this.loading = false;
               this.router.navigateByUrl('/teacherdashboard')
             }
             else{
-              this.loading = false;
+              //this.loading = false;
               this.router.navigateByUrl('/studentProfile')
             }
           }

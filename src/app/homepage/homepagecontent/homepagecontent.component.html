@@ -5,257 +5,260 @@
 <link href="https://fonts.googleapis.com/css2?family=Cambay:wght@700&display=swap" rel="stylesheet">
 </head>
 
-<div class="page-banner home-banner">
-  <div class="container h-80">
-    <div class="row align-items-center h-80 mt-5 pt-5">
-      <div class="col-lg-6 py-3 wow fadeInUp">
-        <h1 class="mb-1 head-class" style="font-size: 45px;
-                      font-style: normal;
-                      font-weight: bold; margin-bottom: 0.8em !important; width: 9em;" >Mock + Subjective Test For Competitive Exams</h1> 
-        <!-- <h1 class="head-class" style="font-size: 30px;
-        font-style: normal;
-        font-weight: bold" >Test For Competitive Exams</h1> -->
-        <p class="text-lg mb-3 description-class" >
-          ParikshaPrep is a mock test platform which helps students evaluate 
-          their preparation before the exam. We also provide performance analysis report to help them plan their preparation.</p>
-        <a (click)="signUpPage()" class="text-size btn btn-outline border btn-split sign-up-button-class">Sign up <mat-icon style="margin-left:5px;">north_east</mat-icon> </a>
-      </div>
-      <div class="col-lg-6 py-3 wow zoomIn">
-        <div class="img-place">
-          <img src="../../assets/img/first_image.png" alt="study">
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+<div *ngIf="!loading">
 
-
-<div class="page-banner home-banner">
-  <div class="container h-200">
-    <div class="row align-items-center h-100">
-      <div class="col-lg-6 py-3 wow fadeInUp">
-        <h1 class="mb-1 head-class" style="font-size: 45px;
-        font-style: normal;
-        font-weight: bold; margin-bottom: 0.8em !important; width: 9em;">Helping Aspirants Accelerate Their Performance</h1> 
-        <!-- <h1>Accelerate Their Performance</h1> -->
-        <p class="text-lg mb-3 description-class">Student can prepare for their exam by solving mock test papers 
-          or subjective test papers designed as per actual exam standard.</p>
-        
-        <a (click)="signUpPage()" class="text-size btn btn-outline border btn-split sign-up-button-class" style="width: 225px;">Register as Student <mat-icon style="margin-left:5px;">north_east</mat-icon></a>
-      </div>
-      <div class="col-lg-6 py-3 wow zoomIn">
-        <div class="img-place">
-          <img src="../../assets/img/bg_image_1.png" alt="study">
-        </div>
-      </div>
-    </div>
-    <div class="row align-items-center h-100">
-      <div class="col-lg-6 py-3 wow fadeInUp">
-        <!-- <p class="col-lg-6 text-lg mb-3" style="font-family: 'Roboto';">Teacher can conduct their own exam with self prepared set of questions. 
-          The test can be conducted for their own students or for general public</p> -->
-          <p class="text-lg mb-3 description-class">Teacher can conduct their own exam with self prepared set of questions. 
-            The test can be conducted for their own students or for general public</p>
-
-            <a (click)="signUpPage()" class="text-size btn btn-outline border btn-split sign-up-button-class" style="width: 225px;">Register as Teacher <mat-icon style="margin-left:5px;">north_east</mat-icon></a>
-          
-      </div>
-      <!-- <div class="row" style="width: auto; margin-left:auto; margin-right: 2em; ">
-        <a (click)="signUpPage()" class="text-size btn btn-outline border" style="float: right; padding: 0.3em;">Register as Institute</a>
-      </div> -->
-
-      <div class="col-lg-6 py-3 wow fadeInUp">
-        <!-- <p class="col-lg-6 text-lg mb-3" style="font-family: 'Roboto';">Teacher can conduct their own exam with self prepared set of questions. 
-          The test can be conducted for their own students or for general public</p> -->
-          <div>
-          <p class="text-lg mb-3 description-class">Institue can conduct their own exam with self prepared set of questions. 
-            The test can be conducted for their own students or for general public</p>
-
-            <a (click)="registerAsInstitute()" class="text-size btn btn-outline border btn-split sign-up-button-class" style="width: 225px;">Register as Institute <mat-icon style="margin-left:5px;">north_east</mat-icon></a>
-          </div>
-      </div>
-      <!-- <div class="row" style="width: auto; margin-left:auto; margin-right: 2em; ">
-        <a (click)="signUpPage()" class="text-size btn btn-outline border" style="float: right; padding: 0.3em;">Register as Institute</a>
-      </div> -->
-
-
-    </div>
-    
-  </div>
-</div>
-
-
-<main>
-  <div class="page-section features">
-    <div class="container">
-      <h1 class="mb-1 head-class" style="font-size: 45px;
-                      font-style: normal;
-                      font-weight: bold; margin-bottom: 0.8em !important; text-align: center;" >ParikshaPrep Provides You</h1>
-      <div class="row justify-content-left">
-        <div class="col-md-6 col-lg-4 py-3 wow fadeInUp">
-          <div class="d-flex flex-row">
-            <div class="img-fluid mr-3">
-              
-              <mat-icon class="services-icon-color">description</mat-icon>
-            </div>
-            <div>
-              <h5 class="services-class services-icon-color">Mock Tests</h5>
-              <p class="services-description">Simulated mock tests to prepare for your competitive exam</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4 py-3 wow fadeInUp">
-          <div class="d-flex flex-row">
-            <div class="img-fluid mr-3">
-              
-              <mat-icon class="services-icon-color">description</mat-icon>
-            </div>
-            <div>
-              <h5 class="services-class services-icon-color">Subjective Tests</h5>
-              <p class="services-description">Evaluate your subjective strength by giving subject tests</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4 py-3 wow fadeInUp">
-          <div class="d-flex flex-row">
-            <div class="img-fluid mr-3">
-              
-              <mat-icon class="services-icon-color">dashboard</mat-icon>
-            </div>
-            <div>
-              <h5 class="services-class services-icon-color" style="color: #6c55f9;">Performance Dashboard</h5>
-              <p class="services-description">Get detailed analysis and evaluation of your performance</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      <div class="row justify-content-left">
-        <div class="col-md-6 col-lg-4 py-3 wow fadeInUp">
-          <div class="d-flex flex-row">
-            <div class="img-fluid mr-3">
-              
-              <mat-icon class="services-icon-color">history_edu</mat-icon>
-            </div>
-            <div>
-              <h5 class="services-class services-icon-color">Teacher/Institute Organized Tests</h5>
-              <p class="services-description">Teacher and institute can organize their own test and get detailed analysis report for their students.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4 py-3 wow fadeInUp">
-          <div class="d-flex flex-row">
-            <div class="img-fluid mr-3">
-              
-              <mat-icon class="services-icon-color">forum</mat-icon>
-            </div>
-            <div>
-              <h5 class="services-class services-icon-color">Discussion Forum</h5>
-              <p class="services-description">Discuss and clear your exam doubts on our discussion forum.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-md-6 col-lg-4 py-3 wow fadeInUp">
-          <div class="d-flex flex-row">
-            <div class="img-fluid mr-3">
-              
-              <mat-icon class="services-icon-color">info</mat-icon>
-            </div>
-            <div>
-              <h5 class="services-class services-icon-color">Information</h5>
-              <p class="services-description">Stay informed about general exam related information</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-    </div>
-  </div>
-
-
-  <div class="page-section">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-6 py-3 wow fadeInLeft">
-          <!-- <h2 class="title-section">Start Your Exam <span class="marked">Preparation</span> Today</h2> -->
+  <div class="page-banner home-banner">
+    <div class="container h-80">
+      <div class="row align-items-center h-80 mt-5 pt-5">
+        <div class="col-lg-6 py-3 wow fadeInUp">
           <h1 class="mb-1 head-class" style="font-size: 45px;
-        font-style: normal;
-        font-weight: bold;">Start Your Exam Preparation Today</h1> 
-          <!-- <div class="divider"></div> -->
-          <p class="text-lg mt-4 mb-5 description-class">Evaluate your exam preparation by taking a free mock test and get your detailed performance summary</p>
-          <!-- <a routerLink="/authentication/signin" class="btn btn-primary">Give Mock Test</a> -->
-          <a routerLink="/authentication/signin" class="text-size btn btn-outline border btn-split sign-up-button-class" style="width: 190px;">Give Mock Test <mat-icon style="margin-left:5px;">north_east</mat-icon></a>
+                        font-style: normal;
+                        font-weight: bold; margin-bottom: 0.8em !important; width: 9em;" >Mock + Subjective Test For Competitive Exams</h1> 
+          <!-- <h1 class="head-class" style="font-size: 30px;
+          font-style: normal;
+          font-weight: bold" >Test For Competitive Exams</h1> -->
+          <p class="text-lg mb-3 description-class" >
+            ParikshaPrep is a mock test platform which helps students evaluate 
+            their preparation before the exam. We also provide performance analysis report to help them plan their preparation.</p>
+          <a (click)="signUpPage()" class="text-size btn btn-outline border btn-split sign-up-button-class">Sign up <mat-icon style="margin-left:5px;">north_east</mat-icon> </a>
         </div>
         <div class="col-lg-6 py-3 wow zoomIn">
-          <div class="img-place text-center">
-            <img src="../../assets/img/bg_image_3.png" alt="">
+          <div class="img-place">
+            <img src="../../assets/img/first_image.png" alt="study">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="page-banner home-banner">
+    <div class="container h-200">
+      <div class="row align-items-center h-100">
+        <div class="col-lg-6 py-3 wow fadeInUp">
+          <h1 class="mb-1 head-class" style="font-size: 45px;
+          font-style: normal;
+          font-weight: bold; margin-bottom: 0.8em !important; width: 9em;">Helping Aspirants Accelerate Their Performance</h1> 
+          <!-- <h1>Accelerate Their Performance</h1> -->
+          <p class="text-lg mb-3 description-class">Student can prepare for their exam by solving mock test papers 
+            or subjective test papers designed as per actual exam standard.</p>
+          
+          <a (click)="signUpPage()" class="text-size btn btn-outline border btn-split sign-up-button-class" style="width: 225px;">Register as Student <mat-icon style="margin-left:5px;">north_east</mat-icon></a>
+        </div>
+        <div class="col-lg-6 py-3 wow zoomIn">
+          <div class="img-place">
+            <img src="../../assets/img/bg_image_1.png" alt="study">
+          </div>
+        </div>
+      </div>
+      <div class="row align-items-center h-100">
+        <div class="col-lg-6 py-3 wow fadeInUp">
+          <!-- <p class="col-lg-6 text-lg mb-3" style="font-family: 'Roboto';">Teacher can conduct their own exam with self prepared set of questions. 
+            The test can be conducted for their own students or for general public</p> -->
+            <p class="text-lg mb-3 description-class">Teacher can conduct their own exam with self prepared set of questions. 
+              The test can be conducted for their own students or for general public</p>
+
+              <a (click)="signUpPage()" class="text-size btn btn-outline border btn-split sign-up-button-class" style="width: 225px;">Register as Teacher <mat-icon style="margin-left:5px;">north_east</mat-icon></a>
+            
+        </div>
+        <!-- <div class="row" style="width: auto; margin-left:auto; margin-right: 2em; ">
+          <a (click)="signUpPage()" class="text-size btn btn-outline border" style="float: right; padding: 0.3em;">Register as Institute</a>
+        </div> -->
+
+        <div class="col-lg-6 py-3 wow fadeInUp">
+          <!-- <p class="col-lg-6 text-lg mb-3" style="font-family: 'Roboto';">Teacher can conduct their own exam with self prepared set of questions. 
+            The test can be conducted for their own students or for general public</p> -->
+            <div>
+            <p class="text-lg mb-3 description-class">Institue can conduct their own exam with self prepared set of questions. 
+              The test can be conducted for their own students or for general public</p>
+
+              <a (click)="registerAsInstitute()" class="text-size btn btn-outline border btn-split sign-up-button-class" style="width: 225px;">Register as Institute <mat-icon style="margin-left:5px;">north_east</mat-icon></a>
+            </div>
+        </div>
+        <!-- <div class="row" style="width: auto; margin-left:auto; margin-right: 2em; ">
+          <a (click)="signUpPage()" class="text-size btn btn-outline border" style="float: right; padding: 0.3em;">Register as Institute</a>
+        </div> -->
+
+
+      </div>
+      
+    </div>
+  </div>
+
+
+  <main>
+    <div class="page-section features">
+      <div class="container">
+        <h1 class="mb-1 head-class" style="font-size: 45px;
+                        font-style: normal;
+                        font-weight: bold; margin-bottom: 0.8em !important; text-align: center;" >ParikshaPrep Provides You</h1>
+        <div class="row justify-content-left">
+          <div class="col-md-6 col-lg-4 py-3 wow fadeInUp">
+            <div class="d-flex flex-row">
+              <div class="img-fluid mr-3">
+                
+                <mat-icon class="services-icon-color">description</mat-icon>
+              </div>
+              <div>
+                <h5 class="services-class services-icon-color">Mock Tests</h5>
+                <p class="services-description">Simulated mock tests to prepare for your competitive exam</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4 py-3 wow fadeInUp">
+            <div class="d-flex flex-row">
+              <div class="img-fluid mr-3">
+                
+                <mat-icon class="services-icon-color">description</mat-icon>
+              </div>
+              <div>
+                <h5 class="services-class services-icon-color">Subjective Tests</h5>
+                <p class="services-description">Evaluate your subjective strength by giving subject tests</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4 py-3 wow fadeInUp">
+            <div class="d-flex flex-row">
+              <div class="img-fluid mr-3">
+                
+                <mat-icon class="services-icon-color">dashboard</mat-icon>
+              </div>
+              <div>
+                <h5 class="services-class services-icon-color" style="color: #6c55f9;">Performance Dashboard</h5>
+                <p class="services-description">Get detailed analysis and evaluation of your performance</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row justify-content-left">
+          <div class="col-md-6 col-lg-4 py-3 wow fadeInUp">
+            <div class="d-flex flex-row">
+              <div class="img-fluid mr-3">
+                
+                <mat-icon class="services-icon-color">history_edu</mat-icon>
+              </div>
+              <div>
+                <h5 class="services-class services-icon-color">Teacher/Institute Organized Tests</h5>
+                <p class="services-description">Teacher and institute can organize their own test and get detailed analysis report for their students.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4 py-3 wow fadeInUp">
+            <div class="d-flex flex-row">
+              <div class="img-fluid mr-3">
+                
+                <mat-icon class="services-icon-color">forum</mat-icon>
+              </div>
+              <div>
+                <h5 class="services-class services-icon-color">Discussion Forum</h5>
+                <p class="services-description">Discuss and clear your exam doubts on our discussion forum.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4 py-3 wow fadeInUp">
+            <div class="d-flex flex-row">
+              <div class="img-fluid mr-3">
+                
+                <mat-icon class="services-icon-color">info</mat-icon>
+              </div>
+              <div>
+                <h5 class="services-class services-icon-color">Information</h5>
+                <p class="services-description">Stay informed about general exam related information</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+
+
+    <div class="page-section">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-6 py-3 wow fadeInLeft">
+            <!-- <h2 class="title-section">Start Your Exam <span class="marked">Preparation</span> Today</h2> -->
+            <h1 class="mb-1 head-class" style="font-size: 45px;
+          font-style: normal;
+          font-weight: bold;">Start Your Exam Preparation Today</h1> 
+            <!-- <div class="divider"></div> -->
+            <p class="text-lg mt-4 mb-5 description-class">Evaluate your exam preparation by taking a free mock test and get your detailed performance summary</p>
+            <!-- <a routerLink="/authentication/signin" class="btn btn-primary">Give Mock Test</a> -->
+            <a routerLink="/authentication/signin" class="text-size btn btn-outline border btn-split sign-up-button-class" style="width: 190px;">Give Mock Test <mat-icon style="margin-left:5px;">north_east</mat-icon></a>
+          </div>
+          <div class="col-lg-6 py-3 wow zoomIn">
+            <div class="img-place text-center">
+              <img src="../../assets/img/bg_image_3.png" alt="">
+            </div>
+          </div>
+        </div>
+      </div> 
+    </div> 
+  </main>
+
+  <footer class="page-footer">
+    <div class="container">
+      <div class="row justify-content-center mb-5">
+        <div class="col-lg-3 py-3">
+          <a routerLink="/home" class="navbar-brand text-primary">Domain<span class="navbar-brand">.com</span></a>
+          
+
+          <p><a href="#" >example@gmail.com</a></p>
+          <p><a href="#">+9771234567891</a></p>
+        </div>
+        <div class="col-lg-3 py-3">
+          <h5>Quick Links</h5>
+          <ul class="footer-menu">
+            <li><a href="#">Report a Bug</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 py-3">
+          <h5>About Us</h5>
+          <ul class="footer-menu">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Our Teams</a></li>
+            <li><a href="#">Testimonials</a></li>
+            <li><a href="#">News & Press</a></li>
+          </ul>
+        </div>
+        <div class="col-lg-3 py-3">
+          <h5>Subscribe</h5>
+          <form action="#">
+            <input type="text" class="form-control" placeholder="Enter your mail..">
+          </form>
+
+          <div class="sosmed-button mt-4">
+            <a href="#"><span class="mai-logo-facebook-f"></span></a>
+            <a href="#"><span class="mai-logo-twitter"></span></a>
+            <a href="#"><span class="mai-logo-google"></span></a>
+            <a href="#"><span class="mai-logo-linkedin"></span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6 py-2">
+          <p id="copyright">&copy; 2022 <a href="#">Domain.com</a>. All rights reserved</p>
+        </div>
+        <div class="col-sm-6 py-2 text-right">
+          <div class="d-inline-block px-3">
+            <a href="#">Privacy</a>
+          </div>
+          <div class="d-inline-block px-3">
+            <a href="#">Contact Us</a>
           </div>
         </div>
       </div>
     </div> 
-  </div> 
-</main>
-
-<footer class="page-footer">
-  <div class="container">
-    <div class="row justify-content-center mb-5">
-      <div class="col-lg-3 py-3">
-        <a routerLink="/home" class="navbar-brand text-primary">Domain<span class="navbar-brand">.com</span></a>
-        
-
-        <p><a href="#" >example@gmail.com</a></p>
-        <p><a href="#">+9771234567891</a></p>
-      </div>
-      <div class="col-lg-3 py-3">
-        <h5>Quick Links</h5>
-        <ul class="footer-menu">
-          <li><a href="#">Report a Bug</a></li>
-        </ul>
-      </div>
-      <div class="col-lg-3 py-3">
-        <h5>About Us</h5>
-        <ul class="footer-menu">
-          <li><a href="#">About Us</a></li>
-          <li><a href="#">Our Teams</a></li>
-          <li><a href="#">Testimonials</a></li>
-          <li><a href="#">News & Press</a></li>
-        </ul>
-      </div>
-      <div class="col-lg-3 py-3">
-        <h5>Subscribe</h5>
-        <form action="#">
-          <input type="text" class="form-control" placeholder="Enter your mail..">
-        </form>
-
-        <div class="sosmed-button mt-4">
-          <a href="#"><span class="mai-logo-facebook-f"></span></a>
-          <a href="#"><span class="mai-logo-twitter"></span></a>
-          <a href="#"><span class="mai-logo-google"></span></a>
-          <a href="#"><span class="mai-logo-linkedin"></span></a>
-        </div>
-      </div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-6 py-2">
-        <p id="copyright">&copy; 2022 <a href="#">Domain.com</a>. All rights reserved</p>
-      </div>
-      <div class="col-sm-6 py-2 text-right">
-        <div class="d-inline-block px-3">
-          <a href="#">Privacy</a>
-        </div>
-        <div class="d-inline-block px-3">
-          <a href="#">Contact Us</a>
-        </div>
-      </div>
-    </div>
-  </div> 
-</footer> 
+  </footer> 
+</div>
 
 <app-spinner [loading]="loading" [diameter]="50" [overlay]="true">
 </app-spinner>
