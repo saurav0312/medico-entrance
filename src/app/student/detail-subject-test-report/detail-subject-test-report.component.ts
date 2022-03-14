@@ -104,59 +104,62 @@ export class DetailSubjectTestReportComponent implements OnInit {
               this.testReportData.allTests = this.testReportData.allTests.filter(test => test.testId === testIdFromParams)
             }
           
-
-            
-            this.uniqueTestsList = {}
-            this.testReportData.allTests.forEach(test =>{
-              if(this.uniqueTestsList[test.testId]=== undefined){
-                this.uniqueTestsList[test.testId] = [];
-                this.uniqueTestsList[test.testId].push(test)
-              }
-              else{
-                if(!this.uniqueTestsList[test.testId].find(ele => ele.testTakenDate === test.testTakenDate))
-                this.uniqueTestsList[test.testId].push(test)
-              }
-            })
-
-            let count = 0;
-            let expanded =true;
-
-            Object.keys(this.uniqueTestsList).forEach(key =>{
-              if(count > 0){
-                expanded = false;
-              }
-
-              if(this.allTests.length == 0 || !this.allTests.find(node => node.data === key))
-              {
-
-                let tempTreeData: TreeNode = {
-                  "label": this.uniqueTestsList[key][0].testName,
-                  "data": key,
-                  "children":[],
-                  "leaf":false,
-                  "expanded": expanded
+            if(this.testReportData.allTests.length > 0){
+              this.uniqueTestsList = {}
+              this.testReportData.allTests.forEach(test =>{
+                if(this.uniqueTestsList[test.testId]=== undefined){
+                  this.uniqueTestsList[test.testId] = [];
+                  this.uniqueTestsList[test.testId].push(test)
                 }
+                else{
+                  if(!this.uniqueTestsList[test.testId].find(ele => ele.testTakenDate === test.testTakenDate))
+                  this.uniqueTestsList[test.testId].push(test)
+                }
+              })
 
-                this.uniqueTestsList[key].forEach(individualTest =>{
-                  let childrenTempData: TreeNode ={
-                    "label": formatDate((<Timestamp><unknown>(individualTest.testTakenDate)).toDate(), 'medium','en-US'),
-                    "data": individualTest,
-                    "leaf": true
+              let count = 0;
+              let expanded =true;
+
+              Object.keys(this.uniqueTestsList).forEach(key =>{
+                if(count > 0){
+                  expanded = false;
+                }
+  
+                if(this.allTests.length == 0 || !this.allTests.find(node => node.data === key))
+                {
+  
+                  let tempTreeData: TreeNode = {
+                    "label": this.uniqueTestsList[key][0].testName,
+                    "data": key,
+                    "children":[],
+                    "leaf":false,
+                    "expanded": expanded
                   }
-                  tempTreeData.children?.push(childrenTempData)
-                })
+  
+                  this.uniqueTestsList[key].forEach(individualTest =>{
+                    let childrenTempData: TreeNode ={
+                      "label": formatDate((<Timestamp><unknown>(individualTest.testTakenDate)).toDate(), 'medium','en-US'),
+                      "data": individualTest,
+                      "leaf": true
+                    }
+                    tempTreeData.children?.push(childrenTempData)
+                  })
+  
+                  this.allTests.push(tempTreeData);
+                  count++;
+                }
+              })
 
-                this.allTests.push(tempTreeData);
-                count++;
+              if(this.allTests.length > 0 && this.allTests[0].children !== undefined){
+                this.defaultSelectedTest = this.allTests[0].children[0]
+                let nodeData ={
+                  'node': this.defaultSelectedTest
+                }
+                this.nodeSelected(nodeData)
               }
-            })
-
-            if(this.allTests.length > 0 && this.allTests[0].children !== undefined){
-              this.defaultSelectedTest = this.allTests[0].children[0]
-              let nodeData ={
-                'node': this.defaultSelectedTest
-              }
-              this.nodeSelected(nodeData)
+            }
+            else{
+              this.isNewUser = true;
             }
           })
         }
