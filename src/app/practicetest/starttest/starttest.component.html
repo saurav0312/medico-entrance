@@ -57,7 +57,7 @@
         <div class="row">
             <div class="col-sm-8 question-mobile-view" style="padding-left: 5em;">
                 <div style="min-width: 20em; min-height: 25em;">
-                    <div class="card" style="width: auto; border: 1px solid black; height: auto; padding: 1em;">
+                    <div class="card mat-elevation-z1" style="width: auto; border: 1px solid #ded9d9; border-radius: 10px; height: auto; padding: 1em;">
                         <div>
                             <h1 class="card-title" style="font-size: 15px; word-break: break-all;">Q{{counter + 1}}. {{testData.questions[counter]?.question}}</h1>
                         </div>
@@ -86,7 +86,7 @@
                         </div>
                     </div>
 
-                    <div style="margin: 1em; float: right;">
+                    <div style="margin: 1em; margin-top: 2em; float: right;">
                         <button (click)="submitTest()" class="btn btn-primary"> Submit</button>
                     </div>
                 </div>
@@ -94,8 +94,8 @@
 
             <div class="col-sm-4 question-buttons-mobile-view" style="padding-left: 2em;">
                 <div style="min-width: 20em; min-height: 20em;">
-                    <div class="card" style="width: auto; border: 1px solid black; height: auto; padding: 1em;">
-                        <div class="row" style="font-size: 20px; text-align:center; margin-bottom:0.5em; height: 1.5em; border-bottom: 1px solid;">
+                    <div class="card mat-elevation-z1" style="width: auto; border: 1px solid #ded9d9; border-radius: 10px; height: auto; padding: 1em;">
+                        <div class="row" style="font-size: 20px; text-align:center; margin-bottom:0.5em; height: 1.5em; border-bottom: 1px solid #ded9d9;">
                             <span style="text-align: center;">Question Status </span>
                         </div>
                         <div class="row" style="text-align: center; justify-content: center;">
