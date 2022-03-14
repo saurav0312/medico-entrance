@@ -63,7 +63,6 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
-    // google.charts.load('current', {packages: ['corechart']});
 
     this.authService.getCurrentUser().subscribe(currentUser =>{
       this.userId = currentUser.uid
@@ -121,14 +120,6 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
             }
           })
         })
-
-        //prepare overall performance chart
-        // let chartData:any = [];
-        // chartData.push(['Correct Answer',  this.noOfCorrectAnswers])
-        // chartData.push(['Incorrect Answer',  this.noOfIncorrectAnswers])
-        // chartData.push(['Unanswered',  this.noOfQuestionsNotAnswered])
-        // this.buildOverallPerformanceChart(chartData);
-
       },
       error =>{
         window.alert(error.error)
@@ -211,33 +202,6 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
       this.loading = false;
     })
   }
-
-  // buildOverallPerformanceChart(chartData: any){
-
-  //   var renderChart = ()=>{
-      
-  //   var data = new google.visualization.DataTable();
-
-  //   data.addColumn('string', 'Category')
-  //   data.addColumn('number','No of Questions')
-  //   data.addRows(chartData)
-
-  //   var options = {
-  //     pieHole: 0.44,
-  //     pieSliceText:'value',
-  //     tooltip:{
-  //       text:'value'
-  //     },
-  //     slices: {0: {color: '#51f57c'}, 1: {color: 'f34c4c'}, 2: {color: 'cfcdcd'}}
-  //   };
-
-  //   var chart = new google.visualization.PieChart(document.getElementById('donutchart'));
-  //   chart.draw(data, options);
-  //   }
-
-  //   var callback = () =>renderChart()
-  //   google.charts.setOnLoadCallback( callback);
-  // }
 
   fetchTestsList(): Observable<any>{
     return this.authService.fetchTestsList();

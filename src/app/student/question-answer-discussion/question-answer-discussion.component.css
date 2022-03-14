@@ -10,6 +10,10 @@
     .raised-block {
         margin-left: -0.625rem;
     }
+
+    .question-in-mobile-view{
+        padding-left: 13px !important;
+    }
 }
 .row [class^="col-"]:first-child>.raised-block {
     margin-left: -0.625rem;

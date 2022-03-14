@@ -1,55 +1,6 @@
 <div class="row" style="font-size: 20px; font-weight: 600; margin-top: 0.4em;">
     <div>
-        <div >
-            <!-- Left side of dashboard -->
-            <!-- <div class="col-sm-4" style="float: left; width: -webkit-fill-available; border-color: azure;">
-                <div class="card mb-4 box-shadow">
-                
-                    <div style="margin-top: 0.3em;">
-                        <div style="margin-top: 0.5em; margin-bottom: 0.5em;">
-                            Overall Performance
-                        </div>
-                        <div id="donutchart" class="chart" style="height:160px; width: 300px;" >
-                        </div>
-                        <div>
-                            <div style="margin-bottom: 0.5em; margin-top: 0.5em;">
-                                Your Progress
-                            </div>
-                            <div class="card" style="padding: 5px; margin-bottom: 20px; background-color: #f7f7f7; border: slategrey;">
-                                <div style="margin-left:0.3em; margin-bottom: 0.5em;">
-                                    <p class="card-title" style="font-size: 15px; font-weight: 500;">Subject Tests</p>
-                                    <div style="display: grid; margin-right: 0.3em;">
-                                        <div style="display: inline;">
-                                            <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: left;">{{noOfSubjectTestsGivenByTheUser}} done out of {{allSubjectTestsList.length}}</h6>
-                                            <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: right;">{{((noOfSubjectTestsGivenByTheUser*100)/allSubjectTestsList.length)}}%</h6>
-                                        </div>
-                                        <div>
-                                            <p-progressBar [value]="((noOfSubjectTestsGivenByTheUser*100)/allSubjectTestsList.length)" [showValue]="false" [style]="{'height': '6px'}"></p-progressBar>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="card" style="padding: 5px; margin-bottom: 20px; background-color: #f7f7f7; border: slategrey;">
-                                <div style="margin-left:0.3em; margin-bottom: 0.5em;">
-                                    <p class="card-title" style="font-size: 15px; font-weight: 500;">Mock Tests</p>
-                                    <div style="display: grid; margin-right: 0.3em;">
-                                        <div style="display: inline;">
-                                            <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: left;">{{noOfMockTestsGivenByTheUser}} done out of {{listOfMockTests.length}}</h6>
-                                            <h6 class="card-subtitle  text-muted" style="font-size: 13px; float: right;">{{((noOfMockTestsGivenByTheUser*100)/listOfMockTests.length)}}%</h6>
-                                        </div>
-                                        <div>
-                                            <p-progressBar [value]="((noOfMockTestsGivenByTheUser*100)/listOfMockTests.length)" [showValue]="false" [style]="{'height': '6px'}"></p-progressBar>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div> -->
-
-            <!-- Right side of dashboard -->
+        <div>
             <div class="col-sm-12">
                 <div class="card mb-4 box-shadow">
                     <p style="margin-top: 5px; text-align: center; font-family: 'Cambay';">Let's start a quick test</p> 
@@ -146,8 +97,8 @@
                             <p class="card-text">
                                 This is the sample test taken by IOE. This is the sample test taken by IOE. This is the sample test taken by IOE
                             </p>
-                            <button (click)="startTest(individualTest)" class="btn btn-outline-primary" [disabled]="individualTest.testType==='Paid' && !individualTest.isBought" style="margin-right: 2em;">Start Test</button>
-                            <button (click)="buySubjectTest(individualTest.id)" class="btn btn-primary" [hidden]="individualTest.testType==='Free' || individualTest.isBought">Buy Test</button>
+                            <button (click)="startTest(individualTest)" class="btn btn-outline-primary" *ngIf="individualTest.testType==='Free' || individualTest.isBought" style="margin-right: 2em;">Start Test</button>
+                            <button (click)="buySubjectTest(individualTest.id)" class="btn btn-primary" *ngIf="!(individualTest.testType==='Free') && !individualTest.isBought">Buy Test</button>
                             
                         </div>
                     </div>
@@ -187,8 +138,8 @@
                     <p class="card-text">
                         This is the sample test taken by IOE. This is the sample test taken by IOE. This is the sample test taken by IOE
                     </p>
-                    <button (click)="startTest(individualTest)" class="btn btn-outline-primary" [disabled]="individualTest.testType==='Paid' && !individualTest.isBought" style="margin-right: 2em;">Start Test</button>
-                    <button (click)="buyMockTest(individualTest.id)" class="btn btn-primary" [hidden]="individualTest.testType==='Free' || individualTest.isBought">Buy Test</button>
+                    <button (click)="startTest(individualTest)" class="btn btn-outline-primary" *ngIf="individualTest.testType==='Free' || individualTest.isBought" style="margin-right: 2em;">Start Test</button>
+                    <button (click)="buyMockTest(individualTest.id)" class="btn btn-primary" *ngIf="!(individualTest.testType==='Free') && !individualTest.isBought">Buy Test</button>
                     
                 </div>
             </div>
