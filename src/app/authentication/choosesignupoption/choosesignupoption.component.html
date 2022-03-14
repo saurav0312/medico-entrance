@@ -130,6 +130,13 @@
     </mat-form-field>
 </ng-template>
 
+<ng-template #phoneNumberTemplate let-signUpForm>
+    <mat-form-field style=" width: 100%;margin-right: 0.5em" appearance="outline">
+        <mat-label>PhoneNumber</mat-label>
+        <input [formControl]="signUpForm.get('phoneNumber')" type="number" maxlength="10" pattern="[1-9]{1}[0-9]{9}" required matInput>
+    </mat-form-field>
+</ng-template>
+
 <ng-template #emailTemplate let-signUpForm>
     <mat-form-field style="width: 100%;" appearance="outline">
         <mat-label>Email</mat-label>

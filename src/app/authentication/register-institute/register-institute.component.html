@@ -2,7 +2,7 @@
 <div >
     <div class="login-container">
         <div class="bb-login">
-            <form (ngSubmit)="register()" name="loginForm" [formGroup]="registerInstitueForm" > 
+            <form (ngSubmit)="register()" name="registerInstitueForm" [formGroup]="registerInstitueForm" > 
                 <span class="mb-3 bb-form-title p-b-26" style="font-family: 'Cambay', sans-serif;"> Register as Institute </span>
                 <div style="height: 5em;">  
                     <ng-container *ngTemplateOutlet="emailTemplate; context:{$implicit:registerInstitueForm}">
