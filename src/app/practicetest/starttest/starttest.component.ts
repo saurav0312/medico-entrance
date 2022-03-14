@@ -54,6 +54,7 @@ export class StarttestComponent implements OnInit, OnDestroy {
 
   questionStartTime!: number ;
   questionEndTime!: number;
+  testCategory: string = ''; 
 
   constructor(
     private router : Router,
@@ -76,6 +77,7 @@ export class StarttestComponent implements OnInit, OnDestroy {
       this.testId = <string>params.data
       this.authService.getMockTestByID(this.testId).subscribe(response=>{
         this.testData= response;
+        this.testCategory = this.testData.testCategory
         this.testTotalTime = this.testData.totalTime
         const sub = this.authService.getCurrentUser().subscribe(response =>{
           this.userId = response?.uid
