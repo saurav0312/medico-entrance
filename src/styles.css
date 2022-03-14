@@ -44,3 +44,21 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 body{
 	margin:0;
 }
+
+
+::-webkit-scrollbar {
+    width: 8px;           
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    /* background: rgb(241, 238, 230);         */
+    background-color: white;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background-color: #aaaaaa;
+    border-radius: 20px;       /* roundness of the scroll thumb */
+    /* border: 3px solid rgb(241, 238, 230); */
+    border: 3px solid #aaaaaa;
+  }

@@ -11,11 +11,11 @@
     <h2 style="padding: 0; font-family: 'Cambay'">Search for teacher</h2> 
     <input style="margin-bottom: 0.4em;" class="form-control" id="myInput" type="text" [(ngModel)]="searchText" (keyup)="searchByName($event)" placeholder="Search by name">
     <br>
-    <p-dropdown [options]="categoryListTemp" 
+    <!-- <p-dropdown [options]="categoryListTemp" 
                                     [(ngModel)]="categoryItemTemp" 
                                     optionLabel="name"
                                     placeholder="Select"
-                                    (onClick)="categorySelectedTemp($event)"></p-dropdown>
+                                    (onChange)="categorySelectedTemp($event)"></p-dropdown> -->
     <div style="padding: 0; margin-top: 0.8em;">
         <mat-label style="text-align: left; font-family: 'Cambay'; font-size: 20px;">Select: </mat-label>
     <!-- </div>

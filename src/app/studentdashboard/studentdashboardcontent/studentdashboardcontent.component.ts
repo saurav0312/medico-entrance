@@ -44,7 +44,7 @@ export class StudentdashboardcontentComponent implements OnInit {
     }
   ];
 
-  categoryItemTemp: string = 'All';
+  categoryItemTemp: SubjectList = this.categoryListTemp[0];
 
   username: string | null = '';
 

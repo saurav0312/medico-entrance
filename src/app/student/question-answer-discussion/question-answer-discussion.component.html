@@ -3,24 +3,24 @@
         <div class="card mb-4 box-shadow">
             <div class="card-body" style="padding: 2px;">
                 <div>
-                        <p-tabView>
-                            <p-tabPanel [selected]="true">
-                                <ng-template pTemplate="header">
-                                    <div>Recent Questions</div>
-                                </ng-template>
-                                <ng-container *ngTemplateOutlet="recentQuestionTemplate">
-            
-                                </ng-container>
-                            </p-tabPanel>
-                            <p-tabPanel>
-                                <ng-template pTemplate="header">
-                                    My Questions
-                                </ng-template>
-                                <ng-container *ngTemplateOutlet="myQuestionsTemplate">
-            
-                                </ng-container>
-                            </p-tabPanel>
-                        </p-tabView>
+                    <p-tabView>
+                        <p-tabPanel [selected]="true">
+                            <ng-template pTemplate="header">
+                                <div>Recent Questions</div>
+                            </ng-template>
+                            <ng-container *ngTemplateOutlet="recentQuestionTemplate">
+        
+                            </ng-container>
+                        </p-tabPanel>
+                        <p-tabPanel>
+                            <ng-template pTemplate="header">
+                                My Questions
+                            </ng-template>
+                            <ng-container *ngTemplateOutlet="myQuestionsTemplate">
+        
+                            </ng-container>
+                        </p-tabPanel>
+                    </p-tabView>
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" style="display: flex; justify-content: center;">
+                <div class="row question-with-date-class" style="display: flex; justify-content: center;">
                     <!-- <div class="row"> -->
                         <!-- <div class="col-sm-2" style="font-weight: 600; color: #5d5ded;">
                             {{discussionQuestion.questionAskedByUsername}}
