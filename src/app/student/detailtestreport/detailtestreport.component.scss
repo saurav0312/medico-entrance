@@ -292,4 +292,8 @@ circle:nth-child(2){
   --successValue: 20;
 }
 
-
+@media(max-width:576px){
+  .strong-subject-list-mobile-view{
+    border-right: none !important;
+  }
+}
