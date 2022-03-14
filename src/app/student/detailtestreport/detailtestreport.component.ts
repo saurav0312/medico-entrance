@@ -420,18 +420,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         }
       }        
 
-      //This is for default value of chart dropdown. will use it later
-      // let event :any ={
-      //   'target':{
-      //     'textContent': this.subjectListDropdownOptions[0].name 
-      //   }
-      // }
-
-      // this.selectedSubjectInTopicWisePiechart = this.subjectListDropdownOptions[0].name
-      // this.subjectSelectedForTopicWiseTimeSpentChart(event)
-
-
-
       //prepare data for strong subject and topic
       Object.keys(this.subjectTagMap).forEach(key =>{
         let temppiechartData = [];
@@ -455,14 +443,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         else{
           this.weakSubjectList['weakSubject'].push(tempSuccessValue)
         }
-
-        // if(this.subjectTagMap[key]['correct'] >= this.subjectThresholdValue){
-
-        //   this.strongSubjectList['strongSubject'].push(tempSuccessValue)
-        // }
-        // else{
-        //   this.weakSubjectList['weakSubject'].push(tempSuccessValue)
-        // }
       })
 
       //prepare data for weak subject and topic
@@ -495,13 +475,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
     }
 
     this.tabChanged('sample')
-    // this.prepareSubjectWiseBarGraph()
-    // this.prepareTopicWiseBarGraph()
-    // this.generateRandomColor(this.subjectWiseTimeSpentPieChartData)
-    // this.prepareSubjectWiseTimeSpentChart(this.subjectWiseTimeSpentPieChartLabels, this.subjectWiseTimeSpentPieChartData, 'subjectWiseTimeSpentPieChart' , 'Subjectwise Time Spent Chart')
-
-    // this.generateRandomColor(this.topicWiseTimeSpentPieChartData)
-    // this.prepareTopicWiseTimeSpentChart(this.topicWiseTimeSpentPieChartLabels, this.topicWiseTimeSpentPieChartData, 'topicWiseTimeSpentPieChart' , 'Topicwise Time Spent Chart')
   }
 
   fullScreen1(){
@@ -562,12 +535,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
 
   prepareSubjectWiseBarGraph(){
-
-    console.log("Correct: ", this.subjectWiseCorrectAnswersData)
-    console.log("Incorrect: ", this.subjectWiseIncorrectAnswersData)
-    console.log("Not answered: ", this.subjectWiseNotAnsweredData)
-    console.log("subjectnammes : ", this.subjectNameList)
-
     const labels = this.subjectNameList
     const data = {
       labels: labels,
@@ -626,7 +593,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
     };
 
     var subjectWiseChartEle: any = document.getElementById('subjectWiseBarGraph')
-    console.log("context: ", subjectWiseChartEle)
     this.subjectWiseChart = new Chart(
       subjectWiseChartEle,
       config
@@ -700,9 +666,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
 
   prepareSubjectWiseTimeSpentChart(chartLabels: string[], chartData: number[], elementId: string, chartTitle: string){
-
-    console.log("subject time labelss: ", chartLabels)
-    console.log("subject time sdata: ", chartData)
     const data = {
       labels: chartLabels,
       datasets: [{
@@ -864,17 +827,17 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
       }
     }
 
+    this.previouslySelectedSubjectInTopicWiseBargraph = '';
     this.defaultSelectedSubjectInTopicWiseBarGraph = this.subjectListDropdownOptions[0]
     this.subjectSelectedForTopicWiseChart(subjectEvent)
 
+    this.previouslySelectedSubjectInTopicWisePiechart = '';
     this.defaultSelectedSubjectInTopicWisePieChart = this.subjectListDropdownOptions[0]
     this.subjectSelectedForTopicWiseTimeSpentChart(subjectEvent);
   }
 
   subjectSelectedForTopicWiseChart(event: any){
-    console.log("SUbject seel: ", event.value.name)
     let subjectName = event.value.name
-    console.log("Suu: ", this.subjectNameWithTopicsMap[subjectName])
     if(subjectName !== undefined && subjectName !== this.previouslySelectedSubjectInTopicWiseBargraph){
       let topicList: string[] = this.subjectNameWithTopicsMap[subjectName]
 
@@ -893,11 +856,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         }
       })
 
-      // this.prepareTopicWiseBarGraph()
-      console.log("Topic wiwiwi corr: ", this.topicWiseCorrectAnswersData)
-      console.log("Topic wiwiwi incorr: ", this.topicWiseIncorrectAnswersData)
-      console.log("Topic wiwiwi not: ", this.topicWiseNotAnsweredData)
-      //this.topicWiseChart.update()
       this.removeData(this.topicWiseChart)
 
       const data = {
@@ -931,22 +889,14 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
   subjectSelectedForTopicWiseTimeSpentChart(event: any){
 
-    console.log("SUbject seel for timespent: ", event.value.name)
     let subjectName = event.value.name
-    console.log("Suu timespent: ", this.subjectNameWithTopicsMap[subjectName])
     if(subjectName !== undefined && subjectName !== this.previouslySelectedSubjectInTopicWisePiechart){
       let topicList: string[] = this.subjectNameWithTopicsMap[subjectName]
 
-      //this.topicWiseChart.update()
       this.removeData(this.topicWiseTimeSpentChart)
-
-      
-
-      //check
 
       let labels = [];
       let pieChartData = [];
-      console.log("SUbject wise time after: ", this.topicWiseTimeSpent)
       
       for (let entry of this.topicWiseTimeSpent.entries()){
         if(topicList.includes(entry[0])){
@@ -967,16 +917,11 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
       };
       this.addData(this.topicWiseTimeSpentChart, data )
       this.previouslySelectedSubjectInTopicWisePiechart = subjectName
-      //this.prepareTopicWiseTimeSpentChart(labels, pieChartData, 'topicWiseTimeSpentChart' , 'Topicwise Time Spent Chart')
     }
   }
 
 
   addData(chart:any, data: any) {
-    // chart.data.labels.push(label);
-    // chart.data.datasets.forEach((dataset:any) => {
-    //     dataset.data.push(data);
-    // });
 
     chart.data = data
     chart.update();
