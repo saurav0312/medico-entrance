@@ -2,7 +2,7 @@
 
     <div class="row">
 
-        <div class="col-sm-3" style="margin-top: 1.2em; margin-bottom: 1.2em;">
+        <div class="col-sm-3" style="margin-bottom: 1.2em;">
             <div style="margin-top: 3em; margin-bottom:  1.5em;">
                 <p style="font-size: 21px; font-weight: 500; font-family: 'Cambay';">All Given Mock Tests</p>
             </div>
@@ -12,13 +12,14 @@
             selectionMode="single" 
             [(selection)]="defaultSelectedTest" 
             (onNodeSelect)="nodeSelected($event)"
-            [filter]="true"></p-tree>
+            [filter]="true"
+            scrollHeight="250px"></p-tree>
 
         </div>
 
         <div class="col-sm-9" style="padding: 0; padding-left: 3px;">
         
-            <h1 style="text-align: center; margin-top: 2em; font-family: 'Cambay';">Test Result Analysis
+            <h1 style="text-align: center; margin-top: 1.2em; font-family: 'Cambay';">Test Result Analysis
             </h1>
 
             <mat-tab-group mat-align-tabs="center" (selectedTabChange)="tabChanged($event)">
@@ -237,10 +238,10 @@
                                     </mat-icon>
                                 </a>
                                 <p-dropdown [options]="subjectListDropdownOptions" 
-                                    [(ngModel)]="selectedSubjectInTopicWiseBargraph" 
+                                    [(ngModel)]="defaultSelectedSubjectInTopicWiseBarGraph" 
                                     optionLabel="name"
                                     placeholder="Select a subject"
-                                    (onClick)="subjectSelectedForTopicWiseChart($event)"></p-dropdown>
+                                    (onChange)="subjectSelectedForTopicWiseChart($event)"></p-dropdown>
                             </div>
                             <div style="display: flex; align-items: center; justify-content: center;">
                                 <canvas id="topicWiseBarGraph"></canvas>
@@ -285,10 +286,10 @@
                                     </mat-icon>
                                 </a>
                                 <p-dropdown [options]="subjectListDropdownOptions" 
-                                            [(ngModel)]="selectedSubjectInTopicWisePiechart" 
+                                            [(ngModel)]="defaultSelectedSubjectInTopicWisePieChart" 
                                             optionLabel="name"
                                             placeholder="Select a subject"
-                                            (onClick)="subjectSelectedForTopicWiseTimeSpentChart($event)"></p-dropdown>
+                                            (onChange)="subjectSelectedForTopicWiseTimeSpentChart($event)"></p-dropdown>
                             </div>
                             <div style="display: flex; align-items: center; justify-content: center;">
                                 <canvas id="topicWiseTimeSpentPieChart"></canvas>

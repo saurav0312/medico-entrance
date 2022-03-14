@@ -79,6 +79,9 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   previouslySelectedSubjectInTopicWisePiechart: string = ''
   subjectListDropdownOptions: SubjectList[] = [];
 
+  defaultSelectedSubjectInTopicWiseBarGraph: any;
+  defaultSelectedSubjectInTopicWisePieChart: any;
+
   subjectWiseChart: any;
   topicWiseChart: any;
 
@@ -487,6 +490,8 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
           this.weakTopicList['weakTopic'].push(tempSuccessValue)
         }
       })
+
+
     }
 
     this.tabChanged('sample')
@@ -851,11 +856,24 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
     this.generateRandomColor(this.topicWiseTimeSpentPieChartData)
     this.prepareTopicWiseTimeSpentChart(this.topicWiseTimeSpentPieChartLabels, this.topicWiseTimeSpentPieChartData, 'topicWiseTimeSpentPieChart' , 'Topicwise Time Spent Chart')
+
+    // This is for default value of chart dropdown. will use it later
+    let subjectEvent :any ={
+      'value':{
+        'name': this.subjectListDropdownOptions[0].name 
+      }
+    }
+
+    this.defaultSelectedSubjectInTopicWiseBarGraph = this.subjectListDropdownOptions[0]
+    this.subjectSelectedForTopicWiseChart(subjectEvent)
+
+    this.defaultSelectedSubjectInTopicWisePieChart = this.subjectListDropdownOptions[0]
+    this.subjectSelectedForTopicWiseTimeSpentChart(subjectEvent);
   }
 
   subjectSelectedForTopicWiseChart(event: any){
-    console.log("SUbject seel: ", event.target.textContent)
-    let subjectName = event.target.textContent
+    console.log("SUbject seel: ", event.value.name)
+    let subjectName = event.value.name
     console.log("Suu: ", this.subjectNameWithTopicsMap[subjectName])
     if(subjectName !== undefined && subjectName !== this.previouslySelectedSubjectInTopicWiseBargraph){
       let topicList: string[] = this.subjectNameWithTopicsMap[subjectName]
@@ -913,8 +931,8 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
   subjectSelectedForTopicWiseTimeSpentChart(event: any){
 
-    console.log("SUbject seel for timespent: ", event.target.textContent)
-    let subjectName = event.target.textContent
+    console.log("SUbject seel for timespent: ", event.value.name)
+    let subjectName = event.value.name
     console.log("Suu timespent: ", this.subjectNameWithTopicsMap[subjectName])
     if(subjectName !== undefined && subjectName !== this.previouslySelectedSubjectInTopicWisePiechart){
       let topicList: string[] = this.subjectNameWithTopicsMap[subjectName]

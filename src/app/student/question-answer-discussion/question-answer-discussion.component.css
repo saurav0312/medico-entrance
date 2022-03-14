@@ -14,6 +14,10 @@
     .question-in-mobile-view{
         padding-left: 13px !important;
     }
+
+    .question-with-date-class{
+        justify-content: normal !important;
+    }
 }
 .row [class^="col-"]:first-child>.raised-block {
     margin-left: -0.625rem;
