@@ -1,6 +1,6 @@
-<div class="row" style="padding-right: 15px; width: 100%; margin-left: 0.1px;">
+<div class="row" style="padding-right: 15px; width: 100%; margin-left: 0.1px; margin-top: 5px;">
     <div class="col-sm-9" style="padding-right: 0;">
-        <div class="card mb-4 box-shadow">
+        <div class="card mb-4 box-shadow mat-elevation-z2">
             <div class="card-body" style="padding: 2px;">
                 <div>
                     <p-tabView>
@@ -26,7 +26,7 @@
         </div>
     </div>
     <div class="col-sm-3" style="padding-right: 0;">
-        <div class="card mb-4 box-shadow ask-question-button" style="position: fixed; min-width: 20em;">
+        <div class="card mb-4 box-shadow ask-question-button mat-elevation-z2" style="position: fixed; min-width: 20em;">
             <div class="card-body" style="text-align: center;">
                 <div>
                     <h3 class="card-title" style="text-align: center; display: inline; ">
@@ -119,18 +119,17 @@
                                         </div>
                                     </div>
                                     <div style="display: inline-flex; margin-right: 0.3em;">
-                                        <mat-icon>thumb_up_alt</mat-icon>
+                                        <mat-icon (click)="increaseUpVoteCountofAnswer(discussionQuestion.id, j)" style="cursor: pointer;" [ngStyle]="{'color': answer.isUpVotedByCurrentLoggedInUser? '#0000ff9c' :''}">thumb_up_alt</mat-icon>
                                         <p>{{answer.answerUpVotesCount}}</p>
                                     </div>
                                     <div style="display: inline-flex;">
-                                        <mat-icon>thumb_down_alt</mat-icon>
-                                        <p>{{answer.answerUpVotesCount}}</p>
+                                        <mat-icon (click)="increaseDownVoteCountOfAnswer(discussionQuestion.id, j)" style="cursor: pointer;" [ngStyle]="{'color': answer.isDownVotedByCurrentLoggedInUser? '#0000ff9c' :''}">thumb_down_alt</mat-icon>
+                                        <p>{{answer.answerDownVotesCount}}</p>
                                     </div>
                                 </div>
                             </div>
-                            
                         </div>
-                        <mat-divider></mat-divider>
+                        <mat-divider *ngIf="j !== discussionQuestion.allAnswers.length-1"></mat-divider>
                     </ng-container>
                 </div>
             </div> 

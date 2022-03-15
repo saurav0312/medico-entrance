@@ -24,6 +24,7 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
 
   answerForm!: FormGroup;
   userId!: string;
+  username!: string;
 
   constructor(public dialogService: DialogService, private authService: AuthService,
               private messageService: MessageService) { }
@@ -38,6 +39,7 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
 
     this.authService.getCurrentUser().subscribe(currentUser =>{
       this.userId = currentUser.uid
+      this.username = currentUser.displayName;
     })
 
     this.authService.readDiscussionQuestions().subscribe( (allDiscussionQuestions:DiscussionQuestion[]) =>{
@@ -65,6 +67,17 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
         if(question.downVotedBy.find(userId => userId === this.userId) !== undefined){
           question.isDownVotedByCurrentLoggedInUser = true;
         }
+
+        question.allAnswers.forEach(answer =>{
+          if(answer.upVotedBy.find(userId => userId === this.userId) !== undefined){
+            answer.isUpVotedByCurrentLoggedInUser = true;
+          }
+
+          if(answer.downVotedBy.find(userId => userId === this.userId) !== undefined){
+            answer.isDownVotedByCurrentLoggedInUser = true;
+          }
+        })
+
         question.questionAskedDate = (<Timestamp><unknown>question.questionAskedDate).toDate()
         if(question.allAnswers.length > 0){
 
@@ -92,7 +105,7 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
 
   addDiscussionQuestion(){
   const ref = this.dialogService.open(DiscussionQuestionComponentComponent, {
-      header: 'Add a question',
+      header: 'Ask a question',
       width: '70%'
   });
 
@@ -103,6 +116,7 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
 
   }
 
+  //upvote and downvote of question
   increaseUpVoteCount(questionId: string){
 
     let currentQuestionIndex: number =  this.allDiscussionQuestions.findIndex(question => question.id === questionId)
@@ -173,9 +187,14 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
     let answerData: DiscussionAnswer={
       'answer': this.answerForm.get('answer')?.value,
       'answeredBy': this.userId,
+      'answeredByUsername': this.username,
       'answeredOn': new Date(),
       'answerUpVotesCount': 0,
-      'answerDownVotesCount': 0 
+      'answerDownVotesCount': 0,
+      'upVotedBy': [],
+      'downVotedBy': [],
+      'isUpVotedByCurrentLoggedInUser': false,
+      'isDownVotedByCurrentLoggedInUser': false 
     }
 
     let currentQuestionIndex: number =  this.allDiscussionQuestions.findIndex(question => question.id === questionId)
@@ -184,6 +203,74 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
       this.messageService.add({severity:'success', summary: 'Answer Submitted Successfully'});
     })
     this.answerForm.reset()
+  }
+
+
+  //upvote and downvote of answer
+  increaseUpVoteCountofAnswer(questionId: string, answerIndex: number){
+
+    let currentQuestionIndex: number =  this.allDiscussionQuestions.findIndex(question => question.id === questionId)
+
+    if(this.allDiscussionQuestions[currentQuestionIndex].allAnswers[answerIndex].isDownVotedByCurrentLoggedInUser){
+      this.removeDownVotedByUserOfAnswer(currentQuestionIndex, answerIndex)
+    }
+
+    //already liked by the user so decrease the upvote count and make isUpVotedByCurrentLoggedInUser false
+    if(this.allDiscussionQuestions[currentQuestionIndex].allAnswers[answerIndex].isUpVotedByCurrentLoggedInUser){
+      this.removeUpVotedByUserOfAnswer(currentQuestionIndex, answerIndex);
+    }
+    // first time liked so increase the upvote count and make isUpVotedByCurrentLoggedInUser true
+    else{
+      this.addUpVotedByUserOfAnswer(currentQuestionIndex, answerIndex)
+    }
+
+    this.allDiscussionQuestions[currentQuestionIndex].allAnswers[answerIndex].isDownVotedByCurrentLoggedInUser = false;
+    this.allDiscussionQuestions[currentQuestionIndex].allAnswers[answerIndex].isUpVotedByCurrentLoggedInUser = false;
+    this.authService.updateDiscussionQuestion(this.allDiscussionQuestions[currentQuestionIndex].id ,this.allDiscussionQuestions[currentQuestionIndex]).subscribe(response =>{
+    })
+  }
+
+  removeUpVotedByUserOfAnswer(questionIndex: number, answerIndex: number){
+    this.allDiscussionQuestions[questionIndex].allAnswers[answerIndex].answerUpVotesCount -= 1;
+    this.allDiscussionQuestions[questionIndex].allAnswers[answerIndex].upVotedBy = this.allDiscussionQuestions[questionIndex].allAnswers[answerIndex].upVotedBy.filter(userId => userId !== this.userId)
+  }
+
+  addUpVotedByUserOfAnswer(questionIndex: number, answerIndex: number){
+    this.allDiscussionQuestions[questionIndex].allAnswers[answerIndex].answerUpVotesCount += 1;
+    this.allDiscussionQuestions[questionIndex].allAnswers[answerIndex].upVotedBy.push(this.userId);
+  }
+
+  increaseDownVoteCountOfAnswer(questionId: string, answerIndex: number){
+
+    let currentQuestionIndex: number =  this.allDiscussionQuestions.findIndex(question => question.id === questionId)
+
+    if(this.allDiscussionQuestions[currentQuestionIndex].allAnswers[answerIndex].isUpVotedByCurrentLoggedInUser){
+      this.removeUpVotedByUserOfAnswer(currentQuestionIndex, answerIndex);
+    }
+
+    //already disliked by the user so decrease the downvote count and make isDownVotedByCurrentLoggedInUser false
+    if(this.allDiscussionQuestions[currentQuestionIndex].allAnswers[answerIndex].isDownVotedByCurrentLoggedInUser){
+      this.removeDownVotedByUserOfAnswer(currentQuestionIndex, answerIndex)
+    }
+    // first time disliked so increase the downvote count and make isDOwnVotedByCurrentLoggedInUser true
+    else{
+      this.addDownVotedByUserOfAnswer(currentQuestionIndex, answerIndex)
+    }
+
+    this.allDiscussionQuestions[currentQuestionIndex].allAnswers[answerIndex].isDownVotedByCurrentLoggedInUser = false;
+    this.allDiscussionQuestions[currentQuestionIndex].allAnswers[answerIndex].isUpVotedByCurrentLoggedInUser = false;
+    this.authService.updateDiscussionQuestion(this.allDiscussionQuestions[currentQuestionIndex].id ,this.allDiscussionQuestions[currentQuestionIndex]).subscribe(response =>{
+    })
+  }
+
+  removeDownVotedByUserOfAnswer(questionIndex: number, answerIndex: number){
+    this.allDiscussionQuestions[questionIndex].allAnswers[answerIndex].answerDownVotesCount -= 1;
+    this.allDiscussionQuestions[questionIndex].allAnswers[answerIndex].downVotedBy = this.allDiscussionQuestions[questionIndex].allAnswers[answerIndex].downVotedBy.filter(userId => userId !== this.userId)
+  }
+
+  addDownVotedByUserOfAnswer(questionIndex: number, answerIndex: number){
+    this.allDiscussionQuestions[questionIndex].allAnswers[answerIndex].answerDownVotesCount += 1;
+    this.allDiscussionQuestions[questionIndex].allAnswers[answerIndex].downVotedBy.push(this.userId);
   }
 
 }
