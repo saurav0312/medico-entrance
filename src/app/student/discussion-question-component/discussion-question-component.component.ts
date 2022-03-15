@@ -24,8 +24,6 @@ export class DiscussionQuestionComponentComponent implements OnInit {
   commonFormFieldsName : string[] =['headerTemplate', 'questionTemplate', 'questionSubjectTemplate', 'questionTagTemplate'];
   commonFormFieldsTemplateList: any;
 
-
-  @ViewChild('headerTemplate', {static:true} ) headerTemplate! : TemplateRef<ElementRef>;
   @ViewChild('questionTemplate', {static:true} ) questionTemplate! : TemplateRef<ElementRef>;
   @ViewChild('questionSubjectTemplate', {static:true} ) questionSubjectTemplate! : TemplateRef<ElementRef>;
   @ViewChild('questionTagTemplate', {static:true} ) questionTagTemplate! : TemplateRef<ElementRef>;
@@ -38,7 +36,7 @@ export class DiscussionQuestionComponentComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.commonFormFieldsTemplateList = {'headerTemplate': this.headerTemplate, 'questionTemplate': this.questionTemplate, 
+    this.commonFormFieldsTemplateList = {'questionTemplate': this.questionTemplate, 
                                         'questionSubjectTemplate':this.questionSubjectTemplate , 'questionTagTemplate': this.questionTagTemplate };
 
     this.discussionQuestionForm = new FormGroup({
