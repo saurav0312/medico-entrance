@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TeacherAuthGuardGuard } from '../authentication/teacher-auth-guard.guard';
+import { QuestionAnswerDiscussionComponent } from '../student/question-answer-discussion/question-answer-discussion.component';
 import { AddmocktestComponent } from './addmocktest/addmocktest.component';
 import { EditmocktestComponent } from './editmocktest/editmocktest.component';
 import { MyMockTestsComponent } from './my-mock-tests/my-mock-tests.component';
@@ -20,7 +21,9 @@ const routes: Routes = [
       { path: 'addtest', component: AddmocktestComponent },
       { path: 'modifytest', component: MyMockTestsComponent },
       { path: 'editmocktest', component: EditmocktestComponent },
+      { path: 'questionAnswerDiscussion', component: QuestionAnswerDiscussionComponent},
       { path: 'viewmystudents', component: MystudentsComponent },
+      { path: 'editprofileinfo', component: TeacherprofileinfoComponent},
       { path: 'myTestsBoughtByAStudent', component: MyTestsBoughtByAStudentComponent },
       { path: '', redirectTo:'/teacherdashboard/teacherdashboardcontent', pathMatch: 'full' }
     ],

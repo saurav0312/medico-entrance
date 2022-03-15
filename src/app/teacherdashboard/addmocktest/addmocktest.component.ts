@@ -42,8 +42,6 @@ export class AddmocktestComponent implements OnInit{
   @ViewChild('saveCancelTemplate',{static: true} ) saveCancelTemplate! : TemplateRef<ElementRef>;
 
   templateNameList : Array<string[]> =[
-          ['testNameTemplate','testTakerTemplate'],
-          ['totalTimeTemplate', 'totalNoOfQuestionTemplate'],
           ['testTypeTemplate'], ['testPriceTemplate'],
           ['testCategoryTemplate'], ['excelFileTemplate'],
           ['testQuestionsZipTemplate'], ['saveCancelTemplate']
