@@ -1,22 +1,10 @@
-
-    <!-- <mat-toolbar class="mat-toolbar-class" style="background-color: rgba(0, 0, 0, 0);">
-      <button mat-icon-button *ngIf="sidenav.mode === 'over' " (click)="sidenav.toggle()">
-          <mat-icon *ngIf="!sidenav.opened">menu</mat-icon> 
-          <mat-icon *ngIf="sidenav.opened">close</mat-icon>
-      </button>
-      My Profile     
-    </mat-toolbar> -->
-
     
-
     <div class="grad1">
 
     <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light" style="background-color: white !important;">
       <button mat-icon-button *ngIf="sidenav.mode === 'over' || sidenav.mode === 'side'" (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon> 
-        <!-- <mat-icon *ngIf="sidenav.opened">close</mat-icon> -->
     </button>
-    <!-- My Profile -->
     </nav>
 
     <mat-sidenav-container class="mat-sidenav-container-class" style="font-family: ubuntu;">
@@ -32,10 +20,7 @@
               <p><i>Student</i></p>
               </div>
             </div>
-    
-          <!-- <div>
-            <mat-divider class="mat-divider"></mat-divider>
-          </div> -->
+            
           <div class="card" style="padding-left: 7px; padding-right: 7px;  border: none;">
             <p-divider></p-divider>
           </div>

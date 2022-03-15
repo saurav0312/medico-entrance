@@ -1,0 +1,125 @@
+.mat-toolbar-class{
+    /* background:darkslateblue; */
+    background: #cacae2eb;
+    /* color: white; */
+  }
+  
+  .mat-sidenav-container-class{
+    /* height: calc(100vh - 65px); */
+    height: 45em;
+    margin-top: 5em;
+  }
+  
+  .mat-sidenav-class{
+    /* margin: 4px; */
+    width: 15em;
+    border-right: none;
+    background: white;
+    /* color: white; */
+    /* border-radius: 2px; */
+    /* padding: 4px; */
+    text-align: center;
+  }
+  
+  .content{
+    /* height: calc(100vh - 98px); */
+    height: 45em;
+    margin: 2em;
+    margin-left: 2em;
+    display: flex;
+    /* justify-content: center; */
+    /* align-items: center; */
+    font-size: 2rem;
+    color: lightgray;
+    border-radius: 10px;
+  }
+  
+  .menu-button{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 1rem;
+    height: 3em;
+  }
+  
+  .mat-divider{
+    margin-top: 16px;
+    margin-bottom: 16px;
+    background-color: rgba(20, 19, 19, 0.5);
+  }
+
+  .icon-class{
+    margin-right:0.5em;
+    font-size: 25px;
+  }
+
+  .navbar-buttons{
+    padding: 1.6em;
+    font-family: 'Roboto';
+    font-weight: 100;
+    font-size: 20px;
+  }
+  
+  
+  
+  /*
+  css for mat table
+  */
+  
+  .table-contents{
+    width: 80%;
+    margin-left: 10em;
+    margin-top: 2em;
+    margin-bottom: 20em;
+  }
+  
+  .quest-width{
+    max-width: 75px;
+  }
+  
+  .mat-row .mat-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+  }
+  
+  .mat-row:hover .mat-cell {
+    border-color: currentColor;
+  }
+  
+  .table-header-class{
+    background-color: #009879;
+    color: #ffffff;
+    text-align: left;
+  }
+  
+  .styled-table {
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 0.9em;
+    font-family: sans-serif;
+    min-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  }
+
+  .active-link{
+    text-decoration: solid;
+    /* background-color: gainsboro; */
+    background-color: rgb(248, 239, 239);
+}
+
+
+.grad1{
+  background-image: linear-gradient(red, yellow);
+}
+
+/* .mat-sidenav-content-class{
+  margin-left: 20.3em !important;
+}
+
+@media (max-width: 510px){
+  .mat-sidenav-content-class{
+    margin-left: 0.2em !important;
+  }
+} */

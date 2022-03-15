@@ -1,4 +1,82 @@
-<div style="margin-top: 10em; text-align: center;">
+<!-- test start -->
+<div class="container rounded bg-blue mt-5 mb-5 ">
+  <div style="max-width: 500px; margin-left: auto; margin-right: auto;">  
+    <div class="border card" style="border-color: #e0e0e0 !important;">
+      <div class="p-3">
+        <div class="mb-3" style="text-align: center;">
+          <h4 style="display: inline; text-align: center;"><b>Create Test</b></h4>
+        </div>
+        
+        <form (ngSubmit)="createMockTest()" name="createMockTestForm" [formGroup]="createMockTestForm" >
+
+          <div style="width: 100%; display: flex;">
+            <ng-container *ngTemplateOutlet="testNameTemplate; context:{$implicit: createMockTestForm}">
+
+            </ng-container>
+
+            <ng-container *ngTemplateOutlet="testTakerTemplate; context:{$implicit: createMockTestForm}">
+
+            </ng-container>
+          </div>
+
+          <div style="width: 100%; display: flex;">
+            <ng-container *ngTemplateOutlet="totalTimeTemplate; context:{$implicit: createMockTestForm}">
+
+            </ng-container>
+
+            <ng-container *ngTemplateOutlet="totalNoOfQuestionTemplate; context:{$implicit: createMockTestForm}">
+
+            </ng-container>
+          </div>
+
+          <ng-container *ngFor="let templateNameSubList of templateNameList">
+            <div style="display: flex;">
+              <ng-container *ngFor="let templateName of templateNameSubList">
+
+                <div [ngSwitch]="templateName" style="width: 100%;">
+                  <div *ngSwitchCase="'testPriceTemplate'">
+                    <div *ngIf="createMockTestForm.get('testType')?.value === 'Paid'">
+                      <ng-container *ngTemplateOutlet="templateRefList[templateName] ; context: {$implicit: createMockTestForm}">
+                      </ng-container>
+                    </div>
+                  </div>
+
+                  <div *ngSwitchCase="'testCategoryTemplate'">
+                    <ng-container *ngTemplateOutlet="templateRefList[templateName] ; context: {$implicit: createMockTestForm}">
+                    </ng-container>
+
+                    <div *ngIf="createMockTestForm.get('testCategory')?.value === 'Subject'">
+                      <div>
+                        <ng-container *ngTemplateOutlet="subjectFieldTemplate ; context: {$implicit: createMockTestForm}">
+                        </ng-container>
+
+                        <ng-container *ngTemplateOutlet="topicFieldTemplate ; context: {$implicit: createMockTestForm}">
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div *ngSwitchDefault>
+                    <ng-container [ngTemplateOutlet]="templateRefList[templateName]" [ngTemplateOutletContext]="{$implicit: createMockTestForm}">
+                    </ng-container>
+                  </div>
+                </div>
+              </ng-container>
+            </div>
+          </ng-container>
+
+          <app-spinner [loading]="loading" [mode]="mode" [diameter]="50" [overlay]="true">
+          </app-spinner>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- test end -->
+
+
+<!-- <div style="margin-top: 10em; text-align: center;">
 </div>
 
 <div class="container rounded bg-blue mt-5 mb-5">
@@ -53,10 +131,10 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->
 
 <ng-template #testNameTemplate let-createMockTestForm>
-  <mat-form-field style="margin-right: 0.5em;" appearance="outline">
+  <mat-form-field style="width: 50%; margin-right: 0.5em;" appearance="outline">
     <mat-label>Test Name</mat-label>
     <input [formControl]="createMockTestForm.get('testName')" type="text" required matInput >
     <mat-error *ngIf="createMockTestForm.get('testName')?.dirty && createMockTestForm.get('testName')?.value.length==0">
@@ -66,7 +144,7 @@
 </ng-template>
 
 <ng-template #testTakerTemplate let-createMockTestForm>
-  <mat-form-field appearance="outline">
+  <mat-form-field style="width: 50%;" appearance="outline">
     <mat-label>Test Taker</mat-label>
     <input [formControl]="createMockTestForm.get('testTakenBy')" type="text" required matInput>
     <mat-error *ngIf="createMockTestForm.get('testTakenBy')?.dirty && createMockTestForm.get('testTakenBy')?.value.length==0">
@@ -76,7 +154,7 @@
 </ng-template>
 
 <ng-template #totalTimeTemplate let-createMockTestForm>
-  <mat-form-field style="margin-right: 0.5em;" appearance="outline">
+  <mat-form-field style="width: 50%; margin-right: 0.5em;" appearance="outline">
     <mat-label>Total Time</mat-label>
     <input [formControl]="createMockTestForm.get('totalTime')" type="number" required matInput>
     <mat-error *ngIf="createMockTestForm.get('totalTime')?.dirty && createMockTestForm.get('totalTime')?.value.length==0">
@@ -86,7 +164,7 @@
 </ng-template>
 
 <ng-template #totalNoOfQuestionTemplate let-createMockTestForm>
-  <mat-form-field appearance="outline">
+  <mat-form-field style="width: 50%;" appearance="outline">
     <mat-label>Total No of Questions</mat-label>
     <input [formControl]="createMockTestForm.get('totalNumberOfQuestions')" type="number" required matInput>
     <mat-error *ngIf="(createMockTestForm.get('totalNumberOfQuestions')?.dirty || createMockTestForm.controls['totalNumberOfQuestions'].touched) && createMockTestForm.get('totalNumberOfQuestions')?.value.length==0">

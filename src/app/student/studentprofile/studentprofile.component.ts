@@ -17,9 +17,6 @@ import { MessageService } from 'primeng/api';
 })
 export class StudentprofileComponent implements OnInit, AfterViewInit {
 
-  // testReportData! : TestReportData;
-  // testToShowInTable! : Tests;
-  // viewTest : boolean = false;
   username!: string | undefined | null;
   profileImageUrl: string | undefined ='';
 
@@ -55,18 +52,6 @@ export class StudentprofileComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-
-    // this.screenWidth$.subscribe(width => {
-    //   console.log("Scree width: ", width)
-    //   if (width < 510) {
-    //     this.sidenav.close();
-    //     this.sidenav.mode ='over'
-    //   }
-    //   else{
-    //     this.sidenav.open()
-    //     this.sidenav.mode = 'side'
-    //   }
-    // });
 
     let sub = this.authService.getCurrentUser().subscribe(response =>{
       this.profileService.getUserDetails(response.uid).subscribe(userDetails =>{
