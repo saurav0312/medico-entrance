@@ -127,7 +127,7 @@
 </ng-template>
 
 <ng-template #phoneTemplate let-profileForm>
-    <mat-form-field style=" width: 50%;margin-right: 0.5em" appearance="outline">
+    <mat-form-field style="width: 50%;margin-right: 0.5em" appearance="outline">
         <mat-label>PhoneNumber</mat-label>
         <input [formControl]="profileForm.get('phoneNumber')" type="number" maxlength="10" pattern="[1-9]{1}[0-9]{9}" required matInput>
     </mat-form-field>

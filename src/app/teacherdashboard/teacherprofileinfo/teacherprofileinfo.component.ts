@@ -50,7 +50,7 @@ export class TeacherprofileinfoComponent implements OnInit {
         firstName: new FormControl('',[Validators.required]),
         lastName: new FormControl('',[Validators.required]),
         email : new FormControl('', [Validators.required, Validators.email]),
-        phoneNumber: new FormControl(''),
+        phoneNumber: new FormControl('', [Validators.maxLength(10)]),
         dob: new FormControl(''),
         address: new FormControl(''),
         education: new FormControl(''),

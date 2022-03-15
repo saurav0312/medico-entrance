@@ -7,6 +7,7 @@ import { Timestamp } from 'firebase/firestore';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { finalize } from 'rxjs';
 import { MessageService } from 'primeng/api';
+import { DiscussionQuestion } from 'src/app/interface/discussion-question';
 
 @Component({
   selector: 'app-editprofileinfo',
@@ -179,6 +180,18 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
 
     this.profileService.uploadProfileImage(this.selectedProfileImage, this.userId).subscribe(response =>{
       this.imageUrl = response
+      console.log("Image url: ", this.imageUrl)
+      //update image in all questions asked by this user
+      let sub = this.authService.readDiscussionQuestionsAskedByAUser(this.userId).subscribe(allAskedQuestions =>{
+        sub.unsubscribe()
+        console.log("All asked questions: ", allAskedQuestions)
+        allAskedQuestions.forEach((question: DiscussionQuestion) =>{
+          question.questionAskedByImage =  this.imageUrl
+          this.authService.updateDiscussionQuestion(question.id, question).subscribe(questionImageUpdated =>{
+            console.log("Image updated...")
+          })
+        })
+      })
       this.saveProfile();
     })
   }

@@ -63,6 +63,12 @@ export class AuthService {
     return from(setDoc(docRef, discussionQuestionData, {merge: true}))
   }
 
+  readDiscussionQuestionsAskedByAUser(userId: string| undefined): Observable<any>{
+    const collectionList = collection(this.firestore, 'DiscussionQuestions');
+    const q = query(collectionList, where("questionAskedBy","==", userId))
+      return collectionData(q, {idField: 'id'})
+  }
+
   getCurrentUser(): Observable<any>{
     return authState(this.auth)
   }
