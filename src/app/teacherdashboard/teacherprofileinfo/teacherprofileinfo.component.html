@@ -79,7 +79,7 @@
 
 <ng-template #headerTemplate>
     <div class="mb-3" style="text-align: center;">
-        <h4 style="display: inline; text-align: center;"><b>Edit Profile</b></h4>
+        <h4 style="display: inline; text-align: center; font-family: 'Cambay';"><b>Edit Profile</b></h4>
     </div>
 </ng-template>
 
@@ -88,14 +88,14 @@
         <div class="profile-pic">
             <label class="-label" for="file">
                 <!-- <span class="glyphicon glyphicon-camera"></span> -->
-                <span>Change Image</span>
+                <span style="font-family: 'Cambay';">Change Image</span>
             </label>
             <input id="file" type="file" (change)="loadProfileImage($event)" accept=".png, .jpg, .jpeg"/>
             <img class="rounded-circle" src="{{imageUrl}}" width="100">
         </div>
-        <span class="font-weight-bold">{{firstName}} {{lastName}}</span>
-        <span class="text-black-50">{{email}}</span>
-        <span>{{country}}</span>
+        <span class="font-weight-bold" style="font-family: 'Cambay';">{{firstName}} {{lastName}}</span>
+        <span class="text-black-50" style="font-family: 'Cambay';">{{email}}</span>
+        <span style="font-family: 'Cambay';">{{country}}</span>
     </div>
 </ng-template>
 
@@ -132,7 +132,7 @@
 <ng-template #phoneTemplate let-profileForm>
     <mat-form-field style="width: 50%; margin-right: 0.5em" appearance="outline">
         <mat-label>PhoneNumber</mat-label>
-        <input [formControl]="profileForm.get('phoneNumber')" type="number" matInput>
+        <input [formControl]="profileForm.get('phoneNumber')" type="number" maxlength="10" pattern="[1-9]{1}[0-9]{9}" required matInput>
     </mat-form-field>
 </ng-template>
 

@@ -18,6 +18,10 @@
     .question-with-date-class{
         justify-content: normal !important;
     }
+
+    .ask-question-button{
+        position: relative !important;
+    }
 }
 .row [class^="col-"]:first-child>.raised-block {
     margin-left: -0.625rem;
