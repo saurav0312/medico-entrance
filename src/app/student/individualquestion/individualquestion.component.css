@@ -1,0 +1,6 @@
+@media (max-width:576px){
+    .question-choices{
+        margin-left: 20px !important;
+        width: 190px !important;
+    }
+}
