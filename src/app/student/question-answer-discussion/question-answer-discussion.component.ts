@@ -19,8 +19,13 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
   loading: boolean = false;
 
   allDiscussionQuestions: DiscussionQuestion[] = [];
+  limitedAllDiscussionQuestions: DiscussionQuestion[] = [];
 
   myDiscussionQuestions: DiscussionQuestion[] = [];
+  limitedMyDiscussionQuestions: DiscussionQuestion[] = [];
+
+  noOfAllQuestionsInPageThreshold: number = 2;
+  noOfMyQuestionsInPageThreshold: number = 2;
 
   answerForm!: FormGroup;
   userId!: string;
@@ -105,6 +110,9 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
       })
 
       this.myDiscussionQuestions = this.allDiscussionQuestions.filter(question => question.questionAskedBy === this.userId)
+      this.limitedMyDiscussionQuestions = this.myDiscussionQuestions.slice(0,this.noOfMyQuestionsInPageThreshold);
+      
+      this.limitedAllDiscussionQuestions = this.allDiscussionQuestions.slice(0,this.noOfAllQuestionsInPageThreshold);
     })
   }
 
@@ -202,6 +210,8 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
       'isDownVotedByCurrentLoggedInUser': false 
     }
 
+    console.log("all ques: ", this.allDiscussionQuestions)
+
     let currentQuestionIndex: number =  this.allDiscussionQuestions.findIndex(question => question.id === questionId)
     this.allDiscussionQuestions[currentQuestionIndex].allAnswers.push(answerData);
     this.authService.updateDiscussionQuestion(this.allDiscussionQuestions[currentQuestionIndex].id ,this.allDiscussionQuestions[currentQuestionIndex]).subscribe(response =>{
@@ -276,6 +286,16 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
   addDownVotedByUserOfAnswer(questionIndex: number, answerIndex: number){
     this.allDiscussionQuestions[questionIndex].allAnswers[answerIndex].answerDownVotesCount += 1;
     this.allDiscussionQuestions[questionIndex].allAnswers[answerIndex].downVotedBy.push(this.userId);
+  }
+
+  loadMoreAllDiscussionQuestions(){
+    this.noOfAllQuestionsInPageThreshold += 2;
+    this.limitedAllDiscussionQuestions = this.allDiscussionQuestions.slice(0,this.noOfAllQuestionsInPageThreshold);
+  }
+
+  loadMoreMyDiscussionQuestions(){
+    this.noOfMyQuestionsInPageThreshold += 2;
+    this.limitedMyDiscussionQuestions = this.myDiscussionQuestions.slice(0,this.noOfMyQuestionsInPageThreshold);
   }
 
 }
