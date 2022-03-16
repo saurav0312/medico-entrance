@@ -15,6 +15,8 @@ import { MatInputModule } from '@angular/material/input';
 import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
 import { NewPageDesignComponent } from './new-page-design/new-page-design.component';
 
+import { ScrollTopModule } from 'primeng/scrolltop';
+
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { NewPageDesignComponent } from './new-page-design/new-page-design.compon
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    SpinnerModule
+    SpinnerModule,
+    ScrollTopModule
   ],
   exports:[
     HomenavigationbarComponent

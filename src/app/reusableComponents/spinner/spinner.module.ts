@@ -16,6 +16,8 @@ import { AllPracticeTestsComponent } from '../all-practice-tests/all-practice-te
 import { TestanalysischartComponent } from '../testanalysischart/testanalysischart.component';
 import { MatDividerModule } from '@angular/material/divider';
 
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { MatDividerModule } from '@angular/material/divider';
     MatIconModule,
     MatInputModule,
     Ng2GoogleChartsModule,
-    MatDividerModule
+    MatDividerModule,
+    ProgressSpinnerModule
   ],
   exports:[
     SpinnerComponent,
