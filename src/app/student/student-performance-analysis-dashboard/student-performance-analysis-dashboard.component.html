@@ -6,12 +6,19 @@
                     <p style="margin-top: 5px; text-align: center; font-family: 'Cambay';">Let's start a quick test</p> 
                     <div style="margin-top: 1em;">
                         <p-tabView>
-                            <p-tabPanel header="Mock Tests">
+                            <p-tabPanel>
+                                <ng-template pTemplate="header">
+                                    <div>Mock Tests <p-badge [value]="listOfMockTests.length.toString()" styleClass="mr-2"></p-badge></div>
+                                </ng-template>
+
                                 <ng-container *ngTemplateOutlet="mockTestsTemplate">
                                 </ng-container>
                             </p-tabPanel>
 
-                            <p-tabPanel header="Subject Tests">
+                            <p-tabPanel>
+                                <ng-template pTemplate="header">
+                                    <div>Subject Tests <p-badge [value]="listOfSubjectTests.length.toString()" styleClass="mr-2"></p-badge></div>
+                                </ng-template>
                                 <ng-container *ngTemplateOutlet="subjectTestsTemplate">
                                 </ng-container>
                             </p-tabPanel>
