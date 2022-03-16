@@ -31,13 +31,15 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
   userId!: string;
   username!: string;
 
+  questionChangedIndex: number = -1;
+
   constructor(public dialogService: DialogService, private authService: AuthService,
               private messageService: MessageService) { }
 
   ngOnInit(): void {
 
     this.answerForm = new FormGroup({
-      'answer': new FormControl('', Validators.required)
+      'answer': new FormControl('')
     })
 
     this.loading = true;
@@ -111,7 +113,7 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
 
       this.myDiscussionQuestions = this.allDiscussionQuestions.filter(question => question.questionAskedBy === this.userId)
       this.limitedMyDiscussionQuestions = this.myDiscussionQuestions.slice(0,this.noOfMyQuestionsInPageThreshold);
-      
+
       this.limitedAllDiscussionQuestions = this.allDiscussionQuestions.slice(0,this.noOfAllQuestionsInPageThreshold);
     })
   }
@@ -197,27 +199,33 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
   }
 
   submitAnswer(questionId: string){
-    let answerData: DiscussionAnswer={
-      'answer': this.answerForm.get('answer')?.value,
-      'answeredBy': this.userId,
-      'answeredByUsername': this.username,
-      'answeredOn': new Date(),
-      'answerUpVotesCount': 0,
-      'answerDownVotesCount': 0,
-      'upVotedBy': [],
-      'downVotedBy': [],
-      'isUpVotedByCurrentLoggedInUser': false,
-      'isDownVotedByCurrentLoggedInUser': false 
+
+    console.log("valuee: ", this.answerForm.get('answer')?.value)
+    if(this.answerForm.get('answer')?.value !== ''){
+      let answerData: DiscussionAnswer={
+        'answer': this.answerForm.get('answer')?.value,
+        'answeredBy': this.userId,
+        'answeredByUsername': this.username,
+        'answeredOn': new Date(),
+        'answerUpVotesCount': 0,
+        'answerDownVotesCount': 0,
+        'upVotedBy': [],
+        'downVotedBy': [],
+        'isUpVotedByCurrentLoggedInUser': false,
+        'isDownVotedByCurrentLoggedInUser': false 
+      }
+  
+      let currentQuestionIndex: number =  this.allDiscussionQuestions.findIndex(question => question.id === questionId)
+      this.allDiscussionQuestions[currentQuestionIndex].allAnswers.push(answerData);
+      this.authService.updateDiscussionQuestion(this.allDiscussionQuestions[currentQuestionIndex].id ,this.allDiscussionQuestions[currentQuestionIndex]).subscribe(response =>{
+        this.messageService.add({severity:'success', summary: 'Answer Submitted Successfully'});
+      })
+      this.answerForm.reset()
+      this.questionChangedIndex = -1;
     }
-
-    console.log("all ques: ", this.allDiscussionQuestions)
-
-    let currentQuestionIndex: number =  this.allDiscussionQuestions.findIndex(question => question.id === questionId)
-    this.allDiscussionQuestions[currentQuestionIndex].allAnswers.push(answerData);
-    this.authService.updateDiscussionQuestion(this.allDiscussionQuestions[currentQuestionIndex].id ,this.allDiscussionQuestions[currentQuestionIndex]).subscribe(response =>{
-      this.messageService.add({severity:'success', summary: 'Answer Submitted Successfully'});
-    })
-    this.answerForm.reset()
+    else{
+      this.messageService.add({severity:'error', summary: 'Please write a comment.'})
+    }
   }
 
 
@@ -296,6 +304,19 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
   loadMoreMyDiscussionQuestions(){
     this.noOfMyQuestionsInPageThreshold += 2;
     this.limitedMyDiscussionQuestions = this.myDiscussionQuestions.slice(0,this.noOfMyQuestionsInPageThreshold);
+  }
+
+  answerFieldChanged(event: any, questionChangedIndex: number){
+    console.log("changed index before: ", questionChangedIndex)
+    if(event.target.value.length === 0){
+      this.questionChangedIndex = -1
+    }
+    else{
+      this.questionChangedIndex = questionChangedIndex
+    }
+    
+    console.log("changed index: ", questionChangedIndex)
+    console.log("answer field changed: ", event)
   }
 
 }
