@@ -135,8 +135,8 @@
             </div> 
         </ng-container>
         <div style="text-align: center;">
-            <mat-icon (click)="loadMoreAllDiscussionQuestions()" style="cursor: pointer;" pTooltip="Load more" *ngIf="limitedAllDiscussionQuestions.length !== allDiscussionQuestions.length && tab === 0">refresh</mat-icon>
-            <mat-icon (click)="loadMoreMyDiscussionQuestions()" style="cursor: pointer;" pTooltip="Load more" *ngIf="limitedMyDiscussionQuestions.length !== myDiscussionQuestions.length && tab === 1">refresh</mat-icon>
+            <mat-icon (click)="loadMoreAllDiscussionQuestions()" style="cursor: pointer;" pTooltip="Load more" *ngIf="limitedAllDiscussionQuestions.length !== allDiscussionQuestions.length && tab === 0">expand_circle_down</mat-icon>
+            <mat-icon (click)="loadMoreMyDiscussionQuestions()" style="cursor: pointer;" pTooltip="Load more" *ngIf="limitedMyDiscussionQuestions.length !== myDiscussionQuestions.length && tab === 1">expand_circle_down</mat-icon>
         </div>
     </ng-container>
 </ng-template>
