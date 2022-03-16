@@ -59,6 +59,8 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
         }
       })
       this.allDiscussionQuestions.forEach(question =>{
+        question.isUpVotedByCurrentLoggedInUser = false;
+        question.isDownVotedByCurrentLoggedInUser = false;
 
         if(question.upVotedBy.find(userId => userId === this.userId) !== undefined){
           question.isUpVotedByCurrentLoggedInUser = true;
