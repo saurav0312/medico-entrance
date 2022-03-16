@@ -41,6 +41,7 @@ import { DynamicDialogModule } from 'primeng/dynamicdialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { DividerModule } from 'primeng/divider';
 import { ScrollTopModule } from 'primeng/scrolltop';
+import { BadgeModule } from 'primeng/badge';
 
 import { Ng2GoogleChartsModule } from 'ng2-google-charts'
 
@@ -113,7 +114,8 @@ import { MyDashboardComponent } from './my-dashboard/my-dashboard.component';
     InputTextModule,
     DropdownModule,
     DividerModule,
-    ScrollTopModule
+    ScrollTopModule,
+    BadgeModule
   ],
   exports: [
     StudentprofileComponent,

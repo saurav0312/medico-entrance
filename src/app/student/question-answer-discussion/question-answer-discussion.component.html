@@ -6,7 +6,7 @@
                     <p-tabView>
                         <p-tabPanel [selected]="true">
                             <ng-template pTemplate="header">
-                                <div>Recent Questions</div>
+                                <div>Recent Questions <p-badge [value]="allDiscussionQuestions.length.toString()" styleClass="mr-2"></p-badge></div>
                             </ng-template>
                             <ng-container *ngTemplateOutlet="recentQuestionTemplate; context: {$implicit: limitedAllDiscussionQuestions, tab: 0}">
         
@@ -14,7 +14,7 @@
                         </p-tabPanel>
                         <p-tabPanel>
                             <ng-template pTemplate="header">
-                                My Questions
+                                <div>My Questions <p-badge [value]="myDiscussionQuestions.length.toString()" styleClass="mr-2"></p-badge></div>
                             </ng-template>
                             <ng-container *ngTemplateOutlet="recentQuestionTemplate; context: {$implicit: limitedMyDiscussionQuestions, tab:1}">
         
