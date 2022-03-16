@@ -7,6 +7,7 @@ import { Timestamp } from 'firebase/firestore';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { finalize } from 'rxjs';
 import { MessageService } from 'primeng/api';
+import { DiscussionQuestion } from 'src/app/interface/discussion-question';
 
 @Component({
   selector: 'app-teacherprofileinfo',
@@ -177,10 +178,29 @@ export class TeacherprofileinfoComponent implements OnInit {
 
     this.selectedProfileImage = target.files[0];
 
-    this.profileService.uploadProfileImage(this.selectedProfileImage, this.userId).subscribe(response =>{
-      this.imageUrl = response
-      this.saveProfile();
-    })
+    if(this.isFileImage(this.selectedProfileImage)){
+      this.profileService.uploadProfileImage(this.selectedProfileImage, this.userId).subscribe(response =>{
+        this.imageUrl = response
+        //update image in all questions asked by this user
+        let sub = this.authService.readDiscussionQuestionsAskedByAUser(this.userId).subscribe(allAskedQuestions =>{
+          sub.unsubscribe()
+          allAskedQuestions.forEach((question: DiscussionQuestion) =>{
+            question.questionAskedByImage =  this.imageUrl
+            this.authService.updateDiscussionQuestion(question.id, question).subscribe(questionImageUpdated =>{
+            })
+          })
+        })
+        this.saveProfile();
+      })
+    }
+    else{
+      this.loading = false;
+      this.messageService.add({severity:'error', summary: 'Please upload image file'});
+    }
+  }
+
+  isFileImage(file: Blob): boolean {
+    return file && file['type'].split('/')[0] === 'image';
   }
 
 

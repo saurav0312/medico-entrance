@@ -8,7 +8,7 @@
                             <ng-template pTemplate="header">
                                 <div>Recent Questions</div>
                             </ng-template>
-                            <ng-container *ngTemplateOutlet="recentQuestionTemplate; context: {$implicit: allDiscussionQuestions}">
+                            <ng-container *ngTemplateOutlet="recentQuestionTemplate; context: {$implicit: limitedAllDiscussionQuestions, tab: 0}">
         
                             </ng-container>
                         </p-tabPanel>
@@ -16,7 +16,7 @@
                             <ng-template pTemplate="header">
                                 My Questions
                             </ng-template>
-                            <ng-container *ngTemplateOutlet="recentQuestionTemplate; context: {$implicit: myDiscussionQuestions}">
+                            <ng-container *ngTemplateOutlet="recentQuestionTemplate; context: {$implicit: limitedMyDiscussionQuestions, tab:1}">
         
                             </ng-container>
                         </p-tabPanel>
@@ -39,7 +39,7 @@
     </div>
 </div>
 
-<ng-template #recentQuestionTemplate let-allAvailableQuestions>
+<ng-template #recentQuestionTemplate let-allAvailableQuestions let-tab="tab">
 
     <ng-container *ngIf="allAvailableQuestions.length > 0; else noQuestionsAvailable">
         <ng-container *ngFor="let discussionQuestion of allAvailableQuestions; let i = index">
@@ -96,7 +96,7 @@
                         <form (ngSubmit)="submitAnswer(discussionQuestion.id)" name="answerForm" [formGroup]="answerForm" fxLayoutAlign ="stretch" fxLayout="column">
                             <textarea formControlName="answer" pInputTextarea placeholder="Add a comment" style="width: 100%;" required></textarea>
                             <div style="display: flex; justify-content: right; margin-top: 0.3em;">
-                                <button class="btn btn-success" type="submit" style="width: fit-content;">Submit</button>
+                                <button class="btn btn-success" type="submit" style="width: fit-content;" [disabled]="answerForm.invalid">Submit</button>
                             </div>
                         </form>
                     </div>
@@ -115,7 +115,7 @@
                                 <div style="display: flex; justify-content: right;">
                                     <div style="display: inline-flex;">
                                         <div style=" display: inline-flex; margin-right: 0.8em;">
-                                            <p>answered on: {{answer.answeredOn | date:'medium'}}</p>
+                                            <p> <span style="color: #3838dc;">{{answer.answeredByUsername}} </span> answered on: {{answer.answeredOn | date:'medium'}}</p>
                                         </div>
                                     </div>
                                     <div style="display: inline-flex; margin-right: 0.3em;">
@@ -134,6 +134,10 @@
                 </div>
             </div> 
         </ng-container>
+        <div style="text-align: center;">
+            <mat-icon (click)="loadMoreAllDiscussionQuestions()" style="cursor: pointer;" pTooltip="Load more" *ngIf="limitedAllDiscussionQuestions.length !== allDiscussionQuestions.length && tab === 0">refresh</mat-icon>
+            <mat-icon (click)="loadMoreMyDiscussionQuestions()" style="cursor: pointer;" pTooltip="Load more" *ngIf="limitedMyDiscussionQuestions.length !== myDiscussionQuestions.length && tab === 1">refresh</mat-icon>
+        </div>
     </ng-container>
 </ng-template>
 

@@ -177,23 +177,31 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
     }
 
     this.selectedProfileImage = target.files[0];
+    console.log("filee: ", this.selectedProfileImage)
 
-    this.profileService.uploadProfileImage(this.selectedProfileImage, this.userId).subscribe(response =>{
-      this.imageUrl = response
-      console.log("Image url: ", this.imageUrl)
-      //update image in all questions asked by this user
-      let sub = this.authService.readDiscussionQuestionsAskedByAUser(this.userId).subscribe(allAskedQuestions =>{
-        sub.unsubscribe()
-        console.log("All asked questions: ", allAskedQuestions)
-        allAskedQuestions.forEach((question: DiscussionQuestion) =>{
-          question.questionAskedByImage =  this.imageUrl
-          this.authService.updateDiscussionQuestion(question.id, question).subscribe(questionImageUpdated =>{
-            console.log("Image updated...")
+    if(this.isFileImage(this.selectedProfileImage)){
+      this.profileService.uploadProfileImage(this.selectedProfileImage, this.userId).subscribe(response =>{
+        this.imageUrl = response
+        //update image in all questions asked by this user
+        let sub = this.authService.readDiscussionQuestionsAskedByAUser(this.userId).subscribe(allAskedQuestions =>{
+          sub.unsubscribe()
+          allAskedQuestions.forEach((question: DiscussionQuestion) =>{
+            question.questionAskedByImage =  this.imageUrl
+            this.authService.updateDiscussionQuestion(question.id, question).subscribe(questionImageUpdated =>{
+            })
           })
         })
+        this.saveProfile();
       })
-      this.saveProfile();
-    })
+    }
+    else{
+      this.loading = false;
+      this.messageService.add({severity:'error', summary: 'Please upload image file'});
+    }
+  }
+
+  isFileImage(file: Blob): boolean {
+    return file && file['type'].split('/')[0] === 'image';
   }
 
 }
