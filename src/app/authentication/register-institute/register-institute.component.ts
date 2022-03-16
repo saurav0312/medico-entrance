@@ -51,7 +51,7 @@ export class RegisterInstituteComponent implements OnInit {
       sub.unsubscribe()
       if(instituteDetails.length === 0){
         const tempUserDetail: InstituteDetail = {
-          'instituteEmail': this.registerInstitueForm.get('instituteEmail')?.value,
+          'instituteEmail': this.registerInstitueForm.get('instituteEmail')?.value.toLocaleLowerCase(),
           'instituteName': this.registerInstitueForm.get('instituteName')?.value,
           'institutePhoneNumber': this.registerInstitueForm.get('institutePhoneNumber')?.value,
           'instituteContactPersonName': this.registerInstitueForm.get('instituteContactPersonName')?.value,

@@ -48,7 +48,7 @@ export class ContactComponent implements OnInit {
 
     let contactRequestData: ContactRequest ={
       'name': this.contactForm.get('name')?.value,
-      'email': this.contactForm.get('email')?.value,
+      'email': this.contactForm.get('email')?.value.toLocaleLowerCase(),
       'message': this.contactForm.get('message')?.value
     }
     this.authService.createContactRequest(contactRequestData).subscribe(response =>{
