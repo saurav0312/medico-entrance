@@ -57,3 +57,13 @@
     align-items: center; 
     justify-content: center;
   }
+
+  .test-class{
+    margin: 2px;
+    padding: 10px; 
+    border-radius: 7px;
+  }
+
+  .test-class:hover{
+      background-color: #92ca61 !important;
+  }

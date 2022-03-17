@@ -17,7 +17,7 @@
 
                             <p-tabPanel>
                                 <ng-template pTemplate="header">
-                                    <div>Subject Tests <p-badge [value]="listOfSubjectTests.length.toString()" styleClass="mr-2"></p-badge></div>
+                                    <div>Subject Tests <p-badge [value]="allSubjectTestsList.length.toString()" styleClass="mr-2"></p-badge></div>
                                 </ng-template>
                                 <ng-container *ngTemplateOutlet="subjectTestsTemplate">
                                 </ng-container>
@@ -29,6 +29,8 @@
         </div>  
     </div>
 </div>
+
+<p-scrollTop [threshold]="0"></p-scrollTop>
 
 
 <!-- Test -->
