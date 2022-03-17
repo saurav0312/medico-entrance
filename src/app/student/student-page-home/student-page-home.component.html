@@ -31,17 +31,32 @@
                             <td>{{row.test.testTakenBy}}</td>
                             <td>
                               <div *ngIf ="row.isAlreadyGiven; else notAlreadyGivenMocktest">
-                                <label (click)="viewMockTestReport(row)" class="badge badge-success badge-class" style="margin-right: 5px;">
+                                <!-- <label (click)="viewMockTestReport(row)" class="badge badge-success badge-class" style="margin-right: 5px;">
                                   View
-                                </label>
-                                <label (click)="startTest(row)" class="badge badge-success badge-class">
+                                </label> -->
+                                <button pButton pRipple (click)="viewMockTestReport(row)" 
+                                type="button" label="View" 
+                                class="p-button-outlined p-button-success test-class"
+                                ></button>
+
+                                <button pButton pRipple (click)="startTest(row)" 
+                                type="button" label="Retake" 
+                                class="p-button-outlined p-button-success test-class"
+                                ></button>
+                                
+                                <!-- <label  class="badge badge-success badge-class">
                                   Retake
-                                </label>
+                                </label> -->
                               </div>
                               <ng-template #notAlreadyGivenMocktest>
-                                <label (click)="startTest(row)"  class="badge badge-success badge-class">
+                                <!-- <label (click)="startTest(row)"  class="badge badge-success badge-class">
                                   Start
-                                </label>
+                                </label> -->
+                                <button pButton pRipple (click)="startTest(row)" 
+                                type="button" label="Start" 
+                                class="p-button-outlined p-button-success test-class"
+                                ></button>
+
                               </ng-template>
                             </td>
                           </tr>
@@ -85,17 +100,33 @@
                             <td>{{row.test.testTakenBy}}</td>
                             <td>
                               <div *ngIf ="row.isAlreadyGiven; else notAlreadyGivenSubjectTest">
-                                <label (click)="viewSubjectTestReport(row)" class="badge badge-success badge-class" style="margin-right: 5px;">
+                                <!-- <label (click)="viewSubjectTestReport(row)" class="badge badge-success badge-class" style="margin-right: 5px;">
                                   View
-                                </label>
-                                <label (click)="startTest(row)"  class="badge badge-success badge-class">
+                                </label> -->
+
+                                <button pButton pRipple (click)="viewSubjectTestReport(row)" 
+                                type="button" label="View" 
+                                class="p-button-outlined p-button-success test-class"
+                                ></button>
+
+                                <!-- <label (click)="startTest(row)"  class="badge badge-success badge-class">
                                   Retake
-                                </label>
+                                </label> -->
+
+                                <button pButton pRipple (click)="startTest(row)" 
+                                type="button" label="Retake" 
+                                class="p-button-outlined p-button-success test-class"
+                                ></button>
                               </div>
                               <ng-template #notAlreadyGivenSubjectTest>
-                                <label (click)="startTest(row)"  class="badge badge-success badge-class">
+                                <!-- <label (click)="startTest(row)"  class="badge badge-success badge-class">
                                   Start
-                                </label>
+                                </label> -->
+
+                                <button pButton pRipple (click)="startTest(row)" 
+                                type="button" label="Start" 
+                                class="p-button-outlined p-button-success test-class"
+                                ></button>
                               </ng-template>
                             </td>
                           </tr>

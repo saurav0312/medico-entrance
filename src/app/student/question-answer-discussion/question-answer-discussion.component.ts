@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, HostListener, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Timestamp } from 'firebase/firestore';
 import { MessageService } from 'primeng/api';
 import { DialogService } from 'primeng/dynamicdialog';
+import { BehaviorSubject } from 'rxjs';
 import { DiscussionAnswer } from 'src/app/interface/discussion-answer';
 import { DiscussionQuestion } from 'src/app/interface/discussion-question';
 import { AuthService } from 'src/app/service/auth.service';
@@ -14,7 +15,7 @@ import { DiscussionQuestionComponentComponent } from '../discussion-question-com
   styleUrls: ['./question-answer-discussion.component.css'],
   providers: [DialogService]
 })
-export class QuestionAnswerDiscussionComponent implements OnInit {
+export class QuestionAnswerDiscussionComponent implements OnInit, AfterViewInit {
 
   loading: boolean = false;
 
@@ -33,8 +34,37 @@ export class QuestionAnswerDiscussionComponent implements OnInit {
 
   questionChangedIndex: number = -1;
 
+  screenWidth!: number;
+
+  isMobileView: boolean = false;
+
+  private screenWidth$ = new BehaviorSubject<number>(window.innerWidth);
+
+  @HostListener('window:resize', ['$event'])
+    onResize(event: any) {
+      console.log("Window resize: ", event)
+        if (event.target.innerWidth < 510) {
+          this.isMobileView = true;
+        }
+        else{
+          this.isMobileView = false;
+        }
+    }
+
   constructor(public dialogService: DialogService, private authService: AuthService,
               private messageService: MessageService) { }
+
+  ngAfterViewInit(): void {
+    this.screenWidth$.subscribe(width => {
+      console.log("Scree width: ", width)
+      if (width < 510) {
+        this.isMobileView = true;
+      }
+      else{
+        this.isMobileView = false;
+      }
+    });
+  }
 
   ngOnInit(): void {
 
