@@ -22,6 +22,8 @@ import { FormsModule } from '@angular/forms';
 import { DropdownModule }  from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { DividerModule } from 'primeng/divider';
+import { TableModule } from 'primeng/table';
+import { PaginatorModule } from 'primeng/paginator';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -78,7 +80,9 @@ import { EditmocktestComponent } from './editmocktest/editmocktest.component';
     FormsModule,
     DropdownModule,
     InputTextModule,
-    DividerModule
+    DividerModule,
+    TableModule,
+    PaginatorModule
   ]
 })
 export class TeacherdashboardModule { }

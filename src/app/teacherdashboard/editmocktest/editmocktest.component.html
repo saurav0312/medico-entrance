@@ -1,12 +1,12 @@
 
-<div style="margin-top: 10em; margin-bottom: 1em; text-align: center;">
-    <div class="container rounded bg-blue mt-5 mb-5">
+<div style="margin-top: 2em; margin-bottom: 1em; text-align: center;">
+    <div class="container rounded bg-blue mb-5">
       <div class="row">
         
-          <div class="border card" style="border-color: #e0e0e0 !important; margin-bottom: 1em;">
+          <div class="border card" style="border-color: #e0e0e0 !important; margin-bottom: 1em; border-radius: 10px;">
               <div class="p-3">
                   <div class="mb-3">
-                      <h4 class="align-items-center" style="display: inline; text-align: center;"><b>Edit Test</b></h4>
+                      <h4 class="align-items-center" style="display: inline; text-align: center; font-family: 'Cambay';"><b>Edit Test</b></h4>
                   </div>
     
                   <form (ngSubmit)="modifyMockTest()" name="modifyMockTestForm" [formGroup]="modifyMockTestForm" >
@@ -52,7 +52,7 @@
     
                     <div style="text-align: left; margin-bottom: 1em;">
                       <!-- <mat-form-field style="width: 100%;" appearance="outline"> -->
-                          <mat-label style="text-align: left;">Test Type: </mat-label>
+                          <mat-label style="text-align: left; font-family: 'Cambay';">Test Type: </mat-label>
                           <mat-radio-group formControlName="testType" [(ngModel)]="testType" aria-label="Test Type">
                             <mat-radio-button style="margin-right: 1em;" (change)="testTypeChanged($event)" [checked]="testType === 'Free'" value="Free">Free</mat-radio-button>
                             <mat-radio-button [checked]="testType === 'Paid'" value="Paid">Paid</mat-radio-button>
@@ -76,7 +76,7 @@
 
                     <div style="text-align: left; margin-bottom: 1em;">
                       <!-- <mat-form-field style="width: 100%;" appearance="outline"> -->
-                          <mat-label style="text-align: left;">Test Category: </mat-label>
+                          <mat-label style="text-align: left; font-family: 'Cambay';">Test Category: </mat-label>
                           <mat-radio-group formControlName="testCategory" [(ngModel)]="testCategory" aria-label="Test Type">
                             <mat-radio-button style="margin-right: 1em;" [checked]="testCategory === 'Mock'" value="Mock">Mock Test</mat-radio-button>
                             <mat-radio-button [checked]="testCategory === 'Subject'" value="Subject">Subject Test</mat-radio-button>

@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute } from '@angular/router';
 import { MockTest } from 'src/app/interface/mockTest';
 import { TestSubscription } from 'src/app/interface/test-subscription';
@@ -17,9 +16,6 @@ export class MyTestsBoughtByAStudentComponent implements OnInit {
   teacherUserId!: string;
   studentsTestList: Array<string | undefined> =[];
   myAllTestsByTheStudent: Array<MockTest> = [];
-
-  dataSource: MatTableDataSource<MockTest> = new MatTableDataSource();
-  //@ViewChild(MatPaginator) paginator! : MatPaginator;
 
   constructor(
     private authService: AuthService,
@@ -44,8 +40,6 @@ export class MyTestsBoughtByAStudentComponent implements OnInit {
                 }
               })
             }
-            this.dataSource.data = this.myAllTestsByTheStudent ;
-            //this.dataSource.paginator = this.paginator
             this.loading = false
           })
         }
