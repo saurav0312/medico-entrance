@@ -1,91 +1,54 @@
 
-<div style="margin-top: 8em;">
-    <h1 style="text-align: center; margin-top: 2em;">My All Tests</h1>
-    <div [ngClass]="'mat-elevation-z8'" class="table-contents" id="content" #content>
-        <div>
-        <mat-table matSort [ngClass]="'styled-table'" matTableExporter [dataSource] = "dataSource"
-                    > 
-            <ng-container matColumnDef="no">
-                <mat-header-cell [ngClass]="'table-header-class testHeaderCss'" *matHeaderCellDef> No </mat-header-cell>
-                <mat-cell [ngClass]="'testNameCss'" *matCellDef="let element; let i = index;"> 
-                    <span class="mobile-label">No:</span>
-                    {{paginator.pageIndex * paginator.pageSize + i + 1}} 
-                </mat-cell>
-            </ng-container>
+<div>
+    <h1 style="text-align: center; margin-top: 0.4em; font-family: 'Cambay';">My All Tests</h1>
+    <div id="content" #content>
+        <div class="card" style="margin: 8px;">
+            <p-table #testTable
+                [columns]="displayedColumns" 
+                [paginator]="true" 
+                [rows]="5" 
+                [showCurrentPageReport]="true" 
+                responsiveLayout="scroll"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+                [rowsPerPageOptions]="[5,10,20]" 
+                [value]="allMockTests"
+                styleClass="p-datatable-striped"
+                [totalRecords]="allMockTests.length">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th style="font-family: 'Cambay';">No</th>
+                        <th style="font-family: 'Cambay'" [pSortableColumn]="col.field" *ngFor="let col of columns">
+                            {{col.header}}
+                            <p-sortIcon [field]="col.field"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
 
-            <ng-container matColumnDef="testId">
-                <mat-header-cell [ngClass]="'table-header-class testHeaderCss'" *matHeaderCellDef> TestId </mat-header-cell>
-                <mat-cell [ngClass]="'testNameCss'" *matCellDef="let element"> 
-                    <span class="mobile-label">TestId:</span>
-                    {{element.id}}
-                    </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="testName">
-                <mat-header-cell mat-sort-header [ngClass]="'table-header-class testHeaderCss'" *matHeaderCellDef> TestName </mat-header-cell>
-                <mat-cell [ngClass]="'testNameCss'" *matCellDef="let element"> 
-                    <span class="mobile-label">TestName:</span>
-                    {{element.testName}}
-                    </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="testTakenBy">
-                <mat-header-cell mat-sort-header [ngClass]="'table-header-class testHeaderCss'" *matHeaderCellDef> Test Taken By </mat-header-cell>
-                <mat-cell [ngClass]="'testNameCss'" *matCellDef="let element"> 
-                    <span class="mobile-label">Test Taken By:</span>
-                    {{element.testTakenBy}}
-                    </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="testCategory">
-                <mat-header-cell mat-sort-header [ngClass]="'table-header-class testHeaderCss'" *matHeaderCellDef> Test Category</mat-header-cell>
-                <mat-cell [ngClass]="'testNameCss'" *matCellDef="let element"> 
-                    <span class="mobile-label">Test Category</span>
-                    {{element.testCategory}}
-                    </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="testType">
-                <mat-header-cell mat-sort-header [ngClass]="'table-header-class testHeaderCss'" *matHeaderCellDef> Test Type</mat-header-cell>
-                <mat-cell [ngClass]="'testNameCss'" *matCellDef="let element"> 
-                    <span class="mobile-label">Test Type</span>
-                    {{element.testType}}
-                    </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="totalTime">
-                <mat-header-cell mat-sort-header [ngClass]="'table-header-class testHeaderCss'" *matHeaderCellDef> Total Time</mat-header-cell>
-                <mat-cell [ngClass]="'testNameCss'" *matCellDef="let element"> 
-                    <span class="mobile-label">Total Time</span>
-                    {{element.totalTime}}
-                    </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="testPrice">
-                <mat-header-cell mat-sort-header [ngClass]="'table-header-class testHeaderCss'" *matHeaderCellDef> Test Price</mat-header-cell>
-                <mat-cell [ngClass]="'testNameCss'" *matCellDef="let element"> 
-                    <span class="mobile-label">Test Price</span>
-                    {{element.testPrice}}
-                    </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="actions">
-                <mat-header-cell [ngClass]="'table-header-class testHeaderCss'" *matHeaderCellDef> Actions</mat-header-cell>
-                <mat-cell [ngClass]="'testNameCss'" *matCellDef="let element"> 
-                    <span class="mobile-label">Actions</span>
-                    <mat-icon matTooltip="Delete" (click)="deleteMockTest(element.id)" style="color: red;">delete</mat-icon>
-                    <mat-icon matTooltip="Edit" [routerLink]="['/teacherdashboard/editmocktest']" [queryParams]="{ testId: element.id }">edit</mat-icon>
-                    </mat-cell>
-            </ng-container>
-
-            <mat-header-row *matHeaderRowDef="displayedColumnsForAllTests"></mat-header-row>
-            <mat-row *matRowDef="let row; columns: displayedColumnsForAllTests;" mat-ripple></mat-row>
-
-            
-        </mat-table>
+                <ng-template pTemplate="body" let-row let-i= "rowIndex" let-columns="columns">
+                    <tr>
+                        <td>
+                            <div>
+                                <a style="text-align: center; color: #0490f4; cursor: pointer;">{{i + 1}}</a>
+                            </div>
+                        </td>
+                        <td *ngFor="let col of columns">
+                            <div *ngIf="col.field == 'actions'; else resultElseBlock">
+                                <div> 
+                                    <mat-icon matTooltip="Delete" (click)="deleteMockTest(row.id)" style="color: red; cursor: pointer;">delete</mat-icon>
+                                    <mat-icon matTooltip="Edit" [routerLink]="['/teacherdashboard/editmocktest']" 
+                                                [queryParams]="{ testId: row.id }" style="cursor: pointer;">edit</mat-icon>
+                                </div>
+                            </div>
+                            <ng-template #resultElseBlock>
+                                {{row[col.field]}}
+                            </ng-template>
+                                
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
         </div>
         <div>
-        <mat-paginator [ngClass]="'styled-paginator'" [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
         </div>
     </div>
 </div>

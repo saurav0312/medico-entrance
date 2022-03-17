@@ -1,9 +1,6 @@
-import { AfterViewInit, Component, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from 'src/app/service/auth.service';
 import { MockTest } from 'src/app/interface/mockTest';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationdialogComponent } from 'src/app/reusableComponents/confirmationdialog/confirmationdialog.component';
 import { Router } from '@angular/router';
@@ -15,23 +12,33 @@ import { Router } from '@angular/router';
 })
 export class DeletemocktestComponent implements OnInit, AfterViewInit {
 
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild('testTable') testTableEle!: any;
 
-  private _dataSource : MatTableDataSource<MockTest> = new MatTableDataSource();
+  private _allMockTests : Array<MockTest> = [];
 
   @Input() loading: boolean = false;
 
   displayedColumnsForAllTests: string[] = ['no', 'testId', 'testName', 'testTakenBy', 'testCategory' ,'testType', 'totalTime','testPrice', 'actions'];
  
-  @ViewChild(MatPaginator) paginator! : MatPaginator;
+  displayedColumns = [
+    { field: 'id', header: 'Test ID' },
+    { field: 'testName', header: 'Test Name' },
+    { field: 'testTakenBy', header: 'Test Taken By' },
+    { field: 'testCategory', header: 'Test Category' },
+    { field: 'testType', header: 'Test Type' },
+    { field: 'totalTime', header: 'Total Time' },
+    { field: 'testPrice', header: 'Test Price' },
+    { field: 'actions', header: 'Actions' },
+  ];
 
-  @Input()
-  set dataSource(dataSourceVal : MatTableDataSource< MockTest> ){
-    this._dataSource = dataSourceVal;
+
+   @Input()
+  set allMockTests(allMockTestsVal : Array< MockTest> ){
+    this._allMockTests = allMockTestsVal;
   }
 
-  get dataSource (): MatTableDataSource< MockTest>{
-    return this._dataSource
+  get allMockTests (): Array< MockTest>{
+    return this._allMockTests
   }
 
   constructor(
@@ -41,12 +48,10 @@ export class DeletemocktestComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-
+    console.log("all mock tests bought by a student: ", this.allMockTests)
   }
 
   ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator
   }
 
   deleteMockTest(testId: string){
@@ -62,7 +67,6 @@ export class DeletemocktestComponent implements OnInit, AfterViewInit {
             })
           }
           this.authService.deleteMockTest(testId).subscribe(response =>{
-            this.dataSource.data = this.dataSource.data.filter(test => test.id !== testId)
             this.loading =false;
           })
         })
