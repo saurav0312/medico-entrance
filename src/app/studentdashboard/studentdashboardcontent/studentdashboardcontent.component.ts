@@ -148,6 +148,7 @@ export class StudentdashboardcontentComponent implements OnInit {
     this.listOfTeachers.sort((x,y) =>{
       return x.isSubscribed === y.isSubscribed ? 0 : x.isSubscribed ? -1 : 1
     })
+    console.log("loop")
 
     if(this.searchText!==''){
       let event ={
@@ -175,7 +176,8 @@ export class StudentdashboardcontentComponent implements OnInit {
       //this.listOfTeachers = this.initialListOfTeachers
     }
     else{
-      this.listOfTeachers = this.listOfTeachers.filter(teacher => teacher.firstName.includes(filterValue) || teacher.lastName.includes(filterValue))
+      this.listOfTeachers = this.initialListOfTeachers.filter(teacher => teacher.firstName.toLowerCase().includes(filterValue) || teacher.lastName.toLowerCase().includes(filterValue))
+      console.log("filtered teacher: ", this.listOfTeachers)
     }
   }
 }
