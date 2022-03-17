@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, AfterViewInit, Input, ElementRef, TemplateRef } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, Input, ElementRef, TemplateRef, HostListener } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { TestReportQuestion } from '../../interface/testReportQuestion';
@@ -16,6 +16,7 @@ import { TestReportData } from 'src/app/interface/testReportData';
 import { formatDate } from '@angular/common';
 import { SubjectList } from 'src/app/interface/subject-list';
 import Chart from 'chart.js/auto';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-detailtestreport',
@@ -131,6 +132,23 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
   uniqueTestsList: {[key:string]: Array<any>} = {};
   testReportData! : TestReportData;
   defaultSelectedTest!: TreeNode;
+
+  smallScreen: boolean = false;
+
+  screenWidth!: number;
+
+  private screenWidth$ = new BehaviorSubject<number>(window.innerWidth);
+
+  @HostListener('window:resize', ['$event'])
+    onResize(event: any) {
+      console.log("Window resize: in detail test report", event)
+        if (event.target.innerWidth < 510) {
+          this.smallScreen = true
+        }
+        else{
+          this.smallScreen = false;
+        }
+    }
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -791,7 +809,15 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
 
   ngAfterViewInit(): void {
-    
+    this.screenWidth$.subscribe(width => {
+      console.log("Scree width detail test report: ", width)
+      if (width < 510) {
+        this.smallScreen = true;
+      }
+      else{
+        this.smallScreen = false
+      }
+    });
   } 
 
   tabChanged(event:any):void{

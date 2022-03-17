@@ -307,7 +307,7 @@
     <!-- <div> -->
     <p style="margin-top: 1.2em;">Based on this test, these are your strengths</p>
 
-    <div class="row" style="margin-top: 2em">
+    <div style="margin-top: 2em">
         <div style="display: contents;">
             <div class="row" style="padding-left: 0; padding-right: 0;">
                 <ng-container  *ngFor="let subject of strongSubjectList['strongSubject']">
@@ -350,7 +350,7 @@
     <!-- <div> -->
     <p style="margin-top: 1.2em;">Based on this test, these are your weakness</p>
 
-    <div class="row" style="margin-top: 2em">
+    <div [ngClass]="smallScreen ? 'row' : ''" style="margin-top: 2em">
         <div style="display: contents;">
             <div class="row" style="padding-left: 0; padding-right: 0;">
                 <ng-container  *ngFor="let subject of weakSubjectList['weakSubject']">
