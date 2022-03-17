@@ -1,77 +1,67 @@
-<!-- <app-teacherdashboardnavigationbar></app-teacherdashboardnavigationbar>
-<router-outlet></router-outlet> -->
-
-<!-- Test -->
-
-    
 <div class="grad1">
 
-    <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light" style="background-color: white !important;">
-      <button mat-icon-button *ngIf="sidenav.mode === 'over' || sidenav.mode === 'side'" (click)="sidenav.toggle()">
-        <mat-icon>menu</mat-icon> 
-    </button>
-    </nav>
+  <nav class="navbar navbar-expand-lg navbar-light fixed-top bg-light" style="background-color: white !important;">
+    <button mat-icon-button *ngIf="sidenav.mode === 'over' || sidenav.mode === 'side'" (click)="sidenav.toggle()">
+      <mat-icon>menu</mat-icon> 
+  </button>
+  </nav>
 
-    <mat-sidenav-container class="mat-sidenav-container-class" style="font-family: ubuntu;">
-      <mat-sidenav #sidenav="matSidenav" class="mat-sidenav-class" mode='side' opened  style="width: 20em;">
-    
-    
-          <p></p>
-            <div style="text-align: left; display: flex; padding-left: 1.4em;">
-              <img class="rounded-circle" src="{{profileImageUrl}}" style=" height: 5em; width: 5em">
-              <div style="padding-left: 1.2em;">
-              <p class="name" style="font-size: 20px; 
-              font-family: fjalla-one; font-weight: 600; padding-top: 0.6em; margin-bottom: 0px;">{{username}}</p>
-              <p><i>Teacher</i></p>
-              </div>
+  <mat-sidenav-container class="mat-sidenav-container-class" style="font-family: ubuntu;">
+    <mat-sidenav #sidenav="matSidenav" class="mat-sidenav-class" mode='side' opened  style="width: 20em;">
+  
+  
+        <p></p>
+          <div style="text-align: left; display: flex; padding-left: 1.4em;">
+            <img class="rounded-circle" src="{{profileImageUrl}}" style=" height: 5em; width: 5em">
+            <div style="padding-left: 1.2em;">
+            <p class="name" style="font-size: 20px; 
+            font-family: fjalla-one; font-weight: 600; padding-top: 0.6em; margin-bottom: 0px;">{{username}}</p>
+            <p><i>Teacher</i></p>
             </div>
-            
-          <div class="card" style="padding-left: 7px; padding-right: 7px;  border: none;">
-            <p-divider></p-divider>
           </div>
-
-          <button routerLink="teacherdashboardcontent" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
-            <mat-icon class="icon-class">home</mat-icon>
-            <span>Home</span>
-          </button>
-
-          <button routerLink="/teacherdashboard/addtest" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
-            <mat-icon class="icon-class">quiz</mat-icon>
-            <span>Add Test</span>
-          </button>
-
-          <button routerLink="/teacherdashboard/modifytest" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
-            <mat-icon class="icon-class">dashboard</mat-icon>
-            <span>My Tests</span>
-          </button>
-
-          <button routerLink="questionAnswerDiscussion" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
-            <mat-icon class="icon-class">question_answer</mat-icon>
-            <span>Ask A Question</span>
-          </button>
-
-          <button routerLink="/teacherdashboard/viewmystudents" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
-            <mat-icon class="icon-class">person</mat-icon>
-            <span>View My Students</span>
-          </button>
-
-          <button routerLink="editprofileinfo" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
-            <mat-icon class="icon-class">person</mat-icon>
-            <span>Profile</span>
-          </button>
           
-          <button (click)='logout()' mat-button class="menu-button navbar-buttons">
-            <mat-icon class="icon-class">logout</mat-icon>
-            <span>Sign out</span>
-          </button>
-      </mat-sidenav>
-    
-      <mat-sidenav-content class="mat-sidenav-content-class" style="background: white;">
-          <router-outlet></router-outlet>
-      </mat-sidenav-content>
-    </mat-sidenav-container>
-  </div>
-    
+        <div class="card" style="padding-left: 7px; padding-right: 7px;  border: none;">
+          <p-divider></p-divider>
+        </div>
 
+        <button routerLink="teacherdashboardcontent" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
+          <mat-icon class="icon-class">home</mat-icon>
+          <span>Home</span>
+        </button>
 
-<!-- Test end -->
+        <button routerLink="/teacherdashboard/addtest" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
+          <mat-icon class="icon-class">quiz</mat-icon>
+          <span>Add Test</span>
+        </button>
+
+        <button routerLink="/teacherdashboard/modifytest" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
+          <mat-icon class="icon-class">dashboard</mat-icon>
+          <span>My Tests</span>
+        </button>
+
+        <button routerLink="questionAnswerDiscussion" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
+          <mat-icon class="icon-class">question_answer</mat-icon>
+          <span>Ask A Question</span>
+        </button>
+
+        <!-- <button routerLink="/teacherdashboard/viewmystudents" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
+          <mat-icon class="icon-class">person</mat-icon>
+          <span>View My Students</span>
+        </button> -->
+
+        <button routerLink="editprofileinfo" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
+          <mat-icon class="icon-class">person</mat-icon>
+          <span>Profile</span>
+        </button>
+        
+        <button (click)='logout()' mat-button class="menu-button navbar-buttons">
+          <mat-icon class="icon-class">logout</mat-icon>
+          <span>Sign out</span>
+        </button>
+    </mat-sidenav>
+  
+    <mat-sidenav-content class="mat-sidenav-content-class" style="background: white;">
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>
