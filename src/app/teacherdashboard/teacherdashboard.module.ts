@@ -29,13 +29,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { TeacherdashboardRoutingModule } from './teacherdashboard-routing.module';
 import { TeacherdashboardcontentComponent } from './teacherdashboardcontent/teacherdashboardcontent.component';
-import { TeacherdashboardnavigationbarComponent } from './teacherdashboardnavigationbar/teacherdashboardnavigationbar.component';
 import { TeacherdashboardhomeComponent } from './teacherdashboardhome/teacherdashboardhome.component';
 import { AddmocktestComponent } from './addmocktest/addmocktest.component';
 import { MystudentsComponent } from './mystudents/mystudents.component';
 import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
 import { DeletemocktestComponent } from './deletemocktest/deletemocktest.component';
-import { TeacherProfileComponent } from './teacher-profile/teacher-profile.component';
 import { TeacherprofileinfoComponent } from './teacherprofileinfo/teacherprofileinfo.component';
 import { MyTestsBoughtByAStudentComponent } from './my-tests-bought-by-astudent/my-tests-bought-by-astudent.component';
 import { MyMockTestsComponent } from './my-mock-tests/my-mock-tests.component';
@@ -45,12 +43,10 @@ import { EditmocktestComponent } from './editmocktest/editmocktest.component';
 @NgModule({
   declarations: [
     TeacherdashboardcontentComponent,
-    TeacherdashboardnavigationbarComponent,
     TeacherdashboardhomeComponent,
     AddmocktestComponent,
     MystudentsComponent,
     DeletemocktestComponent,
-    TeacherProfileComponent,
     TeacherprofileinfoComponent,
     MyTestsBoughtByAStudentComponent,
     MyMockTestsComponent,

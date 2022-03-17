@@ -7,8 +7,6 @@ import { EditmocktestComponent } from './editmocktest/editmocktest.component';
 import { MyMockTestsComponent } from './my-mock-tests/my-mock-tests.component';
 import { MyTestsBoughtByAStudentComponent } from './my-tests-bought-by-astudent/my-tests-bought-by-astudent.component';
 import { MystudentsComponent } from './mystudents/mystudents.component';
-import { TeacherProfileComponent } from './teacher-profile/teacher-profile.component';
-import { TeacherdashboardcontentComponent } from './teacherdashboardcontent/teacherdashboardcontent.component';
 import { TeacherdashboardhomeComponent } from './teacherdashboardhome/teacherdashboardhome.component';
 import { TeacherprofileinfoComponent } from './teacherprofileinfo/teacherprofileinfo.component';
 
@@ -17,7 +15,7 @@ const routes: Routes = [
     path:'', 
     component: TeacherdashboardhomeComponent,
     children: [
-      { path: 'teacherdashboardcontent', component: TeacherdashboardcontentComponent },
+      { path: 'teacherdashboardcontent', component: MystudentsComponent },
       { path: 'addtest', component: AddmocktestComponent },
       { path: 'modifytest', component: MyMockTestsComponent },
       { path: 'editmocktest', component: EditmocktestComponent },
@@ -28,16 +26,7 @@ const routes: Routes = [
       { path: '', redirectTo:'/teacherdashboard/teacherdashboardcontent', pathMatch: 'full' }
     ],
     canActivate: [ TeacherAuthGuardGuard]
-  },
-  { 
-    path: 'teacherProfile', 
-    component: TeacherProfileComponent,
-    children: [
-      { path: 'editprofileinfo', component: TeacherprofileinfoComponent},
-      { path: '', redirectTo:'/teacherdashboard/teacherProfile/editprofileinfo', pathMatch: 'full' }
-    ],
-    canActivate: [ TeacherAuthGuardGuard]
-  },
+  }
 ];
 
 @NgModule({
