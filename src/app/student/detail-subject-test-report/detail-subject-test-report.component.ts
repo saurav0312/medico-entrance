@@ -88,15 +88,14 @@ export class DetailSubjectTestReportComponent implements OnInit {
 
 
     let sub = this.authService.getCurrentUser().subscribe(response =>{
-      this.authService.getAllMockTestsGivenByAUser(response?.uid).subscribe(response =>{
+      this.authService.getAllMockTestsGivenByAUser(response?.uid).subscribe(allTestsResponse =>{
         sub.unsubscribe()
-        if(response!== undefined){
-          this.testReportData = response
+        if(allTestsResponse!== undefined){
+          this.testReportData = allTestsResponse
 
           this.activatedRoute.queryParams.subscribe((params: any) =>{
             let testIdFromParams = <string>params.testId
 
-            console.log(" Subject Testid from param: ", testIdFromParams)
             if(testIdFromParams === undefined){
               this.testReportData.allTests = this.testReportData.allTests.filter(test => test.testCategory ==='Subject')
             }

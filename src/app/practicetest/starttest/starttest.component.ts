@@ -28,6 +28,8 @@ export class StarttestComponent implements OnInit, OnDestroy {
   dataSource!: MatTableDataSource<TestReportQuestion>;
   
   testData!: MockTest;
+  initialTestData!: MockTest;
+
   testReportDataToSend!: TestReportData;
   isYourFirstTest : boolean = true;
   viewResult: boolean = false;
@@ -76,6 +78,28 @@ export class StarttestComponent implements OnInit, OnDestroy {
     this.route.queryParams.subscribe((params: any) =>{
       this.testId = <string>params.data
       this.authService.getMockTestByID(this.testId).subscribe(response=>{
+        console.log("test data: ", response)
+        //this.initialTestData = response
+        // if(response!== undefined){
+
+        //   this.initialTestData = <MockTest>{
+        //     "testName": response.testName,
+        //     "testTakenBy": response.testTakenBy,
+        //     "totalTime": response.totalTime,
+        //     "totalNumberOfQuestions": response.totalNumberOfQuestions,
+        //     "testType": response.testType,
+        //     "testCategory": response.testCategory,
+        //     "subjectName": response.subjectName,
+        //     "topicName": response.topicName,
+        //     "questions": response.questions,
+        //     "testPrice": response.testPrice,
+        //     "teacherUserId": response.teacherUserId,
+        //     "testUploadDate": response.testUploadDate,
+        //     "studentsWhoGaveTest": response.studentsWhoGaveTest
+        //   }
+        // }
+
+
         this.testData= response;
         this.testCategory = this.testData.testCategory
         this.testTotalTime = this.testData.totalTime
@@ -211,9 +235,8 @@ export class StarttestComponent implements OnInit, OnDestroy {
     }
     this.testReportDataToSend = testReportDataToSend
 
-    this.authService.createAllMockTestsGivenByAUser(this.userId, testReportDataToSend, this.isYourFirstTest).subscribe(response =>{
-      this.isResultSubmitted = true;
-    });
+    this.authService.addATestGivenByTheUser(this.userId, this.testToShowInTable)
+    this.isResultSubmitted = true;
   }
 
   ngOnDestroy(){

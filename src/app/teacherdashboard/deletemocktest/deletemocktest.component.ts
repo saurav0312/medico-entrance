@@ -28,7 +28,8 @@ export class DeletemocktestComponent implements OnInit, AfterViewInit {
     { field: 'testType', header: 'Test Type' },
     { field: 'totalTime', header: 'Total Time' },
     { field: 'testPrice', header: 'Test Price' },
-    { field: 'actions', header: 'Actions' },
+    { field: 'studentList', header: 'Students who gave test' },
+    { field: 'actions', header: 'Actions' }
   ];
 
 

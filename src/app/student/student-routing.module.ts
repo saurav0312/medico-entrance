@@ -25,7 +25,7 @@ const routes: Routes = [
       { path: 'detailMockTestReport', component: DetailtestreportComponent},
       { path: 'detailSubjectTestReport', component: DetailSubjectTestReportComponent},
       { path: 'questionAnswerDiscussion', component: QuestionAnswerDiscussionComponent},
-      { path: 'overallAnalysisDashboard', component: StudentPerformanceAnalysisDashboardComponent},
+      { path: 'viewAllAvailableTests', component: StudentPerformanceAnalysisDashboardComponent},
       { path: 'myDashboard', component: MyDashboardComponent},
       { path: 'individualQuestion', component: IndividualquestionComponent },
       { path: '', redirectTo: '/studentProfile/studentPageHome', pathMatch: 'full' },

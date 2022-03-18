@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { MockTestWithAlreadyGiven } from 'src/app/interface/mock-test-with-already-given';
 import { MockTest } from 'src/app/interface/mockTest';
@@ -73,22 +73,8 @@ export class StudentPageHomeComponent implements OnInit, OnDestroy {
   incorrectAnswerChartLabels: string[] = []
   incorrectAnswerChartData: number[] = []
 
-  // @HostListener('window:resize', ['$event'])
-  //   onResize(event: any) {
-  //     console.log("Window resize: ", event)
-  //     //mobile view
-  //       if (event.target.innerWidth < 510) {
-  //         this.banner.
-  //       } 
-  //       else{
-          
-  //       }
-  //   }
-
   ngOnInit(): void {
     this.loading = false;
-    // this.isCorrectAnswerChartDataAvailable = false;
-    // this.isIncorrectAnswerChartDataAvailable = false;
 
     this.authService.getCurrentUser().subscribe(currentUser =>{
       this.userId = currentUser.uid
@@ -241,10 +227,6 @@ export class StudentPageHomeComponent implements OnInit, OnDestroy {
                 })
                 if(!isAllDataZero){
                   this.isCorrectAnswerChartDataAvailable = true;
-                  // if(this.correctAnswerChart !== undefined){
-                  //   this.correctAnswerChart.destroy()
-                  //   console.log("corr destroyed")
-                  // }
                   this.prepareCorrectAnswerPerformanceChart(this.correctAnswerChartLabels, this.correctAnswerChartData, 'overallCorrectAnswersChart', 'Correct Answers')
                 }
                 else{
@@ -273,10 +255,6 @@ export class StudentPageHomeComponent implements OnInit, OnDestroy {
 
                 if(!isAllDataZero){
                   this.isIncorrectAnswerChartDataAvailable = true;
-                  // if(this.incorrectAnswerChart !== undefined){
-                  //   this.incorrectAnswerChart.destroy()
-                  //   console.log("inc destroyed")
-                  // }
 
                   this.prepareIncorrectAnswerPerformanceChart(this.incorrectAnswerChartLabels, this.incorrectAnswerChartData, 'overallIncorrectAnswersChart','Incorrect Answers')
                 }
@@ -301,20 +279,6 @@ export class StudentPageHomeComponent implements OnInit, OnDestroy {
       })
     })
   }
-
-  // ngAfterViewInit(): void {
-  //   console.log("corr ans: ", this.correctAnswerChartData)
-  //   if(this.correctAnswerChartData.length > 0){
-  //     this.isCorrectAnswerChartDataAvailable = true;
-  //     this.prepareCorrectAnswerPerformanceChart(this.correctAnswerChartLabels, this.correctAnswerChartData, 'overallCorrectAnswersChart', 'Correct Answers')
-  //   }
-
-  //   console.log("incorr ans: ", this.incorrectAnswerChartData)
-  //   if(this.incorrectAnswerChartData.length > 0){
-  //     this.isIncorrectAnswerChartDataAvailable = true;
-  //     this.prepareIncorrectAnswerPerformanceChart(this.incorrectAnswerChartLabels, this.incorrectAnswerChartData, 'overallIncorrectAnswersChart','Incorrect Answers')
-  //   }
-  // }
 
 
   generateRandomColor(data: any){

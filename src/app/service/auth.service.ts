@@ -18,7 +18,7 @@ import { Firestore, addDoc, collectionData, collection, doc, docData, setDoc, up
 import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
 import { uploadBytes } from 'firebase/storage';
 import { TestReportData } from '../interface/testReportData';
-import { arrayRemove, deleteDoc, FieldValue, query, where } from 'firebase/firestore';
+import { arrayRemove, collectionGroup, deleteDoc, FieldValue, query, where } from 'firebase/firestore';
 import { ProfileService } from './profile.service';
 import { ContactRequest } from '../interface/contact-request';
 import { DiscussionQuestion } from '../interface/discussion-question';
@@ -177,11 +177,25 @@ export class AuthService {
       return from(updateDoc(docRef, {allTests : arrayUnion(data.allTests[0])} ))    
     }
   }
+
+  //Create sub collection for a user which contains all test history given by the user
+  addATestGivenByTheUser(id: string | undefined, data: any){
+    const docRef = collection(this.firestore, `IndividualUserTests/${id}/allTests`);
+    addDoc(docRef, data)
+  }
   
   // This method fetches all tests given by a student
   getAllMockTestsGivenByAUser(id: string | undefined) : Observable<TestReportData>{
-    const bookRef = doc(this.firestore, `IndividualUserTests/${id}`);
-    return docData(bookRef) as Observable<TestReportData>;
+    const docRef = collection(this.firestore, `IndividualUserTests/${id}/allTests`);
+    return collectionData(docRef).pipe(
+      map(result => {
+        let testReportData = <TestReportData>{
+          allTests: result
+        }
+        console.log("test response from service: ", testReportData)
+        return testReportData
+      })
+    )
   }
 
   //fetches all tests created by a teacher
