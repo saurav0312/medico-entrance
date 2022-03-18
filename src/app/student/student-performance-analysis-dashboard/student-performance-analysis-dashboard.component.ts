@@ -9,18 +9,12 @@ import { TestSubscription } from 'src/app/interface/test-subscription';
 import { AuthService } from 'src/app/service/auth.service';
 import { TestsubscriptionService } from 'src/app/service/testsubscription.service';
 
-declare var google: any;
-
 @Component({
   selector: 'app-student-performance-analysis-dashboard',
   templateUrl: './student-performance-analysis-dashboard.component.html',
   styleUrls: ['./student-performance-analysis-dashboard.component.css']
 })
 export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
-
-  // @ViewChild('myChart') myChart: any;
-  // canvas: any;
-  // ctx: any;
 
   subjectProgressValue: number = 0;
   mockTestProgressValue: number = 0;
@@ -67,65 +61,6 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
     this.authService.getCurrentUser().subscribe(currentUser =>{
       this.userId = currentUser.uid
 
-      this.authService.getAllMockTestsGivenByAUser(this.userId).subscribe(allMockTestsGivenByUser =>{
-        let totalNumberOfTestsGiven = allMockTestsGivenByUser.allTests.length
-        let allSubjectTestGiven = allMockTestsGivenByUser.allTests.filter(test => test.testCategory ==='Subject')
-
-        let allMockTestGiven = allMockTestsGivenByUser.allTests.filter(test => test.testCategory ==='Mock')
-        
-        let unqiueSubjectTestsIdList: string[] = [];
-        
-        allSubjectTestGiven.forEach(subjectTest =>{
-          if(unqiueSubjectTestsIdList.length > 0){ 
-            if(!unqiueSubjectTestsIdList.find(testId => testId === subjectTest.testId)){
-              unqiueSubjectTestsIdList.push(subjectTest.testId);
-            }
-          }
-          else{
-            unqiueSubjectTestsIdList.push(subjectTest.testId);
-          }
-        })
-        this.noOfSubjectTestsGivenByTheUser = unqiueSubjectTestsIdList.length
-
-
-        let unqiueMockTestsIdList: string[] = [];
-        
-        allMockTestGiven.forEach(mockTest =>{
-          if(unqiueMockTestsIdList.length > 0){
-            if(!unqiueMockTestsIdList.find(testId => testId === mockTest.testId)){
-              unqiueMockTestsIdList.push(mockTest.testId);
-            }
-          }
-          else{
-            unqiueMockTestsIdList.push(mockTest.testId);
-          }
-        })
-        this.noOfMockTestsGivenByTheUser = unqiueMockTestsIdList.length
-
-        allMockTestsGivenByUser.allTests.forEach(test =>{
-          test.testQuestions.forEach(question =>{
-            //option selected
-            if(question.selectedOption!== null){
-              if(question.selectedOption === question.correctAnswer)
-              {
-                this.noOfCorrectAnswers += 1;               
-              }
-              else{
-                this.noOfIncorrectAnswers +=1;
-              }
-            }
-            //option not selected
-            else{
-              this.noOfQuestionsNotAnswered +=1;
-            }
-          })
-        })
-      },
-      error =>{
-        window.alert(error.error)
-        this.loading = false;
-      })
-
       //fetch all subscribed tests by the user
       this.testsubscriptionService.getAllSubscribedTestsByAUser(this.userId).subscribe((response:TestSubscription) =>{
         if(response !== undefined){
@@ -144,57 +79,58 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
             })
           }
 
-        this.allSubjectTestsList = this.allTestsList.filter(test => test.testCategory === 'Subject');
-  
-        
-        this.listOfMockTests = this.allTestsList.filter(test => test.testCategory === 'Mock');
-        this.listOfMockTests.sort((a,b) =>{
-          if(a.testType < b.testType){
-            return -1;
-          }
-          else if(a.testType > b.testType){
-            return 1;
-          }
-          else{
-            return 0;
-          }
-        })
-  
-        
-        if(this.allSubjectTestsList!== undefined && this.allSubjectTestsList.length > 0){
-          this.allSubjectTestsList.forEach((subjectTest:MockTest) =>{
-            if(this.subjectNameList.find(subjectName => subjectName === subjectTest.subjectName) === undefined){
-              this.subjectNameList.push(subjectTest.subjectName)
-            }
-            if(this.subjectToTopicListMap[subjectTest.subjectName] === undefined){
-              this.subjectToTopicListMap[subjectTest.subjectName] = []
-            }
-            if(this.subjectToTopicListMap[subjectTest.subjectName].find(topicName => topicName === subjectTest.topicName) === undefined){
-              this.subjectToTopicListMap[subjectTest.subjectName].push(subjectTest.topicName)
-            }
+          this.allSubjectTestsList = this.allTestsList.filter(test => test.testCategory === 'Subject');
     
-            if(this.subjectToTopicToTestIdList[subjectTest.subjectName] === undefined){
-              this.subjectToTopicToTestIdList[subjectTest.subjectName] = {};
+          
+          this.listOfMockTests = this.allTestsList.filter(test => test.testCategory === 'Mock');
+          this.listOfMockTests.sort((a,b) =>{
+            if(a.testType < b.testType){
+              return -1;
             }
-            if(this.subjectToTopicToTestIdList[subjectTest.subjectName][subjectTest.topicName] === undefined){
-              this.subjectToTopicToTestIdList[subjectTest.subjectName][subjectTest.topicName] = [];
+            else if(a.testType > b.testType){
+              return 1;
             }
-            this.subjectToTopicToTestIdList[subjectTest.subjectName][subjectTest.topicName].push(
-            {
-              "testId": subjectTest.id,
-              "testName": subjectTest.testName 
-            })
+            else{
+              return 0;
+            }
           })
-        }
-        this.loading= false;
+    
+          
+          if(this.allSubjectTestsList!== undefined && this.allSubjectTestsList.length > 0){
+            this.allSubjectTestsList.forEach((subjectTest:MockTest) =>{
+              if(this.subjectNameList.find(subjectName => subjectName === subjectTest.subjectName) === undefined){
+                this.subjectNameList.push(subjectTest.subjectName)
+              }
+              if(this.subjectToTopicListMap[subjectTest.subjectName] === undefined){
+                this.subjectToTopicListMap[subjectTest.subjectName] = []
+              }
+              if(this.subjectToTopicListMap[subjectTest.subjectName].find(topicName => topicName === subjectTest.topicName) === undefined){
+                this.subjectToTopicListMap[subjectTest.subjectName].push(subjectTest.topicName)
+              }
+      
+              if(this.subjectToTopicToTestIdList[subjectTest.subjectName] === undefined){
+                this.subjectToTopicToTestIdList[subjectTest.subjectName] = {};
+              }
+              if(this.subjectToTopicToTestIdList[subjectTest.subjectName][subjectTest.topicName] === undefined){
+                this.subjectToTopicToTestIdList[subjectTest.subjectName][subjectTest.topicName] = [];
+              }
+              this.subjectToTopicToTestIdList[subjectTest.subjectName][subjectTest.topicName].push(
+              {
+                "testId": subjectTest.id,
+                "testName": subjectTest.testName 
+              })
+            })
+          }
+          this.loading= false;
+        },
+        error =>{
+          window.alert(error.error)
+          this.loading = false;
+        });
       },
       error =>{
         window.alert(error.error)
         this.loading = false;
-      });
-
-
-
       })
     },
     error =>{

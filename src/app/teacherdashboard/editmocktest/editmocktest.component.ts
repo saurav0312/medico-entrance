@@ -24,6 +24,7 @@ export class EditmocktestComponent implements OnInit {
   loading: boolean = false;
   questionError: Array<boolean> = [];
   optionsName: Array<string> = ['optionA','optionB','optionC','optionD']
+  currentMockTest!: MockTest;
 
   constructor(
     private route: ActivatedRoute,
@@ -58,6 +59,7 @@ export class EditmocktestComponent implements OnInit {
     this.route.queryParams.subscribe( (response:any) =>{
       this.testId = <string>response.testId
       this.authService.getMockTestByID(this.testId).subscribe((response:MockTest) =>{
+        this.currentMockTest = response
         this.testQuestions = response.questions
         this.testType = response['testType']
         this.testCategory = response['testCategory']
