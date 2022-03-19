@@ -123,8 +123,8 @@ export class StudentdashboardcontentComponent implements OnInit {
       const data: TeacherSubscription ={
         allTeacherSubscribed: [teacher.id]
       }
-      // this.searchText =''
-      this.teacherSubscriptionService.subscribeToTeacher(this.currentUserId, data, this.isFirstSubscription).subscribe(response =>{
+      this.searchText =''
+      this.teacherSubscriptionService.subscribeToTeacher(this.currentUserId, teacher.id).subscribe(response =>{
         this.category = 'All'
         this.ngOnInit()
       });
