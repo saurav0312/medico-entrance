@@ -38,6 +38,7 @@
         </div>
     </div>
 </div>
+<p-scrollTop [threshold]="0"></p-scrollTop>
 
 <ng-template #recentQuestionTemplate let-allAvailableQuestions let-tab="tab">
 
@@ -94,7 +95,7 @@
                     
                     <div  style="margin-top: 1em;">
                         <form (ngSubmit)="submitAnswer(discussionQuestion.id)" name="answerForm" [formGroup]="answerForm" fxLayoutAlign ="stretch" fxLayout="column">
-                            <textarea (change)="answerFieldChanged($event, i)" formControlName="answer" pInputTextarea placeholder="Add a comment" style="width: 100%;"></textarea>
+                            <textarea (keyup)="answerFieldChanged($event, i)" formControlName="answer" pInputTextarea placeholder="Add a comment" style="width: 100%;"></textarea>
                             <div style="display: flex; justify-content: right; margin-top: 0.3em;">
                                 <button class="btn btn-success" type="submit" style="width: fit-content;" [disabled]="questionChangedIndex !== i || answerForm.invalid ">Submit</button>
                             </div>
