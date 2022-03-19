@@ -24,7 +24,9 @@ export class MyMockTestsComponent implements OnInit {
         this.authService.fetchAllMockTestsCreatedByATeacher(response.uid).subscribe((response:MockTest[]) =>{
           if(response !== null){
             this.allTestByTheTeacher = response
-            this.loading = false;
+            setTimeout(() =>{
+              this.loading = false;
+            }, 500)
           }
           else{
             this.loading = false;

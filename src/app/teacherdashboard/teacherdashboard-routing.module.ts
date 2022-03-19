@@ -9,6 +9,9 @@ import { MyTestsBoughtByAStudentComponent } from './my-tests-bought-by-astudent/
 import { MystudentsComponent } from './mystudents/mystudents.component';
 import { TeacherdashboardhomeComponent } from './teacherdashboardhome/teacherdashboardhome.component';
 import { TeacherprofileinfoComponent } from './teacherprofileinfo/teacherprofileinfo.component';
+import { ViewAllStudentsOfAtestComponent } from './view-all-students-of-atest/view-all-students-of-atest.component';
+import { ViewSubjectTestHistoryOfAStudentOnATestComponent } from './view-subject-test-history-of-astudent-on-atest/view-subject-test-history-of-astudent-on-atest.component';
+import { ViewTestHistoryOfAStudentOnATestComponent } from './view-test-history-of-astudent-on-atest/view-test-history-of-astudent-on-atest.component';
 
 const routes: Routes = [
   {
@@ -23,6 +26,9 @@ const routes: Routes = [
       { path: 'viewmystudents', component: MystudentsComponent },
       { path: 'editprofileinfo', component: TeacherprofileinfoComponent},
       { path: 'myTestsBoughtByAStudent', component: MyTestsBoughtByAStudentComponent },
+      { path: 'viewAllStudentsOfATest', component: ViewAllStudentsOfAtestComponent },
+      { path: 'viewTestHistoryOfStudentOnThisTest', component: ViewTestHistoryOfAStudentOnATestComponent },
+      { path: 'viewSubjectTestHistoryOfStudentOnThisTest', component: ViewSubjectTestHistoryOfAStudentOnATestComponent },
       { path: '', redirectTo:'/teacherdashboard/teacherdashboardcontent', pathMatch: 'full' }
     ],
     canActivate: [ TeacherAuthGuardGuard]
