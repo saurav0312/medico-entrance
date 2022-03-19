@@ -4,6 +4,7 @@ import { MockTest } from 'src/app/interface/mockTest';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationdialogComponent } from 'src/app/reusableComponents/confirmationdialog/confirmationdialog.component';
 import { Router } from '@angular/router';
+import { UserToTestIdMapping } from 'src/app/interface/user-to-test-id-mapping';
 
 @Component({
   selector: 'app-deletemocktest',

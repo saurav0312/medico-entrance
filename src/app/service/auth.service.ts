@@ -22,6 +22,7 @@ import { arrayRemove, collectionGroup, deleteDoc, FieldValue, query, where } fro
 import { ProfileService } from './profile.service';
 import { ContactRequest } from '../interface/contact-request';
 import { DiscussionQuestion } from '../interface/discussion-question';
+import { UserToTestIdMapping } from '../interface/user-to-test-id-mapping';
 
 @Injectable({
   providedIn: 'root'
@@ -179,8 +180,20 @@ export class AuthService {
   }
 
   //Create sub collection for a user which contains all test history given by the user
-  addATestGivenByTheUser(id: string | undefined, data: any){
-    const docRef = collection(this.firestore, `IndividualUserTests/${id}/allTests`);
+  addStudentIdToTestIdMapping(userId: string | undefined, testId: string | undefined){
+    const docRef = collection(this.firestore, `UserToTestIdMapping`);
+    addDoc(docRef, {userId: userId, testId: testId})
+  }
+
+  readStudentIdToTestIdMapping(testId: string| undefined):Observable<any>{
+    const collectionList = collection(this.firestore, 'UserToTestIdMapping');
+    const q = query(collectionList, where("testId","==", testId))
+    return collectionData(q)
+  }
+
+  //Create sub collection for a user which contains all test history given by the user
+  addATestGivenByTheUser(userId: string | undefined, data: any){
+    const docRef = collection(this.firestore, `IndividualUserTests/${userId}/allTests`);
     addDoc(docRef, data)
   }
   
@@ -192,7 +205,20 @@ export class AuthService {
         let testReportData = <TestReportData>{
           allTests: result
         }
-        console.log("test response from service: ", testReportData)
+        return testReportData
+      })
+    )
+  }
+
+  // This method fetches all tests given by a student
+  getAllHistoryOfAMockTestGivenByAUserForTeacherAnalysis(id: string | undefined, testId: string) : Observable<TestReportData>{
+    const docRef = collection(this.firestore, `IndividualUserTests/${id}/allTests`);
+    const q = query(docRef, where("testId","==", testId))
+    return collectionData(q).pipe(
+      map(result => {
+        let testReportData = <TestReportData>{
+          allTests: result
+        }
         return testReportData
       })
     )

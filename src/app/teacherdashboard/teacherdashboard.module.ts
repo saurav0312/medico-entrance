@@ -18,12 +18,14 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule}  from '@angular/material/select';
 import { FormsModule } from '@angular/forms';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { DropdownModule }  from 'primeng/dropdown';
 import { InputTextModule } from 'primeng/inputtext';
 import { DividerModule } from 'primeng/divider';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
+import { TreeModule } from 'primeng/tree';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -38,6 +40,9 @@ import { TeacherprofileinfoComponent } from './teacherprofileinfo/teacherprofile
 import { MyTestsBoughtByAStudentComponent } from './my-tests-bought-by-astudent/my-tests-bought-by-astudent.component';
 import { MyMockTestsComponent } from './my-mock-tests/my-mock-tests.component';
 import { EditmocktestComponent } from './editmocktest/editmocktest.component';
+import { ViewAllStudentsOfAtestComponent } from './view-all-students-of-atest/view-all-students-of-atest.component';
+import { ViewTestHistoryOfAStudentOnATestComponent } from './view-test-history-of-astudent-on-atest/view-test-history-of-astudent-on-atest.component';
+import { ViewSubjectTestHistoryOfAStudentOnATestComponent } from './view-subject-test-history-of-astudent-on-atest/view-subject-test-history-of-astudent-on-atest.component';
 
 
 @NgModule({
@@ -50,7 +55,10 @@ import { EditmocktestComponent } from './editmocktest/editmocktest.component';
     TeacherprofileinfoComponent,
     MyTestsBoughtByAStudentComponent,
     MyMockTestsComponent,
-    EditmocktestComponent
+    EditmocktestComponent,
+    ViewAllStudentsOfAtestComponent,
+    ViewTestHistoryOfAStudentOnATestComponent,
+    ViewSubjectTestHistoryOfAStudentOnATestComponent
   ],
   imports: [
     CommonModule,
@@ -78,7 +86,9 @@ import { EditmocktestComponent } from './editmocktest/editmocktest.component';
     InputTextModule,
     DividerModule,
     TableModule,
-    PaginatorModule
+    PaginatorModule,
+    TreeModule,
+    MatTabsModule
   ]
 })
 export class TeacherdashboardModule { }

@@ -13,7 +13,8 @@
                 [rowsPerPageOptions]="[5,10,20]" 
                 [value]="allMockTests"
                 styleClass="p-datatable-striped"
-                [totalRecords]="allMockTests.length">
+                [totalRecords]="allMockTests.length"
+                class="card mat-elevation-z2">
                 <ng-template pTemplate="header" let-columns>
                     <tr>
                         <th style="font-family: 'Cambay';">No</th>
@@ -40,7 +41,8 @@
                                 </ng-container>
 
                                 <ng-container *ngIf="col.field == 'studentList'">
-                                    <a style="color: blue; cursor: pointer;"><u>View all students</u></a>
+                                    <a [routerLink]="['/teacherdashboard/viewAllStudentsOfATest']" 
+                                        [queryParams]="{testId: row.id, testCategory: row.testCategory}" style="color: blue; cursor: pointer;"><u>View all students</u></a>
                                 </ng-container>
 
 

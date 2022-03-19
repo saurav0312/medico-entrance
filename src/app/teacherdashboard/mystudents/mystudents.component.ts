@@ -57,7 +57,9 @@ export class MystudentsComponent implements OnInit {
                 
               })
             }
-            this.loading = false;
+            setTimeout(() =>{
+              this.loading = false;
+            }, 500)
           }
           else{
             this.loading = false

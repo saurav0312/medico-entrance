@@ -237,6 +237,10 @@ export class StarttestComponent implements OnInit, OnDestroy {
 
     this.authService.addATestGivenByTheUser(this.userId, this.testToShowInTable)
     this.isResultSubmitted = true;
+    let userIdData : any ={
+      studentUserId: this.userId
+    }
+    this.authService.addStudentIdToTestIdMapping(this.userId, this.testId)
   }
 
   ngOnDestroy(){

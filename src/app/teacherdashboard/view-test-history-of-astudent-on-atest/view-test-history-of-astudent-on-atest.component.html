@@ -1,0 +1,409 @@
+<div *ngIf="!isNewUser; else noDataAvailable"> 
+
+    <div class="row" style="margin: 1px;">
+
+        <div class="col-sm-3" style="margin-bottom: 1.2em;">
+            <div style="margin-top: 3em; margin-bottom:  1.5em;">
+                <p style="font-size: 21px; font-weight: 500; font-family: 'Cambay';">All Given Mock Tests</p>
+            </div>
+
+            <p-tree 
+            [value]="allTests" 
+            selectionMode="single" 
+            [(selection)]="defaultSelectedTest" 
+            (onNodeSelect)="nodeSelected($event)"
+            [filter]="true"
+            scrollHeight="250px"></p-tree>
+
+        </div>
+
+        <div class="col-sm-9" style="padding: 0; padding-left: 3px;">
+        
+            <h1 style="text-align: center; margin-top: 1.2em; font-family: 'Cambay';">Test Result Analysis
+            </h1>
+
+            <mat-tab-group mat-align-tabs="center" (selectedTabChange)="tabChanged($event)">
+                <mat-tab label="Tabular Report">
+                    <ng-container *ngTemplateOutlet="tabularReportTemplate"></ng-container>
+                </mat-tab>
+                
+                <mat-tab label="Chart Report">
+                    <ng-container *ngTemplateOutlet="chartReportTemplate"></ng-container>
+                </mat-tab>
+            </mat-tab-group>
+
+        </div>
+
+    </div>
+
+
+    <ng-template #tabularReportTemplate>
+        <div class="row" style="margin: 0.1px;">
+            <!-- <div class="col-sm-3" style="border-left: 1px solid #bfc3c2; border-right: 1px solid #bfc3c2; margin-top: 1.2em; margin-bottom: 1.2em;">
+                <div style="margin-top: 3em; margin-bottom:  1.5em;">
+                    <p style="font-size: 21px; font-weight: 500;">All Given Mock Tests</p>
+                </div>
+
+                <p-tree 
+                [value]="allTests" 
+                selectionMode="single" 
+                [(selection)]="defaultSelectedTest" 
+                (onNodeSelect)="nodeSelected($event)"
+                [filter]="true"></p-tree>
+
+            </div> -->
+            <div class="col-sm-12">
+                <!-- <mat-expansion-panel style="margin-right: 1.2em; margin-top: 1.2em; margin-bottom: 1.2em;" class="mat-card mat-elevation-z8" 
+                                    (opened)="expandTable = true"
+                                    (closed)="expandTable = false"
+                                    [expanded]="true"> -->
+                    <!-- <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <div class="col-md-12 text-center" >
+                                <h1 style="margin: 1em; font-weight: 500; font-family: 'Cambay';">Score Summary</h1>
+                            </div>
+                        </mat-panel-title>
+                    </mat-expansion-panel-header> -->
+
+                    <div class="col-md-12 text-center" >
+                        <h1 style="margin: 1em; font-weight: 500; font-family: 'Cambay';">Score Summary</h1>
+                    </div>
+
+                    <div class="float-container">
+                        <div class="mat-card " style="border: 1px solid black;">
+                            <div class ="row" style="margin: 1em;">
+                                <div class ="col-md-4">
+                                    <b>Test Name:</b> {{testToShowInTable.testName}}
+                                </div>
+                                <div class ="col-md-4">
+                                    <b>Test Taken By:</b> {{testToShowInTable.testTakenBy}}
+                                </div>
+                                <div class ="col-md-4">
+                                    <b>Test Type:</b> {{testToShowInTable.testType}}
+                                </div>
+                            </div>
+                            <div class ="row" style="margin: 1em;">
+                                <div class="col-md-4">
+                                    <b>Total Score:</b> {{totalScore}}
+                                </div>
+                                <div class ="col-md-4">
+                                    <b>Date:</b> {{testTakenDate | date:'dd/MM/yyyy' }}
+                                </div>
+                            </div>
+                            <div class="green">
+                                <!-- <div style="float: right; margin-right: 2em; margin-bottom: 1em; margin-top: 1em;">
+                                    <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('xlsx', {fileName:'test', sheet: 'sheet_name', Props: {Author: 'OnlineExam'}})">Excel</button>
+                                    <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('csv')">Csv</button>
+                                    <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('json')">Json</button>
+                                    <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('txt')">Txt</button>
+                                    <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" [useExistingCss]="true" printTitle="Your Test Result" printSectionId="content" ngxPrint>Pdf</button> 
+                                </div> -->
+                                <div style="clear: both;">
+                                </div>
+                                <div class="table-contents" id="content" #content>
+
+                                    <p-table 
+                                            [columns]="displayedColumns" 
+                                            [paginator]="true" 
+                                            [rows]="5" 
+                                            [showCurrentPageReport]="true" 
+                                            responsiveLayout="scroll"
+                                            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+                                            [rowsPerPageOptions]="[5,10,20]" 
+                                            [value]="testToShowInTable.testQuestions"
+                                            styleClass="p-datatable-striped">
+                                        <ng-template pTemplate="header" let-columns>
+                                            <tr>
+                                                <th>No</th>
+                                                <th [pSortableColumn]="col.field" *ngFor="let col of columns">
+                                                    {{col.header}}
+                                                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                                                </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-row let-i= "rowIndex" let-columns="columns">
+                                            <tr>
+                                                <td>
+                                                    <div >
+                                                        <a style="text-align: center; color: #0490f4; cursor: pointer;" pTooltip="Click to review question" matTooltipPosition='right' 
+                                                        (click)="viewIndividualQuestion(row, i)">{{i + 1}}</a>
+                                                    </div>
+                                                </td>
+                                                <td *ngFor="let col of columns">
+                                                    <div *ngIf="col.field == 'result'; else resultElseBlock">
+                                                        <div> 
+                                                            <mat-icon *ngIf ='row.correctAnswer === row.selectedOption' style="color: green;">done</mat-icon>
+                                                            <mat-icon *ngIf ='row.selectedOption!== null && row.correctAnswer !== row.selectedOption' style="color: red;">close</mat-icon>
+                                                            <mat-icon *ngIf ='row.selectedOption === null' style="color: green;">question_mark</mat-icon> 
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <ng-template #resultElseBlock>
+                                                         <p *ngIf="col.field ==='totalTimeSpent'"> {{row[col.field]}} s</p>
+                                                         <p *ngIf="col.field !=='totalTimeSpent'"> {{row[col.field]}}</p>
+                                                    </ng-template>
+                                                        
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>   
+                    </div> 
+
+                    <mat-divider></mat-divider>
+                    <div>
+                        <div style="margin-top: 3em; margin-bottom:  1.5em;">
+                            <p style="font-size: 21px; font-weight: 500;">Now let's look at what to do next:</p>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 strong-subject-list-mobile-view" style="font-size: 18px; font-weight: 300; margin-bottom: 1em; display: inline; float: left;" [ngStyle]="
+                                            {
+                                                'border-right': weakSubjectList['weakSubject'].length > 0 ? '1px solid #bfc3c2' : 'none',
+                                                'display': strongSubjectList['strongSubject'].length > 0 ? 'inline':'none'
+                                            }">
+                                <div *ngIf="strongSubjectList['strongSubject'].length > 0 ; else noStrongSubjects">
+                                    <ng-container *ngTemplateOutlet="areasOfStrength">
+
+                                    </ng-container>
+                                </div>
+                            </div>
+
+                            <div class="col-sm-6" style="font-size: 18px; font-weight: 300;" [ngStyle]="
+                                            {
+                                                'display': weakSubjectList['weakSubject'].length > 0 ? 'inline':'none'
+                                            }">
+                                <div *ngIf="weakSubjectList['weakSubject'].length > 0 ; else noWeakSubjects">
+                                    <ng-container *ngTemplateOutlet="areasOfFocus">
+
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                        
+                <!-- </mat-expansion-panel> -->
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template #chartReportTemplate>
+        <!-- <mat-expansion-panel class="mat-card" 
+                            (opened)="expandCharts = true"
+                            (closed)="expandCharts = false"
+                            [expanded]="true"> -->
+            <!-- <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <div class="col-md-12 text-center" >
+                        <h1 style="margin: 1em;">Chart Based Analysis</h1>
+                    </div>
+                </mat-panel-title>
+            </mat-expansion-panel-header> -->
+
+            <div class="col-md-12 text-center" >
+                <h1 style="margin-top: 0.4em;">Chart Based Analysis</h1>
+            </div>
+
+            <div class="row"  style="margin: 2px;">
+                <div class="col-md-6 ">
+                    <div style="margin-bottom: 0.7em; padding-bottom: 0.7em;" class="card mat-elevation-z2">
+                        <div style="padding: 3px;">
+                            <div style="display: flex; flex-flow: row-reverse; background-color: white;">
+                                <mat-icon id="fullScreen1" style="width: auto; cursor: pointer;" (click)="fullScreen1()" >zoom_out_map
+                                </mat-icon>
+                                <a download="subjectWiseBarGraph.png" id="download1" (click)="downloadSubjectWiseChartImage()">
+                                    <mat-icon style="width: auto; cursor: pointer;">file_download
+                                    </mat-icon>
+                                </a>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: center;">
+                                <canvas id="subjectWiseBarGraph"></canvas>
+                            </div>
+                        </div>
+                        <!-- <div style="height:250px; width:250px; display: flex; align-items: center; justify-content: center;">
+                            <canvas id="subjectWiseTimeSpentChart"></canvas>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div class="col-md-6 ">
+                    <div style="margin-bottom: 0.7em; padding-bottom: 0.7em;" class="card mat-elevation-z2">
+                        <div style="padding: 3px;">
+                            <div style="display: flex; flex-flow: row-reverse; background-color: white;">
+                                <mat-icon id="fullScreen2" style="width: auto; cursor: pointer;" (click)="fullScreen2()">zoom_out_map
+                                </mat-icon>
+                                <a download="topicWiseBarGraph.png" id="download2" (click)="downloadTopicWiseChartImage()">
+                                    <mat-icon style="width: auto; cursor: pointer;">file_download
+                                    </mat-icon>
+                                </a>
+                                <p-dropdown [options]="subjectListDropdownOptions" 
+                                    [(ngModel)]="defaultSelectedSubjectInTopicWiseBarGraph" 
+                                    optionLabel="name"
+                                    placeholder="Select a subject"
+                                    (onChange)="subjectSelectedForTopicWiseChart($event)"></p-dropdown>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: center;">
+                                <canvas id="topicWiseBarGraph"></canvas>
+                            </div>
+                        </div>
+                        <!-- <div style="height:250px; width:250px; display: flex; align-items: center; justify-content: center;">
+                            <canvas id="subjectWiseTimeSpentChart"></canvas>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="row"  style="margin: 2px;">
+                <div class="col-md-6 ">
+                    <div style="margin-bottom: 0.7em; padding-bottom: 0.7em;" class="card mat-elevation-z2">
+                        <div style="padding: 3px;">
+                            <div style="display: flex; flex-flow: row-reverse; background-color: white;">
+                                <mat-icon id="fullScreen3" style="width: auto; cursor: pointer;" (click)="fullScreen3()">zoom_out_map
+                                </mat-icon>
+                                <a download="subjectWiseTimeSpentPieChart.png" id="download3" (click)="downloadSubjectWiseTimeSpentChartImage()">
+                                    <mat-icon style="width: auto; cursor: pointer;">file_download
+                                    </mat-icon>
+                                </a>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: center;">
+                                <canvas id="subjectWiseTimeSpentPieChart"></canvas>
+                            </div>
+                        </div>
+                        <!-- <div style="height:250px; width:250px; display: flex; align-items: center; justify-content: center;">
+                            <canvas id="subjectWiseTimeSpentChart"></canvas>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <div style="margin-bottom: 0.7em;" class="card mat-elevation-z2">
+                        <div style="padding: 3px;">
+                            <div style="display: flex; flex-flow: row-reverse; background-color: white;">
+                                <mat-icon id="fullScreen4" style="width: auto; cursor: pointer;" (click)="fullScreen4()">zoom_out_map
+                                </mat-icon>
+                                <a download="topicWiseTimeSpentPieChart.png" id="download4" (click)="downloadTopicWiseTimeSpentChartImage()">
+                                    <mat-icon style="width: auto; cursor: pointer;">file_download
+                                    </mat-icon>
+                                </a>
+                                <p-dropdown [options]="subjectListDropdownOptions" 
+                                            [(ngModel)]="defaultSelectedSubjectInTopicWisePieChart" 
+                                            optionLabel="name"
+                                            placeholder="Select a subject"
+                                            (onChange)="subjectSelectedForTopicWiseTimeSpentChart($event)"></p-dropdown>
+                            </div>
+                            <div style="display: flex; align-items: center; justify-content: center;">
+                                <canvas id="topicWiseTimeSpentPieChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        <!-- </mat-expansion-panel> -->
+    </ng-template>
+</div>
+
+<ng-template #areasOfStrength>
+    <b>Areas of Strength</b>
+    <!-- <div> -->
+    <p style="margin-top: 1.2em;">Based on this test, these are your strengths</p>
+
+    <div style="margin-top: 2em">
+        <div style="display: contents;">
+            <div class="row" style="padding-left: 0; padding-right: 0;">
+                <ng-container  *ngFor="let subject of strongSubjectList['strongSubject']">
+                    <div class="col-sm-6" style="display: flex; width: fit-content; height: auto; float: left; margin-bottom: 0.7em; padding: 5px;">
+                        <div class="circle_box" style="display: contents;">
+                            <div>
+                                <svg>
+                                    <circle [matTooltip]="(100 - subject.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
+                                    <circle [matTooltip]="subject.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="subject.successValue" cx="20" cy="20" r="20" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div style="font-family: 'Cambay'; margin-left: 7px;">
+                            <div style="font-size: 13px;">{{subject.name}}</div>
+                            <div style="font-size: 11px;">Correct: {{subject.successPercent.toString() + '%'}}</div>
+                            <div style="font-size: 11px;">Incorrect: {{(100 - subject.successPercent).toString() + '%'}}</div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+        <!-- <ng-container  *ngFor="let topic of strongTopicList['strongTopic']">
+            <div class="col-sm-6" style="display: flex; align-items: baseline; width: 161px; height: 49px; float: left; margin-bottom: 2em;">
+                <div class="circle_box" style="display: contents;">
+                    <div>
+                        <svg>
+                            <circle [matTooltip]="(100 - topic.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
+                            <circle [matTooltip]="topic.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="topic.successValue" cx="20" cy="20" r="20" />
+                        </svg>
+                    </div>
+                </div>
+                <div style="margin-left: 1.3em;">{{topic.name}}</div>
+            </div>
+        </ng-container> -->
+    </div>
+</ng-template>
+
+<ng-template #areasOfFocus>
+    <b>Areas of Focus</b>
+    <!-- <div> -->
+    <p style="margin-top: 1.2em;">Based on this test, these are your weakness</p>
+
+    <div [ngClass]="smallScreen ? 'row' : ''" style="margin-top: 2em">
+        <div style="display: contents;">
+            <div class="row" style="padding-left: 0; padding-right: 0;">
+                <ng-container  *ngFor="let subject of weakSubjectList['weakSubject']">
+                    <div class="col-sm-6" style="display: flex; width: fit-content; height: auto; float: left; margin-bottom: 0.7em; padding: 5px;">
+                        <div class="circle_box" style="display: contents;">
+                            <div>
+                                <svg>
+                                    <circle [matTooltip]="(100 - subject.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
+                                    <circle [matTooltip]="subject.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="subject.successValue" cx="20" cy="20" r="20" />
+                                </svg>
+                            </div>
+                        </div>
+                        <div style="font-family: 'Cambay'; margin-left: 7px;">
+                            <div style="font-size: 13px;">{{subject.name}}</div>
+                            <div style="font-size: 11px;">Correct: {{subject.successPercent.toString() + '%'}}</div>
+                            <div style="font-size: 11px;">Incorrect: {{(100 - subject.successPercent).toString() + '%'}}</div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+
+        <!-- <ng-container  *ngFor="let topic of weakTopicList['weakTopic']">
+            <div class="col-sm-6" style="display: flex; align-items: baseline; width: 161px; height: 49px; float: left; margin-bottom: 2em;">
+                <div class="circle_box" style="display: contents;">
+                    <div>
+                        <svg>
+                            <circle [matTooltip]="(100 - topic.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
+                            <circle [matTooltip]="topic.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="topic.successValue" cx="20" cy="20" r="20" />
+                        </svg>
+                    </div>
+                </div>
+                <div style="margin-left: 1.3em;">{{topic.name}}</div>
+            </div>
+        </ng-container> -->
+    </div>
+</ng-template>
+
+<ng-template #noStrongSubjects>
+    Looks like you are performing weak in this test.
+</ng-template>
+
+<ng-template #noWeakSubjects>
+    Looks like you are performing well in this test.
+</ng-template>
+
+<ng-template #noDataAvailable>
+    <div style="display: flex; justify-content: center;">
+        <div style="display: grid; font-family: 'Cambay'; padding-top: 2em;">
+            <img  src="../../assets/img/register_left_side.jpeg" style="height: 400px; margin-bottom: 2em; padding-top: 2em;" alt="study">
+            <span style="text-align: center;">This is your mock tests history</span>
+            <span style="text-align: center;">Lets give a test to evaluate your performance level</span>
+        </div>
+    </div>
+</ng-template>
+    
