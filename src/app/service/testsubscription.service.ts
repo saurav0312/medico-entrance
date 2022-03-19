@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { Firestore, addDoc, collectionData, collection, doc, docData, setDoc, updateDoc, arrayUnion, getDocs } from '@angular/fire/firestore';
 import { TestSubscription } from '../interface/test-subscription';
 import { StudentsOfTest } from '../interface/students-of-test';
@@ -13,33 +13,49 @@ export class TestsubscriptionService {
     private firestore: Firestore,
   ) { }
 
-  subscribeToTest(userId : string | undefined, data : TestSubscription | undefined, isFirstSubscription: boolean):void{
-    const docRef = doc(this.firestore, `TestSubscriptionDetails/${userId}`);
-    if(isFirstSubscription){
-      setDoc(docRef, data, {merge: true})
-    }
-    else{
-      updateDoc(docRef, {allSubscribedTests : arrayUnion(data?.allSubscribedTests[0])} )    
-    }
+  //Create sub collection for a user which contains all subscribed tests by the user
+  subscribeToTest(userId: string | undefined, testId: string | undefined){
+    const docRef = collection(this.firestore, `TestSubscriptionDetails/${userId}/allSubscribedTests`);
+    addDoc(docRef, {testId: testId})
   }
 
+  // This method fetches all tests subscribed by a student
   getAllSubscribedTestsByAUser(userId: string | undefined) : Observable<TestSubscription>{
-    const bookRef = doc(this.firestore, `TestSubscriptionDetails/${userId}`);
-    return docData(bookRef) as Observable<TestSubscription>;
+    const docRef = collection(this.firestore, `TestSubscriptionDetails/${userId}/allSubscribedTests`);
+    return collectionData(docRef).pipe(
+      map((result:any) => {
+        let allSubscribedTests: string[] = [] 
+        result.forEach((test:any) =>{
+          allSubscribedTests.push(test.testId)
+        })
+        let testSubscription: TestSubscription ={
+          allSubscribedTests: allSubscribedTests
+        }
+        return testSubscription
+      })
+    )
   }
 
-  addStudentToATest(testId: string | undefined, data: StudentsOfTest, isFirstStudent: boolean): void{
-    const docRef = doc(this.firestore, `StudentsOfATest/${testId}`);
-    if(isFirstStudent){
-      setDoc(docRef, data, {merge: true})
-    }
-    else{
-      updateDoc(docRef, {allStudentsOfTheTest : arrayUnion(data?.allStudentsOfTheTest[0])} )    
-    }
+  //Create sub collection for a test which contains all students of this test
+  addStudentToATest(testId: string | undefined, userId: string | undefined){
+    const docRef = collection(this.firestore, `StudentsOfATest/${testId}/allStudentsOfTheTest`);
+    addDoc(docRef, {userId: userId})
   }
 
+  // This method fetches all students of a test
   getAllStudentsOfATest(testId: string | undefined) : Observable<StudentsOfTest>{
-    const bookRef = doc(this.firestore, `StudentsOfATest/${testId}`);
-    return docData(bookRef) as Observable<StudentsOfTest>;
+    const docRef = collection(this.firestore, `StudentsOfATest/${testId}/allStudentsOfTheTest`);
+    return collectionData(docRef).pipe(
+      map((result:any) => {
+        let allStudentsOfTheTest: string[] = [] 
+        result.forEach((user:any) =>{
+          allStudentsOfTheTest.push(user.userId)
+        })
+        let studentsOfTest: StudentsOfTest ={
+          allStudentsOfTheTest: allStudentsOfTheTest
+        }
+        return studentsOfTest
+      })
+    )
   }
 }

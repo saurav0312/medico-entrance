@@ -43,7 +43,7 @@ export class AllPracticeTestsComponent implements OnInit {
       allSubscribedTests: [testId]
     }
     this.searchText =''
-    this.testsubscriptionService.subscribeToTest(this.userId, data, this.isFirstSubscription);
+    this.testsubscriptionService.subscribeToTest(this.userId, testId);
 
     const studentData : StudentsOfTest ={
       allStudentsOfTheTest : [this.userId]
@@ -57,7 +57,7 @@ export class AllPracticeTestsComponent implements OnInit {
         this.isFirstStudent = true;
       }
       sub.unsubscribe()
-      this.testsubscriptionService.addStudentToATest(testId, studentData, this.isFirstStudent)
+      this.testsubscriptionService.addStudentToATest(testId, this.userId)
     })
   }
 
