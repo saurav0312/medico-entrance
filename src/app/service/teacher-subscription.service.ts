@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Firestore, addDoc, collectionData, collection, doc, docData, setDoc, updateDoc, arrayUnion, getDocs, arrayRemove } from '@angular/fire/firestore';
-import { Observable, from } from 'rxjs';
+import { deleteDoc, query, where } from 'firebase/firestore';
+import { Observable, from, map } from 'rxjs';
 import { TeacherSubscription } from '../interface/teacher-subscription';
 
 @Injectable({
@@ -14,22 +15,32 @@ export class TeacherSubscriptionService {
 
   }
 
-  subscribeToTeacher(userId : string | undefined, data : TeacherSubscription | undefined, isFirstSubscription: boolean):Observable<any>{
-    const docRef = doc(this.firestore, `StudentTeacherSubscriptionDetails/${userId}`);
-    if(isFirstSubscription){
-      return from(setDoc(docRef, data, {merge: true}))
-    }
-      return from(updateDoc(docRef, {allTeacherSubscribed : arrayUnion(data?.allTeacherSubscribed[0])} ) )   
+  //Create sub collection for a user which contains all teacher id subscribed by the student
+  subscribeToTeacher(userId: string | undefined, teacherId: string | undefined):Observable<any>{
+    const docRef = doc(this.firestore, `StudentTeacherSubscriptionDetailsTesting/${userId}/allTeacherSubscribed/${teacherId}`);
+    return from(setDoc(docRef, {teacherId: teacherId}))
+  }
+
+  // This method fetches all subscribed teachers by a student
+  getAllSubscribedTeachersByAUser(userId: string | undefined) : Observable<TeacherSubscription>{
+    const docRef = collection(this.firestore, `StudentTeacherSubscriptionDetailsTesting/${userId}/allTeacherSubscribed`);
+    return collectionData(docRef,{idField:'id'}).pipe(
+      map((result: any) => {
+        let allTeacherSubscribed: string[] = [] 
+        result.forEach((teacher:any) =>{
+          allTeacherSubscribed.push(teacher.teacherId)
+        })
+        let teacherSubscription: TeacherSubscription ={
+          allTeacherSubscribed: allTeacherSubscribed
+        }
+        return teacherSubscription
+      })
+    )
   }
 
   deleteEntryFromStudentTeacherSubscriptionCollection(subscriberUserId: string, teacherIdToDelete: string | undefined) : Observable<any>{
-    const docRef = doc(this.firestore, `StudentTeacherSubscriptionDetails/${subscriberUserId}`)
-    return from(updateDoc(docRef,{"allTeacherSubscribed": arrayRemove(teacherIdToDelete)}))
-  }
-
-  getAllSubscribedTeachersByAUser(userId: string | undefined) : Observable<TeacherSubscription>{
-    const bookRef = doc(this.firestore, `StudentTeacherSubscriptionDetails/${userId}`);
-    return docData(bookRef) as Observable<TeacherSubscription>;
+    const docRef = doc(this.firestore, `StudentTeacherSubscriptionDetailsTesting/${subscriberUserId}/allTeacherSubscribed/${teacherIdToDelete}`)
+    return from(deleteDoc(docRef));
   }
 
 }
