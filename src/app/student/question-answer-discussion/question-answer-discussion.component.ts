@@ -91,6 +91,7 @@ export class QuestionAnswerDiscussionComponent implements OnInit, AfterViewInit 
         let discussionQuestionWithAnswer : DiscussionQuestionWithAnswer ={
           discussionQuestion: discussionQuestion,
           allAnswers: [],
+          limitedAnswers: [],
           upVotedBy: [],
           downVotedBy: []
         }
@@ -99,6 +100,7 @@ export class QuestionAnswerDiscussionComponent implements OnInit, AfterViewInit 
         discussionQuestionWithAnswer.allAnswers = []
         this.authService.fetchAllAnswersOfAQuestion(discussionQuestion.id).subscribe(allAnswers =>{
           discussionQuestionWithAnswer.allAnswers = allAnswers
+          
 
           if(discussionQuestionWithAnswer.allAnswers.length > 0){
             discussionQuestionWithAnswer.allAnswers.sort((a,b) =>{
@@ -116,6 +118,8 @@ export class QuestionAnswerDiscussionComponent implements OnInit, AfterViewInit 
             discussionQuestionWithAnswer.allAnswers.forEach(answer =>{
               answer.answeredOn = (<Timestamp><unknown> answer.answeredOn).toDate();
             })
+
+            discussionQuestionWithAnswer.limitedAnswers = discussionQuestionWithAnswer.allAnswers.slice(0,2);
 
             discussionQuestionWithAnswer.allAnswers.forEach(answer =>{
               this.authService.fetchUpVotedByOfAnAnswer(discussionQuestion.id, answer.id).subscribe(allUpVotedByListOfAnswer =>{
@@ -360,6 +364,22 @@ export class QuestionAnswerDiscussionComponent implements OnInit, AfterViewInit 
   loadMoreMyDiscussionQuestions(){
     this.noOfMyQuestionsInPageThreshold += 2;
     this.limitedMyDiscussionQuestions = this.myDiscussionQuestions.slice(0,this.noOfMyQuestionsInPageThreshold);
+  }
+
+  loadMoreAllDiscussionAnswers(questionId: string){
+
+    let currentQuestionIndex: number =  this.allDiscussionQuestions.findIndex(question => question.discussionQuestion.id === questionId)
+    let currentLimitedAnswersLength = this.allDiscussionQuestions[currentQuestionIndex].limitedAnswers.length;
+    this.allDiscussionQuestions[currentQuestionIndex].limitedAnswers = this.allDiscussionQuestions[currentQuestionIndex].
+                                                      allAnswers.slice(0,currentLimitedAnswersLength+2)
+  }
+
+  loadMoreMyDiscussionAnswers(questionId: string){
+
+    let currentQuestionIndex: number =  this.myDiscussionQuestions.findIndex(question => question.discussionQuestion.id === questionId)
+    let currentLimitedAnswersLength = this.myDiscussionQuestions[currentQuestionIndex].limitedAnswers.length;
+    this.myDiscussionQuestions[currentQuestionIndex].limitedAnswers = this.myDiscussionQuestions[currentQuestionIndex].
+                                                      allAnswers.slice(0,currentLimitedAnswersLength+2)
   }
 
 }

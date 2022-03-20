@@ -6,6 +6,7 @@ import { UpVotedBy } from "./up-voted-by";
 export interface DiscussionQuestionWithAnswer {
     discussionQuestion: NewDiscussionQuestion;
     allAnswers: DiscussionAnswer[];
+    limitedAnswers: DiscussionAnswer[];
     upVotedBy: UpVotedBy[];
     downVotedBy: DownVotedBy[];
 }
