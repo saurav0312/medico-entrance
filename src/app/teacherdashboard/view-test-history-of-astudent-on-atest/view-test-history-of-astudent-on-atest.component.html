@@ -39,32 +39,7 @@
 
     <ng-template #tabularReportTemplate>
         <div class="row" style="margin: 0.1px;">
-            <!-- <div class="col-sm-3" style="border-left: 1px solid #bfc3c2; border-right: 1px solid #bfc3c2; margin-top: 1.2em; margin-bottom: 1.2em;">
-                <div style="margin-top: 3em; margin-bottom:  1.5em;">
-                    <p style="font-size: 21px; font-weight: 500;">All Given Mock Tests</p>
-                </div>
-
-                <p-tree 
-                [value]="allTests" 
-                selectionMode="single" 
-                [(selection)]="defaultSelectedTest" 
-                (onNodeSelect)="nodeSelected($event)"
-                [filter]="true"></p-tree>
-
-            </div> -->
             <div class="col-sm-12">
-                <!-- <mat-expansion-panel style="margin-right: 1.2em; margin-top: 1.2em; margin-bottom: 1.2em;" class="mat-card mat-elevation-z8" 
-                                    (opened)="expandTable = true"
-                                    (closed)="expandTable = false"
-                                    [expanded]="true"> -->
-                    <!-- <mat-expansion-panel-header>
-                        <mat-panel-title>
-                            <div class="col-md-12 text-center" >
-                                <h1 style="margin: 1em; font-weight: 500; font-family: 'Cambay';">Score Summary</h1>
-                            </div>
-                        </mat-panel-title>
-                    </mat-expansion-panel-header> -->
-
                     <div class="col-md-12 text-center" >
                         <h1 style="margin: 1em; font-weight: 500; font-family: 'Cambay';">Score Summary</h1>
                     </div>
@@ -182,25 +157,11 @@
                             </div>
                         </div>
                     </div>
-                        
-                <!-- </mat-expansion-panel> -->
             </div>
         </div>
     </ng-template>
 
     <ng-template #chartReportTemplate>
-        <!-- <mat-expansion-panel class="mat-card" 
-                            (opened)="expandCharts = true"
-                            (closed)="expandCharts = false"
-                            [expanded]="true"> -->
-            <!-- <mat-expansion-panel-header>
-                <mat-panel-title>
-                    <div class="col-md-12 text-center" >
-                        <h1 style="margin: 1em;">Chart Based Analysis</h1>
-                    </div>
-                </mat-panel-title>
-            </mat-expansion-panel-header> -->
-
             <div class="col-md-12 text-center" >
                 <h1 style="margin-top: 0.4em;">Chart Based Analysis</h1>
             </div>
@@ -221,9 +182,6 @@
                                 <canvas id="subjectWiseBarGraph"></canvas>
                             </div>
                         </div>
-                        <!-- <div style="height:250px; width:250px; display: flex; align-items: center; justify-content: center;">
-                            <canvas id="subjectWiseTimeSpentChart"></canvas>
-                        </div> -->
                     </div>
                 </div>
 
@@ -247,9 +205,6 @@
                                 <canvas id="topicWiseBarGraph"></canvas>
                             </div>
                         </div>
-                        <!-- <div style="height:250px; width:250px; display: flex; align-items: center; justify-content: center;">
-                            <canvas id="subjectWiseTimeSpentChart"></canvas>
-                        </div> -->
                     </div>
                 </div>
             </div>
@@ -270,9 +225,6 @@
                                 <canvas id="subjectWiseTimeSpentPieChart"></canvas>
                             </div>
                         </div>
-                        <!-- <div style="height:250px; width:250px; display: flex; align-items: center; justify-content: center;">
-                            <canvas id="subjectWiseTimeSpentChart"></canvas>
-                        </div> -->
                     </div>
                 </div>
                 <div class="col-md-6 ">
@@ -298,13 +250,11 @@
                     </div>
                 </div>
             </div>
-        <!-- </mat-expansion-panel> -->
     </ng-template>
 </div>
 
 <ng-template #areasOfStrength>
     <b>Areas of Strength</b>
-    <!-- <div> -->
     <p style="margin-top: 1.2em;">Based on this test, these are your strengths</p>
 
     <div style="margin-top: 2em">
@@ -329,25 +279,11 @@
                 </ng-container>
             </div>
         </div>
-        <!-- <ng-container  *ngFor="let topic of strongTopicList['strongTopic']">
-            <div class="col-sm-6" style="display: flex; align-items: baseline; width: 161px; height: 49px; float: left; margin-bottom: 2em;">
-                <div class="circle_box" style="display: contents;">
-                    <div>
-                        <svg>
-                            <circle [matTooltip]="(100 - topic.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
-                            <circle [matTooltip]="topic.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="topic.successValue" cx="20" cy="20" r="20" />
-                        </svg>
-                    </div>
-                </div>
-                <div style="margin-left: 1.3em;">{{topic.name}}</div>
-            </div>
-        </ng-container> -->
     </div>
 </ng-template>
 
 <ng-template #areasOfFocus>
     <b>Areas of Focus</b>
-    <!-- <div> -->
     <p style="margin-top: 1.2em;">Based on this test, these are your weakness</p>
 
     <div [ngClass]="smallScreen ? 'row' : ''" style="margin-top: 2em">
@@ -372,20 +308,6 @@
                 </ng-container>
             </div>
         </div>
-
-        <!-- <ng-container  *ngFor="let topic of weakTopicList['weakTopic']">
-            <div class="col-sm-6" style="display: flex; align-items: baseline; width: 161px; height: 49px; float: left; margin-bottom: 2em;">
-                <div class="circle_box" style="display: contents;">
-                    <div>
-                        <svg>
-                            <circle [matTooltip]="(100 - topic.successPercent).toString() + '%'" matTooltipPosition='right' cx="20" cy="20" r="20" />
-                            <circle [matTooltip]="topic.successPercent.toString() + '%'" matTooltipPosition='right' [attr.stroke-dashoffset]="topic.successValue" cx="20" cy="20" r="20" />
-                        </svg>
-                    </div>
-                </div>
-                <div style="margin-left: 1.3em;">{{topic.name}}</div>
-            </div>
-        </ng-container> -->
     </div>
 </ng-template>
 
