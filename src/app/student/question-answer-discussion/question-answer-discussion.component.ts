@@ -46,7 +46,6 @@ export class QuestionAnswerDiscussionComponent implements OnInit, AfterViewInit 
 
   @HostListener('window:resize', ['$event'])
     onResize(event: any) {
-      console.log("Window resize: ", event)
         if (event.target.innerWidth < 510) {
           this.isMobileView = true;
         }
@@ -60,7 +59,6 @@ export class QuestionAnswerDiscussionComponent implements OnInit, AfterViewInit 
 
   ngAfterViewInit(): void {
     this.screenWidth$.subscribe(width => {
-      console.log("Scree width: ", width)
       if (width < 510) {
         this.isMobileView = true;
       }
@@ -123,12 +121,10 @@ export class QuestionAnswerDiscussionComponent implements OnInit, AfterViewInit 
 
             discussionQuestionWithAnswer.allAnswers.forEach(answer =>{
               this.authService.fetchUpVotedByOfAnAnswer(discussionQuestion.id, answer.id).subscribe(allUpVotedByListOfAnswer =>{
-                console.log("all upvoted by list of an answer: ", allUpVotedByListOfAnswer)
                 answer.upVotedBy = allUpVotedByListOfAnswer
                 answer.answerUpVotesCount =  allUpVotedByListOfAnswer.length
 
                 this.authService.fetchDownVotedByOfAnAnswer(discussionQuestion.id, answer.id).subscribe(allDownVotedByListOfAnswer =>{
-                  console.log("all downvoted by list of an answer: ", allDownVotedByListOfAnswer)
                   answer.downVotedBy = allDownVotedByListOfAnswer
                   answer.answerDownVotesCount =  allDownVotedByListOfAnswer.length
 
@@ -152,14 +148,12 @@ export class QuestionAnswerDiscussionComponent implements OnInit, AfterViewInit 
 
           //read question upVotedBy List
           this.authService.fetchUpVotedByOfAQuestion(discussionQuestion.id).subscribe(allUpVotedByList =>{
-            console.log("all upvoted by list of a question: ", allUpVotedByList)
             discussionQuestionWithAnswer.upVotedBy = allUpVotedByList
             discussionQuestionWithAnswer.discussionQuestion.questionUpVotesCount =  allUpVotedByList.length
 
 
             //read question downVotedBy list
             this.authService.fetchDownVotedByOfAQuestion(discussionQuestion.id).subscribe(allDownVotedByList =>{
-              console.log("all upvoted by list: ", allDownVotedByList)
               discussionQuestionWithAnswer.downVotedBy = allDownVotedByList
               discussionQuestionWithAnswer.discussionQuestion.questionDownVotesCount = allDownVotedByList.length
 
@@ -192,7 +186,6 @@ export class QuestionAnswerDiscussionComponent implements OnInit, AfterViewInit 
           return 1
         }
       })
-      console.log("All discussion questionss: ", this.allDiscussionQuestions)
 
       this.myDiscussionQuestions = this.allDiscussionQuestions.filter(question => question.discussionQuestion.questionAskedBy === this.userId)
       this.limitedMyDiscussionQuestions = this.myDiscussionQuestions.slice(0,this.noOfMyQuestionsInPageThreshold);
@@ -224,20 +217,16 @@ export class QuestionAnswerDiscussionComponent implements OnInit, AfterViewInit 
 
     //first removeDownVote by the user
     this.authService.decreaseDownVoteCount(questionId, this.userId).subscribe(removedDownVote =>{
-      console.log("Removed downvote by the user:")
     })
 
     //already upvoted by the user
     if(this.allDiscussionQuestions[currentQuestionIndex].upVotedBy.find((userId:any) => userId.userId === this.userId) !== undefined){
-      console.log("Already upvoted by the user")
       //remove upVote by the user
       this.authService.decreaseUpVoteCount(questionId, this.userId).subscribe(removedUpVote =>{
-        console.log("Removed upvote by the user:")
       })
     }
     else{
       this.authService.increaseUpVoteCount(questionId, this.userId).subscribe(questionUpVoted =>{
-        console.log("Question is upvoted: ", questionUpVoted)
       })
     }
   }
@@ -248,27 +237,22 @@ export class QuestionAnswerDiscussionComponent implements OnInit, AfterViewInit 
 
     //first removeUpVote by the user
     this.authService.decreaseUpVoteCount(questionId, this.userId).subscribe(removedUpVote =>{
-      console.log("Removed upvote by the user:")
     })
 
     //already downvoted by the user
     if(this.allDiscussionQuestions[currentQuestionIndex].downVotedBy.find((userId:any) => userId.userId === this.userId) !== undefined){
-      console.log("Already downvoted by the user")
       //remove downVote by the user
       this.authService.decreaseDownVoteCount(questionId, this.userId).subscribe(removedDownVote =>{
-        console.log("Removed downvote by the user:")
       })
     }
     else{
       this.authService.increaseDownVoteCount(questionId, this.userId).subscribe(questionDownVoted =>{
-        console.log("Question is downvoted: ", questionDownVoted)
       })
     }
   }
 
   submitAnswer(questionId: string){
 
-    console.log("valuee: ", this.answerForm.get('answer')?.value)
     if(this.answerForm.get('answer')?.value !== ''){
       let answerData: DiscussionAnswer={
         'answer': this.answerForm.get('answer')?.value,
@@ -296,16 +280,12 @@ export class QuestionAnswerDiscussionComponent implements OnInit, AfterViewInit 
   }
 
   answerFieldChanged(event: any, questionChangedIndex: number){
-    console.log("changed index before: ", questionChangedIndex)
     if(event.target.value.length === 0){
       this.questionChangedIndex = -1
     }
     else{
       this.questionChangedIndex = questionChangedIndex
     }
-    
-    console.log("changed index: ", questionChangedIndex)
-    console.log("answer field changed: ", event)
   }
 
   increaseUpVoteCountOfAnswer(questionId: string, answerId: string, questionIndex: number, answerIndex: number){
@@ -314,20 +294,16 @@ export class QuestionAnswerDiscussionComponent implements OnInit, AfterViewInit 
 
     //first removeDownVote by the user
     this.authService.decreaseDownVoteCountOfAnAnswer(questionId, answerId, this.userId).subscribe(removedDownVoteOfAnswer =>{
-      console.log("Removed downvote of answer by the user:")
     })
 
     //already upvoted by the user
     if(this.allDiscussionQuestions[currentQuestionIndex].allAnswers[answerIndex].upVotedBy.find((userId:any) => userId.userId === this.userId) !== undefined){
-      console.log("Already upvoted of answer by the user")
       //remove upVote by the user
       this.authService.decreaseUpVoteCountOfAnAnswer(questionId, answerId, this.userId).subscribe(removedUpVoteOfAnswer =>{
-        console.log("Removed upvote of answer by the user:")
       })
     }
     else{
       this.authService.increaseUpVoteCountOfAnAnswer(questionId, answerId, this.userId).subscribe(answerUpVoted =>{
-        console.log("Answer is upvoted: ", answerUpVoted)
       })
     }
   }
@@ -338,20 +314,16 @@ export class QuestionAnswerDiscussionComponent implements OnInit, AfterViewInit 
 
     //first removeUpVote by the user
     this.authService.decreaseUpVoteCountOfAnAnswer(questionId, answerId, this.userId).subscribe(removedUpVoteOfAnswer =>{
-      console.log("Removed upvote of answer by the user:")
     })
 
     //already downvoted by the user
     if(this.allDiscussionQuestions[currentQuestionIndex].allAnswers[answerIndex].downVotedBy.find((userId:any) => userId.userId === this.userId) !== undefined){
-      console.log("Already downvoted of answer by the user")
       //remove downVote by the user
       this.authService.decreaseDownVoteCountOfAnAnswer(questionId, answerId, this.userId).subscribe(removedDownVoteOfAnswer =>{
-        console.log("Removed downvote of answer by the user:")
       })
     }
     else{
       this.authService.increaseDownVoteCountOfAnAnswer(questionId, answerId, this.userId).subscribe(answerDownVoted =>{
-        console.log("Answer is downvoted: ", answerDownVoted)
       })
     }
   }

@@ -86,11 +86,8 @@ export class ViewSubjectTestHistoryOfAStudentOnATestComponent implements OnInit 
     this.route.queryParams.subscribe( (response:any) =>{
       this.testId = <string>response.testId
       this.userId = <string>response.userId
-      console.log("userid: ", this.userId)
-      console.log("testid: ", this.testId)
 
       this.authService.getAllHistoryOfAMockTestGivenByAUserForTeacherAnalysis(this.userId, this.testId).subscribe(allTestsResponse =>{
-        console.log("All test given by user for this test id: ", allTestsResponse)
         this.testReportData = allTestsResponse
 
         if(this.testReportData.allTests.length > 0){

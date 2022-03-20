@@ -63,7 +63,6 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
 
       //fetch all subscribed tests by the user
       this.testsubscriptionService.getAllSubscribedTestsByAUser(this.userId).subscribe((response:TestSubscription) =>{
-        console.log("aal subscribed tests: ", response)
         if(response !== undefined){
           this.allSubscribedTests = response.allSubscribedTests
           this.isFirstSubscription = false;
@@ -169,7 +168,6 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
       this.subjectTestsIdList = [];
 
       this.subjectTestsIdList = this.subjectToTopicToTestIdList[this.selectedSubjectName][this.selectedTopicName]
-      console.log("Subject with topic name list: ", this.subjectToTopicToTestIdList)
 
       this.subjectTestsIdList.forEach(testId =>{
         let tempTest: any = this.allSubjectTestsList.find(subjecTest => subjecTest.id === testId.testId);
@@ -177,8 +175,6 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
           this.listOfSubjectTests.push(tempTest)
         }
       })
-
-      console.log("subject tests id list :", this.subjectTestsIdList)
       
       this.listOfSubjectTests.sort((a,b) =>{
         if(a.testType < b.testType){

@@ -47,7 +47,6 @@ export class RegisterInstituteComponent implements OnInit {
     this.tempSignUpForm = this.registerInstitueForm
 
     let sub = this.profileService.fetchInstituteDetailByEmail(this.registerInstitueForm.get('instituteEmail')?.value).subscribe(instituteDetails =>{
-      console.log("Ins: ", instituteDetails.length)
       sub.unsubscribe()
       if(instituteDetails.length === 0){
         const tempUserDetail: InstituteDetail = {
