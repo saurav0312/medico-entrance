@@ -23,6 +23,8 @@ import { ProfileService } from './profile.service';
 import { ContactRequest } from '../interface/contact-request';
 import { DiscussionQuestion } from '../interface/discussion-question';
 import { UserToTestIdMapping } from '../interface/user-to-test-id-mapping';
+import { NewDiscussionQuestion } from '../interface/new-discussion-question';
+import { DiscussionAnswer } from '../interface/discussion-answer';
 
 @Injectable({
   providedIn: 'root'
@@ -49,26 +51,98 @@ export class AuthService {
     return from(addDoc(docRef, contactFormData));
   }
 
-  addDiscussionQuestion(discussionQuestionData: DiscussionQuestion){
-    const docRef = collection(this.firestore, 'DiscussionQuestions'); 
-    return from(addDoc(docRef, discussionQuestionData));
-  }
-
-  readDiscussionQuestions(): Observable<any> {
-    const bookRef = collection(this.firestore, `DiscussionQuestions`);
-    return collectionData(bookRef, {idField: 'id'});
-  }
-
-  updateDiscussionQuestion(questionId: string| undefined ,discussionQuestionData: DiscussionQuestion){
-    const docRef = doc(this.firestore, `DiscussionQuestions/${questionId}`);
+  updateDiscussionQuestion(questionId: string| undefined ,discussionQuestionData: NewDiscussionQuestion){
+    const docRef = doc(this.firestore, `DiscussionQuestionsTesting/${questionId}`);
     return from(setDoc(docRef, discussionQuestionData, {merge: true}))
   }
 
   readDiscussionQuestionsAskedByAUser(userId: string| undefined): Observable<any>{
-    const collectionList = collection(this.firestore, 'DiscussionQuestions');
+    const collectionList = collection(this.firestore, 'DiscussionQuestionsTesting');
     const q = query(collectionList, where("questionAskedBy","==", userId))
       return collectionData(q, {idField: 'id'})
   }
+
+
+  addDiscussionQuestionTest(discussionQuestionData: NewDiscussionQuestion){
+    const docRef = collection(this.firestore, 'DiscussionQuestionsTesting'); 
+    return from(addDoc(docRef, discussionQuestionData));
+  }
+
+  readDiscussionQuestionsTest():Observable<any>{
+    const docRef = collection(this.firestore, `DiscussionQuestionsTesting`);
+    return collectionData(docRef,{idField:'id'})
+  }
+
+  fetchUpVotedByOfAQuestion(questionId: string| undefined):Observable<any>{
+    const docRef = collection(this.firestore, `DiscussionQuestionsTesting/${questionId}/upVotedBy`);
+    return collectionData(docRef,{idField:'id'})
+  }
+
+  fetchDownVotedByOfAQuestion(questionId: string| undefined):Observable<any>{
+    const docRef = collection(this.firestore, `DiscussionQuestionsTesting/${questionId}/downVotedBy`);
+    return collectionData(docRef,{idField:'id'})
+  }
+
+  increaseUpVoteCount(questionId:string| undefined,  userId: string | undefined){
+    const docRef = doc(this.firestore, `DiscussionQuestionsTesting/${questionId}/upVotedBy/${userId}`);
+    return from(setDoc(docRef, {userId: userId}))
+  }
+
+  decreaseUpVoteCount(questionId: string| undefined,  userId: string | undefined){
+    const docRef = doc(this.firestore, `DiscussionQuestionsTesting/${questionId}/upVotedBy/${userId}`);
+    return from(deleteDoc(docRef))
+  }
+
+  increaseDownVoteCount(questionId:string| undefined, userId: string | undefined){
+    const docRef = doc(this.firestore, `DiscussionQuestionsTesting/${questionId}/downVotedBy/${userId}`);
+    return from(setDoc(docRef, {userId: userId}))
+  }
+
+  decreaseDownVoteCount(questionId: string| undefined, userId: string | undefined){
+    const docRef = doc(this.firestore, `DiscussionQuestionsTesting/${questionId}/downVotedBy/${userId}`);
+    return from(deleteDoc(docRef))
+  }
+
+  addAnswer(questionId: string | undefined, data: DiscussionAnswer):Observable<any>{
+    const docRef = collection(this.firestore, `DiscussionQuestionsTesting/${questionId}/allAnswers`);
+    return from(addDoc(docRef, data))
+  }
+
+  fetchAllAnswersOfAQuestion(questionId: string| undefined):Observable<any>{
+    const docRef = collection(this.firestore, `DiscussionQuestionsTesting/${questionId}/allAnswers`);
+    return collectionData(docRef,{idField:'id'})
+  }
+
+  fetchUpVotedByOfAnAnswer(questionId: string| undefined, answerId: string|undefined):Observable<any>{
+    const docRef = collection(this.firestore, `DiscussionQuestionsTesting/${questionId}/allAnswers/${answerId}/upVotedBy`);
+    return collectionData(docRef,{idField:'id'})
+  }
+
+  fetchDownVotedByOfAnAnswer(questionId: string| undefined, answerId: string|undefined):Observable<any>{
+    const docRef = collection(this.firestore, `DiscussionQuestionsTesting/${questionId}/allAnswers/${answerId}/downVotedBy`);
+    return collectionData(docRef,{idField:'id'})
+  }
+
+  increaseUpVoteCountOfAnAnswer(questionId:string| undefined, answerId: string|undefined, userId: string | undefined){
+    const docRef = doc(this.firestore, `DiscussionQuestionsTesting/${questionId}/allAnswers/${answerId}/upVotedBy/${userId}`);
+    return from(setDoc(docRef, {userId: userId}))
+  }
+
+  decreaseUpVoteCountOfAnAnswer(questionId: string| undefined, answerId: string|undefined, userId: string | undefined){
+    const docRef = doc(this.firestore, `DiscussionQuestionsTesting/${questionId}/allAnswers/${answerId}/upVotedBy/${userId}`);
+    return from(deleteDoc(docRef))
+  }
+
+  increaseDownVoteCountOfAnAnswer(questionId:string| undefined, answerId: string|undefined, userId: string | undefined){
+    const docRef = doc(this.firestore, `DiscussionQuestionsTesting/${questionId}/allAnswers/${answerId}/downVotedBy/${userId}`);
+    return from(setDoc(docRef, {userId: userId}))
+  }
+
+  decreaseDownVoteCountOfAnAnswer(questionId: string| undefined, answerId: string|undefined, userId: string | undefined){
+    const docRef = doc(this.firestore, `DiscussionQuestionsTesting/${questionId}/allAnswers/${answerId}/downVotedBy/${userId}`);
+    return from(deleteDoc(docRef))
+  }
+
 
   getCurrentUser(): Observable<any>{
     return authState(this.auth)
@@ -209,6 +283,13 @@ export class AuthService {
       })
     )
   }
+
+  // addAQuestion(){
+  //   const docRef = collection(this.firestore, `DiscussionQuestionsTesting`);
+  //   return from(addDoc(docRef, {question: "Test Question"}));
+  // }
+
+  
 
   // This method fetches all tests given by a student
   getAllHistoryOfAMockTestGivenByAUserForTeacherAnalysis(id: string | undefined, testId: string) : Observable<TestReportData>{
