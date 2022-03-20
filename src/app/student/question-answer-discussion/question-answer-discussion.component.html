@@ -118,7 +118,7 @@
                                 <div style="display: flex; justify-content: right;">
                                     <div style="display: inline-flex;">
                                         <div style=" display: inline-flex; margin-right: 0.8em;">
-                                            <p> <span style="color: #3838dc;">{{answer.answeredByUsername}} </span> answered on: {{answer.answeredOn | date:'medium'}}</p>
+                                            <p> <span style="color: #3838dc; border-radius: 5px;" [ngStyle]="{'background-color': answer.answeredBy === userId ? '#e1ecf4':'none' }">{{answer.answeredByUsername}} </span> answered on: {{answer.answeredOn | date:'medium'}}</p>
                                         </div>
                                     </div>
                                     <div style="display: inline-flex; margin-right: 0.3em;">
