@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { DiscussionQuestion } from 'src/app/interface/discussion-question';
+import { NewDiscussionQuestion } from 'src/app/interface/new-discussion-question';
 import { AuthService } from 'src/app/service/auth.service';
 import { ProfileService } from 'src/app/service/profile.service'
 
@@ -52,10 +53,6 @@ export class DiscussionQuestionComponentComponent implements OnInit {
       this.profileService.getUserDetails(this.userId).subscribe(userDetails =>{
         this.userImage= userDetails.imageUrl
       })
-
-      // this.authService.readDiscussionQuestions().subscribe(allDiscussionQuestions =>{
-      //   console.log("Discussion questions: ", allDiscussionQuestions)
-      // })
     })
   }
 
@@ -66,7 +63,9 @@ export class DiscussionQuestionComponentComponent implements OnInit {
     let questionTags: string[] = [];
     questionTags.push(this.discussionQuestionForm.get('questionTags')?.value)
 
-    let discussionQuestionData: DiscussionQuestion ={
+    // testing for new discussion question interface
+
+    let discussionQuestionData: NewDiscussionQuestion ={
       'question': this.discussionQuestionForm.get('question')?.value,
       'questionSubject': this.discussionQuestionForm.get('questionSubject')?.value,
       'questionTags': questionTags,
@@ -76,13 +75,11 @@ export class DiscussionQuestionComponentComponent implements OnInit {
       'questionAskedDate': new Date(),
       'questionUpVotesCount': 0,
       'questionDownVotesCount': 0,
-      'allAnswers': [],
-      'upVotedBy':[],
-      'downVotedBy':[],
       'isUpVotedByCurrentLoggedInUser': false,
       'isDownVotedByCurrentLoggedInUser': false
     }
-    this.authService.addDiscussionQuestion(discussionQuestionData).subscribe(response =>{
+
+    this.authService.addDiscussionQuestionTest(discussionQuestionData).subscribe(response =>{
       this.loading = false;
       this.messageService.add({severity:'success', summary: 'Your question has been added successfully.'});
       this.ngOnInit()

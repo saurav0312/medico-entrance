@@ -1,4 +1,6 @@
-<div class="row" [ngStyle]="{'flex-direction': isMobileView ? 'column-reverse' : 'unset'}" style="padding-right: 15px; width: 100%; margin-left: 0.1px; margin-top: 5px; display: flex;">
+ <!-- Test started -->
+
+ <div class="row" [ngStyle]="{'flex-direction': isMobileView ? 'column-reverse' : 'unset'}" style="padding-right: 15px; width: 100%; margin-left: 0.1px; margin-top: 5px; display: flex;">
     <div class="col-sm-9" style="padding-right: 0;">
         <div class="card mb-4 box-shadow mat-elevation-z2">
             <div class="card-body" style="padding: 2px;">
@@ -38,32 +40,32 @@
         </div>
     </div>
 </div>
-<p-scrollTop [threshold]="0"></p-scrollTop>
+<!-- <p-scrollTop [threshold]="0"></p-scrollTop> -->
 
 <ng-template #recentQuestionTemplate let-allAvailableQuestions let-tab="tab">
 
     <ng-container *ngIf="allAvailableQuestions.length > 0; else noQuestionsAvailable">
         <ng-container *ngFor="let discussionQuestion of allAvailableQuestions; let i = index">
-            <div class="card" style="margin-bottom: 2em;">
+            <div class="card mat-elevation-z2" style="margin-bottom: 2em;">
                 <div class="row" style="margin-top: 0.6em; margin-left: 0.3em;">
                     <div class="row" style="float: left;">
                         <div class="row">
                             <div class="col-sm-1" style="width: fit-content;">
-                                <img class="rounded-circle" src="{{discussionQuestion.questionAskedByImage}}" style=" height: 3em; width: 3em">
+                                <img class="rounded-circle" src="{{discussionQuestion.discussionQuestion.questionAskedByImage}}" style=" height: 3em; width: 3em">
                             </div>
 
                             <div class="col-sm-11" style="font-weight: 600; color: #5d5ded; width: fit-content;">
-                                {{discussionQuestion.questionAskedByUsername}}
+                                {{discussionQuestion.discussionQuestion.questionAskedByUsername}}
                             </div>
                         </div>
                     </div>
                     <div class="row question-with-date-class" style="display: flex; justify-content: center;">
                         <div class="row question-in-mobile-view" style="margin-top: 0.3em; font-weight: 700; padding-left: 4em; word-break: break-word;">
                             <div style="font-weight: 400;">
-                                {{discussionQuestion.question}}
+                                {{discussionQuestion.discussionQuestion.question}}
                             </div>
                             <div class=" card-title" style="display: flex; margin-top: 5px;">
-                                <ng-container *ngFor="let questionTag of discussionQuestion.questionTags">
+                                <ng-container *ngFor="let questionTag of discussionQuestion.discussionQuestion.questionTags">
                                     <div style="width: fit-content; height: auto; margin-bottom: 0.3em; 
                                                 margin-right: 0.6em; background-color: #e1ecf4; border-radius: 3px; padding: 2px;">
                                         {{questionTag}}
@@ -75,17 +77,17 @@
                         <div style="display: flex;justify-content: right;">
                             <div style="display: inline-flex; margin-right: 8px;">
                                 <div style=" display: inline-flex; margin-right: 3px;">
-                                    asked on: {{discussionQuestion.questionAskedDate | date:'medium'}}
+                                    asked on: {{discussionQuestion.discussionQuestion.questionAskedDate | date:'medium'}}
                                 </div>
                             </div>
 
                             <div style="display: inline-flex; margin-right: 0.3em; ">
-                                <mat-icon (click)="increaseUpVoteCount(discussionQuestion.id)" style="cursor: pointer;" [ngStyle]="{'color': discussionQuestion.isUpVotedByCurrentLoggedInUser? '#0000ff9c' :''}">thumb_up_alt</mat-icon>
-                                <p>{{discussionQuestion.questionUpVotesCount}}</p>
+                                <mat-icon (click)="increaseUpVoteCount(discussionQuestion.discussionQuestion.id, i)" style="cursor: pointer;" [ngStyle]="{'color': discussionQuestion.discussionQuestion.isUpVotedByCurrentLoggedInUser? '#0000ff9c' :''}">thumb_up_alt</mat-icon>
+                                <p>{{discussionQuestion.discussionQuestion.questionUpVotesCount}}</p>
                             </div>
                             <div style="display: inline-flex;">
-                                <mat-icon (click)="increaseDownVoteCount(discussionQuestion.id)" style="cursor: pointer;" [ngStyle]="{'color': discussionQuestion.isDownVotedByCurrentLoggedInUser? '#0000ff9c' :''}">thumb_down_alt</mat-icon>
-                                <p>{{discussionQuestion.questionDownVotesCount}}</p>
+                                <mat-icon (click)="increaseDownVoteCount(discussionQuestion.discussionQuestion.id, i)" style="cursor: pointer;" [ngStyle]="{'color': discussionQuestion.discussionQuestion.isDownVotedByCurrentLoggedInUser? '#0000ff9c' :''}">thumb_down_alt</mat-icon>
+                                <p>{{discussionQuestion.discussionQuestion.questionDownVotesCount}}</p>
                             </div>
                         </div>
                     </div>
@@ -94,7 +96,7 @@
                     <mat-divider ></mat-divider>
                     
                     <div  style="margin-top: 1em;">
-                        <form (ngSubmit)="submitAnswer(discussionQuestion.id)" name="answerForm" [formGroup]="answerForm" fxLayoutAlign ="stretch" fxLayout="column">
+                        <form (ngSubmit)="submitAnswer(discussionQuestion.discussionQuestion.id)" name="answerForm" [formGroup]="answerForm" fxLayoutAlign ="stretch" fxLayout="column">
                             <textarea (keyup)="answerFieldChanged($event, i)" formControlName="answer" pInputTextarea placeholder="Add a comment" style="width: 100%;"></textarea>
                             <div style="display: flex; justify-content: right; margin-top: 0.3em;">
                                 <button class="btn btn-success" type="submit" style="width: fit-content;" [disabled]="questionChangedIndex !== i || answerForm.invalid ">Submit</button>
@@ -108,7 +110,7 @@
                     <ng-container *ngFor="let answer of discussionQuestion.allAnswers; let j = index">
                         <div style="margin-top: 0.4em;">
                             <div class="row">
-                                <div style="display: flex; margin-bottom: 0.3em;">
+                                <div style="margin-bottom: 0.3em;">
                                     <p>
                                     {{answer.answer}}
                                     </p>
@@ -120,11 +122,11 @@
                                         </div>
                                     </div>
                                     <div style="display: inline-flex; margin-right: 0.3em;">
-                                        <mat-icon (click)="increaseUpVoteCountofAnswer(discussionQuestion.id, j)" style="cursor: pointer;" [ngStyle]="{'color': answer.isUpVotedByCurrentLoggedInUser? '#0000ff9c' :''}">thumb_up_alt</mat-icon>
+                                        <mat-icon (click)="increaseUpVoteCountOfAnswer(discussionQuestion.discussionQuestion.id, answer.id, i, j)" style="cursor: pointer;" [ngStyle]="{'color': answer.isUpVotedByCurrentLoggedInUser? '#0000ff9c' :''}">thumb_up_alt</mat-icon>
                                         <p>{{answer.answerUpVotesCount}}</p>
                                     </div>
                                     <div style="display: inline-flex;">
-                                        <mat-icon (click)="increaseDownVoteCountOfAnswer(discussionQuestion.id, j)" style="cursor: pointer;" [ngStyle]="{'color': answer.isDownVotedByCurrentLoggedInUser? '#0000ff9c' :''}">thumb_down_alt</mat-icon>
+                                        <mat-icon (click)="increaseDownVoteCountOfAnswer(discussionQuestion.discussionQuestion.id, answer.id, i, j)" style="cursor: pointer;" [ngStyle]="{'color': answer.isDownVotedByCurrentLoggedInUser? '#0000ff9c' :''}">thumb_down_alt</mat-icon>
                                         <p>{{answer.answerDownVotesCount}}</p>
                                     </div>
                                 </div>
@@ -136,8 +138,16 @@
             </div> 
         </ng-container>
         <div style="text-align: center;">
-            <mat-icon (click)="loadMoreAllDiscussionQuestions()" style="cursor: pointer;" pTooltip="Load more" *ngIf="limitedAllDiscussionQuestions.length !== allDiscussionQuestions.length && tab === 0">expand_circle_down</mat-icon>
-            <mat-icon (click)="loadMoreMyDiscussionQuestions()" style="cursor: pointer;" pTooltip="Load more" *ngIf="limitedMyDiscussionQuestions.length !== myDiscussionQuestions.length && tab === 1">expand_circle_down</mat-icon>
+            <mat-icon (click)="loadMoreAllDiscussionQuestions()" 
+                style="cursor: pointer;" pTooltip="Load more" 
+                *ngIf="limitedAllDiscussionQuestions.length !== allDiscussionQuestions.length && tab === 0">
+                expand_circle_down
+            </mat-icon>
+            <mat-icon (click)="loadMoreMyDiscussionQuestions()" 
+                style="cursor: pointer;" pTooltip="Load more" 
+                *ngIf="limitedMyDiscussionQuestions.length !== myDiscussionQuestions.length && tab === 1">
+                expand_circle_down
+            </mat-icon>
         </div>
     </ng-container>
 </ng-template>
@@ -150,8 +160,8 @@ My Questions list
 No discussion questions available yet.
 </ng-template>
 
-<p-scrollTop></p-scrollTop>
 <app-spinner [loading]="loading" [diameter]="50" [overlay]="true">
 </app-spinner>
-<!-- test -->
 
+
+ <!-- Test ended -->
