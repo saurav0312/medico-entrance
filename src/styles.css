@@ -55,7 +55,6 @@ body{
       }
       
       ::-webkit-scrollbar-track {
-        /* background: rgb(241, 238, 230);         */
         background-color: #e0e0e6;
         border-radius: 20px; 
       }
@@ -63,7 +62,6 @@ body{
       ::-webkit-scrollbar-thumb {
         background-color: #aaaaaa;
         border-radius: 20px;       /* roundness of the scroll thumb */
-        /* border: 3px solid rgb(241, 238, 230); */
         border: 3px solid #aaaaaa;
       }
   }
