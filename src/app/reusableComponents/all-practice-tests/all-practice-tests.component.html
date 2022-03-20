@@ -37,8 +37,8 @@
                             <p class="card-text">
                                 This is the sample test taken by IOE. This is the sample test taken by IOE. This is the sample test taken by IOE
                             </p>
-                            <button (click)="startTest(individualTest.id, individualTest)" class="btn btn-outline-primary" [disabled]="individualTest.testType==='Paid' && !individualTest.isBought" style="margin-right: 2em;">Start Test</button>
-                            <button (click)="buyTest(individualTest.id)" class="btn btn-primary" [hidden]="individualTest.testType==='Free' || individualTest.isBought">Buy Test</button>
+                            <button (click)="startTest(individualTest.id, individualTest)" class="btn btn-outline-primary" *ngIf="individualTest.testType==='Free' || individualTest.isBought" style="margin-right: 2em;">Start Test</button>
+                            <button (click)="buyTest(individualTest.id)" class="btn btn-primary" *ngIf="!(individualTest.testType==='Free') && !individualTest.isBought">Buy Test</button>
                             
                         </div>
                     </div>

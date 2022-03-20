@@ -178,7 +178,6 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
     }
 
     this.selectedProfileImage = target.files[0];
-    console.log("filee: ", this.selectedProfileImage)
 
     if(this.isFileImage(this.selectedProfileImage)){
       this.profileService.uploadProfileImage(this.selectedProfileImage, this.userId).subscribe(response =>{
@@ -186,7 +185,6 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
         //update image in all questions asked by this user
         let sub = this.authService.readDiscussionQuestionsAskedByAUser(this.userId).subscribe(allAskedQuestions =>{
           sub.unsubscribe()
-          console.log("all asked questions: ", allAskedQuestions)
           allAskedQuestions.forEach((question: NewDiscussionQuestion) =>{
             question.questionAskedByImage =  this.imageUrl
             this.authService.updateDiscussionQuestion(question.id, question).subscribe(questionImageUpdated =>{

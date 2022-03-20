@@ -332,7 +332,6 @@ export class StudentPageHomeComponent implements OnInit, OnDestroy {
     var overallPerformanceChartEle: any = document.getElementById('overallCorrectAnswersChart')
     if(this.correctAnswerChart){
       this.correctAnswerChart.destroy()
-      console.log("correct destroyed")
     }
     this.correctAnswerChart = new Chart(
       overallPerformanceChartEle,
@@ -368,7 +367,6 @@ export class StudentPageHomeComponent implements OnInit, OnDestroy {
     var overallInCorrectPerformanceChartEle: any = document.getElementById('overallIncorrectAnswersChart')
     if(this.incorrectAnswerChart){
       this.incorrectAnswerChart.destroy()
-      console.log("inc destroyed")
     }
 
     const plugin = {

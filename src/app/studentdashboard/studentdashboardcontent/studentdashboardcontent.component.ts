@@ -148,7 +148,6 @@ export class StudentdashboardcontentComponent implements OnInit {
     this.listOfTeachers.sort((x,y) =>{
       return x.isSubscribed === y.isSubscribed ? 0 : x.isSubscribed ? -1 : 1
     })
-    console.log("loop")
 
     if(this.searchText!==''){
       let event ={
@@ -161,7 +160,6 @@ export class StudentdashboardcontentComponent implements OnInit {
   }
 
   categorySelectedTemp(event: any){
-    console.log("Evveennt: ", event)
   }
 
   searchByName(event:any){
@@ -177,7 +175,6 @@ export class StudentdashboardcontentComponent implements OnInit {
     }
     else{
       this.listOfTeachers = this.initialListOfTeachers.filter(teacher => teacher.firstName.toLowerCase().includes(filterValue) || teacher.lastName.toLowerCase().includes(filterValue))
-      console.log("filtered teacher: ", this.listOfTeachers)
     }
   }
 }

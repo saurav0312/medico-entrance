@@ -143,7 +143,6 @@ export class ViewTestHistoryOfAStudentOnATestComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
     onResize(event: any) {
-      console.log("Window resize: in detail test report", event)
         if (event.target.innerWidth < 510) {
           this.smallScreen = true
         }
@@ -162,10 +161,7 @@ export class ViewTestHistoryOfAStudentOnATestComponent implements OnInit {
     this.route.queryParams.subscribe( (response:any) =>{
       this.testId = <string>response.testId
       this.userId = <string>response.userId
-      console.log("userid: ", this.userId)
-      console.log("testid: ", this.testId)
       this.authService.getAllHistoryOfAMockTestGivenByAUserForTeacherAnalysis(this.userId, this.testId).subscribe(allTestsResponse =>{
-        console.log("All test given by user for this test id: ", allTestsResponse)
         this.testReportData = allTestsResponse
 
         if(this.testReportData.allTests.length > 0){
@@ -293,9 +289,6 @@ export class ViewTestHistoryOfAStudentOnATestComponent implements OnInit {
         })
       })
 
-      console.log("Subject with topic list: ", this.subjectNameWithTopicsMap)
-
-
       this.totalScore = 0;
       this.singleTest.testQuestions.forEach(testQuestion =>{
 
@@ -380,11 +373,6 @@ export class ViewTestHistoryOfAStudentOnATestComponent implements OnInit {
         this.subjectWiseNotAnsweredData.push(this.subjectTagMap[key]['not_answered'])
       })
 
-      console.log("Correct aa: ", this.subjectWiseCorrectAnswersData)
-      console.log("Incorrect aa: ", this.subjectWiseIncorrectAnswersData)
-      console.log("Not answered aa: ", this.subjectWiseNotAnsweredData)
-      
-
       //prepare data for topic wise bar graph for chart js
 
       this.topicNameList = []
@@ -399,14 +387,7 @@ export class ViewTestHistoryOfAStudentOnATestComponent implements OnInit {
         this.topicWiseNotAnsweredData.push(this.topicTagMap[key]['not_answered'])
       })
 
-      console.log("Correct aa: ", this.topicWiseCorrectAnswersData)
-      console.log("Incorrect aa: ", this.topicWiseIncorrectAnswersData)
-      console.log("Not answered aa: ", this.topicWiseNotAnsweredData)
-
-
       //prepare data for subject wise time spent pie chart
-      
-      console.log("SUbject wise time after: ", this.subjectWiseTimeSpent)
       this.subjectWiseTimeSpentPieChartLabels = []
       this.subjectWiseTimeSpentPieChartData = []
       
@@ -416,10 +397,6 @@ export class ViewTestHistoryOfAStudentOnATestComponent implements OnInit {
           this.subjectWiseTimeSpentPieChartData.push(entry[1])
         }
       }
-
-      console.log("Piechart albel: ", this.subjectWiseTimeSpentPieChartLabels)
-      console.log("SUbjectwise pie chart time: ", this.subjectWiseTimeSpentPieChartData)
-      console.log("SUbject wise time after: ", this.topicWiseTimeSpent)
       
       this.topicWiseTimeSpentPieChartLabels = []
       this.topicWiseTimeSpentPieChartData = []
@@ -802,7 +779,6 @@ export class ViewTestHistoryOfAStudentOnATestComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.screenWidth$.subscribe(width => {
-      console.log("Scree width detail test report: ", width)
       if (width < 510) {
         this.smallScreen = true;
       }

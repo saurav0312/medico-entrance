@@ -35,7 +35,6 @@ export class ViewAllStudentsOfAtestComponent implements OnInit {
 
   viewAllStudents(testId: string){
     this.authService.readStudentIdToTestIdMapping(testId).subscribe((allUserIdResponse:UserToTestIdMapping[]) =>{
-      console.log("All user id list: ", allUserIdResponse)
       let uniqueUserIdList: string[] = [];
       allUserIdResponse.forEach((userResponse:UserToTestIdMapping) =>{
         if(uniqueUserIdList.length > 0){
@@ -47,8 +46,6 @@ export class ViewAllStudentsOfAtestComponent implements OnInit {
           uniqueUserIdList.push(userResponse.userId)
         }
       })
-
-      console.log("final unique user id list: ", uniqueUserIdList)
 
       if(uniqueUserIdList.length > 0){
         uniqueUserIdList.forEach((studentUserId:any) =>{

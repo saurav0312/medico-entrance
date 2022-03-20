@@ -141,7 +141,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:resize', ['$event'])
     onResize(event: any) {
-      console.log("Window resize: in detail test report", event)
         if (event.target.innerWidth < 510) {
           this.smallScreen = true
         }
@@ -168,8 +167,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
           this.testReportData = response
           this.activatedRoute.queryParams.subscribe((params: any) =>{
             let testIdFromParams = <string>params.testId
-
-            console.log("Testid from param: ", testIdFromParams)
 
             if(testIdFromParams === undefined){
               this.testReportData.allTests = this.testReportData.allTests.filter(test => test.testCategory ==='Mock')
@@ -301,8 +298,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         })
       })
 
-      console.log("Subject with topic list: ", this.subjectNameWithTopicsMap)
-
 
       this.totalScore = 0;
       this.singleTest.testQuestions.forEach(testQuestion =>{
@@ -387,12 +382,7 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         this.subjectWiseIncorrectAnswersData.push(this.subjectTagMap[key]['incorrect'])
         this.subjectWiseNotAnsweredData.push(this.subjectTagMap[key]['not_answered'])
       })
-
-      console.log("Correct aa: ", this.subjectWiseCorrectAnswersData)
-      console.log("Incorrect aa: ", this.subjectWiseIncorrectAnswersData)
-      console.log("Not answered aa: ", this.subjectWiseNotAnsweredData)
       
-
       //prepare data for topic wise bar graph for chart js
 
       this.topicNameList = []
@@ -407,14 +397,8 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
         this.topicWiseNotAnsweredData.push(this.topicTagMap[key]['not_answered'])
       })
 
-      console.log("Correct aa: ", this.topicWiseCorrectAnswersData)
-      console.log("Incorrect aa: ", this.topicWiseIncorrectAnswersData)
-      console.log("Not answered aa: ", this.topicWiseNotAnsweredData)
-
-
       //prepare data for subject wise time spent pie chart
       
-      console.log("SUbject wise time after: ", this.subjectWiseTimeSpent)
       this.subjectWiseTimeSpentPieChartLabels = []
       this.subjectWiseTimeSpentPieChartData = []
       
@@ -424,10 +408,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
           this.subjectWiseTimeSpentPieChartData.push(entry[1])
         }
       }
-
-      console.log("Piechart albel: ", this.subjectWiseTimeSpentPieChartLabels)
-      console.log("SUbjectwise pie chart time: ", this.subjectWiseTimeSpentPieChartData)
-      console.log("SUbject wise time after: ", this.topicWiseTimeSpent)
       
       this.topicWiseTimeSpentPieChartLabels = []
       this.topicWiseTimeSpentPieChartData = []
@@ -810,7 +790,6 @@ export class DetailtestreportComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(): void {
     this.screenWidth$.subscribe(width => {
-      console.log("Scree width detail test report: ", width)
       if (width < 510) {
         this.smallScreen = true;
       }

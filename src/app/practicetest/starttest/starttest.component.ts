@@ -78,28 +78,6 @@ export class StarttestComponent implements OnInit, OnDestroy {
     this.route.queryParams.subscribe((params: any) =>{
       this.testId = <string>params.data
       this.authService.getMockTestByID(this.testId).subscribe(response=>{
-        console.log("test data: ", response)
-        //this.initialTestData = response
-        // if(response!== undefined){
-
-        //   this.initialTestData = <MockTest>{
-        //     "testName": response.testName,
-        //     "testTakenBy": response.testTakenBy,
-        //     "totalTime": response.totalTime,
-        //     "totalNumberOfQuestions": response.totalNumberOfQuestions,
-        //     "testType": response.testType,
-        //     "testCategory": response.testCategory,
-        //     "subjectName": response.subjectName,
-        //     "topicName": response.topicName,
-        //     "questions": response.questions,
-        //     "testPrice": response.testPrice,
-        //     "teacherUserId": response.teacherUserId,
-        //     "testUploadDate": response.testUploadDate,
-        //     "studentsWhoGaveTest": response.studentsWhoGaveTest
-        //   }
-        // }
-
-
         this.testData= response;
         this.testCategory = this.testData.testCategory
         this.testTotalTime = this.testData.totalTime

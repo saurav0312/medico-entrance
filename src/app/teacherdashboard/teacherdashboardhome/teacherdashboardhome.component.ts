@@ -31,7 +31,6 @@ export class TeacherdashboardhomeComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
     onResize(event: any) {
-      console.log("Window resize: ", event)
         if (event.target.innerWidth < 510) {
           
             this.sidenav.close();
@@ -63,7 +62,6 @@ export class TeacherdashboardhomeComponent implements OnInit {
 
   ngAfterViewInit(): void {
     this.screenWidth$.subscribe(width => {
-      console.log("Scree width: ", width)
       if (width < 510) {
         this.sidenav.close();
         this.sidenav.mode ='over'

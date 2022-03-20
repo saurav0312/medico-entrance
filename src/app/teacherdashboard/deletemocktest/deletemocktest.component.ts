@@ -50,7 +50,6 @@ export class DeletemocktestComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    console.log("all mock tests bought by a student: ", this.allMockTests)
   }
 
   ngAfterViewInit() {
