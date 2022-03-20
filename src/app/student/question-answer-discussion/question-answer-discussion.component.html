@@ -107,7 +107,7 @@
                         {{discussionQuestion.allAnswers.length}} Answers
                     </div>
 
-                    <ng-container *ngFor="let answer of discussionQuestion.allAnswers; let j = index">
+                    <ng-container *ngFor="let answer of discussionQuestion.limitedAnswers; let j = index">
                         <div style="margin-top: 0.4em;">
                             <div class="row">
                                 <div style="margin-bottom: 0.3em;">
@@ -132,19 +132,32 @@
                                 </div>
                             </div>
                         </div>
-                        <mat-divider *ngIf="j !== discussionQuestion.allAnswers.length-1"></mat-divider>
+                        <mat-divider *ngIf="j !== discussionQuestion.limitedAnswers.length-1"></mat-divider>
                     </ng-container>
+                    <div style="text-align: center;">
+                        <mat-icon (click)="loadMoreAllDiscussionAnswers(discussionQuestion.discussionQuestion.id)" 
+                            style="cursor: pointer;" pTooltip="Load more answers" 
+                            *ngIf="discussionQuestion.limitedAnswers.length !== discussionQuestion.allAnswers.length && tab === 0">
+                            expand_circle_down
+                        </mat-icon>
+
+                        <mat-icon (click)="loadMoreMyDiscussionAnswers(discussionQuestion.discussionQuestion.id)" 
+                            style="cursor: pointer;" pTooltip="Load more answers" 
+                            *ngIf="discussionQuestion.limitedAnswers.length !== discussionQuestion.allAnswers.length && tab === 1">
+                            expand_circle_down
+                        </mat-icon>
+                    </div>
                 </div>
             </div> 
         </ng-container>
         <div style="text-align: center;">
             <mat-icon (click)="loadMoreAllDiscussionQuestions()" 
-                style="cursor: pointer;" pTooltip="Load more" 
+                style="cursor: pointer;" pTooltip="Load more questions" 
                 *ngIf="limitedAllDiscussionQuestions.length !== allDiscussionQuestions.length && tab === 0">
                 expand_circle_down
             </mat-icon>
             <mat-icon (click)="loadMoreMyDiscussionQuestions()" 
-                style="cursor: pointer;" pTooltip="Load more" 
+                style="cursor: pointer;" pTooltip="Load more questions" 
                 *ngIf="limitedMyDiscussionQuestions.length !== myDiscussionQuestions.length && tab === 1">
                 expand_circle_down
             </mat-icon>
