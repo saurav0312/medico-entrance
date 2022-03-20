@@ -283,7 +283,7 @@ export class QuestionAnswerDiscussionComponent implements OnInit, AfterViewInit 
         this.messageService.add({severity:'success', summary: 'Answer Submitted Successfully'});
         this.answerForm.reset()
         this.questionChangedIndex = -1;
-        this.ngOnInit()
+        //this.ngOnInit()
       })
     }
     else{
