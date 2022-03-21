@@ -3,6 +3,7 @@ import { map, Observable } from 'rxjs';
 import { Firestore, addDoc, collectionData, collection, doc, docData, setDoc, updateDoc, arrayUnion, getDocs } from '@angular/fire/firestore';
 import { TestSubscription } from '../interface/test-subscription';
 import { StudentsOfTest } from '../interface/students-of-test';
+import { deleteDoc, query, where } from 'firebase/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +16,8 @@ export class TestsubscriptionService {
 
   //Create sub collection for a user which contains all subscribed tests by the user
   subscribeToTest(userId: string | undefined, testId: string | undefined){
-    const docRef = collection(this.firestore, `TestSubscriptionDetails/${userId}/allSubscribedTests`);
-    addDoc(docRef, {testId: testId})
+    const docRef = doc(this.firestore, `TestSubscriptionDetails/${userId}/allSubscribedTests/${testId}`);
+    setDoc(docRef, {testId: testId})
   }
 
   // This method fetches all tests subscribed by a student
@@ -36,10 +37,21 @@ export class TestsubscriptionService {
     )
   }
 
+  //Create sub collection for a user which contains all subscribed tests by the user
+  deleteEntryFromSubscriptionCollection(userId: string | undefined, testId: string | undefined){
+    const docRef = doc(this.firestore, `TestSubscriptionDetails/${userId}/allSubscribedTests/${testId}`);
+    deleteDoc(docRef)
+  }
+
+  deleteStudentToATest(testId: string | undefined, userId: string | undefined){
+    const docRef = doc(this.firestore, `StudentsOfATest/${testId}/allStudentsOfTheTest/${userId}`);
+    deleteDoc(docRef)
+  }
+
   //Create sub collection for a test which contains all students of this test
   addStudentToATest(testId: string | undefined, userId: string | undefined){
-    const docRef = collection(this.firestore, `StudentsOfATest/${testId}/allStudentsOfTheTest`);
-    addDoc(docRef, {userId: userId})
+    const docRef = doc(this.firestore, `StudentsOfATest/${testId}/allStudentsOfTheTest/${userId}`);
+    setDoc(docRef, {userId: userId})
   }
 
   // This method fetches all students of a test who have bought this test

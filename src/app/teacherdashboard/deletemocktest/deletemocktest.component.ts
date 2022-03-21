@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationdialogComponent } from 'src/app/reusableComponents/confirmationdialog/confirmationdialog.component';
 import { Router } from '@angular/router';
 import { UserToTestIdMapping } from 'src/app/interface/user-to-test-id-mapping';
+import { TestsubscriptionService } from 'src/app/service/testsubscription.service';
 
 @Component({
   selector: 'app-deletemocktest',
@@ -46,7 +47,8 @@ export class DeletemocktestComponent implements OnInit, AfterViewInit {
   constructor(
     private authService: AuthService,
     private dialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private testSubscriptionService: TestsubscriptionService
   ) { }
 
   ngOnInit(): void {
@@ -61,10 +63,12 @@ export class DeletemocktestComponent implements OnInit, AfterViewInit {
       if(result === true){
         this.loading = true
         let testIdArray = [testId];
-        this.authService.fetchAllUserDetailsSubscribedToTeacherTests(testIdArray).subscribe(response =>{
-          if(response.length > 0){
-            response.forEach((user:any) =>{
-              this.authService.deleteEntryFromSubscriptionCollection(user['id'],testId);
+        this.testSubscriptionService.getAllStudentsOfATest(testId).subscribe(response =>{
+          console.log("All students of the test: ", response)
+          if(response.allStudentsOfTheTest.length > 0){
+            response.allStudentsOfTheTest.forEach((user:any) =>{
+              this.testSubscriptionService.deleteEntryFromSubscriptionCollection(user,testId);
+              this.testSubscriptionService.deleteStudentToATest(testId, user)
             })
           }
           this.authService.deleteMockTest(testId).subscribe(response =>{
