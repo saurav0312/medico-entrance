@@ -82,7 +82,8 @@ export class MyDashboardComponent implements OnInit {
     let sub = this.authService.getCurrentUser().subscribe((userResponse:any) =>{
       this.authService.getAllMockTestsGivenByAUser(userResponse?.uid).subscribe( (allGivenTestsData:any) =>{
         sub.unsubscribe()
-        if(allGivenTestsData!== undefined){
+        console.log("all given test: ", allGivenTestsData)
+        if(allGivenTestsData!== undefined && allGivenTestsData.allTests.length > 0){
           this.testReportData = allGivenTestsData
           this.prepareData()
         }

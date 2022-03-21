@@ -4,7 +4,7 @@
 </div> -->
 
 
-<div class="row" style="margin-top: 1.3rem; margin-left: 0.3rem; margin-right: 0.3rem; margin-bottom: 0.3rem;">
+<div *ngIf="initialListOfTeachers.length > 0; else noTeachersAvailable" class="row" style="margin-top: 1.3rem; margin-left: 0.3rem; margin-right: 0.3rem; margin-bottom: 0.3rem;">
     <div style="text-align: center;">
         <h1 style="font-family: 'Cambay'">List of all teachers available</h1>
     </div>
@@ -73,11 +73,25 @@
     </div>  
     </ng-template>  
     
-    <ng-template [ngIf]="listOfTeachers.length === 0 && searchText ==='' && category ===''">
-        Currently no teachers have registered to this website.
-    </ng-template>
-    <ng-template [ngIf]="listOfTeachers.length === 0 && searchText !=='' && category !==''">
-        No teacher found with current filter
-    </ng-template>
+    
+    
 </div>
 <app-spinner [loading]="loading"></app-spinner>
+
+<ng-template [ngIf]="listOfTeachers.length === 0 && searchText ==='' && category ===''">
+    Currently no teachers have registered to this website.
+</ng-template>
+
+<ng-template [ngIf]="listOfTeachers.length === 0 && searchText !=='' && category !==''">
+    No teacher found with current filter
+</ng-template>
+
+<ng-template #noTeachersAvailable>
+    <div style="display: flex; justify-content: center;">
+        <div style="display: grid; font-family: 'Cambay'; padding-top: 2em;">
+            <img  src="../../assets/img/register_left_side.jpeg" style="height: 400px; margin-bottom: 2em; padding-top: 2em;" alt="study">
+            <span style="text-align: center;">Currently no teachers have registered to this website.</span>
+        </div>
+    </div>
+    
+</ng-template>

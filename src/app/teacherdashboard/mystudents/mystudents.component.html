@@ -19,7 +19,7 @@
                                     <p class="card-text"><b>Student Name:</b> {{myStudent.firstName}} {{myStudent.lastName}}</p>
                                     <p class="card-text"><b>Email:</b> {{myStudent.email}}</p>
                                     <p class="card-text"><b>Phone Number:</b> {{myStudent.phoneNumber === 0 ? 'Not available' : myStudent.phoneNumber }}</p>
-                                    <p class="card-text"><b>Date of birth:</b> {{myStudent.dob === undefined ? 'Not available' : myStudent.dob }}</p>
+                                    <p class="card-text"><b>Date of birth:</b> {{myStudent.dob === undefined ? 'Not available' : myStudent.dob | date:'mediumDate' }}</p>
                                     <p class="card-text"><b>Address:</b> {{myStudent.address === '' ? 'Not available' : myStudent.address}}</p>
                                 </div>
                             </div>

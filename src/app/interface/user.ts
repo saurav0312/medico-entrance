@@ -2,7 +2,7 @@ export interface Userr {
     firstName: string; 
     lastName: string;
     email: string;
-    phoneNumber?: number;
+    phoneNumber: number;
     dob?: Date;
     address?: string;
     education?: string;
