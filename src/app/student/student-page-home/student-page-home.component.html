@@ -52,10 +52,15 @@
                                 <!-- <label (click)="startTest(row)"  class="badge badge-success badge-class">
                                   Start
                                 </label> -->
-                                <button pButton pRipple (click)="startTest(row)" 
+                                <button *ngIf="row.isBought" pButton pRipple (click)="startTest(row)" 
                                 type="button" label="Start" 
                                 class="p-button-outlined p-button-success test-class"
                                 ></button>
+
+                                <button *ngIf="!row.isBought" pButton pRipple (click)="buyTest(row)" 
+                                type="button" label="Buy" 
+                                class="p-button-outlined p-button-success test-class">
+                                </button>
 
                               </ng-template>
                             </td>
@@ -123,10 +128,15 @@
                                   Start
                                 </label> -->
 
-                                <button pButton pRipple (click)="startTest(row)" 
+                                <button *ngIf="row.isBought" pButton pRipple (click)="startTest(row)" 
                                 type="button" label="Start" 
                                 class="p-button-outlined p-button-success test-class"
                                 ></button>
+
+                                <button *ngIf="!row.isBought" pButton pRipple (click)="buyTest(row)" 
+                                type="button" label="Buy" 
+                                class="p-button-outlined p-button-success test-class">
+                                </button>
                               </ng-template>
                             </td>
                           </tr>

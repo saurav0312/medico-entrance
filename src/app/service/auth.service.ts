@@ -332,6 +332,11 @@ export class AuthService {
     return docData(docRef)
   }
 
+  checkIfStudentHasBoughtThisTest(studentId: string| undefined, testId: string|undefined): Observable<any>{
+    const docRef = doc(this.firestore, `TestSubscriptionDetails/${studentId}/allSubscribedTests/${testId}`);
+    return docData(docRef)
+  }
+
   //sets test finish time in server whenever a student starts a test
   setTestFinishTime(userId: string | undefined, data: any): void{
     const docRef = doc(this.firestore, `TestTime/${userId}`);

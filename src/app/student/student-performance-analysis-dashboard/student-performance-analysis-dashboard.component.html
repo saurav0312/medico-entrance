@@ -117,10 +117,10 @@
 </ng-template>
 
 <ng-template #mockTestsTemplate>
-<p style="margin-bottom: 0.8em;">Choose the Mock Test</p>
+<p *ngIf="listOfMockTests.length > 0" style="margin-bottom: 0.8em;">Choose the Mock Test</p>
 
 <!-- Test -->
-<div class="row">
+<div *ngIf="listOfMockTests.length > 0; else noMockTestsAvailable" class="row">
     <ng-container class ="col-sm-6"  *ngFor="let individualTest of listOfMockTests; let i = index" style="margin-bottom: 2rem;">
         <div class="col-md-4">
             <div class="card mb-2 box-shadow">
@@ -158,6 +158,10 @@
 
 <ng-template #noSubjectTestsAvailable>
     <p style="padding-left: 1.2em;">No subject tests available at the moment.</p>
+</ng-template>
+
+<ng-template #noMockTestsAvailable>
+    <p style="padding-left: 1.2em;">No mock tests available at the moment.</p>
 </ng-template>
 
 <app-spinner [loading]="loading" [overlay]="true">

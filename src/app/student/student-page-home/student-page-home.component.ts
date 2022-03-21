@@ -4,6 +4,7 @@ import { MockTestWithAlreadyGiven } from 'src/app/interface/mock-test-with-alrea
 import { MockTest } from 'src/app/interface/mockTest';
 import { AuthService } from 'src/app/service/auth.service';
 import  Chart from 'chart.js/auto'
+import { TestsubscriptionService } from 'src/app/service/testsubscription.service';
 
 @Component({
   selector: 'app-student-page-home',
@@ -15,7 +16,8 @@ export class StudentPageHomeComponent implements OnInit, OnDestroy {
   constructor(
     private authService: AuthService,
     private router: Router,
-    private elementRef: ElementRef
+    private elementRef: ElementRef,
+    private testsubscriptionService: TestsubscriptionService
   ) { }
 
   @ViewChild('banner') banner! : HTMLElement;
@@ -83,9 +85,22 @@ export class StudentPageHomeComponent implements OnInit, OnDestroy {
         allTests.forEach(test =>{
           let temp: MockTestWithAlreadyGiven ={
             'test': test,
-            'isAlreadyGiven': false
+            'isAlreadyGiven': false,
+            'isBought': true
           }
           this.allAvailableTests.push(temp);
+        })
+
+        this.allAvailableTests.forEach(individualTest =>{
+          if(individualTest.test.testType === 'Paid'){
+            this.authService.checkIfStudentHasBoughtThisTest(this.userId, individualTest.test.id).subscribe(isTestBought =>{
+              console.log("Bought: ", isTestBought)
+              //not present in the subscription list: so test is not bought
+              if(isTestBought=== undefined){
+                individualTest.isBought = false;
+              }
+            })
+          }
         })
 
   
@@ -428,6 +443,13 @@ export class StudentPageHomeComponent implements OnInit, OnDestroy {
     if(test !== undefined){
       this.router.navigate(["/practicetest/testInstructions"], {queryParams: {data: test.test.id, testTime: test.test.totalTime, testCategory: test.test.testCategory}})
     }
+  }
+
+  buyTest(indivdualTest: MockTestWithAlreadyGiven){
+    this.testsubscriptionService.subscribeToTest(this.userId, indivdualTest.test.id);
+    //add student id in the list of students who have bought this test
+    this.testsubscriptionService.addStudentToATest(indivdualTest.test.id, this.userId)
+    indivdualTest.isBought = true;
   }
 
   viewMoreMockTest(){

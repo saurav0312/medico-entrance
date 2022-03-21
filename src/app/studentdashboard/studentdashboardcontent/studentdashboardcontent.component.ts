@@ -60,7 +60,8 @@ export class StudentdashboardcontentComponent implements OnInit {
         this.currentUserId = response.uid
         this.username = response.displayName
         this.authService.getUserDetailsByType("teacher").subscribe((response:any) =>{
-          if(response !== null){
+          console.log("All teachers: ", response)
+          if(response !== null && response.length > 0){
             this.listOfTeachers = response
             this.listOfTeachers.forEach(teacher =>{
               if(teacher.dob !== undefined){
@@ -145,9 +146,13 @@ export class StudentdashboardcontentComponent implements OnInit {
     else{
       this.listOfTeachers = this.initialListOfTeachers.filter(teacher => teacher.isSubscribed == false)
     }
-    this.listOfTeachers.sort((x,y) =>{
-      return x.isSubscribed === y.isSubscribed ? 0 : x.isSubscribed ? -1 : 1
-    })
+
+    this.category = category['value']
+    if(this.listOfTeachers.length > 0){
+      this.listOfTeachers.sort((x,y) =>{
+        return x.isSubscribed === y.isSubscribed ? 0 : x.isSubscribed ? -1 : 1
+      })
+    }
 
     if(this.searchText!==''){
       let event ={

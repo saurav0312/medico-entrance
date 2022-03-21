@@ -54,6 +54,7 @@ export class TeacherprofileinfoComponent implements OnInit {
         lastName: new FormControl('',[Validators.required]),
         email : new FormControl('', [Validators.required, Validators.email]),
         phoneNumber: new FormControl('', [Validators.maxLength(10)]),
+        teacherCode: new FormControl(''),
         dob: new FormControl(''),
         address: new FormControl(''),
         education: new FormControl(''),
@@ -95,7 +96,9 @@ export class TeacherprofileinfoComponent implements OnInit {
                     this.countries.push(countryWithState.countryName)
                 })
                 this.profileForm.setValue(response)
-                this.countryChanged(response.country)
+                if(response.country !== undefined && response.country !== ''){
+                  this.countryChanged(response.country)
+                }
 
                 this.firstName = response.firstName
                 this.lastName = response.lastName 
