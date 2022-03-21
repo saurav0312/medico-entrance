@@ -26,6 +26,7 @@ import { DividerModule } from 'primeng/divider';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { TreeModule } from 'primeng/tree';
+import { ScrollTopModule } from 'primeng/scrolltop';
 
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -90,7 +91,8 @@ import { NgxPrintModule } from 'ngx-print';
     PaginatorModule,
     TreeModule,
     MatTabsModule,
-    NgxPrintModule
+    NgxPrintModule,
+    ScrollTopModule
   ]
 })
 export class TeacherdashboardModule { }
