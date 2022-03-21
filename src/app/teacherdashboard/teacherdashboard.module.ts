@@ -44,6 +44,7 @@ import { ViewAllStudentsOfAtestComponent } from './view-all-students-of-atest/vi
 import { ViewTestHistoryOfAStudentOnATestComponent } from './view-test-history-of-astudent-on-atest/view-test-history-of-astudent-on-atest.component';
 import { ViewSubjectTestHistoryOfAStudentOnATestComponent } from './view-subject-test-history-of-astudent-on-atest/view-subject-test-history-of-astudent-on-atest.component';
 
+import { NgxPrintModule } from 'ngx-print';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,8 @@ import { ViewSubjectTestHistoryOfAStudentOnATestComponent } from './view-subject
     TableModule,
     PaginatorModule,
     TreeModule,
-    MatTabsModule
+    MatTabsModule,
+    NgxPrintModule
   ]
 })
 export class TeacherdashboardModule { }

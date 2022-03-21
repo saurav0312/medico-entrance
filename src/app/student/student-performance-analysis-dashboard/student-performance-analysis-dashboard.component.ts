@@ -206,6 +206,7 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
       }
     })
 
+    //add student id in the list of students who have bought this test
     this.addStudentToTestList(testId);
     
   }
@@ -221,6 +222,7 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
       }
     })
 
+    //add student id in the list of students who have bought this test
     this.addStudentToTestList(testId);
   }
 

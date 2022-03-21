@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { MockTest } from 'src/app/interface/mockTest';
 import { TestSubscription } from 'src/app/interface/test-subscription';
 import { AuthService } from 'src/app/service/auth.service';
+import { TestsubscriptionService } from 'src/app/service/testsubscription.service';
 
 @Component({
   selector: 'app-my-tests-bought-by-astudent',
@@ -19,7 +20,8 @@ export class MyTestsBoughtByAStudentComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private testSubscriptionService: TestsubscriptionService
   ) { }
 
   ngOnInit(): void {
@@ -28,7 +30,7 @@ export class MyTestsBoughtByAStudentComponent implements OnInit {
     this.route.queryParams.subscribe((params: any) =>{
       this.myStudentId = <string> params.myStudentId
       this.teacherUserId = <string> params.teacherUserId
-      this.authService.fetchAllTestsBoughtByThisStudent(this.myStudentId).subscribe((response: TestSubscription) =>{
+      this.testSubscriptionService.getAllSubscribedTestsByAUser(this.myStudentId).subscribe((response: TestSubscription) =>{
         if(response !== undefined){
           this.studentsTestList = response.allSubscribedTests;
           this.authService.fetchAllMockTestsCreatedByATeacher(this.teacherUserId).subscribe((response:MockTest[]) =>{
@@ -40,6 +42,17 @@ export class MyTestsBoughtByAStudentComponent implements OnInit {
                 }
               })
             }
+            this.myAllTestsByTheStudent.sort((a,b) =>{
+              if(a.testCategory === b.testCategory){
+                return 0
+              }
+              else if(a.testCategory > b.testCategory){
+                return 1
+              }
+              else{
+                return -1
+              }
+            })
             this.loading = false
           })
         }

@@ -29,7 +29,7 @@ const routes: Routes = [
       { path: 'viewAllStudentsOfATest', component: ViewAllStudentsOfAtestComponent },
       { path: 'viewTestHistoryOfStudentOnThisTest', component: ViewTestHistoryOfAStudentOnATestComponent },
       { path: 'viewSubjectTestHistoryOfStudentOnThisTest', component: ViewSubjectTestHistoryOfAStudentOnATestComponent },
-      { path: '', redirectTo:'/teacherdashboard/teacherdashboardcontent', pathMatch: 'full' }
+      { path: '', redirectTo:'/teacherdashboard/modifytest', pathMatch: 'full' }
     ],
     canActivate: [ TeacherAuthGuardGuard]
   }
