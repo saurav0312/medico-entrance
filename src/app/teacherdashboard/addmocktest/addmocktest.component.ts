@@ -8,6 +8,8 @@ import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { ProfileService } from 'src/app/service/profile.service';
 import { HttpClient } from '@angular/common/http';
 import { MessageService } from 'primeng/api';
+import {NgxImageCompressService} from 'ngx-image-compress';
+import { from, Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-addmocktest',
@@ -53,7 +55,8 @@ export class AddmocktestComponent implements OnInit{
     private authService: AuthService,
     private profileService: ProfileService,
     private http: HttpClient,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private imageCompress: NgxImageCompressService
   ) { }
 
   ngOnInit(): void {
@@ -234,33 +237,66 @@ export class AddmocktestComponent implements OnInit{
 
                       let totalNoOfQuestions = Object.keys(questionNumberToImageMap).length
 
-                      Object.keys(questionNumberToImageMap).forEach((questionNumber,i) =>{
-                        imagesUploadedCount+=1
-                        questionNumberToImageMap[questionNumber].forEach(questionImage =>{
+                      Object.keys(questionNumberToImageMap).forEach((questionNumber,questionIndex) =>{
+                        //imagesUploadedCount+=1
+                        let totalNoOfImageForThisQuestion = questionNumberToImageMap[questionNumber].length;
+
+                        questionNumberToImageMap[questionNumber].forEach((questionImage, imageIndex) =>{
+
                           this.zipFileContent.files['QuestionImages/'+(parseInt(questionNumber)+1).toString() +'/'+questionImage].async('arraybuffer').then((fileData:Uint8Array) =>{
-  
-                            let subs = this.profileService.uploadQuestionImage(fileData,questionImage,userDetail.uid,ref.id, questionNumber).subscribe(imageUrl =>{
-                              subs.unsubscribe()
-                              
-                              createdMockTest.questions[parseInt(questionNumber)].questionImageUrl?.push(imageUrl)
-                              if(imagesUploadedCount == totalNoOfQuestions){
-                                this.authService.updateMockTestDetails(ref.id, createdMockTest).subscribe(response =>{
-                                })
-                              }
-                              
+                            this.loading = true;
+
+                            var binary = ''
+                            var bytes = new Uint8Array(fileData)
+                            var len = bytes.length
+
+                            for(let q=0; q< len; q++){
+                              binary += String.fromCharCode(bytes[q])
+                            }
+
+                            var b64 = window.btoa(binary);
+                            b64 = 'data:image/jpeg;base64,'+b64
+                            this.compressFile(b64)
+                            .subscribe(compressedImage =>{
+                              let imgResultAfterCompress = compressedImage;
+                              //let localCompressedURl = result;
+                              //let sizeOFCompressedImage = this.imageCompress.byteCount(compressedImage)/(1024*1024)
+                              // call method that creates a blob from dataUri
+                              let blobFromCompressedImage = this.dataURItoBlob(imgResultAfterCompress.split(',')[1]);
+
+                              let subs = this.profileService.uploadQuestionImage(blobFromCompressedImage,questionImage,userDetail.uid,ref.id, questionNumber).subscribe(imageUrl =>{
+                                subs.unsubscribe()
+
+                                if(imageIndex === (totalNoOfImageForThisQuestion -1)){
+                                  imagesUploadedCount+=1
+                                }
+                                
+                                createdMockTest.questions[parseInt(questionNumber)].questionImageUrl?.push(imageUrl)
+                                if(imagesUploadedCount == totalNoOfQuestions){
+                                  this.authService.updateMockTestDetails(ref.id, createdMockTest).subscribe(response =>{
+                                    this.loading = false;
+                                    this.messageService.add({severity:'success', summary: 'Test created successfully'});
+                                    this.zipFileContent = undefined
+                                    this.createMockTestForm.reset('')
+                                    this.ngOnInit();
+                                  })
+                                }
+                                
+                              })
                             })
                           })
                         })
                       })
                     }
+                    else{
+                      this.loading = false;
+                      this.messageService.add({severity:'success', summary: 'Test created successfully'});
+                      this.createMockTestForm.reset('')
+                      this.ngOnInit();
+                    }
                   })
                 }
               })
-              
-              this.loading = false;
-              this.messageService.add({severity:'success', summary: 'Test created successfully'});
-              this.createMockTestForm.reset('')
-              this.ngOnInit();
             }) 
           }
         }
@@ -270,6 +306,28 @@ export class AddmocktestComponent implements OnInit{
     if(this.testSourceFile !== null){
       reader.readAsBinaryString(this.testSourceFile.files[0]);
     }
+  }
+
+  compressFile(image: any):Observable<any>{
+    var orientation = -1;
+    let sizeOfOriginalImage = this.imageCompress.byteCount(image)/(1024*1024);
+    if(sizeOfOriginalImage > 0.19){
+      return from(this.imageCompress.compressFile(image, orientation, 50, 50))
+    }
+    else{
+      return of(image)
+    }
+  }
+
+  dataURItoBlob(dataURI:any) {
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+    int8Array[i] = byteString.charCodeAt(i);
+    }
+    //const blob = new Blob([int8Array], { type: 'image/jpeg' });
+    return int8Array;
   }
 
   clearForm() : void{
