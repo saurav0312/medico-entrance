@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Timestamp } from 'firebase/firestore';
 import { MockTest } from 'src/app/interface/mockTest';
+import { StudentsOfTest } from 'src/app/interface/students-of-test';
 import { AuthService } from 'src/app/service/auth.service';
 import { ProfileService } from 'src/app/service/profile.service';
+import { TestsubscriptionService } from 'src/app/service/testsubscription.service';
 import { Userr } from '../../interface/user'
 
 @Component({
@@ -14,7 +16,8 @@ export class MystudentsComponent implements OnInit {
 
   constructor(
     private authService: AuthService,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private testSubscriptionService: TestsubscriptionService
   ) { }
 
   loading: boolean = false;
@@ -38,17 +41,17 @@ export class MystudentsComponent implements OnInit {
           })
 
           if(this.allTestsCreatedByATeacher.length !== 0){
-            while(this.allTestsCreatedByATeacher.length){
-              const testIdList = this.allTestsCreatedByATeacher.splice(0,10);
-              this.authService.fetchAllUserDetailsSubscribedToTeacherTests(testIdList).subscribe(response =>{
-                if(response.length > 0){
-                  response.forEach((studentUser:any) =>{
-                    this.profileService.getUserDetails(studentUser['id']).subscribe(response =>{
+            this.allTestsCreatedByATeacher.forEach(testId =>{
+              //const testIdList = this.allTestsCreatedByATeacher.splice(0,10);
+              this.testSubscriptionService.getAllStudentsOfATest(testId).subscribe((studentsOfTest:StudentsOfTest) =>{
+                if(studentsOfTest.allStudentsOfTheTest.length > 0){
+                  studentsOfTest.allStudentsOfTheTest.forEach((studentUserId:any) =>{
+                    this.profileService.getUserDetails(studentUserId).subscribe(response =>{
                       if(this.myStudents.findIndex(ele => ele.email === response.email) === -1){
                         if(response.dob !== undefined){
                           response.dob = (<Timestamp><unknown>response.dob).toDate()
                         }
-                        response.id = studentUser.id
+                        response.id = studentUserId
                         this.myStudents.push(response)
                       }
                     })
@@ -56,7 +59,7 @@ export class MystudentsComponent implements OnInit {
                 }
                 
               })
-            }
+            })
             setTimeout(() =>{
               this.loading = false;
             }, 500)

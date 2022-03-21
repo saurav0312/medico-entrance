@@ -326,7 +326,7 @@ export class AuthService {
     return collectionData(q,{idField: 'id'})
   }
 
-  //fetches all users who have subscribed to the current logged in teacher's tests
+  //fetches all tests bought by the student
   fetchAllTestsBoughtByThisStudent(studentId: string | undefined):Observable<any>{
     const docRef = doc(this.firestore, `TestSubscriptionDetails/${studentId}`);
     return docData(docRef)

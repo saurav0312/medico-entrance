@@ -34,6 +34,7 @@
     "ng-http-loader": "^11.0.1",
     "ng2-google-charts": "^7.0.0",
     "ngx-bootstrap": "^8.0.0",
+    "ngx-image-compress": "^13.1.9",
     "ngx-print": "^1.2.1",
     "ngx-toastr": "^14.2.1",
     "popper.js": "^1.16.1",

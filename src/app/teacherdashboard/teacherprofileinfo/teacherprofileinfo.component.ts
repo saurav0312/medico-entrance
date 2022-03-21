@@ -8,6 +8,7 @@ import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { finalize } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { DiscussionQuestion } from 'src/app/interface/discussion-question';
+import {NgxImageCompressService} from 'ngx-image-compress';
 
 @Component({
   selector: 'app-teacherprofileinfo',
@@ -42,7 +43,8 @@ export class TeacherprofileinfoComponent implements OnInit {
   constructor(
     private profileService: ProfileService,
     private authService: AuthService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private imageCompress: NgxImageCompressService
   ) { }
 
   ngOnInit(): void {
@@ -176,7 +178,11 @@ export class TeacherprofileinfoComponent implements OnInit {
       throw new Error("Cannot upload multiple files!")
     }
 
+    console.log("image: ", event)
+
     this.selectedProfileImage = target.files[0];
+
+    // this.imageCompress.compressFile(this.selectedProfileImage, -1, )
 
     if(this.isFileImage(this.selectedProfileImage)){
       this.profileService.uploadProfileImage(this.selectedProfileImage, this.userId).subscribe(response =>{

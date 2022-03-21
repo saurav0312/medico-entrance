@@ -42,7 +42,7 @@ export class TestsubscriptionService {
     addDoc(docRef, {userId: userId})
   }
 
-  // This method fetches all students of a test
+  // This method fetches all students of a test who have bought this test
   getAllStudentsOfATest(testId: string | undefined) : Observable<StudentsOfTest>{
     const docRef = collection(this.firestore, `StudentsOfATest/${testId}/allStudentsOfTheTest`);
     return collectionData(docRef).pipe(
