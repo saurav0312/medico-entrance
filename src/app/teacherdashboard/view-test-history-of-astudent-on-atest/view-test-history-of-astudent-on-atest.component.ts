@@ -20,7 +20,7 @@ import Chart from 'chart.js/auto';
 @Component({
   selector: 'app-view-test-history-of-astudent-on-atest',
   templateUrl: './view-test-history-of-astudent-on-atest.component.html',
-  styleUrls: ['./view-test-history-of-astudent-on-atest.component.css']
+  styleUrls: ['./view-test-history-of-astudent-on-atest.component.scss']
 })
 export class ViewTestHistoryOfAStudentOnATestComponent implements OnInit {
 
