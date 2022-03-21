@@ -42,7 +42,13 @@
         </ng-container>
     </ng-template>
     <ng-template [ngIf]="myStudents.length === 0">
-        No one has bought your test yet!
+        
+        <div style="display: flex; justify-content: center;">
+            <div style="display: grid; font-family: 'Cambay'; padding-top: 2em;">
+                <img  src="../../assets/img/register_left_side.jpeg" style="height: 400px; margin-bottom: 2em; padding-top: 2em;" alt="study">
+                <span style="text-align: center;">No one has bought your test yet!</span>
+            </div>
+        </div>
     </ng-template>
 </div>
 <app-spinner [loading]="loading"></app-spinner>
