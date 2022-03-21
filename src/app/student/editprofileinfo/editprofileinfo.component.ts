@@ -9,6 +9,7 @@ import { finalize } from 'rxjs';
 import { MessageService } from 'primeng/api';
 import { DiscussionQuestion } from 'src/app/interface/discussion-question';
 import { NewDiscussionQuestion } from 'src/app/interface/new-discussion-question';
+import {NgxImageCompressService} from 'ngx-image-compress';
 
 @Component({
   selector: 'app-editprofileinfo',
@@ -43,7 +44,8 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
   constructor(
     private profileService: ProfileService,
     private authService: AuthService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private imageCompress: NgxImageCompressService
   ) { }
 
   ngOnInit(): void {
@@ -177,8 +179,36 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
       throw new Error("Cannot upload multiple files!")
     }
 
-    this.selectedProfileImage = target.files[0];
+    var reader = new FileReader();
+    reader.onload = (event: any) => {
+      let localUrl = event.target.result;
+      this.compressFile(localUrl) 
+    }
+    reader.readAsDataURL(event.target.files[0]);
+  }
 
+  isFileImage(file: Blob): boolean {
+    return file && file['type'].split('/')[0] === 'image';
+  }
+
+  compressFile(image: any){
+    var orientation = -1;
+    let sizeOfOriginalImage = this.imageCompress.byteCount(image)/(1024*1024);
+    console.log('Size in bytes before: ',  sizeOfOriginalImage);
+    this.imageCompress.compressFile(image, orientation, 50, 50).then(
+      result => {
+      let imgResultAfterCompress = result;
+      let localCompressedURl = result;
+      let sizeOFCompressedImage = this.imageCompress.byteCount(result)/(1024*1024)
+      console.warn('Size in bytes after compression:',  sizeOFCompressedImage);
+      // call method that creates a blob from dataUri
+      this.selectedProfileImage = this.dataURItoBlob(imgResultAfterCompress.split(',')[1]);
+
+      this.uploadProfileImage()
+    });
+  }
+
+  uploadProfileImage(){
     if(this.isFileImage(this.selectedProfileImage)){
       this.profileService.uploadProfileImage(this.selectedProfileImage, this.userId).subscribe(response =>{
         this.imageUrl = response
@@ -200,8 +230,15 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
     }
   }
 
-  isFileImage(file: Blob): boolean {
-    return file && file['type'].split('/')[0] === 'image';
+  dataURItoBlob(dataURI:any) {
+    const byteString = window.atob(dataURI);
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const int8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+    int8Array[i] = byteString.charCodeAt(i);
+    }
+    const blob = new Blob([int8Array], { type: 'image/jpeg' });
+    return blob;
   }
 
 }
