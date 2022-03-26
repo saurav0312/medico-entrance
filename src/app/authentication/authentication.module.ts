@@ -21,6 +21,7 @@ import { StudentModule } from '../student/student.module';
 import { HomepageModule } from '../homepage/homepage.module';
 import { SpinnerModule } from '../reusableComponents/spinner/spinner.module';
 import { RegisterInstituteComponent } from './register-institute/register-institute.component';
+import { SendTeacherCodeComponent } from './send-teacher-code/send-teacher-code.component';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { RegisterInstituteComponent } from './register-institute/register-instit
     SigninComponent,
     ChoosesignupoptionComponent,
     ForgetpasswordComponent,
-    RegisterInstituteComponent
+    RegisterInstituteComponent,
+    SendTeacherCodeComponent
   ],
   imports: [
     CommonModule,

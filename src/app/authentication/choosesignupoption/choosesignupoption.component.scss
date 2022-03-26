@@ -24,7 +24,7 @@ background-color:darkslateblue;
     background: #fff;
     border-radius: 10px;
     overflow: hidden;
-    padding: 26px 23px 35px 21px;
+    padding: 26px 23px 14px 21px;
     box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
     -moz-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
     -webkit-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
@@ -66,7 +66,8 @@ background-color:darkslateblue;
 
 @media (max-width: 576px) {
     .bb-login {
-        padding: 77px 15px 33px 15px
+        padding: 77px 15px 33px 15px;
+        margin-left: 25px !important;
     }
 
     .img-class{

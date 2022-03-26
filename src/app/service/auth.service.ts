@@ -25,6 +25,7 @@ import { DiscussionQuestion } from '../interface/discussion-question';
 import { UserToTestIdMapping } from '../interface/user-to-test-id-mapping';
 import { NewDiscussionQuestion } from '../interface/new-discussion-question';
 import { DiscussionAnswer } from '../interface/discussion-answer';
+import { TeacherCodeRequestI } from '../interface/teacher-code-request-i';
 
 @Injectable({
   providedIn: 'root'
@@ -66,6 +67,17 @@ export class AuthService {
   addDiscussionQuestionTest(discussionQuestionData: NewDiscussionQuestion){
     const docRef = collection(this.firestore, 'DiscussionQuestionsTesting'); 
     return from(addDoc(docRef, discussionQuestionData));
+  }
+
+  getExistingTeacherCode(teacherCodeRequestData: TeacherCodeRequestI):Observable<any>{
+    const collectionRef = collection(this.firestore, 'TeacherCodeRequests'); 
+    const q = query(collectionRef, where("email","==",teacherCodeRequestData.email))
+    return collectionData(q, {idField:'id'});
+  }
+
+  createTeacherCodeRequest(teacherCodeRequestData: TeacherCodeRequestI):Observable<any>{
+    const docRef = collection(this.firestore, 'TeacherCodeRequests'); 
+    return from(addDoc(docRef, teacherCodeRequestData));
   }
 
   readDiscussionQuestionsTest():Observable<any>{

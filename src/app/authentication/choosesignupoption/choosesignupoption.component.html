@@ -44,10 +44,8 @@
 <ng-template #teacherSignupFormTemplate>
     <!-- Sign up for teacher -->
     <form (ngSubmit)="signUp()" name="signUpForm" [formGroup]="signUpForm" fxLayoutAlign ="stretch" fxLayout="column">
-        <!-- <ng-container *ngTemplateOutlet="signUpHeaderTemplate">
-        </ng-container> -->
 
-        <div class="row">
+        <div class="row" style="margin-bottom: -17px;">
             <ng-container *ngFor="let field of nameFormFieldsName">
                 <ng-container [ngTemplateOutlet]="nameFormFieldsTemplateList[field]" [ngTemplateOutletContext]= "{$implicit: signUpForm}">
                 </ng-container>
@@ -59,7 +57,7 @@
             </ng-container>
         </ng-container>
 
-        <div>
+        <div style="margin-bottom: -17px;">
             <ng-container *ngTemplateOutlet="teacherCodeTemplate; context:{$implicit: signUpForm}">
             </ng-container>
         </div>
@@ -75,10 +73,8 @@
 <ng-template #studentSignupFormTemplate>
     <!-- Sign up for student -->
     <form (ngSubmit)="signUp()" name="signUpForm" [formGroup]="signUpForm" fxLayoutAlign ="stretch" fxLayout="column">
-        <!-- <ng-container *ngTemplateOutlet="signUpHeaderTemplate">
-        </ng-container> -->
 
-        <div class="row">
+        <div class="row" style="margin-bottom: -17px;">
             <ng-container *ngFor="let field of nameFormFieldsName">
                 <ng-container [ngTemplateOutlet]="nameFormFieldsTemplateList[field]" [ngTemplateOutletContext]= "{$implicit: signUpForm}">
                 </ng-container>
@@ -131,14 +127,14 @@
 </ng-template>
 
 <ng-template #phoneNumberTemplate let-signUpForm>
-    <mat-form-field style=" width: 100%;margin-right: 0.5em" appearance="outline">
+    <mat-form-field style=" width: 100%;margin-right: 0.5em; margin-bottom: -17px;" appearance="outline">
         <mat-label>PhoneNumber</mat-label>
         <input [formControl]="signUpForm.get('phoneNumber')" type="number" maxlength="10" pattern="[1-9]{1}[0-9]{9}" required matInput>
     </mat-form-field>
 </ng-template>
 
 <ng-template #emailTemplate let-signUpForm>
-    <mat-form-field style="width: 100%;" appearance="outline">
+    <mat-form-field style="width: 100%; ; margin-bottom: -17px;" appearance="outline">
         <mat-label>Email</mat-label>
         <input [formControl]="signUpForm.get('email')" type="email" required matInput>
         <mat-error *ngIf="signUpForm.dirty && signUpForm.get('email')?.value.length==0">
@@ -148,7 +144,7 @@
 </ng-template>
 
 <ng-template #passwordTemplate let-signUpForm>
-    <mat-form-field style="width: 100%;" appearance="outline">
+    <mat-form-field style="width: 100%; ; margin-bottom: -17px;" appearance="outline">
         <mat-label>Password</mat-label>
         <input [formControl]="signUpForm.get('password')" [type]="signupHide ? 'password' : 'text'" required matInput>
         <button *ngIf="signUpForm.get('password')?.value.length > 0" mat-icon-button matSuffix type="button" (click)="signupHide = !signupHide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="signupHide">
@@ -163,7 +159,7 @@
 <ng-template #teacherCodeTemplate let-signUpForm>
     <mat-form-field style="width: 100%;" appearance="outline">
         <mat-label>Teacher's Code</mat-label>
-        <input [formControl]="signUpForm.get('teacherCode')" type="text" matInput>
+        <input [formControl]="signUpForm.get('teacherCode')" type="text" matInput [required]="selectedIndex === 1">
     </mat-form-field>
 </ng-template>
 

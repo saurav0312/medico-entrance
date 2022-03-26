@@ -1,20 +1,25 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, ElementRef, Input, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnDestroy, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../service/auth.service';
 import { Userr } from '../../interface/user';
 import { ProfileService } from '../../service/profile.service';
 import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
-import { finalize } from 'rxjs';
+import { BehaviorSubject, finalize } from 'rxjs';
 import { MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
+import { DiscussionQuestionComponentComponent } from '../../student/discussion-question-component/discussion-question-component.component';
+import { SendTeacherCodeComponent } from '../send-teacher-code/send-teacher-code.component';
+import { TeacherCodeRequestI } from 'src/app/interface/teacher-code-request-i';
 
 @Component({
   selector: 'app-choosesignupoption',
   templateUrl: './choosesignupoption.component.html',
-  styleUrls: ['./choosesignupoption.component.scss']
+  styleUrls: ['./choosesignupoption.component.scss'],
+  providers: [DialogService]
 })
-export class ChoosesignupoptionComponent implements OnInit {
+export class ChoosesignupoptionComponent implements OnInit, AfterViewInit {
 
   // @Input() selectedIndex = 0;
 
@@ -45,6 +50,24 @@ export class ChoosesignupoptionComponent implements OnInit {
 
   selectedIndex: number = 0;
 
+  screenWidth!: number;
+
+  isMobileView: boolean = false;
+
+  private screenWidth$ = new BehaviorSubject<number>(window.innerWidth);
+
+  @HostListener('window:resize', ['$event'])
+    onResize(event: any) {
+        if (event.target.innerWidth < 510) {
+          this.isMobileView = true;
+        }
+        else{
+          this.isMobileView = false;
+        }
+    }
+
+  
+
   constructor(
     private router : Router, 
     private httpClient : HttpClient,
@@ -52,8 +75,20 @@ export class ChoosesignupoptionComponent implements OnInit {
     private authService: AuthService,
     private fb: FormBuilder,
     private profileService: ProfileService,
-    private messageService : MessageService
+    private messageService : MessageService,
+    public dialogService: DialogService
     ) { }
+
+    ngAfterViewInit(): void {
+      this.screenWidth$.subscribe(width => {
+        if (width < 510) {
+          this.isMobileView = true;
+        }
+        else{
+          this.isMobileView = false;
+        }
+      });
+    }
 
   ngOnInit(): void {
 
@@ -82,6 +117,47 @@ export class ChoosesignupoptionComponent implements OnInit {
 
     this.tempSignUpForm = this.signUpForm
     delete this.tempSignUpForm.value['password']
+
+    let teacherCodeRequestData: TeacherCodeRequestI = {
+      "email": this.signUpForm.get('email')?.value,
+      "isVerified": false
+    }
+
+    //teacher is registering
+    if(this.selectedIndex === 1){
+      let sub = this.authService.getExistingTeacherCode(teacherCodeRequestData).subscribe(existingTeacherCode =>{
+        sub.unsubscribe()
+
+        console.log("Existing teacher code data: ", existingTeacherCode)
+        //this teacher's email is added in teachercoderequests table
+        if(existingTeacherCode!== undefined && existingTeacherCode.length > 0){
+          let teacherCodeFromDb = existingTeacherCode[0].id
+          let teacherCodeFromForm = this.signUpForm.get('teacherCode')?.value
+          //teacher code didn't match
+          if(teacherCodeFromDb !== teacherCodeFromForm){
+            this.loading =false;
+            this.messageService.add({severity:'error',summary:'Please provide correct teacher code'})
+          }
+          //teacher code matched
+          else{
+            this.registerUser()
+          }
+        }
+        //the provided email is not in teachercoderequests table
+        else{
+          this.loading =false;
+          this.messageService.add({severity:'error',summary:'No teacher code exists for the provided email id'})
+        }
+      })
+    }
+    //student is registering
+    else{
+      this.registerUser()
+    }
+  }
+
+
+  registerUser(){
     this.authService.signUpUser(this.signUpForm).pipe(
       finalize(()=>{
         this.loading=false;
@@ -136,13 +212,24 @@ export class ChoosesignupoptionComponent implements OnInit {
   }
 
   sendTeacherCode(): void{
-    let email = this.signUpForm.get('email')?.value
-    if(email !== ''){
-      this.messageService.add({severity:'success', summary: 'Teacher code has been sent to the provided email'});
-    }
-    else{
-      this.messageService.add({severity:'error', summary: 'Please enter email id.'});
-    }
+    // let email = this.signUpForm.get('email')?.value
+    // if(email !== ''){
+    //   this.messageService.add({severity:'success', summary: 'Teacher code has been sent to the provided email'});
+    // }
+    // else{
+    //   this.messageService.add({severity:'error', summary: 'Please enter email id.'});
+    // }
+
+    const ref = this.dialogService.open(SendTeacherCodeComponent, {
+      header: 'Request For Code',
+      width: this.isMobileView ? '70%' : '20%'
+    });
+
+    ref.onClose.subscribe((teacherCodeRequest: string) => {
+      console.log("teacherCodeRequest: ", teacherCodeRequest)
+      if (teacherCodeRequest) {
+      }
+    });
   }
 
   signIn(): void{
