@@ -11,6 +11,7 @@ import { IPerformance } from 'src/app/interface/performance';
 import { TreeNode } from 'primeng/api';
 import { TestReportData } from 'src/app/interface/testReportData';
 import { formatDate } from '@angular/common';
+import * as XLSX from 'xlsx';
 
 declare var google: any;
 
@@ -83,6 +84,36 @@ export class DetailSubjectTestReportComponent implements OnInit {
     private router: Router,
     private dialog: MatDialog,
   ) { }
+
+  exportToExcel(){
+
+    let data: Array<any> = [];
+    this.testToShowInTable.testQuestions.forEach(question =>{
+      let temp = {  
+        "Question": question.question,
+        "Option A": question.options[0],
+        "Option B": question.options[1],
+        "Option C": question.options[2],
+        "Option D": question.options[3],
+        "Correct Answer": question.correctAnswer, 
+        "Selected Option": question.selectedOption,
+        "Result": question.selectedOption === null ? 
+                'Not Answered' : 
+                question.selectedOption === question.correctAnswer ?
+                'Correct': 'Incorrect',
+        "Time Spent (s)": question.totalTimeSpent
+      }
+      data.push(temp)
+    })
+
+    var ws = XLSX.utils.json_to_sheet(data, 
+      {header: ["Question", "Option A", "Option B", "Option C","Option D", "Correct Answer", "Selected Option", "Result", "Time Spent (s)"]}
+      );
+
+    var wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet 1");
+    XLSX.writeFile(wb, `${this.testToShowInTable.testName}.xlsx`);
+  }
 
   ngOnInit(): void {
 
