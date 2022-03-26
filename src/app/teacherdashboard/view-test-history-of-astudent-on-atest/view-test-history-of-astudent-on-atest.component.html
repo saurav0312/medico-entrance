@@ -67,11 +67,7 @@
                             </div>
                             <div class="green">
                                 <div style="float: right; margin-right: 2em; margin-bottom: 1em; margin-top: 1em;">
-                                    <!-- <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('xlsx', {fileName:'test', sheet: 'sheet_name', Props: {Author: 'OnlineExam'}})">Excel</button>
-                                    <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('csv')">Csv</button>
-                                    <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('json')">Json</button>
-                                    <button mat-raised-button style="margin-left: 1em; margin-bottom: inherit;" (click)="exporter.exportTable('txt')">Txt</button> -->
-                                    <!-- <button style="margin-left: 1em; margin-bottom: inherit;"  printTitle="Your Test Result" printSectionId="content" ngxPrint>Pdf</button>  -->
+                                    <mat-icon style="cursor: pointer;" (click)="exportToExcel()">file_download</mat-icon>
                                 </div>
                                 <div style="clear: both;">
                                 </div>

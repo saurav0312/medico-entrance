@@ -54,7 +54,7 @@
                                 <img class="rounded-circle" src="{{discussionQuestion.discussionQuestion.questionAskedByImage}}" style=" height: 3em; width: 3em">
                             </div>
 
-                            <div class="col-sm-11" style="font-weight: 600; color: #5d5ded; width: fit-content;">
+                            <div class="col-sm-11" style="font-weight: 600; color: #5d5ded; width: fit-content; padding-left: 7px;">
                                 {{discussionQuestion.discussionQuestion.questionAskedByUsername}}
                             </div>
                         </div>
@@ -97,7 +97,10 @@
                     
                     <div  style="margin-top: 1em;">
                         <form (ngSubmit)="submitAnswer(discussionQuestion.discussionQuestion.id)" name="answerForm" [formGroup]="answerForm" fxLayoutAlign ="stretch" fxLayout="column">
-                            <textarea (keyup)="answerFieldChanged($event, i)" formControlName="answer" pInputTextarea placeholder="Add a comment" style="width: 100%;"></textarea>
+                            <textarea   class="mat-elevation-z1"
+                                        (keyup)="answerFieldChanged($event, i)" 
+                                        formControlName="answer" pInputTextarea placeholder="Add a comment" 
+                                        style="width: 100%; border-radius: 8px;"></textarea>
                             <div style="display: flex; justify-content: right; margin-top: 0.3em;">
                                 <button class="btn btn-success" type="submit" style="width: fit-content;" [disabled]="questionChangedIndex !== i || answerForm.invalid ">Submit</button>
                             </div>

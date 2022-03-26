@@ -10,6 +10,7 @@ import { TestReportQuestion } from 'src/app/interface/testReportQuestion';
 import { Tests } from 'src/app/interface/tests';
 import { AuthService } from 'src/app/service/auth.service';
 import { IndividualquestionComponent } from 'src/app/student/individualquestion/individualquestion.component';
+import * as XLSX from 'xlsx';
 
 @Component({
   selector: 'app-view-subject-test-history-of-astudent-on-atest',
@@ -82,6 +83,36 @@ export class ViewSubjectTestHistoryOfAStudentOnATestComponent implements OnInit 
     private dialog: MatDialog
   ) { }
 
+  exportToExcel(){
+
+    let data: Array<any> = [];
+    this.testToShowInTable.testQuestions.forEach(question =>{
+      let temp = {  
+        "Question": question.question,
+        "Option A": question.options[0],
+        "Option B": question.options[1],
+        "Option C": question.options[2],
+        "Option D": question.options[3],
+        "Correct Answer": question.correctAnswer, 
+        "Selected Option": question.selectedOption,
+        "Result": question.selectedOption === null ? 
+                'Not Answered' : 
+                question.selectedOption === question.correctAnswer ?
+                'Correct': 'Incorrect',
+        "Time Spent (s)": question.totalTimeSpent
+      }
+      data.push(temp)
+    })
+
+    var ws = XLSX.utils.json_to_sheet(data, 
+      {header: ["Question", "Option A", "Option B", "Option C","Option D", "Correct Answer", "Selected Option", "Result", "Time Spent (s)"]}
+      );
+
+    var wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet 1");
+    XLSX.writeFile(wb, `${this.testToShowInTable.testName}.xlsx`);
+  }
+  
   ngOnInit(): void {
     this.route.queryParams.subscribe( (response:any) =>{
       this.testId = <string>response.testId
