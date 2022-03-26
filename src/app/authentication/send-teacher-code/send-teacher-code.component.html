@@ -1,0 +1,39 @@
+<div style="margin-top: 2em;">
+    <div class="login-container">
+      <div class="bb-login">
+        <div>
+          <form (ngSubmit)="submitRequest()" name="sendTeacherCodeForm" [formGroup]="sendTeacherCodeForm" fxLayoutAlign ="stretch" fxLayout="column">
+            <div>
+              <ng-container *ngFor="let field of commonFormFieldsName">
+                  <ng-container [ngTemplateOutlet]="commonFormFieldsTemplateList[field]" [ngTemplateOutletContext]= "{$implicit: sendTeacherCodeForm}">
+                  </ng-container>
+              </ng-container>
+            </div>
+            
+            <ng-container *ngTemplateOutlet="submitCancel">
+            </ng-container>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+
+<app-spinner [loading]="loading" [diameter]="50" [overlay]="true">
+</app-spinner>
+
+<ng-template #emailTemplate let-sendTeacherCodeForm>
+    <mat-form-field style="width: 100%;" appearance="outline">
+      <mat-label>Email</mat-label> 
+      <input [formControl]="sendTeacherCodeForm.get('email')" type="email" required matInput>
+      <mat-error *ngIf="sendTeacherCodeForm.dirty && sendTeacherCodeForm.get('email')?.value.length==0">
+        Email is required
+      </mat-error>
+    </mat-form-field>
+</ng-template>
+
+<ng-template #submitCancel>
+    <div style="text-align: center;" >
+        <button mat-raised-button type="button" (click)="clearForm()" class="cancel-class" style="margin-right: 10px;">Cancel</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="sendTeacherCodeForm.invalid">Submit</button>
+    </div>
+</ng-template>
