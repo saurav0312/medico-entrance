@@ -1,0 +1,96 @@
+<div style="text-align: center; font-family: 'Cambay'; font-size: 20px; font-weight: 800; margin-top: 20px;">All Students List</div>
+<div style="margin: 10px;" class="card mat-elevation-z2">
+    <p-table 
+        [columns]="studentDisplayedColumns" 
+        [paginator]="true" 
+        [rows]="5" 
+        [showCurrentPageReport]="true" 
+        responsiveLayout="scroll"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+        [rowsPerPageOptions]="[5,10,20]" 
+        [value]="allStudents"
+        styleClass="p-datatable-striped">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th>No</th>
+                <th [pSortableColumn]="col.field" *ngFor="let col of columns">
+                    {{col.header}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-row let-i= "rowIndex" let-columns="columns">
+            <tr>
+                <td>
+                    <div>
+                        <a style="text-align: center; color: #0490f4; cursor: pointer;" pTooltip="Click to review question" matTooltipPosition='right' 
+                        >{{i + 1}}</a>
+                    </div>
+                </td>
+                <td *ngFor="let col of columns">
+                    <div>
+                        {{row[col.field]}}
+                    </div>    
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<div style="text-align: center; font-family: 'Cambay'; font-size: 20px; font-weight: 800; margin-top: 40px;">All Teachers List</div>
+<div style="margin: 10px;" class="card mat-elevation-z2">
+    <p-table 
+        [columns]="teacherDisplayedColumns" 
+        [paginator]="true" 
+        [rows]="5" 
+        [showCurrentPageReport]="true" 
+        responsiveLayout="scroll"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
+        [rowsPerPageOptions]="[5,10,20]" 
+        [value]="allTeachers"
+        styleClass="p-datatable-striped">
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th>No</th>
+                <th [pSortableColumn]="col.field" *ngFor="let col of columns">
+                    {{col.header}}
+                    <p-sortIcon [field]="col.field"></p-sortIcon>
+                </th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-row let-i= "rowIndex" let-columns="columns">
+            <tr>
+                <td>
+                    <div>
+                        <a style="text-align: center; color: #0490f4; cursor: pointer;" pTooltip="Click to review question" matTooltipPosition='right' 
+                        >{{i + 1}}</a>
+                    </div>
+                </td>
+                <td *ngFor="let col of columns">
+
+                    <ng-container *ngIf="col.field==='isVerified' || col.field==='action'; else otherCols;">
+                        <div *ngIf="col.field === 'isVerified'">
+                            <span style="padding: 5px;" class="badge" [ngClass]="{'badge-success':row[col.field], 'badge-danger':!row[col.field]}"> 
+                                {{row[col.field] ?  'Verified' : 'Pending'}}
+                            </span>
+                        </div>
+                        <ng-container *ngIf="col.field=== 'action'">
+                            <button pButton type="button" style="padding: 5px;" (click)="verifyDisableTeacher(row, i)" [ngClass]="{'p-button-success':!row['isVerified'],'p-button-danger':row['isVerified']}">
+                                {{row['isVerified'] ?  'Disable' : 'Verify'}}
+                            </button>
+                        </ng-container>
+                    </ng-container>
+
+                    <ng-template #otherCols>
+                        <div>
+                            {{row[col.field]}}
+                        </div>    
+                    </ng-template>
+                </td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>
+
+<app-spinner [loading]="loading" [diameter]="50" [overlay]="true">
+</app-spinner>

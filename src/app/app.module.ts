@@ -25,6 +25,7 @@ import { StudentdashboardhomeComponent } from './studentdashboard/studentdashboa
 
 import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { AdminPanelModule } from './admin-panel/admin-panel.module';
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,7 +47,8 @@ import { MessageService } from 'primeng/api';
     StudentdashboardModule,
     PracticetestModule,
     TeacherdashboardModule,
-    ToastModule
+    ToastModule,
+    AdminPanelModule
   ],
   providers: [MessageService],
   bootstrap: [AppComponent]

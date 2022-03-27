@@ -35,6 +35,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./teacherdashboard/teacherdashboard.module').then((m) => m.TeacherdashboardModule),
   },
+  {
+    path: 'admin',
+    loadChildren: () =>
+      import('./admin-panel/admin-panel.module').then((m) => m.AdminPanelModule),
+  },
   { path: '**', component: PageNotFoundComponent }
 ];
 
