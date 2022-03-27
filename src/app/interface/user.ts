@@ -13,4 +13,5 @@ export interface Userr {
     id?: string;
     isSubscribed?: boolean;
     teacherCode?: string;
+    isVerified?: boolean;
   }

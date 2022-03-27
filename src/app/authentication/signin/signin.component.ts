@@ -98,18 +98,27 @@ export class SigninComponent implements OnInit {
             else{
               let subb = this.profileService.getUserDetails(response?.uid).subscribe(response =>{
                 subb.unsubscribe()
-                if(response.accountType === 'student'){
-                  sub.unsubscribe();
-                  this.loading=false;
-                  this.router.navigateByUrl("/studentProfile/studentPageHome")
+                console.log("User res: ",response)
+                if(response!== undefined){
+                  if(response.accountType === 'student'){
+                    sub.unsubscribe();
+                    this.loading=false;
+                    this.messageService.add({severity:'success', summary: 'User logged in '});
+                    this.router.navigateByUrl("/studentProfile/studentPageHome")
+                  }
+                  else{
+                    sub.unsubscribe();
+                    this.loading=false;
+                    this.messageService.add({severity:'success', summary: 'User logged in '});
+                    this.router.navigateByUrl("/teacherdashboard")
+                  }
                 }
+                //user doesn't exists
                 else{
-                  sub.unsubscribe();
-                  this.loading=false;
-                  this.router.navigateByUrl("/teacherdashboard")
-                }
+                  this.loading = false;
+                  this.messageService.add({severity:'error', summary:'User does not exist.'})
+                } 
               })
-              this.messageService.add({severity:'success', summary: 'User logged in '});
             }
           }
           else{

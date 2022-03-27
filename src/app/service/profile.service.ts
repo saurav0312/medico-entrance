@@ -38,6 +38,11 @@ export class ProfileService {
     return docData(bookRef) as Observable<Userr>;
   }
 
+  getAdminDetails(id: string | undefined):Observable<any>{
+    const bookRef = doc(this.firestore, `AdminDetails/${id}`);
+    return docData(bookRef) as Observable<any>;
+  }
+
   getCountryDetails(): Observable<any>{
     const bookRef = collection(this.firestore, `CountriesWithState`);
     return collectionData(bookRef) as Observable<any>;

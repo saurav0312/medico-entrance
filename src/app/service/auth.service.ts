@@ -11,14 +11,14 @@ import {
   deleteUser
 } from '@angular/fire/auth';
 import { HttpClient } from '@angular/common/http';
-import { from, map, Observable, switchMap, take } from 'rxjs';
+import { from, map, merge, Observable, switchMap, take } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MockTest} from '../interface/mockTest';
 import { Firestore, addDoc, collectionData, collection, doc, docData, setDoc, updateDoc, arrayUnion, getDocs } from '@angular/fire/firestore';
 import { getDownloadURL, ref, Storage } from '@angular/fire/storage';
 import { uploadBytes } from 'firebase/storage';
 import { TestReportData } from '../interface/testReportData';
-import { arrayRemove, collectionGroup, deleteDoc, FieldValue, query, where } from 'firebase/firestore';
+import { arrayRemove, collectionGroup, deleteDoc, FieldValue, getDoc, query, where } from 'firebase/firestore';
 import { ProfileService } from './profile.service';
 import { ContactRequest } from '../interface/contact-request';
 import { DiscussionQuestion } from '../interface/discussion-question';
@@ -78,6 +78,16 @@ export class AuthService {
   createTeacherCodeRequest(teacherCodeRequestData: TeacherCodeRequestI):Observable<any>{
     const docRef = collection(this.firestore, 'TeacherCodeRequests'); 
     return from(addDoc(docRef, teacherCodeRequestData));
+  }
+
+  getTeacherCodeInfo(teacherCode: string|undefined){
+    const docRef = doc(this.firestore, `TeacherCodeRequests/${teacherCode}`)
+    return docData(docRef) as Observable<TeacherCodeRequestI>;
+  }
+
+  updateTeacherCodeInfo(teacherCode: string| undefined, teacherCodeStatus: boolean):Observable<any>{
+    const docRef = doc(this.firestore, `TeacherCodeRequests/${teacherCode}`)
+    return from(setDoc(docRef, {isVerified: teacherCodeStatus},{merge: true}))
   }
 
   readDiscussionQuestionsTest():Observable<any>{
@@ -337,6 +347,13 @@ export class AuthService {
     const q = query(collectionList, where("accountType", "==",  type))
     return collectionData(q,{idField: 'id'})
   }
+
+  //gets user details based on account type ex: teacher or student
+  getAllUserDetails():Observable<any>{
+    const collectionList = collection(this.firestore, 'UserDetails');
+    return collectionData(collectionList,{idField: 'id'})
+  }
+
 
   //fetches all tests bought by the student
   fetchAllTestsBoughtByThisStudent(studentId: string | undefined):Observable<any>{
