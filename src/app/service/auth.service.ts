@@ -392,7 +392,16 @@ export class AuthService {
 
   fetchTestsList(): Observable<any>{
     const collectionList = collection(this.firestore, 'MockTests');
-    //const q = query(collectionList, where("testCategory", "==", testCategory))
     return collectionData(collectionList,{idField: 'id'})
+  }
+
+  getAllContactRequests():Observable<any>{
+    const collectionList = collection(this.firestore, 'ContactRequests');
+    return collectionData(collectionList,{idField: 'id'})
+  }
+
+  updateContactRequestInfo(contactRequestCode: string| undefined, status: string):Observable<any>{
+    const docRef = doc(this.firestore, `ContactRequests/${contactRequestCode}`)
+    return from(setDoc(docRef, {status: status},{merge: true}))
   }
 }

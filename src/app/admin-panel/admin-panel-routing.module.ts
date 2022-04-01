@@ -5,6 +5,7 @@ import { AdminDashboardHomeContentComponent } from './admin-dashboard-home-conte
 import { AdminDashboardComponent } from './admin-dashboard/admin-dashboard.component';
 import { AdminHomePageComponent } from './admin-home-page/admin-home-page.component';
 import { AdminLoginPageComponent } from './admin-login-page/admin-login-page.component';
+import { ManageContactRequestsComponent } from './manage-contact-requests/manage-contact-requests.component';
 
 const routes: Routes = [
   {
@@ -20,6 +21,7 @@ const routes: Routes = [
     component: AdminDashboardComponent,
     children:[
       {path:'home',component:AdminDashboardHomeContentComponent},
+      {path:'contactRequests',component:ManageContactRequestsComponent},
       {path:'',redirectTo:'/admin/dashboard/home',pathMatch:'full'}
     ],
     canActivate: [AdminAuthGuardGuard]

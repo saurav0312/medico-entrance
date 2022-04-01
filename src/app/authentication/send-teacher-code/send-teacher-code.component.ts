@@ -55,6 +55,7 @@ export class SendTeacherCodeComponent implements OnInit {
           this.authService.createTeacherCodeRequest(teacherCodeRequestData).subscribe(teacherCodeRequestAdded =>{
             console.log("added: ", teacherCodeRequestAdded)
             console.log("added id: ", teacherCodeRequestAdded.id)
+            //send email
             this.loading = false
             this.messageService.add({severity:'success', summary: 'Teacher code has been sent to the provided email'});
             this.ref.close("Success");
