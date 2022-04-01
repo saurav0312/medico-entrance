@@ -57,7 +57,7 @@
             </ng-container>
         </ng-container>
 
-        <div style="margin-bottom: -17px;">
+        <div>
             <ng-container *ngTemplateOutlet="teacherCodeTemplate; context:{$implicit: signUpForm}">
             </ng-container>
         </div>
@@ -86,7 +86,7 @@
             </ng-container>
         </ng-container>
 
-        <p style="font-family: 'Cambay';">Not a student?<a class="forgetPassword" style="color: #715bf9;" (click)="changeAccountType(1)"> Click here for teacher</a></p>
+        <p style="font-family: 'Cambay'; margin-top: 17px;">Not a student?<a class="forgetPassword" style="color: #715bf9;" (click)="changeAccountType(1)"> Click here for teacher</a></p>
         
         <ng-container *ngTemplateOutlet="submitCancel">
         </ng-container>

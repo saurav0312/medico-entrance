@@ -48,7 +48,7 @@
 <ng-template #messageTemplate let-contactForm>
   <mat-form-field style="width: 100%;" appearance="outline">
     <mat-label>Message</mat-label> 
-    <textarea rows="5" [formControl]="contactForm.get('message')" matInput></textarea>
+    <textarea rows="5" [formControl]="contactForm.get('message')" required matInput></textarea>
   </mat-form-field>
 </ng-template>
 

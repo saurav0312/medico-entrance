@@ -38,7 +38,7 @@ export class ContactComponent implements OnInit {
       {
         name: new FormControl('',[Validators.required]),
         email : new FormControl('', [Validators.required, Validators.email]),
-        message: new FormControl('')
+        message: new FormControl('', [Validators.required])
       }
     );
   }
@@ -49,7 +49,9 @@ export class ContactComponent implements OnInit {
     let contactRequestData: ContactRequest ={
       'name': this.contactForm.get('name')?.value,
       'email': this.contactForm.get('email')?.value.toLocaleLowerCase(),
-      'message': this.contactForm.get('message')?.value
+      'message': this.contactForm.get('message')?.value,
+      'date': new Date(),
+      'status':"Pending"
     }
     this.authService.createContactRequest(contactRequestData).subscribe(response =>{
       this.loading = false;

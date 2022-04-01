@@ -25,52 +25,21 @@
                 <p-divider></p-divider>
               </div>
     
-              <button routerLink="studentPageHome" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
-                <mat-icon class="icon-class">home</mat-icon>
-                <span>Home</span>
-              </button>
-    
-              <button routerLink="viewAllAvailableTests" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
-                <mat-icon class="icon-class">quiz</mat-icon>
-                <span>Tests</span>
-              </button>
-    
-              <button routerLink="myDashboard" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
+              <button routerLink="/admin/dashboard/home" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
                 <mat-icon class="icon-class">dashboard</mat-icon>
                 <span>Dashboard</span>
               </button>
     
+              
+    
               <button routerLink="questionAnswerDiscussion" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
                 <mat-icon class="icon-class">question_answer</mat-icon>
-                <span>Ask A Question</span>
+                <span>Manage Question</span>
               </button>
-    
-              <button routerLink="viewAllTeachers" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
-                <mat-icon class="icon-class">person</mat-icon>
-                <span>View All Teachers</span>
-              </button>
-    
-              <div class="card" style="padding-left: 10px; padding-right: 10px; border: none;">
-                <p-divider></p-divider>
-              </div>
-    
-              <button routerLink="detailMockTestReport" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
-                <mat-icon class="icon-class">article</mat-icon>
-                <span>Mock Tests History</span>
-              </button>
-    
-              <button routerLink="detailSubjectTestReport" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
-                <mat-icon class="icon-class">article</mat-icon>
-                <span>Subject Tests History</span>
-              </button>
-    
-              <div class="card" style="padding-left: 10px; padding-right: 10px;  border: none;">
-                <p-divider></p-divider>
-              </div>
-    
-              <button routerLink="editprofileinfo" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
-                <mat-icon class="icon-class">person</mat-icon>
-                <span>Profile</span>
+
+              <button routerLink="/admin/dashboard/contactRequests" routerLinkActive="active-link" mat-button class="menu-button navbar-buttons">
+                <mat-icon class="icon-class">contact_support</mat-icon>
+                <span>Contact Requests</span>
               </button>
               
               <button mat-button class="menu-button navbar-buttons">

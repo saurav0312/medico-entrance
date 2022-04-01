@@ -25,6 +25,7 @@ import { AdminDashboardHomeContentComponent } from './admin-dashboard-home-conte
 
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
+import { ManageContactRequestsComponent } from './manage-contact-requests/manage-contact-requests.component';
 
 
 @NgModule({
@@ -32,7 +33,8 @@ import { PaginatorModule } from 'primeng/paginator';
     AdminHomePageComponent,
     AdminLoginPageComponent,
     AdminDashboardComponent,
-    AdminDashboardHomeContentComponent
+    AdminDashboardHomeContentComponent,
+    ManageContactRequestsComponent
   ],
   imports: [
     CommonModule,
