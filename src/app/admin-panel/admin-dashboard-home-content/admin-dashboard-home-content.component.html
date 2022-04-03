@@ -10,7 +10,8 @@
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
         [rowsPerPageOptions]="[5,10,20]" 
         [value]="allStudents"
-        styleClass="p-datatable-striped">
+        styleClass="p-datatable-gridlines"
+        [globalFilterFields]="['firstName','lastName','email']">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th>No</th>
@@ -18,6 +19,15 @@
                     {{col.header}}
                     <p-sortIcon [field]="col.field"></p-sortIcon>
                 </th>
+            </tr>
+
+            <tr>
+                <th></th>
+                <ng-container *ngFor="let col of columns">
+                    <th>
+                        <p-columnFilter type="text" [field]="col.field"></p-columnFilter>
+                    </th>
+                </ng-container>
             </tr>
         </ng-template>
         <ng-template pTemplate="body" let-row let-i= "rowIndex" let-columns="columns">
@@ -35,6 +45,12 @@
                 </td>
             </tr>
         </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="5">No students found.</td>
+            </tr>
+        </ng-template>
     </p-table>
 </div>
 
@@ -50,15 +66,24 @@
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
         [rowsPerPageOptions]="[5,10,20]" 
         [value]="allTeachers"
-        styleClass="p-datatable-striped">
+        styleClass="p-datatable-gridlines">
         <ng-template pTemplate="header" let-columns>
             <tr>
                 <th>No</th>
                 <th [pSortableColumn]="col.field" *ngFor="let col of columns">
                     {{col.header}}
                     <p-sortIcon [field]="col.field"></p-sortIcon>
+                    <p-columnFilter *ngIf="col.field !== 'action'" type="text" [field]="col.field" display="menu"></p-columnFilter>
                 </th>
             </tr>
+            <!-- <tr>
+                <th></th>
+                <ng-container *ngFor="let col of columns">
+                    <th>
+                        <p-columnFilter type="text" [field]="col.field"></p-columnFilter>
+                    </th>
+                </ng-container>
+            </tr> -->
         </ng-template>
         <ng-template pTemplate="body" let-row let-i= "rowIndex" let-columns="columns">
             <tr>
@@ -89,6 +114,11 @@
                         </div>    
                     </ng-template>
                 </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No teachers found.</td>
             </tr>
         </ng-template>
     </p-table>

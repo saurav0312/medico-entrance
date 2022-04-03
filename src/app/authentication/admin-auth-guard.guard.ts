@@ -29,7 +29,7 @@ export class AdminAuthGuardGuard implements CanActivate {
       return this.profileService.getAdminDetails(userId).pipe(
         take(1),
         map((userDetails:any) => {
-              if(userDetails.email == 'sauravchaudhary0312@gmail.com'){
+              if(userDetails !== undefined && userDetails.email !== undefined){
                 return true;
               }
           // return false;

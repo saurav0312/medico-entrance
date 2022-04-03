@@ -10,13 +10,17 @@
         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" 
         [rowsPerPageOptions]="[5,10,20]" 
         [value]="allContactRequests"
-        styleClass="p-datatable-striped">
+        styleClass="p-datatable-gridlines"
+        [globalFilterFields]="['id','name','message','email','status']">
         <ng-template pTemplate="header" let-columns>
             <tr>
-                <th>No</th>
-                <th [pSortableColumn]="col.field" *ngFor="let col of columns">
+                <th pResizableColumn>No</th>
+                <th pResizableColumn [pSortableColumn]="col.field" *ngFor="let col of columns">
                     {{col.header}}
                     <p-sortIcon [field]="col.field"></p-sortIcon>
+                    <p-columnFilter *ngIf="col.field =='id' || col.field =='name' || 
+                                        col.field =='message' || col.field =='email' || col.field =='status'" type="text" 
+                                [field]="col.field" display="menu"></p-columnFilter>
                 </th>
             </tr>
         </ng-template>

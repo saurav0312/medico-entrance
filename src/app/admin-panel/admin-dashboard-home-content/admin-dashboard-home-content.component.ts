@@ -54,12 +54,9 @@ export class AdminDashboardHomeContentComponent implements OnInit {
       this.allTeachers = allUserDetails.filter((userr:Userr) => userr.accountType === 'teacher')
       this.allTeachers.forEach(teacher =>{
         this.authService.getTeacherCodeInfo(teacher.teacherCode).subscribe(teacherCodeInfo =>{
-          console.log("Teacher code info: ", teacherCodeInfo)
           teacher.isVerified = teacherCodeInfo.isVerified
         })
       })
-      console.log("All users: ", allUserDetails)
-      console.log("All users: ", this.allTeachers)
     },
     error =>{
       this.loading = false;

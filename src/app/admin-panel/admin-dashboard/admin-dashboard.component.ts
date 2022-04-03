@@ -1,6 +1,9 @@
 import { AfterViewInit, Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { BehaviorSubject } from 'rxjs';
+import { AuthService } from 'src/app/service/auth.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -30,7 +33,11 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
     }
 
 
-  constructor() { }
+  constructor(
+    private authService: AuthService,
+    private messageService: MessageService,
+    private router: Router
+  ) { }
 
   ngOnInit(): void {
   }
@@ -46,6 +53,13 @@ export class AdminDashboardComponent implements OnInit, AfterViewInit {
         this.sidenav.mode = 'side'
       }
     });
+  }
+
+  logout(): void{
+    this.authService.logout().subscribe(response =>{
+      this.messageService.add({severity:'success', summary: 'Logged Out Successfully'});
+      this.router.navigateByUrl("/admin")
+    })
   }
 
 }

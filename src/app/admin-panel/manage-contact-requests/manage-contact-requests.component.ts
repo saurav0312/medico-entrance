@@ -15,7 +15,7 @@ export class ManageContactRequestsComponent implements OnInit {
   loading: boolean = false;
 
   contactRequestColumns = [
-    {field: 'id', header: 'Id'},
+    { field: 'id', header: 'Id' },
     { field: 'name', header: 'Full Name' },
     { field: 'email', header: 'Email' },
     { field: 'message', header: 'Message'},
