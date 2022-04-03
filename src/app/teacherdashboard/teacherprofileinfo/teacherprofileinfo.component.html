@@ -24,8 +24,11 @@
                         </ng-container>
                     </div>
 
-                    <div>
+                    <div style="width: 100%; display: flex;">
                         <ng-container *ngTemplateOutlet="emailTemplate; context:{$implicit: profileForm}">
+
+                        </ng-container>
+                        <ng-container *ngTemplateOutlet="teacherCodeTemplate; context:{$implicit: profileForm}">
 
                         </ng-container>
                     </div>
@@ -120,12 +123,19 @@
 </ng-template>
 
 <ng-template #emailTemplate let-profileForm>
-    <mat-form-field style="width: 100%;" appearance="outline">
+    <mat-form-field style="width: 50%; margin-right: 0.5em" appearance="outline">
         <mat-label>Email</mat-label>
         <input [formControl]="profileForm.get('email')" type="email" required matInput readonly>
         <mat-error *ngIf="profileForm.dirty && profileForm.get('email')?.value.length==0">
             Email is required
         </mat-error>
+    </mat-form-field>
+</ng-template>
+
+<ng-template #teacherCodeTemplate let-profileForm>
+    <mat-form-field style="width: 50%;" appearance="outline">
+        <mat-label>Teacher Code</mat-label>
+        <input [formControl]="profileForm.get('teacherCode')" type="text" matInput>
     </mat-form-field>
 </ng-template>
 

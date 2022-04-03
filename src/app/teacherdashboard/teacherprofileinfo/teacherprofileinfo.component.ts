@@ -27,6 +27,7 @@ export class TeacherprofileinfoComponent implements OnInit {
   today: Date = new Date();
 
   profileForm!: FormGroup;
+  tempProfileForm!: FormGroup;
   userDetail! : Userr;
 
   firstName!: string;
@@ -54,7 +55,7 @@ export class TeacherprofileinfoComponent implements OnInit {
         lastName: new FormControl('',[Validators.required]),
         email : new FormControl('', [Validators.required, Validators.email]),
         phoneNumber: new FormControl('', [Validators.maxLength(10)]),
-        teacherCode: new FormControl(''),
+        teacherCode: new FormControl({value:'', disabled: true}),
         dob: new FormControl(''),
         address: new FormControl(''),
         education: new FormControl(''),
@@ -154,7 +155,9 @@ export class TeacherprofileinfoComponent implements OnInit {
 
   saveProfile(){
     this.loading = true;
-    this.userDetail = this.profileForm.value
+    this.tempProfileForm = this.profileForm;
+    delete this.tempProfileForm.value['teacherCode']
+    this.userDetail = this.tempProfileForm.value
     let ti = 1
     this.userDetail.imageUrl = this.imageUrl
     this.profileService.updateUserDetails(this.userId,this.userDetail).pipe(
