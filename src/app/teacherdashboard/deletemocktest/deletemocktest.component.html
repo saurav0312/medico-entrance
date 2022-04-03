@@ -14,13 +14,21 @@
                 [value]="allMockTests"
                 styleClass="p-datatable-striped"
                 [totalRecords]="allMockTests.length"
-                class="card mat-elevation-z2">
+                class="card mat-elevation-z2"
+                [globalFilterFields]="['id', 'testName','testTakenBy','testCategory','testType']">
                 <ng-template pTemplate="header" let-columns>
                     <tr>
                         <th style="font-family: 'Cambay';">No</th>
                         <th style="font-family: 'Cambay'" [pSortableColumn]="col.field" *ngFor="let col of columns">
                             {{col.header}}
                             <p-sortIcon [field]="col.field"></p-sortIcon>
+                            <p-columnFilter *ngIf="
+                                            col.field == 'id' || 
+                                           col.field == 'testName' || 
+                                           col.field == 'testTakenBy' || 
+                                           col.field == 'testCategory' ||
+                                           col.field == 'testType'" 
+                                        type="text" [field]="col.field" display="menu"></p-columnFilter>
                         </th>
                     </tr>
                 </ng-template>
@@ -53,6 +61,11 @@
                             </ng-template>
                                 
                         </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="10">No tests found.</td>
                     </tr>
                 </ng-template>
             </p-table>

@@ -43,6 +43,11 @@ export class ProfileService {
     return docData(bookRef) as Observable<any>;
   }
 
+  getAllAdminDetails():Observable<any>{
+    const bookRef = collection(this.firestore, `AdminDetails`);
+    return collectionData(bookRef, {idField: 'id'}) as Observable<any>;
+  }
+
   getCountryDetails(): Observable<any>{
     const bookRef = collection(this.firestore, `CountriesWithState`);
     return collectionData(bookRef) as Observable<any>;
