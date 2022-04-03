@@ -42,7 +42,7 @@ export class EditmocktestComponent implements OnInit {
         totalTime : new FormControl('', [Validators.required, Validators.min(1)]),
         totalNumberOfQuestions: new FormControl('', [Validators.required]),
         testType: new FormControl('', [Validators.required]),
-        testCategory: new FormControl('', [Validators.required]),
+        testCategory: new FormControl({value:'', disabled: true}, [Validators.required]),
         subjectName: new FormControl(''),
         topicName: new FormControl(''),
         testPrice: new FormControl(''),
