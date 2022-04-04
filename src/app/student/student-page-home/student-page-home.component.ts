@@ -94,7 +94,6 @@ export class StudentPageHomeComponent implements OnInit, OnDestroy {
         this.allAvailableTests.forEach(individualTest =>{
           if(individualTest.test.testType === 'Paid'){
             this.authService.checkIfStudentHasBoughtThisTest(this.userId, individualTest.test.id).subscribe(isTestBought =>{
-              console.log("Bought: ", isTestBought)
               //not present in the subscription list: so test is not bought
               if(isTestBought=== undefined){
                 individualTest.isBought = false;
