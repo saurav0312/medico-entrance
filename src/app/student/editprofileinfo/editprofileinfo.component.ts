@@ -53,7 +53,7 @@ export class EditprofileinfoComponent implements OnInit, OnDestroy {
       {
         firstName: new FormControl('',[Validators.required]),
         lastName: new FormControl('',[Validators.required]),
-        email : new FormControl('', [Validators.required, Validators.email]),
+        email : new FormControl({value:'', disabled: true}, [Validators.required, Validators.email]),
         phoneNumber: new FormControl('',[Validators.maxLength(10)]),
         dob: new FormControl(''),
         address: new FormControl(''),
