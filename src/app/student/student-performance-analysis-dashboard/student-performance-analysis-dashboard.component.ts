@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Chart } from 'chart.js'
+import { Timestamp } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { MockTest } from 'src/app/interface/mockTest';
 import { StudentsOfTest } from 'src/app/interface/students-of-test';
@@ -71,6 +72,11 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
         //fetch all mock and subject tests
         this.fetchTestsList().subscribe((allTests: MockTest[]) =>{
           this.allTestsList = allTests
+          if(this.allTestsList.length > 0){
+            this.allTestsList.forEach(test =>{
+              test.testUploadDate = (<Timestamp><unknown>test.testUploadDate).toDate()
+            })
+          }
           if(this.allTestsList.length > 0 && this.allSubscribedTests.length > 0){
             this.allTestsList.forEach(test =>{
               if(this.allSubscribedTests.findIndex(subscribedTest => subscribedTest === test.id) !== -1){
@@ -81,6 +87,29 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
 
           this.allSubjectTestsList = this.allTestsList.filter(test => test.testCategory === 'Subject');
     
+          this.allSubjectTestsList.sort((a,b) =>{
+            if(a.testType < b.testType){
+              return -1;
+            }
+            else if(a.testType > b.testType){
+              return 1;
+            }
+            //same type
+            else{
+              if(a.testUploadDate == b.testUploadDate){
+                return 0;
+              }
+              else if(a.testUploadDate > b.testUploadDate){
+                return -1;
+              }
+              else{
+                return 1;
+              }
+            }
+          })
+    
+
+
           
           this.listOfMockTests = this.allTestsList.filter(test => test.testCategory === 'Mock');
           this.listOfMockTests.sort((a,b) =>{
@@ -90,8 +119,17 @@ export class StudentPerformanceAnalysisDashboardComponent implements OnInit {
             else if(a.testType > b.testType){
               return 1;
             }
+            //same type
             else{
-              return 0;
+              if(a.testUploadDate == b.testUploadDate){
+                return 0;
+              }
+              else if(a.testUploadDate > b.testUploadDate){
+                return -1;
+              }
+              else{
+                return 1;
+              }
             }
           })
     

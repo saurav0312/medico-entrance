@@ -150,7 +150,7 @@
                   </div>
               </div>
           </div>
-          <ng-container *ngIf="allSubjectTests.length > 4">
+          <ng-container *ngIf="allSubjectTests.length > 2">
             <div style="text-align: center;">
               <mat-icon style="cursor: pointer;" pTooltip="View more" 
                     *ngIf="allSubjectTestsForTable.length !== allSubjectTests.length" (click)="viewMoreSubjectTest()">expand_circle_down</mat-icon>
@@ -202,7 +202,7 @@
     
               <div class="col-sm-6" style="width: 50%; text-align: center; margin-top: 30px">
                 <div class="col-sm-3" style="float: left; margin-top: 20px;">
-                  <mat-icon [inline]="true" style="font-size: 50px;">remove</mat-icon>
+                  <mat-icon [inline]="true" style="font-size: 50px;">remove_circle_outline</mat-icon>
                 </div>
                 <div>
                   <p style="font-size: 15px; margin-bottom: 30px;">No of Questions Not Answered:</p>
