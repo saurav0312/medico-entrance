@@ -76,8 +76,9 @@
               </div>
           </div>
           <ng-container *ngIf="allMockTests.length > 2">
-            <div>
-              <p *ngIf="allMockTestsForTable.length !== allMockTests.length" (click)="viewMoreMockTest()" class="view-more-class">View More</p>
+            <div style="text-align: center;">
+              <mat-icon style="cursor: pointer;" pTooltip="View more" 
+                    *ngIf="allMockTestsForTable.length !== allMockTests.length" (click)="viewMoreMockTest()">expand_circle_down</mat-icon>
             </div>
           </ng-container>
       </div>
@@ -150,8 +151,9 @@
               </div>
           </div>
           <ng-container *ngIf="allSubjectTests.length > 4">
-            <div>
-              <p *ngIf="allSubjectTestsForTable.length !== allSubjectTests.length" class="view-more-class" (click)="viewMoreSubjectTest()">View More</p>
+            <div style="text-align: center;">
+              <mat-icon style="cursor: pointer;" pTooltip="View more" 
+                    *ngIf="allSubjectTestsForTable.length !== allSubjectTests.length" (click)="viewMoreSubjectTest()">expand_circle_down</mat-icon>
             </div>
           </ng-container>
 

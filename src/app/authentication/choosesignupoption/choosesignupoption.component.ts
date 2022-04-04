@@ -56,6 +56,9 @@ export class ChoosesignupoptionComponent implements OnInit, AfterViewInit {
 
   private screenWidth$ = new BehaviorSubject<number>(window.innerWidth);
 
+  teacherCodeId: string ='';
+  showTeacherCode: boolean = false;
+
   @HostListener('window:resize', ['$event'])
     onResize(event: any) {
         if (event.target.innerWidth < 510) {
@@ -228,6 +231,8 @@ export class ChoosesignupoptionComponent implements OnInit, AfterViewInit {
     ref.onClose.subscribe((teacherCodeRequest: string) => {
       console.log("teacherCodeRequest: ", teacherCodeRequest)
       if (teacherCodeRequest) {
+        this.teacherCodeId = teacherCodeRequest
+        this.showTeacherCode = true;
       }
     });
   }

@@ -54,11 +54,11 @@ export class SendTeacherCodeComponent implements OnInit {
         if(existingTeacherCode === undefined || existingTeacherCode.length == 0){
           this.authService.createTeacherCodeRequest(teacherCodeRequestData).subscribe(teacherCodeRequestAdded =>{
             console.log("added: ", teacherCodeRequestAdded)
-            console.log("added id: ", teacherCodeRequestAdded.id)
+            console.log("added teacher code: ", teacherCodeRequestAdded.id)
             //send email
             this.loading = false
             this.messageService.add({severity:'success', summary: 'Teacher code has been sent to the provided email'});
-            this.ref.close("Success");
+            this.ref.close(teacherCodeRequestAdded.id);
           },
           error =>{
             this.loading = false

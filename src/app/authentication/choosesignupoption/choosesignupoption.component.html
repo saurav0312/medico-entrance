@@ -1,5 +1,12 @@
 <app-homenavigationbar></app-homenavigationbar>
 <div class="login-container row" style="background-color: white; margin-top: 7em;">
+    <div style="text-align: center;" *ngIf="showTeacherCode">
+        <p>
+            Your teacher code is : "<b>{{teacherCodeId}}</b>" Please save it for future reference
+            <mat-icon style="cursor: pointer;" (click)="showTeacherCode=false;">close</mat-icon>
+        </p>
+        
+    </div>
     <div class="col-sm-4 img-class">
         <img  src="../../assets/img/register_left_side.jpeg" style="height: 400px; margin-bottom: 2em;" alt="study">
     </div>
