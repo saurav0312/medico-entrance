@@ -20,6 +20,11 @@ export class HomepagecontentComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
+
+    this.authService.getAllUserDetails().subscribe(allUsers =>{
+      console.log("All users: ", allUsers)
+    })
+
     this.authService.getCurrentUser().subscribe(response =>{
       if(response !== null){
         const sub = this.profileService.getUserDetails(response.uid).subscribe(response =>{
