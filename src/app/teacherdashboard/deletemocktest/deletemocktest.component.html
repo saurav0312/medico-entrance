@@ -41,7 +41,7 @@
                             </div>
                         </td>
                         <td *ngFor="let col of columns">
-                            <div *ngIf="col.field == 'actions' || col.field == 'studentList'; else resultElseBlock">
+                            <div *ngIf="col.field == 'actions' || col.field == 'studentList' || col.field == 'testUploadDate' ; else resultElseBlock">
                                 <ng-container *ngIf="col.field == 'actions'"> 
                                     <mat-icon matTooltip="Delete" (click)="deleteMockTest(row.id)" style="color: red; cursor: pointer;">delete</mat-icon>
                                     <mat-icon matTooltip="Edit" [routerLink]="['/teacherdashboard/editmocktest']" 
@@ -53,8 +53,9 @@
                                         [queryParams]="{testId: row.id, testCategory: row.testCategory}" style="color: blue; cursor: pointer;"><u>View all students</u></a>
                                 </ng-container>
 
-
-
+                                <ng-container *ngIf="col.field == 'testUploadDate'">
+                                    {{row[col.field] | date:'medium'}}
+                                </ng-container>
                             </div>
                             <ng-template #resultElseBlock>
                                 {{row[col.field]}}
