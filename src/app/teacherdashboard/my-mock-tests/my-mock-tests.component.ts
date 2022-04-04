@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Timestamp } from 'firebase/firestore';
 import { MockTest } from 'src/app/interface/mockTest';
 import { AuthService } from 'src/app/service/auth.service';
 
@@ -24,6 +25,9 @@ export class MyMockTestsComponent implements OnInit {
         this.authService.fetchAllMockTestsCreatedByATeacher(response.uid).subscribe((response:MockTest[]) =>{
           if(response !== null){
             this.allTestByTheTeacher = response
+            this.allTestByTheTeacher.forEach(test =>{
+              test.testUploadDate = (<Timestamp><unknown>test.testUploadDate).toDate()
+            })
             this.allTestByTheTeacher.sort((a,b) =>{
               if(a.testCategory === b.testCategory){
                 return 0

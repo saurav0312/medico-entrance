@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Timestamp } from 'firebase/firestore';
 import { MockTest } from 'src/app/interface/mockTest';
 import { TestSubscription } from 'src/app/interface/test-subscription';
 import { AuthService } from 'src/app/service/auth.service';
@@ -42,6 +43,9 @@ export class MyTestsBoughtByAStudentComponent implements OnInit {
                 }
               })
             }
+            this.myAllTestsByTheStudent.forEach(test =>{
+              test.testUploadDate = (<Timestamp><unknown>test.testUploadDate).toDate()
+            })
             this.myAllTestsByTheStudent.sort((a,b) =>{
               if(a.testCategory === b.testCategory){
                 return 0

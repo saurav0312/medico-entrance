@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Firestore, addDoc, collectionData, collection, doc, docData, setDoc, updateDoc, arrayUnion } from '@angular/fire/firestore';
 import { Storage, uploadBytes, ref, UploadResult, getDownloadURL } from '@angular/fire/storage';
 import { query, where } from 'firebase/firestore';
+import { deleteObject, listAll } from 'firebase/storage';
 import { from, switchMap, Observable } from 'rxjs';
 import { InstituteDetail } from '../interface/institute-detail';
 import { Userr } from '../interface/user';
@@ -69,5 +70,15 @@ export class ProfileService {
       switchMap((result) => from(getDownloadURL(result.ref))
       )
     )
+  }
+
+  listOfTestQuestionImages(userId: string, testId: string| undefined) : Observable<any>{
+    const testQuestionsImagesRef = ref(this.storage, `questionImages/${userId}/${testId}`)
+    return from(listAll(testQuestionsImagesRef)) as Observable<any>
+  }
+
+  deleteImage(path: string):Observable<any>{
+    const imageRef = ref(this.storage, path)
+    return from(deleteObject(imageRef)) as Observable<any>
   }
 }

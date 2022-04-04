@@ -6,6 +6,10 @@ import { ConfirmationdialogComponent } from 'src/app/reusableComponents/confirma
 import { Router } from '@angular/router';
 import { UserToTestIdMapping } from 'src/app/interface/user-to-test-id-mapping';
 import { TestsubscriptionService } from 'src/app/service/testsubscription.service';
+import { ProfileService } from 'src/app/service/profile.service';
+import { MessageService } from 'primeng/api';
+import { listAll } from 'firebase/storage';
+import { from, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-deletemocktest',
@@ -20,7 +24,9 @@ export class DeletemocktestComponent implements OnInit, AfterViewInit {
 
   @Input() loading: boolean = false;
 
-  displayedColumnsForAllTests: string[] = ['no', 'testId', 'testName', 'testTakenBy', 'testCategory' ,'testType', 'totalTime','testPrice', 'actions'];
+  userId: string  ='';
+
+  displayedColumnsForAllTests: string[] = ['no', 'testId', 'testName', 'testTakenBy', 'testCategory' ,'testType', 'totalTime','testPrice','testUploadDate', 'actions'];
  
   displayedColumns = [
     { field: 'id', header: 'Test ID' },
@@ -30,6 +36,7 @@ export class DeletemocktestComponent implements OnInit, AfterViewInit {
     { field: 'testType', header: 'Test Type' },
     { field: 'totalTime', header: 'Total Time' },
     { field: 'testPrice', header: 'Test Price' },
+    { field: 'testUploadDate', header: 'Test Upload Date' },
     { field: 'studentList', header: 'Students Who Gave Test' },
     { field: 'actions', header: 'Actions' }
   ];
@@ -48,10 +55,16 @@ export class DeletemocktestComponent implements OnInit, AfterViewInit {
     private authService: AuthService,
     private dialog: MatDialog,
     private router: Router,
-    private testSubscriptionService: TestsubscriptionService
+    private testSubscriptionService: TestsubscriptionService,
+    private profileService: ProfileService,
+    private messageService: MessageService
   ) { }
 
   ngOnInit(): void {
+
+    this.authService.getCurrentUser().subscribe(currentUser =>{
+      this.userId = currentUser.uid
+    })
   }
 
   ngAfterViewInit() {
@@ -72,10 +85,30 @@ export class DeletemocktestComponent implements OnInit, AfterViewInit {
             })
           }
           this.authService.deleteMockTest(testId).subscribe(response =>{
-            this.loading =false;
+            this.deleteTestQuestionImages(testId)
           })
         })
       }
+    })
+  }
+
+  subb!: Observable<any>;
+
+  deleteTestQuestionImages(testId: string){
+    this.profileService.listOfTestQuestionImages(this.userId, testId).subscribe(listOfTestQuestionImages =>{
+      listOfTestQuestionImages.prefixes.forEach((folderRef:any)=>{
+        (from(listAll(folderRef)) as Observable<any>).subscribe(allImagesOfAQuestion =>{
+          allImagesOfAQuestion.items.forEach((eachImage:any) =>{
+            this.profileService.deleteImage(eachImage.fullPath)
+          })
+        })
+      })
+      this.loading =false;
+      this.messageService.add({severity:'success', summary:"Test Deleted Successfully"})
+    },
+    error =>{
+      this.loading = false
+      this.messageService.add({severity:'error', summary:error.error})
     })
   }
 
