@@ -65,9 +65,13 @@
 }
 
 .responsive{
-    max-width: 100%;
-    height: auto;
     margin-right: 0.8em;
+    width: 200px;
+    height: 200px;
+}
+
+.images-list{
+    display: inline;
 }
 
 .answered-dot{

@@ -62,7 +62,7 @@
                             <h1 class="card-title" style="font-size: 15px; word-break: break-all;">Q{{counter + 1}}. {{testData.questions[counter]?.question}}</h1>
                         </div>
 
-                        <div style="display: flex;">
+                        <div class="images-list">
                             <ng-container style="text-align: center;"  *ngFor="let imageUrl of testData.questions[counter]?.questionImageUrl; let i= index">
                                 <div style="float: left;">
                                     <img  class="responsive" src="{{imageUrl}}">
